@@ -1,0 +1,2214 @@
+<div class="nast-root" id="nastenka">
+  <header class="nast-header">
+    <div class="nast-brand">
+      <img class="nast-logo" src="https://mamateyka.sk/wp-content/uploads/2026/05/logo.png" alt="Mamateyka" />
+      <div class="nast-brand-text">
+        <div class="nast-brand-name">MAMATEYKA</div>
+        <div class="nast-brand-sub" id="nast-subtitle"></div>
+      </div>
+    </div>
+    <div class="nast-date">
+      <div class="nast-date-num" id="nast-date"></div>
+      <div class="nast-date-day" id="nast-day"></div>
+    </div>
+  </header>
+
+  <main class="nast-body" id="nast-body">
+    <!-- 1: Farske oznamy -->
+    <section class="nast-slide" id="nastenka-1">
+      <!-- Oznamy sa sem nacitaju skriptom z REST endpointu pluginu farske-oznamy (/embed). -->
+      <div class="nast-scale-outer">
+        <div class="nast-embed nast-scaled" id="nast-oznamy-slot"></div>
+      </div>
+    </section>
+
+    <!-- 2: Liturgicky kalendar a omse -->
+    <section class="nast-slide" id="nastenka-2">
+      <!-- Rozpis sa sem nacita skriptom z REST endpointu pluginu rozpis-omsi (/embed). -->
+      <div class="nast-scale-outer">
+        <div class="nast-scaled" id="nast-rozpis-slot"></div>
+      </div>
+    </section>
+
+    <!-- 3: Plagaty a pozvanky -->
+    <section class="nast-slide" id="nastenka-3">
+      <div class="nast-scale-outer">
+        <div class="nast-embed nast-scaled" id="nast-obrazky-slot"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="nast-footer">
+    <div class="nast-progress" id="nast-progress"></div>
+    <div class="nast-footer-place"></div>
+    <div class="nast-dots" id="nast-dots"></div>
+    <span class="nast-qr-copy"><span>Celý rozpis, oznamy, plagáty:</span></span>
+    <a
+      class="nast-qr-card"
+      href="https://mamateyka.sk/farnost-vestibul"
+      aria-label="Celý rozpis, oznamy a plagáty nájdeš na našom webe. Otvoriť stránku farnosti."
+    >
+      <!-- Staticky QR pre https://mamateyka.sk/farnost-vestibul ; pri zmene URL ho treba vygenerovat znova. -->
+      <span class="nast-qr-code" id="nast-qr-code" role="img" aria-label="QR kód na stránku farnosti Mamateyka"
+        ><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 37 37" shape-rendering="crispEdges"><path fill="#ffffff" d="M0 0h37v37H0z"/><path stroke="#000000" d="M4 4.5h7m2 0h1m1 0h1m1 0h1m2 0h1m1 0h3m1 0h7M4 5.5h1m5 0h1m2 0h4m1 0h3m1 0h1m3 0h1m5 0h1M4 6.5h1m1 0h3m1 0h1m1 0h3m1 0h1m2 0h2m2 0h2m1 0h1m1 0h3m1 0h1M4 7.5h1m1 0h3m1 0h1m1 0h5m2 0h3m4 0h1m1 0h3m1 0h1M4 8.5h1m1 0h3m1 0h1m1 0h1m4 0h1m2 0h1m2 0h2m1 0h1m1 0h3m1 0h1M4 9.5h1m5 0h1m1 0h8m1 0h2m1 0h1m1 0h1m5 0h1M4 10.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M12 11.5h1m1 0h4m4 0h3M4 12.5h1m1 0h5m7 0h2m1 0h1m1 0h1m2 0h5M5 13.5h1m2 0h1m2 0h1m2 0h1m1 0h1m3 0h4m2 0h3m3 0h1M4 14.5h3m2 0h2m1 0h1m3 0h1m2 0h3m2 0h1m2 0h2M4 15.5h3m1 0h2m1 0h1m4 0h1m1 0h2m2 0h2m1 0h1m2 0h2m1 0h1M5 16.5h3m2 0h2m2 0h1m6 0h1m1 0h1m5 0h2M5 17.5h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h2m1 0h9m3 0h1M4 18.5h1m2 0h1m1 0h5m1 0h1m1 0h3m1 0h1m2 0h1m2 0h4M5 19.5h5m2 0h2m2 0h2m1 0h2m2 0h1m3 0h1m3 0h1M5 20.5h1m1 0h1m2 0h1m1 0h1m1 0h1m3 0h4m2 0h1m4 0h2M4 21.5h1m1 0h1m1 0h1m2 0h1m2 0h1m5 0h1m2 0h2m1 0h3m1 0h1m1 0h1M4 22.5h1m2 0h1m1 0h2m1 0h4m3 0h4m2 0h4m1 0h1M4 23.5h1m1 0h1m2 0h1m2 0h2m2 0h1m1 0h1m4 0h2m3 0h1m2 0h1M4 24.5h1m2 0h2m1 0h1m1 0h2m5 0h3m1 0h6m1 0h3M12 25.5h1m3 0h3m1 0h1m3 0h1m3 0h5M4 26.5h7m2 0h3m1 0h4m2 0h2m1 0h1m1 0h3M4 27.5h1m5 0h1m1 0h6m1 0h2m1 0h1m1 0h1m3 0h1M4 28.5h1m1 0h3m1 0h1m1 0h1m1 0h2m2 0h2m1 0h2m1 0h5m1 0h1M4 29.5h1m1 0h3m1 0h1m1 0h1m1 0h2m1 0h1m2 0h4m5 0h4M4 30.5h1m1 0h3m1 0h1m1 0h1m2 0h1m1 0h1m1 0h1m5 0h7M4 31.5h1m5 0h1m2 0h3m4 0h1m3 0h6m1 0h1M4 32.5h7m1 0h5m2 0h3m1 0h1m2 0h2m2 0h1"/></svg></span>
+      <span class="nast-qr-site">mamateyka.sk</span>
+    </a>
+  </footer>
+
+  <section class="nast-mass-screen" aria-labelledby="nast-mass-title">
+    <span class="nast-mass-cross" aria-hidden="true"></span>
+    <div class="nast-mass-copy">
+      <h1 class="nast-mass-title" id="nast-mass-title">Práve prebieha svätá omša</h1>
+      <p class="nast-mass-label">MAMATEYKA · PETRŽALKA</p>
+    </div>
+  </section>
+</div>
+
+<style>
+  #nastenka {
+    /* Hodnoty preberane z premennych webu (Breakdance); druhy parameter je fallback. */
+    --nast-primary: var(--bde-brand-primary-color, #537891);
+    --nast-primary-dark: var(--bde-palette-color-1-85cd12d1-0c85-425c-87a7-5ac0ed8b516c, #40647d);
+    --nast-heading: var(--bde-headings-color, #161b23);
+    --nast-bg: var(--bde-background-color, #f4f8fa);
+    --nast-bg-soft: var(--bde-palette-color-1-ac1398e0-ee51-4833-9fa4-66c3dbffc139, #e6eff3);
+    --nast-bg-mid: var(--bde-palette-color-1-686a50a5-0a3f-4ff8-aaaf-e303f2841928, #cddfe7);
+    --nast-panel: #ffffff;
+    --nast-text: var(--bde-body-text-color, #1d2630);
+    --nast-muted: var(--bde-palette-color-1-2389698e-530b-4029-863b-90eb0fd3d128, #5d6c75);
+    --nast-border: rgba(160, 182, 194, 0.4);
+    --nast-gold: var(--bde-palette-color-1-cf43b8a3-2324-49f8-b7f4-bcc578b0db81, #bf8027);
+    --nast-gold-soft: var(--bde-palette-color-1-0345d457-9608-41d4-8c0f-b772e39ad1b8, #f1af57);
+    --nast-font: var(--bde-body-font-family, "Fira Sans", sans-serif);
+    --nast-font-heading: var(--bde-heading-font-family, "Fira Sans", sans-serif);
+    --vs-fade: 300ms;
+
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    height: 100dvh;
+    z-index: 99999;
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(140deg, var(--nast-bg) 0%, var(--nast-bg-soft) 100%);
+    color: var(--nast-text);
+    /* Fallback bez JS; skript nastavi velkost z rozmerov okna (bez stropu). */
+    font-size: clamp(16px, 2.9vw, 52px);
+    line-height: 1.45;
+    -webkit-user-select: none;
+    user-select: none;
+    touch-action: manipulation;
+  }
+
+  #nastenka.nast-mass-active {
+    overflow: hidden;
+    background: #080b0e;
+    color: #fff;
+  }
+
+  #nastenka .nast-mass-screen {
+    position: absolute;
+    inset: 0;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: clamp(32px, 4.5vh, 64px);
+    padding: clamp(24px, 8vw, 100px);
+    background: #080b0e;
+    color: #fff;
+    text-align: center;
+  }
+
+  #nastenka.nast-mass-active .nast-header,
+  #nastenka.nast-mass-active .nast-body,
+  #nastenka.nast-mass-active .nast-footer {
+    visibility: hidden;
+  }
+
+  #nastenka.nast-mass-active .nast-mass-screen {
+    display: flex;
+  }
+
+  #nastenka .nast-mass-cross {
+    position: relative;
+    flex: 0 0 auto;
+    width: clamp(48px, 6.2vw, 84px);
+    height: clamp(96px, 12.4vw, 168px);
+    color: #537891;
+  }
+
+  #nastenka .nast-mass-cross::before,
+  #nastenka .nast-mass-cross::after {
+    position: absolute;
+    display: block;
+    content: "";
+    background: currentColor;
+  }
+
+  #nastenka .nast-mass-cross::before {
+    top: 32%;
+    left: 0;
+    width: 100%;
+    height: 2px;
+  }
+
+  #nastenka .nast-mass-cross::after {
+    top: 0;
+    left: 50%;
+    width: 2px;
+    height: 100%;
+    transform: translateX(-50%);
+  }
+
+  #nastenka .nast-mass-copy {
+    display: grid;
+    justify-items: center;
+    gap: clamp(14px, 2vh, 24px);
+    max-width: 100%;
+  }
+
+  #nastenka .nast-mass-title {
+    max-width: min(100%, 20em);
+    margin: 0;
+    color: #fff;
+    font-family: var(--nast-font-heading);
+    font-size: clamp(1.5rem, 4.5vw, 3.75rem);
+    font-weight: 500;
+    line-height: 1.15;
+    text-wrap: balance;
+  }
+
+  #nastenka .nast-mass-label {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.58);
+    font-size: clamp(0.75rem, 1.3vw, 1.1rem);
+    font-weight: 500;
+    letter-spacing: 0.18em;
+  }
+
+  #nastenka.nast-idle {
+    cursor: none;
+  }
+
+  /* Obsah sa drzi v stlpci max. pomeru 3:4; sirku nastavuje skript. */
+  #nastenka .nast-header,
+  #nastenka .nast-body,
+  #nastenka .nast-footer {
+    width: var(--nast-stage-w, 100%);
+    align-self: center;
+  }
+
+  #nastenka,
+  #nastenka * {
+    box-sizing: border-box;
+    font-family: var(--nast-font);
+  }
+
+  html.nast-page-lock,
+  html.nast-page-lock body {
+    overflow: hidden !important;
+    overscroll-behavior: none;
+  }
+
+  #nastenka h2:not(.nast-embed *),
+  #nastenka h3:not(.nast-embed *),
+  #nastenka h4:not(.nast-embed *),
+  #nastenka p:not(.nast-embed *) {
+    margin: 0;
+    padding: 0;
+    letter-spacing: normal;
+    text-transform: none;
+  }
+
+  #nastenka h2,
+  #nastenka h3,
+  #nastenka h4,
+  #nastenka .nast-brand-name {
+    font-family: var(--nast-font-heading);
+  }
+
+  /* header + footer */
+  #nastenka .nast-header,
+  #nastenka .nast-footer {
+    position: relative;
+    z-index: 2;
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1em;
+    padding: 0.7em 1.2em;
+    background: var(--nast-panel);
+  }
+
+  #nastenka .nast-footer {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    --nast-footer-height: 2.85em;
+    --nast-footer-qr-size: calc(var(--nast-footer-height) + var(--nast-footer-height));
+    height: var(--nast-footer-height);
+  }
+
+  #nastenka .nast-header {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto auto;
+    gap: 0.45em;
+    font-size: calc(1em * var(--nast-chrome-zoom, 1));
+    box-shadow: 0 4px 14px rgba(64, 100, 125, 0.12);
+  }
+
+  #nastenka .nast-footer {
+    padding-top: 0.6em;
+    padding-bottom: 0.6em;
+    font-size: calc(0.7em * var(--nast-chrome-zoom, 1));
+    color: var(--nast-muted);
+    box-shadow:
+      0 -2px 5px rgba(22, 27, 35, 0.06),
+      0 -9px 22px rgba(64, 100, 125, 0.16);
+  }
+
+  #nastenka .nast-brand {
+    display: flex;
+    grid-column: 1;
+    align-items: center;
+    gap: 0.7em;
+    min-width: 0;
+  }
+
+  #nastenka .nast-qr-card {
+    display: grid;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    z-index: 4;
+    grid-template-columns: var(--nast-footer-qr-size);
+    grid-template-rows: minmax(0, 1fr) auto;
+    align-items: center;
+    width: max-content;
+    max-width: calc(var(--nast-stage-w) - 2.4em);
+    height: calc(var(--nast-footer-qr-size) + 1.5em);
+    padding: 0.35em 0.45em 0.25em 0.25em;
+    color: var(--nast-primary-dark);
+    background: var(--nast-panel);
+    border: 1px solid var(--nast-bg-mid);
+    border-radius: 0.45em;
+    box-shadow: 0 2px 8px rgba(64, 100, 125, 0.12);
+    text-decoration: none;
+  }
+
+  #nastenka .nast-qr-copy {
+    position: absolute;
+    right: calc(var(--nast-footer-qr-size) + 1.3em);
+    white-space: nowrap;
+    color: var(--nast-primary);
+    font-weight: 400;
+    line-height: 1.1;
+  }
+
+  #nastenka .nast-qr-copy span {
+    font-size: 0.8em;
+  }
+
+  #nastenka .nast-qr-code {
+    display: grid;
+    grid-column: 1;
+    grid-row: 1;
+    flex: none;
+    width: var(--nast-footer-qr-size);
+    height: var(--nast-footer-qr-size);
+    aspect-ratio: 1;
+    place-items: center;
+    overflow: hidden;
+    background: #fff;
+  }
+
+  #nastenka .nast-qr-code svg {
+    display: block;
+    width: 106%;
+    height: 106%;
+  }
+
+  #nastenka .nast-qr-code.nast-qr-error {
+    padding: 0.5em;
+    color: var(--nast-muted);
+    font-size: 0.3em;
+    line-height: 1.2;
+    text-align: center;
+  }
+
+  #nastenka .nast-footer-place,
+  #nastenka .nast-qr-site {
+    font-size: 0.7em;
+    line-height: 1.1;
+    font-weight: 500;
+    white-space: nowrap;
+    margin-bottom: 2px;
+  }
+
+  #nastenka .nast-qr-site {
+    grid-column: 1;
+    grid-row: 2;
+    text-align: center;
+  }
+
+  #nastenka .nast-footer-place {
+    color: var(--nast-primary-dark);
+  }
+
+  #nastenka img.nast-logo {
+    flex: 0 0 auto;
+    display: block;
+    height: 2.5em !important;
+    width: auto !important;
+    max-width: none !important;
+    margin: 0 !important;
+  }
+
+  #nastenka .nast-brand-name {
+    font-weight: 700;
+    font-size: 1.1em;
+    letter-spacing: 0.02em;
+    line-height: 1.2;
+    color: var(--nast-heading);
+  }
+
+  #nastenka .nast-brand-sub {
+    display: inline-block;
+    margin-top: 0.25em;
+    padding: 0.15em 0.8em;
+    border-radius: 9999px;
+    background: var(--nast-primary);
+    color: #fff;
+    font-size: 0.6em;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  #nastenka .nast-brand-sub.nast-subtitle-exit {
+    animation: nast-subtitle-out 180ms ease-in forwards;
+  }
+
+  #nastenka .nast-brand-sub.nast-subtitle-enter {
+    animation: nast-subtitle-in 350ms cubic-bezier(0.2, 0.7, 0.25, 1) both;
+  }
+
+  @keyframes nast-subtitle-out {
+    to {
+      opacity: 0;
+      transform: translateY(-0.6em);
+    }
+  }
+
+  @keyframes nast-subtitle-in {
+    from {
+      opacity: 0;
+      transform: translateY(0.6em) scale(0.97);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  #nastenka .nast-date {
+    flex: 0 0 auto;
+    grid-column: 3;
+    justify-self: end;
+    text-align: right;
+  }
+
+  #nastenka .nast-date-num {
+    font-size: 1.1em;
+    font-weight: 700;
+    color: var(--nast-heading);
+  }
+
+  #nastenka .nast-date-day {
+    font-size: 0.75em;
+    font-weight: 400;
+    color: var(--nast-gold);
+  }
+
+  #nastenka .nast-progress {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: var(--nast-progress-right, 0px);
+    height: 0.18em;
+    background: var(--nast-gold-soft);
+    transform-origin: left;
+    transform: scaleX(0);
+  }
+
+  #nastenka .nast-dots {
+    display: flex;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 3;
+    align-items: center;
+    gap: 0;
+    transform: translate(-50%, -50%);
+  }
+
+  #nastenka .nast-dot {
+    display: grid;
+    flex: 0 0 1.5em;
+    place-items: center;
+    width: 1.5em;
+    height: 1.5em;
+    padding: 0;
+    font-size: inherit;
+    border: 0;
+    border-radius: 50%;
+    background: transparent;
+    cursor: pointer;
+  }
+
+  #nastenka .nast-dot::before {
+    content: "";
+    display: block;
+    width: 0.55em;
+    height: 0.55em;
+    border-radius: 50%;
+    background: var(--nast-bg-mid);
+    transition: background var(--vs-fade) ease;
+  }
+
+  #nastenka .nast-dot:focus-visible {
+    outline: 2px solid var(--nast-primary-dark);
+    outline-offset: 3px;
+  }
+
+  #nastenka .nast-dot.nast-active {
+    background: transparent;
+  }
+
+  #nastenka .nast-dot.nast-active::before {
+    background: var(--nast-primary);
+  }
+
+  /* body */
+  #nastenka .nast-body {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    scrollbar-width: none;
+    padding: 0.4em 0.5em;
+    transition:
+      opacity var(--vs-fade) ease,
+      transform var(--vs-fade) ease;
+    /* Jemna modra textura pod ostatnymi kartami; plocha pod nou je gradient z #nastenka. */
+    background:
+      radial-gradient(rgba(83, 120, 145, 0.13) 1px, transparent 1.6px) 0 0 / 13px 13px,
+      radial-gradient(rgba(255, 255, 255, 0.55) 1px, transparent 1.6px) 6px 6px / 17px 17px;
+    background-attachment: local;
+  }
+
+  #nastenka .nast-body::-webkit-scrollbar {
+    display: none;
+  }
+
+  #nastenka .nast-body.nast-noscroll {
+    overflow-y: hidden;
+  }
+
+  #nastenka .nast-body.nast-transparent {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  #nastenka .nast-slide {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9em;
+  }
+
+  #nastenka .nast-slide.nast-hidden {
+    display: none !important;
+  }
+
+  #nastenka .nast-reveal {
+    animation: nast-reveal 900ms cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation-delay: var(--nast-delay, 0ms);
+  }
+
+  @keyframes nast-reveal {
+    from {
+      opacity: 0;
+      transform: translateY(1.1em) scale(0.92);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  /* shared */
+  #nastenka .nast-card,
+  #nastenka .nast-item,
+  #nastenka .nast-note {
+    background: var(--nast-panel);
+    border: 1px solid var(--nast-border);
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(64, 100, 125, 0.08);
+  }
+
+  #nastenka .nast-card {
+    padding: 1em 1.1em;
+  }
+
+  #nastenka .nast-section-title {
+    margin-bottom: 0.5em;
+    font-size: 1.15em;
+    font-weight: 700;
+    color: var(--nast-heading);
+  }
+
+  #nastenka .nast-slide > .nast-section-title {
+    margin: 0.3em 0 -0.2em;
+  }
+
+  #nastenka h4:not(.nast-embed *) {
+    font-size: 0.95em;
+    font-weight: 700;
+    color: var(--nast-heading);
+  }
+
+  #nastenka .nast-body p:not(.nast-embed *) {
+    font-size: 0.8em;
+    color: var(--nast-text);
+  }
+
+  /* Obsah pluginov je v rem/px, preto sa skaluje transformom (funguje aj na starsich TV prehliadacoch); mierky nastavuje skript. */
+  #nastenka .nast-embed {
+    --nast-s: var(--nast-zoom, 1);
+  }
+
+  #nastenka #nast-rozpis-slot {
+    --nast-s: var(--nast-rozpis-zoom, 1);
+  }
+
+  #nastenka .nast-scale-outer {
+    position: relative;
+  }
+
+  #nastenka .nast-scaled {
+    width: calc(100% / var(--nast-s, 1));
+    transform: scale(var(--nast-s, 1));
+    transform-origin: 0 0;
+  }
+
+  /* Pri priblizeni je obsah uzsi nez okno, takze sa media queries pluginu nespustia; rozpis ich nahradi container query. */
+  #nastenka #nast-rozpis-slot {
+    container-type: inline-size;
+  }
+
+  @container (max-width: 840px) {
+    #nastenka #nast-rozpis-slot .rozpis-omsi--nastenka .priest-card {
+      grid-template-columns: minmax(0, 1fr) max-content;
+      gap: 5px;
+      align-items: start;
+    }
+
+    #nastenka #nast-rozpis-slot .rozpis-omsi--nastenka .time-block,
+    #nastenka #nast-rozpis-slot .rozpis-omsi--nastenka .service-tag-group {
+      display: contents;
+    }
+
+    #nastenka #nast-rozpis-slot .rozpis-omsi--nastenka .service-tag {
+      grid-column: 1;
+      grid-row: 1;
+      width: auto;
+      text-align: left;
+      align-self: center;
+    }
+
+    #nastenka #nast-rozpis-slot .rozpis-omsi--nastenka .service-main {
+      grid-column: 1;
+      grid-row: 2;
+      min-width: 0;
+    }
+
+    #nastenka #nast-rozpis-slot .rozpis-omsi--nastenka .time {
+      grid-column: 2;
+      grid-row: 1;
+      min-width: 0;
+      width: auto;
+      text-align: right;
+    }
+
+    #nastenka #nast-rozpis-slot .rozpis-omsi--nastenka .service-special {
+      grid-column: 2;
+      grid-row: 2;
+      min-width: 0;
+      width: auto;
+      text-align: right;
+    }
+
+    #nastenka #nast-rozpis-slot .rozpis-omsi--nastenka .confession-box {
+      grid-column: 1 / -1;
+      grid-row: 3;
+      width: 100%;
+      min-width: 0;
+      margin-top: 0;
+    }
+
+    #nastenka #nast-rozpis-slot .rozpis-omsi--nastenka .confession-title {
+      margin-top: 5px;
+    }
+  }
+
+  #nastenka .nast-zoom-badge {
+    position: absolute;
+    top: 8em;
+    right: 1.2em;
+    z-index: 6;
+    padding: 0.25em 0.8em;
+    border-radius: 9999px;
+    background: rgba(22, 27, 35, 0.8);
+    color: #fff;
+    font-size: 0.6em;
+    font-weight: 600;
+    opacity: 0;
+    transition: opacity 170ms ease;
+    pointer-events: none;
+  }
+
+  #nastenka .nast-zoom-badge.nast-visible {
+    opacity: 1;
+  }
+
+  #nastenka .nast-embed .oznamy-content > :first-child {
+    margin-top: 0;
+  }
+
+  #nastenka .nast-embed .oznamy-content > :last-child {
+    margin-bottom: 0;
+  }
+
+  #nastenka .nast-embed .oznamy-content.oznamy-modern .oznamy-modern-section,
+  #nastenka .nast-embed .oznamy-content.oznamy-modern .oznamy-modern-section:hover,
+  #nastenka .nast-embed .oznamy-content.oznamy-modern .oznamy-modern-section:focus-within,
+  #nastenka .nast-embed .oznamy-content.oznamy-modern .oznamy-modern-section:active {
+    background: rgba(255, 255, 255, 0.65);
+  }
+
+  #nastenka .nast-embed .oznamy-images {
+    margin: 0;
+  }
+
+  /* Plagaty ako pripnute papiere; mala medzera pri okrajoch obrazovky, len mierne prekrytie v strede. */
+  #nastenka .nast-embed .oznamy-images {
+    columns: 2;
+    column-gap: 0;
+    padding: 0.8em 0.2em 0.7em;
+  }
+
+  #nastenka .nast-embed .oznamy-images:not(.nast-fit) {
+    display: block;
+    columns: 2;
+    column-gap: 0.2em;
+    padding: 0.8em 0.2em 0.7em;
+  }
+
+  /* 1 - 4 plagatov: velkost a poziciu vypocita skript, aby sa zmestili bez scrollu. */
+  #nastenka .nast-embed .oznamy-images.nast-fit {
+    columns: auto;
+    padding: 0;
+    position: relative;
+  }
+
+  #nastenka .nast-embed .oznamy-images.nast-fit figure.oznamy-img-item {
+    position: absolute;
+    margin: 0;
+  }
+
+  #nastenka .nast-embed figure.oznamy-img-item {
+    position: relative;
+    overflow: visible;
+    margin: 0 -0.05em 0.45em;
+    padding: 0;
+    cursor: default;
+    box-shadow:
+      0 0 0 1px rgba(22, 27, 35, 0.14),
+      0 2px 3px rgba(60, 35, 10, 0.25),
+      0 8px 18px rgba(60, 35, 10, 0.35);
+    transform: rotate(var(--rot, 0deg));
+    transition: none;
+    animation: nast-drop 630ms ease-out var(--d, 0ms) backwards;
+  }
+
+  #nastenka .nast-embed .oznamy-images:not(.nast-fit) figure.oznamy-img-item {
+    break-inside: avoid;
+    -webkit-column-break-inside: avoid;
+  }
+
+  #nastenka .nast-embed figure.oznamy-img-item:hover,
+  #nastenka .nast-embed figure.oznamy-img-item:focus {
+    opacity: 1;
+    outline: none;
+  }
+
+  #nastenka .nast-embed figure.oznamy-img-item img {
+    border-radius: 0;
+  }
+
+  /* Dve lepiace pasky v hornych rohoch plagatu; --tape-* nastavuje skript. */
+  #nastenka .nast-embed figure.oznamy-img-item::before,
+  #nastenka .nast-embed figure.oznamy-img-item::after {
+    content: "";
+    position: absolute;
+    z-index: 1;
+    top: -0.1em;
+    width: 2.2em;
+    height: 0.8em;
+    background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0));
+    clip-path: polygon(0 8%, 4% 0, 8% 10%, 12% 0, 100% 0, 100% 100%, 12% 100%, 8% 90%, 4% 100%, 0 92%);
+  }
+
+  #nastenka .nast-embed figure.oznamy-img-item::before {
+    left: -0.35em;
+    background-color: var(--tape-c1, rgba(241, 175, 87, 0.82));
+    transform: rotate(var(--tape-rot1, -38deg));
+  }
+
+  #nastenka .nast-embed figure.oznamy-img-item::after {
+    right: -0.35em;
+    background-color: var(--tape-c2, rgba(120, 170, 205, 0.78));
+    transform: rotate(var(--tape-rot2, 38deg));
+  }
+
+  @keyframes nast-drop {
+    from {
+      opacity: 0;
+      transform: translateY(0.8em) rotate(calc(var(--rot, 0deg) * 2.5)) scale(0.97);
+    }
+    to {
+      opacity: 1;
+      transform: rotate(var(--rot, 0deg));
+    }
+  }
+
+  /* Korkova nastenka na karte s plagatmi */
+  #nastenka .nast-body.nast-board {
+    background:
+      radial-gradient(rgba(110, 80, 40, 0.18) 1px, transparent 1.6px) 0 0 / 13px 13px,
+      radial-gradient(rgba(255, 255, 255, 0.22) 1px, transparent 1.6px) 6px 6px / 17px 17px,
+      linear-gradient(140deg, #dcc39b, #c8a674);
+    background-attachment: local;
+    padding-inline: 0.2em;
+  }
+
+  #nastenka .nast-body .nast-meta {
+    margin: 0.1em 0 0.3em;
+    font-weight: 600;
+    color: var(--nast-gold);
+  }
+
+  #nastenka .nast-pill {
+    display: inline-block;
+    padding: 0.25em 0.9em;
+    border-radius: 9999px;
+    background: rgba(255, 255, 255, 0.18);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    color: #fff;
+    font-size: 0.6em;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  #nastenka .nast-pill-solid {
+    margin-top: 0.8em;
+    background: var(--nast-primary);
+    border-color: transparent;
+    font-size: 0.7em;
+    letter-spacing: normal;
+    text-transform: none;
+  }
+
+  /* karta 1 */
+  #nastenka .nast-hero {
+    padding: 1.2em 1.2em 1.3em;
+    border-radius: 12px;
+    background: linear-gradient(140deg, var(--nast-primary-dark) 0%, var(--nast-primary) 100%);
+    color: #fff;
+    box-shadow: 0 4px 14px rgba(64, 100, 125, 0.25);
+  }
+
+  #nastenka .nast-hero h2 {
+    margin: 0.5em 0 0.2em;
+    font-size: 1.6em;
+    font-weight: 700;
+    line-height: 1.2;
+    color: #fff;
+  }
+
+  #nastenka .nast-body .nast-hero p {
+    color: rgba(255, 255, 255, 0.92);
+  }
+
+  #nastenka .nast-body .nast-hero .nast-hero-meta {
+    margin-bottom: 0.5em;
+    font-weight: 600;
+    color: var(--nast-gold-soft);
+  }
+
+  #nastenka .nast-item {
+    display: flex;
+    gap: 0.9em;
+    padding: 0.9em 1em;
+  }
+
+  #nastenka .nast-ico {
+    flex: 0 0 2.4em;
+    height: 2.4em;
+    border-radius: 50%;
+    background: var(--nast-bg-soft);
+    border: 1px solid var(--nast-bg-mid);
+  }
+
+  #nastenka .nast-note {
+    display: flex;
+    align-items: center;
+    gap: 1em;
+    padding: 0.9em 1em;
+    background: var(--nast-bg-soft);
+  }
+
+  #nastenka .nast-qr {
+    flex: 0 0 3.4em;
+    height: 3.4em;
+    border-radius: 8px;
+    background: var(--nast-panel);
+    border: 1px solid var(--nast-bg-mid);
+  }
+
+  #nastenka .nast-quote {
+    justify-content: center;
+    text-align: center;
+    font-style: italic;
+  }
+
+  /* karta 2 */
+  #nastenka .nast-cal-row {
+    display: grid;
+    grid-template-columns: 4.6em 1fr;
+    gap: 0.8em;
+    align-items: start;
+    padding: 0.55em 0.6em;
+    border-top: 1px solid var(--nast-border);
+  }
+
+  #nastenka .nast-cal-today {
+    border-radius: 8px;
+    background: var(--nast-bg-soft);
+    border-top-color: transparent;
+  }
+
+  #nastenka .nast-cal-date {
+    font-size: 0.8em;
+    font-weight: 700;
+    color: var(--nast-gold);
+  }
+
+  #nastenka .nast-mass-group {
+    margin-bottom: 0.7em;
+    padding: 0.6em 0.8em;
+    border: 1px solid var(--nast-border);
+    border-radius: 10px;
+    background: var(--nast-bg);
+  }
+
+  #nastenka .nast-mass-group:last-child {
+    margin-bottom: 0;
+  }
+
+  #nastenka .nast-mass-row {
+    display: flex;
+    gap: 1em;
+    padding: 0.25em 0;
+    font-size: 0.8em;
+  }
+
+  #nastenka .nast-time {
+    flex: 0 0 3.6em;
+    font-weight: 700;
+    color: var(--nast-primary-dark);
+  }
+
+  /* karta 3 */
+  #nastenka .nast-poster {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-end;
+    min-height: 12em;
+    padding: 1.2em;
+    border-radius: 12px;
+    background: linear-gradient(0deg, rgba(0, 0, 0, 0.7) 18%, rgba(0, 0, 0, 0) 80%), var(--nast-primary-dark);
+    color: #fff;
+  }
+
+  #nastenka .nast-poster-alt {
+    background: linear-gradient(0deg, rgba(0, 0, 0, 0.7) 18%, rgba(0, 0, 0, 0) 80%), var(--nast-gold);
+  }
+
+  #nastenka .nast-poster h2 {
+    font-size: 1.5em;
+    font-weight: 700;
+    line-height: 1.2;
+    color: #fff;
+  }
+
+  #nastenka .nast-body .nast-poster p {
+    margin-top: 0.3em;
+    color: rgba(255, 255, 255, 0.92);
+  }
+
+  #nastenka .nast-body .nast-poster .nast-poster-meta {
+    font-weight: 600;
+    color: var(--nast-gold-soft);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    #nastenka .nast-body,
+    #nastenka .nast-dot::before {
+      transition-duration: 0ms;
+    }
+    #nastenka .nast-reveal {
+      animation: none;
+    }
+    #nastenka .nast-embed figure.oznamy-img-item {
+      animation: none;
+    }
+    #nastenka .nast-brand-sub {
+      animation-duration: 0ms !important;
+    }
+  }
+</style>
+
+<script>
+  (function () {
+    // Poradie kariet. Pre dalsiu kartu pridat <section id="..."> a zaznam sem.
+    var SLIDES = [
+      {
+        id: "nastenka-1",
+        title: "Farské oznamy",
+        durationSeconds: 15,
+        reveal: ".oznamy-content > *",
+      },
+      {
+        id: "nastenka-2",
+        title: "Rozpis omší",
+        durationSeconds: 15,
+        scroll: false,
+        reveal: ".nast-section-title, .rozpis-omsi--nastenka .day-column",
+      },
+      {
+        id: "nastenka-3",
+        title: "Plagáty a pozvánky",
+        durationSeconds: 15,
+        board: true,
+        scrollSpeed: 15,
+      },
+    ];
+    var SCROLL_SPEED = 30; // px/s, plynuly posun pri dlhsom obsahu
+    var SCROLL_PAUSE_MS = 3500; // pauza na zaciatku a na konci posunu
+    var BOTTOM_TOLERANCE = 2; // px
+    var FIRST_SLIDE_TARGET_STEP_RATIO = 0.68;
+    var FIRST_SLIDE_MIN_STEP_RATIO = 0.4;
+    var FIRST_SLIDE_MAX_STEP_RATIO = 0.85;
+    var FIRST_SLIDE_MIN_READ_MS = 7500;
+    var FIRST_SLIDE_MAX_READ_MS = 15000;
+    var FIRST_SLIDE_WORDS_PER_SECOND = 3;
+    var FIRST_SLIDE_SCROLL_SPEED_RATIO = 0.32;
+    var FIRST_SLIDE_MIN_SCROLL_MS = 1000;
+    var FIRST_SLIDE_MAX_SCROLL_MS = 2500;
+    var FIRST_SLIDE_LOADING_PAUSE_MS = 10000;
+
+    var reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    var FADE_MS = reducedMotion.matches ? 0 : 350;
+
+    var root = document.getElementById("nastenka");
+    var body = document.getElementById("nast-body");
+    var subtitleEl = document.getElementById("nast-subtitle");
+    var dotsEl = document.getElementById("nast-dots");
+    var dateEl = document.getElementById("nast-date");
+    var dayEl = document.getElementById("nast-day");
+    var progressEl = document.getElementById("nast-progress");
+    if (!root || !body) return;
+
+    var rozpisSlot = document.getElementById("nast-rozpis-slot");
+    if (rozpisSlot && window.MutationObserver) {
+      var updateMassScreen = function () {
+        root.classList.toggle(
+          "nast-mass-active",
+          !!rozpisSlot.querySelector(".priest-card--live"),
+        );
+      };
+      var massScreenObserver = new MutationObserver(updateMassScreen);
+      massScreenObserver.observe(rozpisSlot, {
+        attributes: true,
+        attributeFilter: ["class"],
+        childList: true,
+        subtree: true,
+      });
+      updateMassScreen();
+    }
+
+    var progressFooterEl = progressEl && progressEl.parentElement;
+    var qrCardEl = root.querySelector(".nast-qr-card");
+    var updateProgressTrack = function () {
+      if (!progressFooterEl || !qrCardEl) return;
+      progressFooterEl.style.setProperty(
+        "--nast-progress-right",
+        qrCardEl.offsetWidth + "px",
+      );
+    };
+    if (progressFooterEl && qrCardEl) {
+      updateProgressTrack();
+      if (window.ResizeObserver) {
+        var progressTrackObserver = new ResizeObserver(updateProgressTrack);
+        progressTrackObserver.observe(progressFooterEl);
+        progressTrackObserver.observe(qrCardEl);
+      }
+      window.addEventListener("resize", updateProgressTrack);
+    }
+
+    document.documentElement.classList.add("nast-page-lock");
+    root.style.setProperty("--vs-fade", FADE_MS + "ms");
+
+    // Mobil: rovnaky rozmer okna ako pri "Desktop layout", aby sa nespustili kompaktne styly pluginov.
+    if ((navigator.maxTouchPoints > 0 || "ontouchstart" in window) && window.innerWidth < 1000) {
+      var viewportMeta = document.querySelector('meta[name="viewport"]');
+      if (!viewportMeta) {
+        viewportMeta = document.createElement("meta");
+        viewportMeta.name = "viewport";
+        document.head.appendChild(viewportMeta);
+      }
+      viewportMeta.setAttribute("content", "width=1080");
+    }
+
+    // Skryje kurzor mysi po niekolkych sekundach necinnosti (TV).
+    var idleTimer = null;
+    var wakeCursor = function () {
+      root.classList.remove("nast-idle");
+      clearTimeout(idleTimer);
+      idleTimer = setTimeout(function () {
+        root.classList.add("nast-idle");
+      }, 3000);
+    };
+    ["mousemove", "mousedown", "touchstart"].forEach(function (name) {
+      window.addEventListener(name, wakeCursor, { passive: true });
+    });
+    wakeCursor();
+
+    // Dlhodobe bezanie na TV: obcas obnovit stranku (len ked je web dostupny).
+    setInterval(
+      function () {
+        fetch(location.href, { method: "HEAD", cache: "no-store" })
+          .then(function (res) {
+            if (res.ok) location.reload();
+          })
+          .catch(function () {});
+      },
+      6 * 60 * 60 * 1000,
+    );
+    var activeIndex = 0;
+    var navigationVersion = 0;
+
+    var sleep = function (ms) {
+      return new Promise(function (resolve) {
+        setTimeout(resolve, ms);
+      });
+    };
+
+    // Cakanie, ktore sa da predcasne ukoncit (po rucnom prepnuti karty).
+    var wakers = [];
+    var wait = function (ms) {
+      return new Promise(function (resolve) {
+        var timer = setTimeout(finish, ms);
+        function finish() {
+          clearTimeout(timer);
+          var i = wakers.indexOf(finish);
+          if (i >= 0) wakers.splice(i, 1);
+          resolve();
+        }
+        wakers.push(finish);
+      });
+    };
+    var wakeAll = function () {
+      wakers.slice().forEach(function (w) {
+        w();
+      });
+    };
+
+    var slides = SLIDES.map(function (s) {
+      var el = document.getElementById(s.id);
+      if (!el) console.warn("Nastenka: chyba element s ID '" + s.id + "'.");
+      return {
+        el: el,
+        title: s.title,
+        durationSeconds: s.durationSeconds,
+        scroll: s.scroll !== false,
+        scrollSpeed: s.scrollSpeed || SCROLL_SPEED,
+        board: !!s.board,
+        reveal: s.reveal || null,
+      };
+    }).filter(function (s) {
+      return s.el;
+    });
+    if (!slides.length) return;
+
+    slides.forEach(function (s, index) {
+      s.el.classList.add("nast-slide", "nast-hidden");
+      var dot = document.createElement("button");
+      dot.type = "button";
+      dot.className = "nast-dot";
+      dot.setAttribute("aria-label", "Prejsť na kartu: " + s.title);
+      dot.setAttribute("aria-current", "false");
+      dot.addEventListener("click", function () {
+        if (index === activeIndex) {
+          navigationVersion++;
+          wakeAll();
+          return;
+        }
+        activeIndex = index;
+        navigationVersion++;
+        var version = navigationVersion;
+        switchTo(index, version).then(function () {
+          if (version === navigationVersion) wakeAll();
+        });
+      });
+      dotsEl.appendChild(dot);
+    });
+    var dots = dotsEl.children;
+    var updateSlideTitle = function (index, title) {
+      slides[index].title = title;
+      dots[index].setAttribute("aria-label", "Prejsť na kartu: " + title);
+      if (activeIndex === index) subtitleEl.textContent = title;
+    };
+    var OZNAMY_ARCHIVE_AJAX_URL = "/wp-admin/admin-ajax.php";
+    var OZNAMY_DATE_RETRY_MS = 5 * 60 * 1000;
+    var OZNAMY_DATE_PROBE_WEEKS = 12;
+    var oznamyDateKey = null;
+    var oznamyDateLoading = false;
+    var oznamyDateNextAt = 0;
+    var isValidDateKey = function (value) {
+      if (typeof value !== "string" || !/^\d{4}-\d{2}-\d{2}$/.test(value)) return false;
+      var parts = value.split("-").map(Number);
+      var date = new Date(Date.UTC(parts[0], parts[1] - 1, parts[2]));
+      return Number.isFinite(date.getTime()) && date.toISOString().slice(0, 10) === value;
+    };
+    var getRecentSundayDateKeys = function () {
+      var sunday = new Date();
+      sunday.setHours(12, 0, 0, 0);
+      sunday.setDate(sunday.getDate() - sunday.getDay());
+      var dates = [];
+      for (var i = 0; i < OZNAMY_DATE_PROBE_WEEKS; i++) {
+        dates.push(
+          sunday.getFullYear() +
+            "-" +
+            String(sunday.getMonth() + 1).padStart(2, "0") +
+            "-" +
+            String(sunday.getDate()).padStart(2, "0"),
+        );
+        sunday.setDate(sunday.getDate() - 7);
+      }
+      return dates;
+    };
+    var formatDateKey = function (value) {
+      var parts = value.split("-");
+      return parts[2] + "." + parts[1] + "." + parts[0];
+    };
+    var fetchOznamyLatestDateFor = function (dateKey) {
+      var body = new URLSearchParams();
+      body.set("action", "oznamy_archive_fetch");
+      body.set("date", dateKey);
+      return fetch(OZNAMY_ARCHIVE_AJAX_URL, {
+        method: "POST",
+        cache: "no-store",
+        credentials: "same-origin",
+        headers: { "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8" },
+        body: body.toString(),
+      }).then(function (res) {
+        return res.json().then(function (data) {
+          if (data && data.success === true && data.data && isValidDateKey(data.data.latest_date)) {
+            return data.data.latest_date;
+          }
+          if (404 === res.status) return null;
+          throw new Error("Neplatná odpoveď dátumu oznamov (HTTP " + res.status + ")");
+        });
+      });
+    };
+    var findOznamyLatestDate = function (candidates, index) {
+      if (index >= candidates.length) {
+        return Promise.reject(new Error("V posledných týždňoch sa nenašiel platný archívny dátum oznamov."));
+      }
+      return fetchOznamyLatestDateFor(candidates[index]).then(function (dateKey) {
+        return dateKey || findOznamyLatestDate(candidates, index + 1);
+      });
+    };
+    var refreshOznamyTitle = function () {
+      if (oznamyDateLoading || Date.now() < oznamyDateNextAt) return;
+
+      oznamyDateLoading = true;
+      var candidates = [];
+      if (isValidDateKey(oznamyDateKey)) candidates.push(oznamyDateKey);
+      getRecentSundayDateKeys().forEach(function (dateKey) {
+        if (candidates.indexOf(dateKey) === -1) candidates.push(dateKey);
+      });
+      findOznamyLatestDate(candidates, 0)
+        .then(function (dateKey) {
+          oznamyDateKey = dateKey;
+          updateSlideTitle(0, "Farské oznamy z nedele " + formatDateKey(oznamyDateKey));
+          oznamyDateNextAt = getNextRefreshAt();
+        })
+        .catch(function (error) {
+          console.warn("Nastenka: dátum farských oznamov sa nepodarilo obnoviť.", error);
+          oznamyDateNextAt = Date.now() + OZNAMY_DATE_RETRY_MS;
+        })
+        .then(function () {
+          oznamyDateLoading = false;
+        });
+    };
+
+    var timeFormatter = new Intl.DateTimeFormat("sk-SK", {
+      hour: "2-digit",
+      minute: "2-digit",
+      hourCycle: "h23",
+    });
+    var updateDate = function () {
+      var now = new Date();
+      dateEl.textContent = timeFormatter.format(now);
+      var dayAbbreviations = ["Ne", "Po", "Ut", "St", "Št", "Pi", "So"];
+      dayEl.textContent =
+        dayAbbreviations[now.getDay()] + " " + now.getDate() + "." + (now.getMonth() + 1) + "." + now.getFullYear();
+      setTimeout(updateDate, 60000 - (Date.now() % 60000));
+    };
+    updateDate();
+
+    var restartProgress = function (ms) {
+      progressEl.style.transition = "none";
+      progressEl.style.transform = "scaleX(0)";
+      void progressEl.offsetWidth; // reflow, aby sa spustil transition
+      progressEl.style.transition = "transform " + ms + "ms linear";
+      progressEl.style.transform = "scaleX(1)";
+    };
+    var continueProgress = function (progress, ms) {
+      progress = Math.max(0, Math.min(1, progress));
+      progressEl.style.transition = "none";
+      progressEl.style.transform = "scaleX(" + progress + ")";
+      void progressEl.offsetWidth;
+      progressEl.style.transition = "transform " + ms + "ms linear";
+      progressEl.style.transform = "scaleX(1)";
+    };
+
+    var EMBED_RETRY_MS = 30 * 1000;
+    var getNextRefreshAt = function () {
+      var next = new Date();
+      next.setSeconds(0, 0);
+      next.setMinutes(Math.floor(next.getMinutes() / 10) * 10 + 10);
+      return next.getTime();
+    };
+
+    // Rich Text blok shortcodes nespracuje, preto sa rozpis načíta z REST endpointu pluginu.
+    var ROZPIS_EMBED_URL = "/wp-json/rozpis-omsi/v1/embed?typ=nastenka";
+    var rozpisHtml = null;
+    var rozpisLoading = false;
+    var rozpisNextAt = 0;
+    var loadRozpisEmbed = function (slot) {
+      if (rozpisLoading) return;
+      rozpisLoading = true;
+      fetch(ROZPIS_EMBED_URL, { cache: "no-store", credentials: "same-origin" })
+        .then(function (res) {
+          if (!res.ok) throw new Error("HTTP " + res.status);
+          return res.json();
+        })
+        .then(function (data) {
+          if (!data || typeof data.html !== "string") {
+            throw new Error("Neplatná odpoveď");
+          }
+          rozpisNextAt = getNextRefreshAt();
+          if (data.html === rozpisHtml) return;
+          rozpisHtml = data.html;
+          slot.innerHTML = data.html;
+          // innerHTML skripty nespustí, preto ich vytvoríme znova (v pôvodnom poradí).
+          slot.querySelectorAll("script").forEach(function (old) {
+            var script = document.createElement("script");
+            script.textContent = old.textContent;
+            old.replaceWith(script);
+          });
+          if (activeIndex === 1) revealContent(slides[1]);
+        })
+        .catch(function (error) {
+          console.warn("Nastenka: rozpis sa nepodarilo načítať.", error);
+          rozpisNextAt = Date.now() + EMBED_RETRY_MS;
+          if (rozpisHtml === null) {
+            slot.innerHTML = '<p class="nast-meta">Rozpis sa nepodarilo načítať.</p>';
+          }
+        })
+        .then(function () {
+          rozpisLoading = false;
+        });
+    };
+    var refreshRozpis = function () {
+      if (Date.now() < rozpisNextAt) return;
+      var slot = document.getElementById("nast-rozpis-slot");
+      if (slot) loadRozpisEmbed(slot);
+    };
+    var mountRozpis = refreshRozpis;
+
+    // Oznamy a obrazky z pluginu farske-oznamy; obsah sa na pozadi obnovuje a vymeni sa iba pri zmene.
+    var OZNAMY_EMBED_URL = "/wp-json/oznamy-gdocs/v1/embed";
+    var embeds = [
+      { slotId: "nast-oznamy-slot", typ: "oznamy" },
+      { slotId: "nast-obrazky-slot", typ: "obrazky" },
+    ]
+      .map(function (e) {
+        e.slot = document.getElementById(e.slotId);
+        e.html = null;
+        e.loading = false;
+        e.settled = false;
+        e.nextAt = 0;
+        return e;
+      })
+      .filter(function (e) {
+        return e.slot;
+      });
+
+    var loadEmbed = function (embed) {
+      if (embed.loading) return;
+      embed.loading = true;
+      fetch(OZNAMY_EMBED_URL + "?typ=" + embed.typ, {
+        cache: "no-store",
+        credentials: "same-origin",
+      })
+        .then(function (res) {
+          if (!res.ok) throw new Error("HTTP " + res.status);
+          return res.json();
+        })
+        .then(function (data) {
+          if (!data || typeof data.html !== "string") {
+            throw new Error("Neplatná odpoveď");
+          }
+          embed.nextAt = getNextRefreshAt();
+          if (data.html === embed.html) return;
+          embed.html = data.html;
+          embed.slot.innerHTML = data.html;
+          // Lazy obrazky v skrytej karte by sa nenacitali a rozhodili by vypocet scrollu.
+          embed.slot.querySelectorAll("img").forEach(function (img) {
+            img.loading = "eager";
+          });
+          randomizePosters(embed.slot);
+          layoutAll();
+          if (embed.typ === "oznamy" && activeIndex === 0) {
+            revealContent(slides[0]);
+          }
+        })
+        .catch(function (error) {
+          console.warn("Nastenka: obsah '" + embed.typ + "' sa nepodarilo načítať.", error);
+          embed.nextAt = Date.now() + EMBED_RETRY_MS;
+          if (embed.html === null) {
+            embed.slot.innerHTML = '<p class="nast-meta">Obsah sa nepodarilo načítať.</p>';
+          }
+        })
+        .then(function () {
+          var wasInitialLoad = !embed.settled;
+          embed.loading = false;
+          embed.settled = true;
+          if (wasInitialLoad && activeIndex === 0) wakeAll();
+        });
+    };
+    var refreshEmbeds = function () {
+      var now = Date.now();
+      refreshRozpis();
+      refreshOznamyTitle();
+      embeds.forEach(function (e) {
+        if (now >= e.nextAt) loadEmbed(e);
+      });
+    };
+    refreshEmbeds();
+    setInterval(refreshEmbeds, 10000);
+
+    // Vsetko sa skaluje z jednej jednotky: sirky stlpca nastenky (max. pomer 3:4). Referencia je 1080 px.
+    var REF_WIDTH = 1080;
+    var REF_FONT_PX = 31.32;
+    var MAX_STAGE_RATIO = 0.75; // max. sirka / vyska stlpca
+    var EMBED_ZOOM_FACTOR = 0.7; // 1 = plugin text rovnako velky ako zakladne pismo nastenky
+    var embedZoom = 1;
+    var rozpisZoom = 1;
+
+    // TV = velka obrazovka na vysku; ?layout=tv/list ovlada automatiku a #columns=1/2 vynuti stlpce plagatov.
+    var TV_MIN_SHORT_SIDE = 1080;
+    var layoutOverride = (location.search.match(/[?&]layout=(tv|list)/) || [])[1];
+    var posterColumnOverride = (location.hash.match(/(?:^#|&)columns=(1|2)(?:&|$)/) || [])[1];
+    var isTvLayout = function () {
+      if (posterColumnOverride) return posterColumnOverride === "2";
+      if (layoutOverride) return layoutOverride === "tv";
+      var scr = window.screen;
+      var shortSide = scr ? Math.min(scr.width, scr.height) : 0;
+      return window.innerHeight > window.innerWidth && shortSide >= TV_MIN_SHORT_SIDE;
+    };
+
+    // Vlastny zoom obsahu (Ctrl+koliesko, Ctrl +/-/0); natívny zoom by sa s prisposobenim oknu vyrusil.
+    var ZOOM_MIN = 0.5;
+    var ZOOM_MAX = 3;
+    var ZOOM_STEPS = [0.5, 0.67, 0.75, 0.8, 0.9, 1, 1.1, 1.25, 1.5, 1.75, 2, 2.5, 3];
+    var ZOOM_STORAGE_KEY = "nastenkaZoom";
+    var userZoom = 1;
+    var zoomTarget = 1;
+    var CHROME_ZOOM_MIN = 0.75;
+    var CHROME_ZOOM_MAX = 1.6;
+    var chromeZoom = 1;
+    var supportsContainerQueries = !!(window.CSS && CSS.supports && CSS.supports("container-type", "inline-size"));
+    try {
+      var savedZoom = parseFloat(localStorage.getItem(ZOOM_STORAGE_KEY));
+      if (savedZoom >= ZOOM_MIN && savedZoom <= ZOOM_MAX) userZoom = savedZoom;
+    } catch (e) {}
+    zoomTarget = userZoom;
+
+    var scaledSlots = Array.prototype.slice.call(root.querySelectorAll(".nast-scaled"));
+    // Transform nemeni rozlozenie, preto obal dostane vysku obsahu po skalovani.
+    var syncScaledHeights = function () {
+      scaledSlots.forEach(function (slot) {
+        var z = slot.id === "nast-rozpis-slot" ? rozpisZoom : embedZoom;
+        slot.parentNode.style.height = Math.ceil(slot.offsetHeight * z) + "px";
+      });
+    };
+    if (window.ResizeObserver) {
+      var scaledObserver = new ResizeObserver(syncScaledHeights);
+      scaledSlots.forEach(function (slot) {
+        scaledObserver.observe(slot);
+      });
+    } else {
+      setInterval(syncScaledHeights, 500);
+    }
+
+    var debugEl = null;
+    if (/[?&]debug(=|&|$)/.test(location.search)) {
+      debugEl = document.createElement("div");
+      debugEl.style.cssText =
+        "position:absolute;top:0;left:0;z-index:5;padding:4px 8px;background:rgba(0,0,0,.75);color:#0f0;font:12px/1.3 monospace;white-space:pre;pointer-events:none";
+      root.appendChild(debugEl);
+    }
+
+    var updateZoom = function () {
+      var w = window.innerWidth || root.clientWidth;
+      var h = window.innerHeight || root.clientHeight;
+      var stageW = Math.min(w, h * MAX_STAGE_RATIO);
+      var fontPx = Math.max(10, (stageW / REF_WIDTH) * REF_FONT_PX);
+      root.style.fontSize = fontPx + "px";
+      root.style.setProperty("--nast-stage-w", stageW + "px");
+      embedZoom = (fontPx / 16) * EMBED_ZOOM_FACTOR * userZoom;
+      rozpisZoom = (fontPx / REF_FONT_PX) * userZoom;
+      if (!supportsContainerQueries) {
+        // Bez container queries sa rozpis nesmie zuzit pod sirku, pri ktorej sa karty rozbiju.
+        rozpisZoom = Math.min(rozpisZoom, Math.max(fontPx / REF_FONT_PX, body.clientWidth / 840));
+      }
+      root.style.setProperty("--nast-zoom", String(embedZoom));
+      root.style.setProperty("--nast-rozpis-zoom", String(rozpisZoom));
+      // Hlavicka a paticka rastu pomalsie nez obsah, aby nezabrali obrazovku.
+      chromeZoom = Math.min(CHROME_ZOOM_MAX, Math.max(CHROME_ZOOM_MIN, Math.sqrt(userZoom)));
+      root.style.setProperty("--nast-chrome-zoom", String(chromeZoom));
+      if (typeof layoutAll === "function") layoutAll();
+      syncScaledHeights();
+      if (debugEl) {
+        debugEl.textContent =
+          w +
+          "x" +
+          h +
+          " @" +
+          (window.devicePixelRatio || 1) +
+          "\nstage " +
+          Math.round(stageW) +
+          "px font " +
+          fontPx.toFixed(1) +
+          "px" +
+          "\nembed x" +
+          embedZoom.toFixed(2) +
+          " rozpis x" +
+          rozpisZoom.toFixed(2) +
+          " user x" +
+          userZoom.toFixed(2) +
+          " chrome x" +
+          chromeZoom.toFixed(2) +
+          "\nlayout " +
+          (isTvLayout() ? "tv" : "list") +
+          "\n" +
+          navigator.userAgent;
+      }
+    };
+    updateZoom();
+    window.addEventListener("resize", updateZoom);
+
+    var zoomBadge = document.createElement("div");
+    zoomBadge.className = "nast-zoom-badge";
+    root.appendChild(zoomBadge);
+    var zoomBadgeTimer = null;
+    var showZoomBadge = function () {
+      var header = root.querySelector(".nast-header");
+      zoomBadge.style.top = (header ? header.offsetHeight : 0) + 8 + "px";
+      zoomBadge.textContent = Math.round(userZoom * 100) + " %";
+      zoomBadge.classList.add("nast-visible");
+      clearTimeout(zoomBadgeTimer);
+      zoomBadgeTimer = setTimeout(function () {
+        zoomBadge.classList.remove("nast-visible");
+      }, 1500);
+    };
+
+    var zoomFrame = 0;
+    var applyZoom = function () {
+      zoomFrame = 0;
+      if (zoomTarget === userZoom) return;
+      // Zachova sa cast obsahu, ktora je prave na obrazovke.
+      var ratio = body.scrollHeight > 0 ? body.scrollTop / body.scrollHeight : 0;
+      userZoom = zoomTarget;
+      try {
+        if (userZoom === 1) localStorage.removeItem(ZOOM_STORAGE_KEY);
+        else localStorage.setItem(ZOOM_STORAGE_KEY, String(userZoom));
+      } catch (e) {}
+      updateZoom();
+      body.scrollTop = ratio * body.scrollHeight;
+      showZoomBadge();
+    };
+    var requestZoom = function (value) {
+      zoomTarget = Math.round(Math.min(ZOOM_MAX, Math.max(ZOOM_MIN, value)) * 1000) / 1000;
+      if (!zoomFrame) zoomFrame = requestAnimationFrame(applyZoom);
+    };
+    var stepZoom = function (direction) {
+      var next = zoomTarget;
+      if (direction > 0) {
+        for (var i = 0; i < ZOOM_STEPS.length; i++) {
+          if (ZOOM_STEPS[i] > zoomTarget + 0.001) {
+            next = ZOOM_STEPS[i];
+            break;
+          }
+        }
+      } else {
+        for (var j = ZOOM_STEPS.length - 1; j >= 0; j--) {
+          if (ZOOM_STEPS[j] < zoomTarget - 0.001) {
+            next = ZOOM_STEPS[j];
+            break;
+          }
+        }
+      }
+      requestZoom(next);
+    };
+
+    var lastWheelStepAt = 0;
+    window.addEventListener(
+      "wheel",
+      function (e) {
+        if (!e.ctrlKey) return;
+        e.preventDefault();
+        // Mys dava velke skoky (kroky ako v prehliadaci), trackpad pinch male (plynuly zoom).
+        if (e.deltaMode !== 0 || Math.abs(e.deltaY) >= 40) {
+          if (e.timeStamp - lastWheelStepAt < 60) return;
+          lastWheelStepAt = e.timeStamp;
+          stepZoom(e.deltaY < 0 ? 1 : -1);
+        } else {
+          requestZoom(zoomTarget * Math.exp(-e.deltaY * 0.01));
+        }
+      },
+      { passive: false },
+    );
+    window.addEventListener("keydown", function (e) {
+      if (!(e.ctrlKey || e.metaKey) || e.altKey) return;
+      if (e.key === "+" || e.key === "=" || e.key === "Add") stepZoom(1);
+      else if (e.key === "-" || e.key === "_" || e.key === "Subtract") stepZoom(-1);
+      else if (e.key === "0") requestZoom(1);
+      else return;
+      e.preventDefault();
+    });
+    // Safari na macOS: pinch na trackpade nevyvola wheel s ctrlKey.
+    var gestureStartZoom = 1;
+    window.addEventListener(
+      "gesturestart",
+      function (e) {
+        e.preventDefault();
+        gestureStartZoom = zoomTarget;
+      },
+      { passive: false },
+    );
+    window.addEventListener(
+      "gesturechange",
+      function (e) {
+        e.preventDefault();
+        requestZoom(gestureStartZoom * e.scale);
+      },
+      { passive: false },
+    );
+    window.addEventListener("orientationchange", function () {
+      setTimeout(updateZoom, 300);
+    });
+    document.addEventListener("fullscreenchange", updateZoom);
+    // Po zmene viewportu na mobile sa rozmery ustalia az s oneskorenim.
+    setTimeout(updateZoom, 300);
+
+    // Len odtiene oranzovej (zlata) a modrej z palety webu.
+    var TAPE_COLORS = [
+      "rgba(241, 175, 87, 0.85)",
+      "rgba(191, 128, 39, 0.8)",
+      "rgba(248, 205, 145, 0.88)",
+      "rgba(83, 120, 145, 0.8)",
+      "rgba(64, 100, 125, 0.8)",
+      "rgba(140, 180, 210, 0.82)",
+    ];
+    var pick = function (arr) {
+      return arr[Math.floor(Math.random() * arr.length)];
+    };
+
+    // Nova nahodna rotacia, farby pasiek a oneskorenie animacie pri kazdom zobrazeni karty; minimum, aby nebol ziadny plagat celkom rovny.
+    var randomizePosters = function (el) {
+      var grid = el.querySelector(".oznamy-images");
+      if (grid) grid.dataset.nastFlip = Math.random() < 0.5 ? "1" : "0";
+      var figures = el.querySelectorAll("figure.oznamy-img-item");
+      figures.forEach(function (f, i) {
+        var rot = (0.4 + Math.random() * 1.2) * (Math.random() < 0.5 ? -1 : 1);
+        f.style.setProperty("--rot", rot.toFixed(2) + "deg");
+        f.style.setProperty("--tape-rot1", (-38 + (Math.random() * 14 - 7)).toFixed(1) + "deg");
+        f.style.setProperty("--tape-rot2", (38 + (Math.random() * 14 - 7)).toFixed(1) + "deg");
+        f.style.setProperty("--tape-c1", pick(TAPE_COLORS));
+        f.style.setProperty("--tape-c2", pick(TAPE_COLORS));
+        f.style.setProperty("--d", i * 150 + "ms");
+      });
+    };
+
+    var POSTER_GAP = 18; // px medzi plagatmi pri rozlozeni 1 - 4 plagatov
+    var POSTER_FIT_MAX = 4; // do tohto poctu sa plagaty zmestia bez scrollu (len TV)
+    var POSTER_STACK_DWELL_MS = 8000; // pauza na kazdom plagate v rezime pod sebou
+    var POSTER_STACK_SCROLL_MS = 2000; // posun na dalsi plagat
+
+    var rectArea = function (rects) {
+      return rects.reduce(function (area, rect) {
+        return area + rect.w * rect.h;
+      }, 0);
+    };
+
+    // Dva plagaty diagonalne; vyberieme, ci im viac vyhovuju rovnake vysky alebo rovnake sirky.
+    var diagonalRects = function (ratios, W, H, flip) {
+      var q = 0.08; // podiel prekrytia
+      var i1 = 1 / ratios[0];
+      var i2 = 1 / ratios[1];
+      var iMin = Math.min(i1, i2);
+      var widthScale = Math.min(
+        W / (2 - q),
+        H / (i1 + i2 - q * iMin),
+      );
+      var widthBox = (2 - q) * widthScale;
+      var heightBox = widthScale * (i1 + i2 - q * iMin);
+      var widthRects = [
+        {
+          x: (W - widthBox) / 2,
+          y: (H - heightBox) / 2,
+          w: widthScale,
+          h: widthScale * i1,
+        },
+        {
+          x: (W - widthBox) / 2 + widthScale * (1 - q),
+          y: (H - heightBox) / 2 + widthScale * (i1 - q * iMin),
+          w: widthScale,
+          h: widthScale * i2,
+        },
+      ];
+
+      var heightScale = Math.min(
+        W / (ratios[0] + ratios[1] - q * Math.min(ratios[0], ratios[1])),
+        H / (2 - q),
+      );
+      var heightBox = heightScale * (2 - q);
+      var widthByHeight = [
+        ratios[0] * heightScale,
+        ratios[1] * heightScale,
+      ];
+      var widthBoxByHeight =
+        widthByHeight[0] + widthByHeight[1] - q * Math.min(widthByHeight[0], widthByHeight[1]);
+      var heightRects = [
+        {
+          x: (W - widthBoxByHeight) / 2,
+          y: (H - heightBox) / 2,
+          w: widthByHeight[0],
+          h: heightScale,
+        },
+        {
+          x:
+            (W - widthBoxByHeight) / 2 +
+            widthByHeight[0] -
+            q * Math.min(widthByHeight[0], widthByHeight[1]),
+          y: (H - heightBox) / 2 + heightScale * (1 - q),
+          w: widthByHeight[1],
+          h: heightScale,
+        },
+      ];
+      var rects = rectArea(heightRects) > rectArea(widthRects) ? heightRects : widthRects;
+
+      if (flip) {
+        rects = rects.map(function (rect) {
+          return {
+            x: W - rect.x - rect.w,
+            y: rect.y,
+            w: rect.w,
+            h: rect.h,
+          };
+        });
+      }
+      return rects;
+    };
+
+    // Skusa vsetky poradia skupin po jednom alebo dvoch plagatoch; vyska plagatov v riadkoch zostava jednotna.
+    var gridRects = function (ratios, W, H, g) {
+      var layouts = [];
+      var collectLayouts = function (index, rows) {
+        if (index === ratios.length) {
+          layouts.push(rows.slice());
+          return;
+        }
+        rows.push(1);
+        collectLayouts(index + 1, rows);
+        rows.pop();
+        if (index + 1 < ratios.length) {
+          rows.push(2);
+          collectLayouts(index + 2, rows);
+          rows.pop();
+        }
+      };
+      collectLayouts(0, []);
+
+      var best = null;
+      layouts.forEach(function (rows) {
+        var groups = [];
+        var index = 0;
+        rows.forEach(function (count) {
+          var groupRatios = ratios.slice(index, index + count);
+          groups.push({
+            count: count,
+            ratios: groupRatios,
+            ratioSum: groupRatios.reduce(function (sum, ratio) {
+              return sum + ratio;
+            }, 0),
+          });
+          index += count;
+        });
+
+        var maxHeightByWidth = Math.min.apply(
+          null,
+          groups.map(function (group) {
+            return (W - g * (group.count - 1)) / group.ratioSum;
+          }),
+        );
+        var maxHeight = Math.min(
+          maxHeightByWidth,
+          (H - g * (groups.length - 1)) / groups.length,
+        );
+        if (!(maxHeight > 0)) return;
+
+        var contentHeight = groups.length * maxHeight + g * (groups.length - 1);
+        var y = (H - contentHeight) / 2;
+        var rects = [];
+        groups.forEach(function (group) {
+          var groupWidth = group.ratioSum * maxHeight + g * (group.count - 1);
+          var x = (W - groupWidth) / 2;
+          group.ratios.forEach(function (ratio) {
+            var width = ratio * maxHeight;
+            rects.push({
+              x: x,
+              y: y,
+              w: width,
+              h: maxHeight,
+            });
+            x += width + g;
+          });
+          y += maxHeight + g;
+        });
+
+        var area = rectArea(rects);
+        if (!best || area > best.area) best = { area: area, rects: rects };
+      });
+      return best ? best.rects : [];
+    };
+
+    // 1 - 4 plagatov: velkost sa vypocita tak, aby sa zmestili bez scrollu; 5 a viac: stlpce so scrollom.
+    var layoutPosters = function (el) {
+      var grid = el.querySelector(".oznamy-images");
+      if (!grid) return;
+      var figures = Array.prototype.slice.call(grid.querySelectorAll("figure.oznamy-img-item"));
+      var n = figures.length;
+      var stacked = !isTvLayout();
+      if (n === 0 || (!stacked && n > POSTER_FIT_MAX)) {
+        grid.classList.remove("nast-fit", "nast-stack");
+        delete grid.dataset.nastPage;
+        grid.style.width = "";
+        grid.style.height = "";
+        figures.forEach(function (f) {
+          f.style.left = f.style.top = f.style.width = "";
+        });
+        return;
+      }
+
+      var relayout = function () {
+        layoutPosters(el);
+      };
+      var ratios = figures.map(function (f) {
+        var img = f.querySelector("img");
+        if (img && img.naturalWidth > 0) {
+          return img.naturalWidth / img.naturalHeight;
+        }
+        if (img && !img.dataset.nastWait) {
+          img.dataset.nastWait = "1";
+          img.addEventListener("load", relayout);
+        }
+        return 0.7;
+      });
+
+      var cs = getComputedStyle(body);
+      var z = parseFloat(root.style.getPropertyValue("--nast-zoom")) || 1;
+      var availW = body.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
+      var availH = body.clientHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom) - 3;
+      var m = Math.round(availW * 0.02) + 4; // rezerva na natocenie plagatov a pasky
+      var W = availW - 2 * m;
+      var H = availH - 2 * m;
+
+      var rects;
+      if (stacked) {
+        // Kazdy plagat dostane vlastnu "stranku" vysky okna a je v nej vycentrovany.
+        rects = ratios.map(function (r, i) {
+          var sw = Math.min(W, H * r);
+          var sh = sw / r;
+          return {
+            x: (W - sw) / 2,
+            y: i * availH + (H - sh) / 2,
+            w: sw,
+            h: sh,
+          };
+        });
+      } else if (n === 1) {
+        var w = Math.min(W, H * ratios[0]);
+        var h = w / ratios[0];
+        rects = [{ x: (W - w) / 2, y: (H - h) / 2, w: w, h: h }];
+      } else if (n === 2) {
+        rects = diagonalRects(ratios, W, H, grid.dataset.nastFlip === "1");
+      } else {
+        rects = gridRects(ratios, W, H, POSTER_GAP);
+      }
+
+      grid.classList.add("nast-fit");
+      grid.classList.toggle("nast-stack", stacked);
+      if (stacked) grid.dataset.nastPage = String(availH);
+      else delete grid.dataset.nastPage;
+      grid.style.width = availW / z + "px";
+      grid.style.height = (stacked ? n * availH : availH) / z + "px";
+      figures.forEach(function (f, i) {
+        f.style.left = (m + rects[i].x) / z + "px";
+        f.style.top = (m + rects[i].y) / z + "px";
+        f.style.width = rects[i].w / z + "px";
+      });
+    };
+
+    var layoutAll = function () {
+      slides.forEach(function (s) {
+        if (s.board) layoutPosters(s.el);
+      });
+    };
+    window.addEventListener("resize", layoutAll);
+
+    var revealContent = function (slide) {
+      if (!slide.reveal || reducedMotion.matches) return;
+      var items = slide.el.querySelectorAll(slide.reveal);
+      items.forEach(function (item) {
+        item.classList.remove("nast-reveal");
+      });
+      if (!items.length) return;
+      void body.offsetWidth;
+      items.forEach(function (item, index) {
+        item.style.setProperty("--nast-delay", Math.min(index, 7) * 220 + "ms");
+        item.classList.add("nast-reveal");
+      });
+    };
+
+    var setActive = function (index, updateSubtitle) {
+      mountRozpis();
+      randomizePosters(slides[index].el);
+      body.classList.toggle("nast-board", !!slides[index].board);
+      body.classList.toggle("nast-noscroll", !slides[index].scroll);
+      slides.forEach(function (s, i) {
+        s.el.classList.toggle("nast-hidden", i !== index);
+        dots[i].classList.toggle("nast-active", i === index);
+        dots[i].setAttribute("aria-current", i === index ? "true" : "false");
+      });
+      layoutAll();
+      syncScaledHeights();
+      revealContent(slides[index]);
+      if (updateSubtitle !== false) {
+        subtitleEl.textContent = slides[index].title;
+      }
+      body.scrollTo({ top: 0, behavior: "auto" });
+    };
+
+    var switchTo = async function (index, version) {
+      subtitleEl.classList.remove("nast-subtitle-enter", "nast-subtitle-exit");
+      void subtitleEl.offsetWidth;
+      subtitleEl.classList.add("nast-subtitle-exit");
+
+      if (reducedMotion.matches || FADE_MS === 0) {
+        if (version === navigationVersion) setActive(index, false);
+      } else {
+        body.classList.add("nast-transparent");
+        await sleep(FADE_MS);
+        if (version === navigationVersion) setActive(index, false);
+        void body.offsetHeight; // reflow, aby sa spustil transition
+        body.classList.remove("nast-transparent");
+        if (version === navigationVersion) await sleep(FADE_MS);
+      }
+      if (version !== navigationVersion) return;
+      subtitleEl.textContent = slides[index].title;
+      subtitleEl.classList.remove("nast-subtitle-exit");
+      void subtitleEl.offsetWidth;
+      subtitleEl.classList.add("nast-subtitle-enter");
+    };
+
+    // Plynuly posun konstantnou rychlostou; skonci aj pri rucnom prepnuti karty (wakeAll).
+    var animateScroll = function (to, fixedDurationMs, speed) {
+      return new Promise(function (resolve) {
+        var from = body.scrollTop;
+        var durationMs = fixedDurationMs || (Math.abs(to - from) / (speed || SCROLL_SPEED)) * 1000;
+        var start = null;
+        var done = false;
+        var startVersion = navigationVersion;
+        var finish = function () {
+          if (done) return;
+          done = true;
+          var i = wakers.indexOf(finish);
+          if (i >= 0) wakers.splice(i, 1);
+          resolve();
+        };
+        wakers.push(finish);
+        var step = function (ts) {
+          if (done) return;
+          // Pri ručnom prepnutí karty sa posun zastaví; promise ukončí až wakeAll().
+          if (startVersion !== navigationVersion) return;
+          if (start === null) start = ts;
+          var t = durationMs > 0 ? Math.min((ts - start) / durationMs, 1) : 1;
+          var progress = fixedDurationMs ? t * t * (3 - 2 * t) : t;
+          body.scrollTop = from + (to - from) * progress;
+          if (t < 1) requestAnimationFrame(step);
+          else finish();
+        };
+        requestAnimationFrame(step);
+      });
+    };
+
+    var createFirstSlideScrollPlan = function () {
+      var viewportHeight = body.clientHeight;
+      var scrollHeight = body.scrollHeight;
+      var maxTop = Math.max(0, scrollHeight - viewportHeight);
+      var startTop = Math.min(body.scrollTop, maxTop);
+      if (body.scrollTop > maxTop) body.scrollTop = maxTop;
+
+      var distance = maxTop - startTop;
+      var tolerance = Math.max(BOTTOM_TOLERANCE, viewportHeight * 0.005);
+      var targets = [];
+      if (viewportHeight > 0 && distance > tolerance) {
+        var preferredStep = viewportHeight * FIRST_SLIDE_TARGET_STEP_RATIO;
+        var minStep = viewportHeight * FIRST_SLIDE_MIN_STEP_RATIO;
+        var maxStep = viewportHeight * FIRST_SLIDE_MAX_STEP_RATIO;
+        var count = Math.max(1, Math.round(distance / preferredStep));
+        while (distance / count > maxStep) count++;
+        if (count > 1 && distance / count < minStep && distance / (count - 1) <= maxStep) {
+          count--;
+        }
+        for (var i = 1; i <= count; i++) {
+          targets.push(i === count ? maxTop : startTop + (distance * i) / count);
+        }
+      } else if (distance > 0) {
+        body.scrollTop = maxTop;
+      }
+
+      return {
+        targets: targets,
+        scrollHeight: body.scrollHeight,
+        viewportHeight: body.clientHeight,
+      };
+    };
+
+    var getFirstSlideReadPause = function () {
+      var viewport = body.getBoundingClientRect();
+      var blocks = slides[0].el.querySelectorAll(".oznamy-content > *");
+      var visibleWords = 0;
+      blocks.forEach(function (block) {
+        var text = block.textContent.trim();
+        if (!text) return;
+        var rect = block.getBoundingClientRect();
+        var height = rect.height;
+        if (height <= 0) return;
+        var visibleHeight = Math.max(0, Math.min(rect.bottom, viewport.bottom) - Math.max(rect.top, viewport.top));
+        if (visibleHeight <= 0) return;
+        var words = text.match(/\S+/g);
+        visibleWords += (words ? words.length : 0) * Math.min(1, visibleHeight / height);
+      });
+      var estimatedMs = (3 + visibleWords / FIRST_SLIDE_WORDS_PER_SECOND) * 1000;
+      return Math.max(FIRST_SLIDE_MIN_READ_MS, Math.min(FIRST_SLIDE_MAX_READ_MS, estimatedMs));
+    };
+
+    var getFirstSlideScrollDuration = function (distance) {
+      var viewportHeight = Math.max(1, body.clientHeight);
+      var estimatedMs = (distance / (viewportHeight * FIRST_SLIDE_SCROLL_SPEED_RATIO)) * 1000;
+      return Math.max(FIRST_SLIDE_MIN_SCROLL_MS, Math.min(FIRST_SLIDE_MAX_SCROLL_MS, estimatedMs));
+    };
+
+    // Plagaty pod sebou: progress pokryva pauzu aj posun na dalsi plagat.
+    var runPosterStack = async function (grid, version) {
+      var count = Math.max(1, grid.querySelectorAll("figure").length);
+      for (var i = 0; i < count; i++) {
+        var scrollMs = i < count - 1 && !reducedMotion.matches ? POSTER_STACK_SCROLL_MS : 0;
+        restartProgress(POSTER_STACK_DWELL_MS + scrollMs);
+        await wait(POSTER_STACK_DWELL_MS);
+        if (version !== navigationVersion) return;
+        if (i < count - 1) {
+          var pageH = parseFloat(grid.dataset.nastPage) || body.clientHeight;
+          var maxTop = Math.max(0, body.scrollHeight - body.clientHeight);
+          var target = Math.min((i + 1) * pageH, maxTop);
+          if (reducedMotion.matches) body.scrollTop = target;
+          else await animateScroll(target, POSTER_STACK_SCROLL_MS);
+          if (version !== navigationVersion) return;
+        }
+      }
+    };
+
+    var run = async function () {
+      mountRozpis();
+      setActive(activeIndex);
+      while (true) {
+        var version = navigationVersion;
+        var slide = slides[activeIndex];
+        if (activeIndex === 0) {
+          var firstEmbed = embeds.filter(function (embed) {
+            return embed.typ === "oznamy";
+          })[0];
+          while (firstEmbed && !firstEmbed.settled) {
+            restartProgress(FIRST_SLIDE_LOADING_PAUSE_MS);
+            await wait(FIRST_SLIDE_LOADING_PAUSE_MS);
+            if (version !== navigationVersion) break;
+          }
+          if (version !== navigationVersion) continue;
+
+          var firstSlidePlan = createFirstSlideScrollPlan();
+          var firstSlideHasScrolled = false;
+          var firstSlideNeedsDwell = true;
+          if (!firstSlidePlan.targets.length) {
+            var noScrollMs = slide.durationSeconds * 1000;
+            restartProgress(noScrollMs);
+            await wait(noScrollMs);
+            if (version !== navigationVersion) continue;
+            firstSlidePlan = createFirstSlideScrollPlan();
+            firstSlideNeedsDwell = false;
+          }
+
+          while (true) {
+            if (firstSlideNeedsDwell) {
+              var readPauseMs = getFirstSlideReadPause();
+              restartProgress(readPauseMs);
+              await wait(readPauseMs);
+              if (version !== navigationVersion) break;
+            }
+
+            if (
+              firstSlidePlan.scrollHeight !== body.scrollHeight ||
+              firstSlidePlan.viewportHeight !== body.clientHeight
+            ) {
+              firstSlidePlan = createFirstSlideScrollPlan();
+            }
+            if (!firstSlidePlan.targets.length) break;
+
+            var firstSlideTargetTop = firstSlidePlan.targets.shift();
+            var firstSlideDistance = Math.max(0, firstSlideTargetTop - body.scrollTop);
+            var firstSlideTolerance = Math.max(BOTTOM_TOLERANCE, body.clientHeight * 0.005);
+            if (firstSlideDistance <= firstSlideTolerance) {
+              firstSlidePlan = createFirstSlideScrollPlan();
+              firstSlideNeedsDwell = firstSlideHasScrolled;
+              continue;
+            }
+
+            var scrollDurationMs = getFirstSlideScrollDuration(firstSlideDistance);
+            if (reducedMotion.matches) {
+              body.scrollTop = firstSlideTargetTop;
+            } else {
+              await animateScroll(firstSlideTargetTop, scrollDurationMs);
+            }
+            if (version !== navigationVersion) break;
+            firstSlideHasScrolled = true;
+            firstSlideNeedsDwell = true;
+            if (
+              firstSlidePlan.scrollHeight !== body.scrollHeight ||
+              firstSlidePlan.viewportHeight !== body.clientHeight
+            ) {
+              firstSlidePlan = createFirstSlideScrollPlan();
+            }
+          }
+          if (version !== navigationVersion) continue;
+          activeIndex = (activeIndex + 1) % slides.length;
+          await switchTo(activeIndex, navigationVersion);
+          continue;
+        }
+        var stackGrid = slide.board ? slide.el.querySelector(".oznamy-images.nast-stack") : null;
+        if (stackGrid) {
+          await runPosterStack(stackGrid, version);
+          if (version !== navigationVersion) continue;
+          activeIndex = (activeIndex + 1) % slides.length;
+          await switchTo(activeIndex, navigationVersion);
+          continue;
+        }
+        var slideDurationMs = slide.durationSeconds * 1000;
+        if (slide.board) {
+          var posterCount = slide.el.querySelectorAll("figure.oznamy-img-item").length;
+          if (posterCount > 0 && posterCount <= POSTER_FIT_MAX) {
+            slideDurationMs = posterCount <= 2 ? 13000 : 18000;
+          }
+        }
+        var maxTop = Math.max(0, body.scrollHeight - body.clientHeight);
+        var scrolls = slide.scroll && maxTop > BOTTOM_TOLERANCE;
+        var scrollMs = scrolls && !reducedMotion.matches ? (maxTop / slide.scrollSpeed) * 1000 : 0;
+        var totalMs = Math.max(slideDurationMs, scrolls ? SCROLL_PAUSE_MS * 2 + scrollMs : 0);
+        var initialTotalMs = totalMs;
+        var startedAt = Date.now();
+        if (slide.scroll) {
+          restartProgress(totalMs);
+          await wait(SCROLL_PAUSE_MS);
+          if (version !== navigationVersion) continue;
+          // Obsah sa mohol dotiahnut az po zobrazeni karty, preto sa vyska meria znova.
+          var targetTop = Math.max(0, body.scrollHeight - body.clientHeight);
+          var hasScroll = targetTop > BOTTOM_TOLERANCE;
+          var actualScrollMs = hasScroll && !reducedMotion.matches ? (targetTop / slide.scrollSpeed) * 1000 : 0;
+          totalMs = Math.max(slideDurationMs, hasScroll ? SCROLL_PAUSE_MS * 2 + actualScrollMs : 0);
+          var elapsedMs = Date.now() - startedAt;
+          var remainingMs = Math.max(0, totalMs - elapsedMs);
+          continueProgress(elapsedMs / initialTotalMs, remainingMs);
+          if (hasScroll) {
+            if (reducedMotion.matches) body.scrollTop = targetTop;
+            else await animateScroll(targetTop, null, slide.scrollSpeed);
+            if (version !== navigationVersion) continue;
+          }
+        } else {
+          restartProgress(totalMs);
+        }
+        var remainingMs = Math.max(0, totalMs - (Date.now() - startedAt));
+        await wait(remainingMs);
+        if (version !== navigationVersion) continue;
+        activeIndex = (activeIndex + 1) % slides.length;
+        await switchTo(activeIndex, navigationVersion);
+      }
+    };
+
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", run);
+    } else {
+      run();
+    }
+  })();
+</script>

@@ -1,0 +1,718 @@
+<div
+  id="gallery-lightbox"
+  class="gallery-lightbox"
+  hidden=""
+  aria-hidden="true"
+>
+  <button
+    class="gallery-lightbox__backdrop"
+    type="button"
+    aria-label="Zavrieť lightbox"
+  ></button>
+  <div
+    class="gallery-lightbox__panel"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Lightbox galéria"
+  >
+    <button class="gallery-lightbox__close" type="button" aria-label="Zavrieť">
+      ×
+    </button>
+    <button
+      class="gallery-lightbox__nav gallery-lightbox__nav--prev"
+      type="button"
+      aria-label="Predchádzajúci obrázok"
+    >
+      ‹
+    </button>
+    <img class="gallery-lightbox__image" alt="" />
+    <button
+      class="gallery-lightbox__nav gallery-lightbox__nav--next"
+      type="button"
+      aria-label="Nasledujúci obrázok"
+    >
+      ›
+    </button>
+  </div>
+</div>
+<style>
+  .gallery-lightbox[hidden] {
+    display: none;
+  }
+
+  .gallery-lightbox-trigger {
+    cursor: pointer;
+  }
+
+  .gallery-lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    opacity: 0;
+    transition: opacity 180ms ease;
+  }
+
+  .gallery-lightbox.is-open {
+    opacity: 1;
+  }
+
+  .gallery-lightbox.is-open .gallery-lightbox__image {
+    border-radius: 0;
+  }
+
+  .gallery-lightbox__backdrop {
+    position: absolute;
+    inset: 0;
+    border: 0;
+    background: rgba(8, 15, 27, 0.88);
+    cursor: pointer;
+  }
+
+  .gallery-lightbox__panel {
+    position: relative;
+    z-index: 1;
+    width: min(96vw, 1400px);
+    height: min(92vh, 1000px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    touch-action: none;
+  }
+
+  .gallery-lightbox__image {
+    display: block;
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    border-radius: 18px;
+    box-shadow: 0 24px 80px rgba(0, 0, 0, 0.35);
+    pointer-events: auto;
+    user-select: none;
+    -webkit-user-drag: none;
+    transform: translate3d(0, 0, 0) scale(1);
+    transform-origin: center center;
+    transition:
+      transform 180ms ease,
+      border-radius 180ms ease;
+    will-change: transform;
+    touch-action: none;
+  }
+
+  .gallery-lightbox.is-zoomed .gallery-lightbox__image {
+    cursor: grab;
+  }
+
+  .gallery-lightbox.is-zoomed.is-panning .gallery-lightbox__image {
+    cursor: grabbing;
+    transition: border-radius 180ms ease;
+  }
+
+  .gallery-lightbox__close,
+  .gallery-lightbox__nav {
+    position: absolute;
+    z-index: 2;
+    border: 0;
+    background: rgba(255, 255, 255, 0.14);
+    color: #fff;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    cursor: pointer;
+    transition:
+      transform 180ms ease,
+      background 180ms ease,
+      opacity 180ms ease;
+    pointer-events: auto;
+  }
+
+  .gallery-lightbox__close:hover,
+  .gallery-lightbox__nav:hover {
+    background: rgba(255, 255, 255, 0.22);
+  }
+
+  .gallery-lightbox__close:hover {
+    transform: scale(1.04);
+  }
+
+  .gallery-lightbox__nav:hover {
+    transform: translateY(-50%) scale(1.04);
+  }
+
+  .gallery-lightbox__close {
+    top: -12px;
+    right: -12px;
+    width: 42px;
+    height: 42px;
+    border-radius: 999px;
+    font-size: 28px;
+    line-height: 1;
+  }
+
+  .gallery-lightbox__nav {
+    top: 50%;
+    width: 52px;
+    height: 52px;
+    border-radius: 999px;
+    font-size: 34px;
+    line-height: 1;
+    transform: translateY(-50%);
+  }
+
+  .gallery-lightbox__nav--prev {
+    left: -70px;
+  }
+
+  .gallery-lightbox__nav--next {
+    right: -70px;
+  }
+
+  body.gallery-lightbox-open {
+    overflow: hidden;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .gallery-lightbox,
+    .gallery-lightbox__image,
+    .gallery-lightbox__close,
+    .gallery-lightbox__nav {
+      transition: none !important;
+    }
+  }
+
+  @media (max-width: 700px) {
+    .gallery-lightbox {
+      padding: 0;
+    }
+
+    .gallery-lightbox__panel {
+      width: 100%;
+      height: 100%;
+    }
+
+    .gallery-lightbox__close {
+      top: 10px;
+      right: 10px;
+      width: 44px;
+      height: 44px;
+    }
+
+    .gallery-lightbox__nav {
+      width: 48px;
+      height: 48px;
+    }
+
+    .gallery-lightbox__nav--prev {
+      left: 10px;
+    }
+
+    .gallery-lightbox__nav--next {
+      right: 10px;
+    }
+
+    .gallery-lightbox__image {
+      border-radius: 14px;
+    }
+  }
+</style>
+<script>
+  (() => {
+    if (window.__galleryLightboxInit) return;
+    window.__galleryLightboxInit = true;
+
+    const init = () => {
+      const root = document.getElementById("gallery-lightbox");
+      if (!root) return;
+
+      const image = root.querySelector(".gallery-lightbox__image");
+      const closeBtn = root.querySelector(".gallery-lightbox__close");
+      const prevBtn = root.querySelector(".gallery-lightbox__nav--prev");
+      const nextBtn = root.querySelector(".gallery-lightbox__nav--next");
+      const backdrop = root.querySelector(".gallery-lightbox__backdrop");
+      const panel = root.querySelector(".gallery-lightbox__panel");
+
+      let images = Array.from(
+        document.querySelectorAll(".bde-rich-text-15419-112 img"),
+      );
+
+      // Fallback: ak sa nenašli obrázky v konkrétnom bloku, skúsiť všetky galérie
+      if (!images.length) {
+        images = Array.from(document.querySelectorAll(".wp-block-gallery img"));
+      }
+
+      // Fallback 2: zachovať podporu obrázkov s odkazmi mimo galérie
+      if (!images.length) {
+        images = Array.from(document.querySelectorAll("a[href] img")).filter(
+          (img) => img.parentElement.tagName === "A",
+        );
+      }
+
+      const targets = Array.from(
+        new Map(
+          images
+            .map((img) => {
+              const link = img.closest("a[href]");
+              const element = link || img;
+              return [
+                element,
+                {
+                  element,
+                  img,
+                  src: link?.href || img.currentSrc || img.src,
+                  alt: img.alt || "",
+                },
+              ];
+            })
+            .filter(([, item]) => item.src),
+        ).values(),
+      );
+
+      // Zoradiť obrázky podľa vizuálnej pozície na stránke (stĺpcami: najprv ľavý stĺpec zhora nadol)
+      try {
+        targets.sort((a, b) => {
+          const ra = a.element.getBoundingClientRect();
+          const rb = b.element.getBoundingClientRect();
+          const leftDiff = ra.left - rb.left;
+          if (Math.abs(leftDiff) > 6) return leftDiff;
+          return ra.top - rb.top;
+        });
+      } catch (e) {
+        // Ak niečo zlyhá (napr. elementy ešte nie sú v DOM), ignorujeme a použijeme pôvodné poradie
+      }
+
+      if (!targets.length) return;
+
+      const items = targets.map(({ src, alt }) => ({ src, alt }));
+
+      let index = 0;
+      let startX = 0;
+      let startY = 0;
+      let isOpen = false;
+      let closeTimeout = null;
+
+      const zoom = {
+        min: 1,
+        max: 2.5,
+        scale: 1,
+        x: 0,
+        y: 0,
+        isPanning: false,
+        panStartX: 0,
+        panStartY: 0,
+        panBaseX: 0,
+        panBaseY: 0,
+        isPinching: false,
+        pinchStartDistance: 0,
+        pinchStartScale: 1,
+        lastTapAt: 0,
+        lastTapX: 0,
+        lastTapY: 0,
+      };
+
+      let swipeStartX = 0;
+      let swipeStartY = 0;
+      let touchMoved = false;
+
+      const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
+
+      const getDistance = (t1, t2) => {
+        const dx = t2.clientX - t1.clientX;
+        const dy = t2.clientY - t1.clientY;
+        return Math.hypot(dx, dy);
+      };
+
+      const getMidpoint = (t1, t2) => ({
+        x: (t1.clientX + t2.clientX) / 2,
+        y: (t1.clientY + t2.clientY) / 2,
+      });
+
+      const getBaseImageSize = () => {
+        const panelRect = panel.getBoundingClientRect();
+        const nw = image.naturalWidth || panelRect.width;
+        const nh = image.naturalHeight || panelRect.height;
+
+        if (!nw || !nh || !panelRect.width || !panelRect.height) {
+          return { width: panelRect.width, height: panelRect.height };
+        }
+
+        const ratio = Math.min(panelRect.width / nw, panelRect.height / nh);
+        return {
+          width: nw * ratio,
+          height: nh * ratio,
+        };
+      };
+
+      const clampPan = () => {
+        if (zoom.scale <= 1) {
+          zoom.x = 0;
+          zoom.y = 0;
+          return;
+        }
+
+        const panelRect = panel.getBoundingClientRect();
+        const base = getBaseImageSize();
+
+        const scaledW = base.width * zoom.scale;
+        const scaledH = base.height * zoom.scale;
+
+        const maxX = Math.max(0, (scaledW - panelRect.width) / 2);
+        const maxY = Math.max(0, (scaledH - panelRect.height) / 2);
+
+        zoom.x = clamp(zoom.x, -maxX, maxX);
+        zoom.y = clamp(zoom.y, -maxY, maxY);
+      };
+
+      const updateZoomClass = () => {
+        const zoomed = zoom.scale > 1.01;
+        root.classList.toggle("is-zoomed", zoomed);
+      };
+
+      const applyTransform = () => {
+        clampPan();
+        image.style.transform = `translate3d(${zoom.x}px, ${zoom.y}px, 0) scale(${zoom.scale})`;
+        updateZoomClass();
+      };
+
+      const resetZoom = () => {
+        zoom.scale = 1;
+        zoom.x = 0;
+        zoom.y = 0;
+        zoom.isPanning = false;
+        zoom.isPinching = false;
+        root.classList.remove("is-panning");
+        applyTransform();
+      };
+
+      const setZoom = (nextScale, originClientX, originClientY) => {
+        const prevScale = zoom.scale;
+        const targetScale = clamp(nextScale, zoom.min, zoom.max);
+
+        if (Math.abs(targetScale - prevScale) < 0.0001) return;
+
+        const panelRect = panel.getBoundingClientRect();
+
+        const originX =
+          originClientX != null
+            ? originClientX - panelRect.left - panelRect.width / 2
+            : 0;
+        const originY =
+          originClientY != null
+            ? originClientY - panelRect.top - panelRect.height / 2
+            : 0;
+
+        zoom.x = originX - (targetScale / prevScale) * (originX - zoom.x);
+        zoom.y = originY - (targetScale / prevScale) * (originY - zoom.y);
+        zoom.scale = targetScale;
+
+        if (zoom.scale <= 1.01) {
+          zoom.scale = 1;
+          zoom.x = 0;
+          zoom.y = 0;
+        }
+
+        applyTransform();
+      };
+
+      const toggleZoomAt = (clientX, clientY) => {
+        if (zoom.scale > 1.01) {
+          resetZoom();
+        } else {
+          setZoom(2, clientX, clientY);
+        }
+      };
+
+      const updateNavVisibility = () => {
+        // Skryť predchádzajúce / nasledujúce tlačidlo na okrajoch albumu
+        if (!prevBtn || !nextBtn) return;
+        prevBtn.hidden = index === 0;
+        nextBtn.hidden = index === items.length - 1;
+      };
+
+      const render = () => {
+        const item = items[index];
+        image.src = item.src;
+        image.alt = item.alt;
+        updateNavVisibility();
+      };
+
+      const openAt = (nextIndex) => {
+        if (nextIndex < 0 || nextIndex >= items.length) {
+          console.warn(
+            "Lightbox openAt called with invalid index",
+            nextIndex,
+            "items length",
+            items.length,
+          );
+          return;
+        }
+
+        if (closeTimeout) {
+          window.clearTimeout(closeTimeout);
+          closeTimeout = null;
+        }
+
+        index = nextIndex;
+        resetZoom();
+        render();
+        root.hidden = false;
+        root.setAttribute("aria-hidden", "false");
+        document.body.classList.add("gallery-lightbox-open");
+        isOpen = true;
+
+        requestAnimationFrame(() => {
+          root.classList.add("is-open");
+        });
+      };
+
+      const close = () => {
+        if (!isOpen) return;
+        root.classList.remove("is-open");
+        root.setAttribute("aria-hidden", "true");
+        document.body.classList.remove("gallery-lightbox-open");
+        isOpen = false;
+        resetZoom();
+
+        closeTimeout = window.setTimeout(() => {
+          root.hidden = true;
+          image.removeAttribute("src");
+          image.removeAttribute("alt");
+          closeTimeout = null;
+        }, 180);
+      };
+
+      const prev = () => {
+        if (!isOpen || index <= 0) return;
+        if (zoom.scale > 1.01) return;
+        openAt(index - 1);
+      };
+
+      const next = () => {
+        if (!isOpen || index >= items.length - 1) return;
+        if (zoom.scale > 1.01) return;
+        openAt(index + 1);
+      };
+
+      image.addEventListener("load", () => {
+        resetZoom();
+      });
+
+      targets.forEach(({ element }) => {
+        element.classList.add("gallery-lightbox-trigger");
+        element.addEventListener(
+          "click",
+          (event) => {
+            event.preventDefault();
+            event.stopPropagation();
+            event.stopImmediatePropagation();
+            const idx = targets.findIndex(
+              (target) => target.element === element,
+            );
+            if (idx < 0) {
+              console.warn(
+                "Gallery image not found in ordered image list",
+                element,
+              );
+              return;
+            }
+            openAt(idx);
+          },
+          true,
+        );
+      });
+
+      closeBtn.addEventListener("click", close);
+      backdrop.addEventListener("click", close);
+      prevBtn.addEventListener("click", prev);
+      nextBtn.addEventListener("click", next);
+
+      panel.addEventListener(
+        "wheel",
+        (event) => {
+          if (!isOpen) return;
+          event.preventDefault();
+
+          const factor = Math.exp(-event.deltaY * 0.0015);
+          setZoom(zoom.scale * factor, event.clientX, event.clientY);
+        },
+        { passive: false },
+      );
+
+      image.addEventListener("dblclick", (event) => {
+        if (!isOpen) return;
+        event.preventDefault();
+        toggleZoomAt(event.clientX, event.clientY);
+      });
+
+      panel.addEventListener("mousedown", (event) => {
+        if (!isOpen) return;
+        if (event.button !== 0) return;
+        if (zoom.scale <= 1.01) return;
+        if (
+          event.target.closest(
+            ".gallery-lightbox__nav, .gallery-lightbox__close, .gallery-lightbox__backdrop",
+          )
+        )
+          return;
+
+        zoom.isPanning = true;
+        zoom.panStartX = event.clientX;
+        zoom.panStartY = event.clientY;
+        zoom.panBaseX = zoom.x;
+        zoom.panBaseY = zoom.y;
+        root.classList.add("is-panning");
+        event.preventDefault();
+      });
+
+      window.addEventListener("mousemove", (event) => {
+        if (!zoom.isPanning) return;
+        const dx = event.clientX - zoom.panStartX;
+        const dy = event.clientY - zoom.panStartY;
+        zoom.x = zoom.panBaseX + dx;
+        zoom.y = zoom.panBaseY + dy;
+        applyTransform();
+      });
+
+      window.addEventListener("mouseup", () => {
+        if (!zoom.isPanning) return;
+        zoom.isPanning = false;
+        root.classList.remove("is-panning");
+      });
+
+      document.addEventListener("keydown", (event) => {
+        if (root.hidden) return;
+        if (event.key === "Escape") {
+          if (zoom.scale > 1.01) resetZoom();
+          else close();
+        }
+        if (event.key === "ArrowLeft") prev();
+        if (event.key === "ArrowRight") next();
+      });
+
+      panel.addEventListener(
+        "touchstart",
+        (event) => {
+          if (!isOpen) return;
+          touchMoved = false;
+
+          if (event.touches.length === 2) {
+            zoom.isPinching = true;
+            zoom.pinchStartDistance = getDistance(
+              event.touches[0],
+              event.touches[1],
+            );
+            zoom.pinchStartScale = zoom.scale;
+            zoom.isPanning = false;
+            root.classList.remove("is-panning");
+            swipeStartX = 0;
+            swipeStartY = 0;
+            image.style.transition = "none";
+            return;
+          }
+
+          if (event.touches.length !== 1) return;
+
+          const touch = event.touches[0];
+          startX = touch.clientX;
+          startY = touch.clientY;
+
+          swipeStartX = touch.clientX;
+          swipeStartY = touch.clientY;
+
+          if (zoom.scale > 1.01) {
+            zoom.isPanning = true;
+            zoom.panStartX = touch.clientX;
+            zoom.panStartY = touch.clientY;
+            zoom.panBaseX = zoom.x;
+            zoom.panBaseY = zoom.y;
+            root.classList.add("is-panning");
+          }
+        },
+        { passive: true },
+      );
+
+      panel.addEventListener(
+        "touchmove",
+        (event) => {
+          if (!isOpen) return;
+
+          if (event.touches.length === 2 && zoom.isPinching) {
+            event.preventDefault();
+            const dist = getDistance(event.touches[0], event.touches[1]);
+            const center = getMidpoint(event.touches[0], event.touches[1]);
+            const ratio = zoom.pinchStartDistance
+              ? Math.pow(dist / zoom.pinchStartDistance, 1.2)
+              : 1;
+            setZoom(zoom.pinchStartScale * ratio, center.x, center.y);
+            touchMoved = true;
+            return;
+          }
+
+          if (
+            event.touches.length === 1 &&
+            zoom.isPanning &&
+            zoom.scale > 1.01
+          ) {
+            event.preventDefault();
+            const touch = event.touches[0];
+            const dx = touch.clientX - zoom.panStartX;
+            const dy = touch.clientY - zoom.panStartY;
+            zoom.x = zoom.panBaseX + dx;
+            zoom.y = zoom.panBaseY + dy;
+            applyTransform();
+            touchMoved = true;
+          }
+        },
+        { passive: false },
+      );
+
+      panel.addEventListener("touchend", (event) => {
+        if (root.hidden) return;
+
+        if (event.touches.length < 2) {
+          zoom.isPinching = false;
+        }
+
+        if (event.touches.length === 0) {
+          zoom.isPanning = false;
+          root.classList.remove("is-panning");
+          image.style.transition = "";
+        }
+
+        const touch = event.changedTouches[0];
+        if (!touch) return;
+
+        const dxTap = touch.clientX - swipeStartX;
+        const dyTap = touch.clientY - swipeStartY;
+        const isTap = !touchMoved && Math.abs(dxTap) < 8 && Math.abs(dyTap) < 8;
+
+        if (zoom.scale > 1.01) return;
+
+        const dx = touch.clientX - startX;
+        const dy = touch.clientY - startY;
+        const distance = Math.abs(dx);
+        const isHorizontal = Math.abs(dx) > Math.abs(dy);
+
+        // Vykonať akciu len ak je pohyb dostatočne vodorovný a vzdialenosť je viac ako 60px
+        if (distance > 60 && isHorizontal) {
+          if (dx < 0) next();
+          else prev();
+        }
+      });
+    };
+
+    // Inicializovať hneď
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", init);
+    } else {
+      init();
+    }
+
+    // Skúsiť aj s oneskorením na prípad, že sa galéria načítava neskôr
+    setTimeout(init, 200);
+  })();
+</script>

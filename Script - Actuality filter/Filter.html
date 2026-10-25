@@ -1,0 +1,973 @@
+<!doctype html>
+<html lang="sk">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Filter panel</title>
+    <style>
+      :root {
+        --primary: #537891;
+        --primary-dark: #3b5f78;
+        --primary-soft: rgba(83, 120, 145, 0.12);
+        --bg: #f4f8fa;
+        --panel-bg: #ffffff;
+        --text: #1d2630;
+        --muted: #5f6a73;
+        --border: rgba(29, 38, 48, 0.14);
+        --shadow: 0 6px 18px rgba(29, 38, 48, 0.06);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        background: var(--bg);
+        color: var(--text);
+        font-family: Arial, Helvetica, sans-serif;
+      }
+
+      body {
+        min-height: auto;
+      }
+
+      .filter-wrap {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0;
+      }
+
+      .filter-panel {
+        background: var(--panel-bg);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        box-shadow: var(--shadow);
+        padding: 12px;
+      }
+
+      .filters-form {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        flex-wrap: nowrap;
+      }
+
+      .field,
+      .year-picker,
+      .sort-picker {
+        position: relative;
+        display: flex;
+        align-items: center;
+        min-width: 0;
+      }
+
+      .field-search {
+        flex: 0 1 360px;
+      }
+
+      .year-picker {
+        flex: 0 0 220px;
+        width: 220px;
+        margin-left: auto;
+      }
+
+      .sort-picker {
+        flex: 0 0 220px;
+        width: 220px;
+      }
+
+      .field-select {
+        flex: 0 0 180px;
+      }
+
+      .field input,
+      .field select,
+      .year-trigger {
+        width: 100%;
+        height: 46px;
+        border: 1.5px solid rgba(83, 120, 145, 0.2);
+        border-radius: 14px;
+        background: linear-gradient(180deg, #ffffff 0%, #fbfcfd 100%);
+        color: var(--text);
+        padding: 0 16px;
+        font-size: 15px;
+        outline: none;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.85);
+        transition:
+          border-color 0.2s ease,
+          box-shadow 0.2s ease,
+          transform 0.2s ease,
+          background 0.2s ease;
+      }
+
+      .field input:hover,
+      .field select:hover,
+      .year-trigger:hover {
+        border-color: rgba(83, 120, 145, 0.55);
+        background: #ffffff;
+      }
+
+      .field input:focus,
+      .field select:focus,
+      .year-trigger:focus {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 4px var(--primary-soft);
+        background: #ffffff;
+      }
+
+      .field select,
+      .year-trigger,
+      .sort-trigger {
+        appearance: none;
+      }
+
+      .field select {
+        border: 1.5px solid rgba(83, 120, 145, 0.2);
+        border-radius: 14px;
+        background: linear-gradient(180deg, #ffffff 0%, #fbfcfd 100%);
+        background-image:
+          linear-gradient(45deg, transparent 50%, var(--muted) 50%),
+          linear-gradient(135deg, var(--muted) 50%, transparent 50%);
+        background-position:
+          calc(100% - 18px) calc(50% - 1px),
+          calc(100% - 12px) calc(50% - 1px);
+        background-size:
+          6px 6px,
+          6px 6px;
+        background-repeat: no-repeat;
+        padding-right: 36px;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.85);
+      }
+
+      .field input::placeholder {
+        color: var(--muted);
+      }
+
+      .field-search {
+        position: relative;
+        align-items: stretch;
+        gap: 0;
+      }
+
+      .field-search input {
+        flex: 1 1 auto;
+        width: auto;
+        min-width: 0;
+        padding-right: 16px;
+        border-right: 0;
+        border-radius: 14px 0 0 14px;
+      }
+
+      .field-search.has-query input {
+        padding-right: 44px;
+      }
+
+      .field-search input[type="search"]::-webkit-search-cancel-button {
+        -webkit-appearance: none;
+        appearance: none;
+        display: none;
+        width: 0;
+        height: 0;
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      .field-search input[type="search"]::-ms-clear {
+        display: none;
+        width: 0;
+        height: 0;
+      }
+
+      .search-clear {
+        position: absolute;
+        right: 52px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 24px;
+        height: 24px;
+        border: 0;
+        border-radius: 50%;
+        background: var(--primary-soft);
+        color: var(--primary);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        opacity: 0;
+        pointer-events: none;
+        transition:
+          background 0.2s ease,
+          transform 0.2s ease,
+          opacity 0.2s ease,
+          box-shadow 0.2s ease;
+        box-shadow: 0 0 0 2px rgba(83, 120, 145, 0.04);
+      }
+
+      .search-clear.is-visible {
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      .search-clear:hover {
+        background: rgba(83, 120, 145, 0.14);
+        transform: translateY(-50%) scale(1.05);
+      }
+
+      .search-clear:focus-visible {
+        outline: none;
+        box-shadow: 0 0 0 4px var(--primary-soft);
+      }
+
+      .search-clear svg {
+        width: 14px;
+        height: 14px;
+      }
+
+      .search-submit {
+        flex: 0 0 46px;
+        width: 46px;
+        height: 46px;
+        border: 0;
+        border-radius: 0 14px 14px 0;
+        background: var(--primary);
+        color: #ffffff;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition:
+          background 0.2s ease,
+          box-shadow 0.2s ease;
+      }
+
+      .search-submit:hover {
+        background: var(--primary-dark);
+      }
+
+      .search-submit:focus-visible {
+        outline: none;
+        box-shadow: 0 0 0 4px var(--primary-soft);
+      }
+
+      .search-submit svg {
+        width: 18px;
+        height: 18px;
+      }
+
+      .year-trigger,
+      .sort-trigger {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        width: 100%;
+        height: 46px;
+        padding: 0 16px;
+        border: 1.5px solid rgba(83, 120, 145, 0.2);
+        border-radius: 14px;
+        background: linear-gradient(180deg, #ffffff 0%, #fbfcfd 100%);
+        color: var(--text);
+        font-size: 15px;
+        font-weight: 500;
+        cursor: pointer;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.85);
+        transition:
+          border-color 0.2s ease,
+          box-shadow 0.2s ease,
+          transform 0.2s ease,
+          background 0.2s ease;
+      }
+
+      .year-trigger:hover,
+      .sort-trigger:hover {
+        border-color: rgba(83, 120, 145, 0.55);
+        background: #ffffff;
+      }
+
+      .year-trigger:focus,
+      .sort-trigger:focus {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 4px var(--primary-soft);
+        background: #ffffff;
+      }
+
+      .year-trigger-label,
+      .sort-trigger-label {
+        display: inline-block;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .year-trigger svg,
+      .sort-trigger svg {
+        width: 16px;
+        height: 16px;
+        color: var(--muted);
+        transition: transform 0.2s ease;
+      }
+
+      .year-picker.open .year-trigger svg,
+      .sort-picker.open .sort-trigger svg {
+        transform: rotate(180deg);
+      }
+
+      .year-menu,
+      .sort-menu {
+        display: none;
+        position: absolute;
+        top: calc(100% + 8px);
+        left: 0;
+        width: min(280px, calc(100vw - 24px));
+        max-width: 280px;
+        max-height: 420px;
+        overflow: hidden;
+        background: #fff;
+        border: 1px solid rgba(83, 120, 145, 0.18);
+        border-radius: 14px;
+        box-shadow: 0 14px 30px rgba(29, 38, 48, 0.08);
+        padding: 12px;
+        z-index: 30;
+      }
+
+      .year-picker.open .year-menu,
+      .sort-picker.open .sort-menu {
+        display: block;
+      }
+
+      .year-menu-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin-bottom: 10px;
+      }
+
+      .year-options {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        max-height: 300px;
+        overflow-y: auto;
+        width: 100%;
+        padding-right: 2px;
+      }
+
+      .year-option-group {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 8px 10px;
+        border-radius: 10px;
+        border: 1px solid rgba(83, 120, 145, 0.18);
+        background: rgba(83, 120, 145, 0.02);
+        cursor: pointer;
+        transition:
+          background 0.2s ease,
+          border-color 0.2s ease,
+          transform 0.15s ease;
+      }
+
+      .year-option-group:hover {
+        background: rgba(83, 120, 145, 0.04);
+        border-color: rgba(83, 120, 145, 0.32);
+        transform: translateY(-1px);
+      }
+
+      .year-option-group input {
+        width: 16px;
+        height: 16px;
+        margin: 0;
+        accent-color: var(--primary);
+        cursor: pointer;
+      }
+
+      .year-option-group label {
+        cursor: pointer;
+        font-size: 14px;
+        color: var(--text);
+        font-weight: 600;
+        width: 100%;
+      }
+
+      .sort-menu {
+        display: none;
+        padding: 8px;
+      }
+
+      .sort-option {
+        width: 100%;
+        border: 0;
+        background: transparent;
+        border-radius: 10px;
+        padding: 9px 10px;
+        text-align: left;
+        font-size: 14px;
+        color: var(--text);
+        cursor: pointer;
+        transition:
+          background 0.2s ease,
+          transform 0.15s ease;
+      }
+
+      .sort-option:hover {
+        background: rgba(83, 120, 145, 0.06);
+        transform: translateY(-1px);
+      }
+
+      .sort-option.is-selected {
+        background: rgba(83, 120, 145, 0.08);
+        font-weight: 700;
+      }
+
+      .year-option {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 74px;
+        min-height: 34px;
+        padding: 8px 12px;
+        border-radius: 999px;
+        border: 1.5px solid rgba(83, 120, 145, 0.3);
+        background: #fff;
+        cursor: pointer;
+        color: var(--text);
+        font-size: 13px;
+        font-weight: 600;
+        transition:
+          background 0.2s ease,
+          border-color 0.2s ease,
+          transform 0.15s ease,
+          box-shadow 0.2s ease;
+        user-select: none;
+      }
+
+      .year-option:hover {
+        border-color: rgba(83, 120, 145, 0.6);
+        background: rgba(83, 120, 145, 0.03);
+        transform: translateY(-1px);
+      }
+
+      .year-option input {
+        position: absolute;
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      .year-option.is-selected {
+        background: var(--primary);
+        border-color: var(--primary);
+        color: #fff;
+        box-shadow: 0 8px 18px rgba(83, 120, 145, 0.18);
+      }
+
+      .year-option.is-selected:hover {
+        background: var(--primary-dark);
+      }
+
+      .year-option span {
+        display: inline-block;
+      }
+
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        border: 0;
+      }
+
+      .results-summary {
+        color: var(--muted);
+        font-size: 14px;
+        margin-top: 12px;
+        display: block;
+      }
+
+      .results-summary[hidden] {
+        display: none;
+      }
+
+      .results-summary .clear-link {
+        color: var(--primary);
+        font-weight: 600;
+        margin-left: 8px;
+        text-decoration: none;
+      }
+
+      .results-summary .clear-link:hover {
+        text-decoration: underline;
+      }
+
+      @media (max-width: 860px) {
+        .filter-panel {
+          padding: 10px;
+        }
+
+        .filters-form {
+          flex-wrap: wrap;
+        }
+
+        .field-search,
+        .field-select,
+        .year-picker,
+        .sort-picker {
+          flex: 1 1 100%;
+          width: 100%;
+        }
+
+        .year-picker {
+          margin-left: 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="filter-wrap">
+      <div class="filter-panel">
+        <form
+          id="newsFilters"
+          class="filters-form"
+          method="get"
+          data-action="/aktuality/"
+          action="/aktuality/"
+          aria-label="Filter aktualít"
+        >
+          <div class="field field-search">
+            <label class="sr-only" for="searchInput">Hľadať aktuality</label>
+            <input
+              id="searchInput"
+              name="q"
+              type="search"
+              placeholder="Hľadať aktuality..."
+              autocomplete="off"
+              aria-label="Hľadať aktuality"
+            />
+            <button type="button" class="search-clear" id="searchClear" aria-label="Vymazať vyhľadávanie" tabindex="-1">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
+            </button>
+            <button type="submit" class="search-submit" aria-label="Vyhľadať">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <circle cx="11" cy="11" r="6"></circle>
+                <line x1="16" y1="16" x2="21" y2="21"></line>
+              </svg>
+            </button>
+          </div>
+
+          <div class="year-picker" id="yearPicker">
+            <button
+              type="button"
+              class="year-trigger"
+              id="yearTrigger"
+              aria-expanded="false"
+              aria-controls="yearMenu"
+              aria-label="Filtrovať podľa roku"
+            >
+              <span class="year-trigger-label" id="yearTriggerLabel">Všetky roky</span>
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </button>
+
+            <div class="year-menu" id="yearMenu" role="menu" aria-label="Výber rokov">
+              <div class="year-options" id="yearOptions"></div>
+            </div>
+          </div>
+
+          <div class="sort-picker" id="sortPicker">
+            <button
+              type="button"
+              class="sort-trigger"
+              id="sortTrigger"
+              aria-expanded="false"
+              aria-haspopup="listbox"
+              aria-label="Zoradiť výsledky"
+            >
+              <span class="sort-trigger-label" id="sortTriggerLabel">Najnovšie</span>
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </button>
+
+            <div class="sort-menu" id="sortMenu" role="listbox" aria-label="Zoradiť výsledky">
+              <button
+                type="button"
+                class="sort-option is-selected"
+                data-value="newest"
+                role="option"
+                aria-selected="true"
+              >
+                Najnovšie
+              </button>
+              <button type="button" class="sort-option" data-value="oldest" role="option" aria-selected="false">
+                Najstaršie
+              </button>
+            </div>
+
+            <select id="sortFilter" name="sort" class="sr-only" aria-label="Zoradiť výsledky">
+              <option value="newest" selected>Najnovšie</option>
+              <option value="oldest">Najstaršie</option>
+            </select>
+          </div>
+        </form>
+      </div>
+      <div id="resultsSummary" class="results-summary" role="status" aria-live="polite" hidden></div>
+    </div>
+
+    <script>
+      (function () {
+        const form = document.getElementById("newsFilters");
+        const searchInput = document.getElementById("searchInput");
+        const searchClearButton = document.getElementById("searchClear");
+        const sortSelect = document.getElementById("sortFilter");
+        const sortPicker = document.getElementById("sortPicker");
+        const sortTrigger = document.getElementById("sortTrigger");
+        const sortTriggerLabel = document.getElementById("sortTriggerLabel");
+        const sortOptions = document.querySelectorAll(".sort-option");
+        const yearPicker = document.getElementById("yearPicker");
+        const yearTrigger = document.getElementById("yearTrigger");
+        const yearOptions = document.getElementById("yearOptions");
+        const yearTriggerLabel = document.getElementById("yearTriggerLabel");
+        const currentYear = new Date().getFullYear();
+        const startYear = 2004;
+        const basePath = form.dataset.action || window.location.pathname || "/aktuality/";
+        const params = new URLSearchParams(window.location.search);
+
+        function getSelectedYear() {
+          const rawValues = [];
+
+          if (params.has("rok")) {
+            rawValues.push(params.get("rok"));
+          }
+
+          if (params.has("rok[]")) {
+            rawValues.push(...params.getAll("rok[]"));
+          }
+
+          const values = rawValues
+            .flatMap(function (value) {
+              return String(value || "")
+                .split(",")
+                .map(function (item) {
+                  return item.trim();
+                });
+            })
+            .filter(function (value) {
+              return value && /^\d{4}$/.test(value);
+            })
+            .map(function (value) {
+              return String(value);
+            });
+
+          return values.length > 0 ? values[0] : "";
+        }
+
+        function buildYearOptions() {
+          const allYears = [];
+          for (let year = currentYear; year >= startYear; year--) {
+            allYears.push(String(year));
+          }
+
+          yearOptions.innerHTML = "";
+
+          const allYearsOption = document.createElement("div");
+          allYearsOption.className = "year-option-group";
+          allYearsOption.innerHTML =
+            '<input type="radio" name="yearOption" id="allYearsRadio" value="" checked /><label for="allYearsRadio">Všetky roky</label>';
+          yearOptions.appendChild(allYearsOption);
+
+          allYears.forEach(function (year) {
+            const optionGroup = document.createElement("div");
+            optionGroup.className = "year-option-group";
+
+            const radio = document.createElement("input");
+            radio.type = "radio";
+            radio.name = "yearOption";
+            radio.value = year;
+            radio.id = "yearRadio-" + year;
+            radio.setAttribute("aria-label", "Rok " + year);
+
+            const label = document.createElement("label");
+            label.setAttribute("for", radio.id);
+            label.textContent = year;
+
+            optionGroup.appendChild(radio);
+            optionGroup.appendChild(label);
+            yearOptions.appendChild(optionGroup);
+          });
+
+          const selectedYear = getSelectedYear();
+          const radios = yearOptions.querySelectorAll('input[name="yearOption"]');
+
+          radios.forEach(function (radio) {
+            radio.checked = !selectedYear ? radio.value === "" : radio.value === selectedYear;
+          });
+
+          updateYearLabel();
+        }
+
+        function updateYearLabel() {
+          const selectedRadio = yearOptions.querySelector('input[name="yearOption"]:checked');
+
+          if (!selectedRadio || selectedRadio.value === "") {
+            yearTriggerLabel.textContent = "Všetky roky";
+            return;
+          }
+
+          yearTriggerLabel.textContent = "Rok " + selectedRadio.value;
+        }
+
+        function syncSortUI() {
+          const value = sortSelect.value || "newest";
+
+          sortOptions.forEach(function (option) {
+            const isSelected = option.dataset.value === value;
+            option.classList.toggle("is-selected", isSelected);
+            option.setAttribute("aria-selected", String(isSelected));
+          });
+
+          sortTriggerLabel.textContent = value === "oldest" ? "Najstaršie" : "Najnovšie";
+        }
+
+        function toggleSearchClearButton() {
+          const hasValue = searchInput.value.trim().length > 0;
+          searchClearButton.classList.toggle("is-visible", hasValue);
+          searchInput.parentElement.classList.toggle("has-query", hasValue);
+        }
+
+        function submitFilters() {
+          const nextParams = new URLSearchParams();
+          const query = searchInput.value.trim();
+          const selectedYearRadio = yearOptions.querySelector('input[name="yearOption"]:checked');
+          const selectedYear = selectedYearRadio && selectedYearRadio.value ? selectedYearRadio.value : "";
+          const selectedSort = sortSelect.value || "newest";
+
+          if (query) {
+            nextParams.set("q", query);
+          }
+
+          if (selectedYear) {
+            nextParams.set("rok", selectedYear);
+          }
+
+          nextParams.set("sort", selectedSort);
+
+          const url = new URL(basePath, window.location.origin);
+          url.search = nextParams.toString();
+          window.location.href = url.toString();
+        }
+
+        function clearFilters() {
+          searchInput.value = "";
+          sortSelect.value = "newest";
+
+          const defaultRadio = yearOptions.querySelector('input[value=""]');
+          if (defaultRadio) {
+            defaultRadio.checked = true;
+            updateYearLabel();
+          }
+
+          toggleSearchClearButton();
+          syncSortUI();
+          submitFilters();
+        }
+
+        yearTrigger.addEventListener("click", function (event) {
+          yearPicker.classList.toggle("open");
+          yearTrigger.setAttribute("aria-expanded", String(yearPicker.classList.contains("open")));
+          if (yearPicker.classList.contains("open")) {
+            sortPicker.classList.remove("open");
+            sortTrigger.setAttribute("aria-expanded", "false");
+          }
+          // prevent document click handler from immediately closing the menu
+          event.stopPropagation();
+        });
+
+        sortTrigger.addEventListener("click", function (event) {
+          sortPicker.classList.toggle("open");
+          sortTrigger.setAttribute("aria-expanded", String(sortPicker.classList.contains("open")));
+          if (sortPicker.classList.contains("open")) {
+            yearPicker.classList.remove("open");
+            yearTrigger.setAttribute("aria-expanded", "false");
+          }
+          // prevent document click handler from immediately closing the menu
+          event.stopPropagation();
+        });
+
+        document.addEventListener("click", function (event) {
+          if (!yearPicker.contains(event.target)) {
+            yearPicker.classList.remove("open");
+            yearTrigger.setAttribute("aria-expanded", "false");
+          }
+
+          if (!sortPicker.contains(event.target)) {
+            sortPicker.classList.remove("open");
+            sortTrigger.setAttribute("aria-expanded", "false");
+          }
+        });
+
+        sortOptions.forEach(function (option) {
+          option.addEventListener("click", function () {
+            sortSelect.value = option.dataset.value;
+            syncSortUI();
+            sortPicker.classList.remove("open");
+            sortTrigger.setAttribute("aria-expanded", "false");
+            submitFilters();
+          });
+        });
+
+        yearOptions.addEventListener("change", function (event) {
+          const target = event.target;
+          if (target && target.matches('input[name="yearOption"]')) {
+            updateYearLabel();
+            submitFilters();
+          }
+        });
+
+        form.addEventListener("submit", function (event) {
+          event.preventDefault();
+          submitFilters();
+        });
+
+        searchInput.addEventListener("keydown", function (event) {
+          if (event.key === "Enter") {
+            event.preventDefault();
+            submitFilters();
+          }
+        });
+
+        searchInput.addEventListener("search", function () {
+          submitFilters();
+        });
+
+        searchInput.addEventListener("input", function () {
+          toggleSearchClearButton();
+
+          if (searchInput.value.trim() === "") {
+            submitFilters();
+          }
+        });
+
+        searchClearButton.addEventListener("click", function () {
+          searchInput.value = "";
+          toggleSearchClearButton();
+          searchInput.focus();
+          submitFilters();
+        });
+
+        sortSelect.addEventListener("change", function () {
+          syncSortUI();
+          submitFilters();
+        });
+
+        function hideResultsSummary() {
+          const el = document.getElementById("resultsSummary");
+          if (el) {
+            el.hidden = true;
+            el.innerHTML = "";
+          }
+        }
+
+        function updateResultsSummary() {
+          const query = (params.get("q") || "").trim();
+          const year = getSelectedYear();
+
+          const hasFilter = query.length > 0 || year.length > 0;
+          if (!hasFilter) {
+            hideResultsSummary();
+            return;
+          }
+
+          renderSimpleSummary(query, year);
+        }
+
+        function renderSimpleSummary(query, year) {
+          const el = document.getElementById("resultsSummary");
+          if (!el) return;
+
+          let message = "";
+          if (query && year) {
+            message = 'Zobrazujú sa aktuality s textom "' + query + '" z roku ' + year + ".";
+          } else if (query) {
+            message = 'Zobrazujú sa aktuality s textom "' + query + '".';
+          } else if (year) {
+            message = "Zobrazujú sa aktuality z roku " + year + ".";
+          } else {
+            hideResultsSummary();
+            return;
+          }
+
+          el.replaceChildren(document.createTextNode(message + " "));
+
+          const clearLink = document.createElement("a");
+          clearLink.href = "#";
+          clearLink.className = "clear-link";
+          clearLink.textContent = "Zrušiť filter";
+          clearLink.addEventListener("click", function (event) {
+            event.preventDefault();
+            clearFilters();
+          });
+          el.appendChild(clearLink);
+          el.hidden = false;
+        }
+
+        buildYearOptions();
+        searchInput.value = params.get("q") || "";
+        toggleSearchClearButton();
+
+        const initialSort = params.get("sort");
+        if (initialSort === "oldest" || initialSort === "newest") {
+          sortSelect.value = initialSort;
+        }
+
+        syncSortUI();
+
+        updateResultsSummary();
+      })();
+    </script>
+  </body>
+</html>

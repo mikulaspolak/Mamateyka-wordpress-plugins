@@ -1,0 +1,152 @@
+<style>
+  #events .ev {
+    display: flex;
+    gap: 14px;
+    padding: 12px 0;
+    border-top: 1px solid #d9e8ee;
+    align-items: center;
+  }
+
+  #events .ev:first-of-type {
+    border-top: none;
+    padding-top: 4px;
+  }
+
+  #events .date {
+    flex: 0 0 auto;
+    width: 60px;
+    aspect-ratio: 1;
+    background: #cddfe7;
+    color: #40647dff;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 8px;
+  }
+
+  #events .date b {
+    display: block;
+    font-size: 20px;
+    font-weight: 800;
+    line-height: 1;
+  }
+  #events .date span {
+    font-size: 11px;
+    text-transform: uppercase;
+    margin-top: 2px;
+  }
+
+  #events .meta {
+    flex: 1;
+  }
+  #events .kind {
+    font-size: 10px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: #537891ff;
+  }
+  #events .meta b {
+    display: block;
+    font-size: 14px;
+    margin: 3px 0 2px;
+  }
+  #events .meta span {
+    font-size: 12px;
+    color: #66737b;
+  }
+
+  #events .more {
+    display: block;
+    text-align: center;
+    margin-top: 14px;
+    color: #537891ff;
+    font-weight: 700;
+    font-size: 14px;
+    padding-top: 12px;
+    border-top: 1px solid #d9e8ee;
+  }
+</style>
+
+<div id="events"></div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", async () => {
+    const calendarId = "9j6qtv0ic0pgieobm312t1kc9k@group.calendar.google.com";
+    const apiKey = "AIzaSyAUxqbI8HtOjIUSnsaae7Uzq7m0LpCWFHA";
+    const howManyEvents = window.innerWidth < 1024 ? 4 : 6;
+
+    try {
+      const response = await fetch(
+        `https://www.googleapis.com/calendar/v3/calendars/${encodeURIComponent(calendarId)}/events` +
+          `?singleEvents=true` +
+          `&orderBy=startTime` +
+          `&maxResults=${howManyEvents}` +
+          `&timeMin=${new Date().toISOString()}` +
+          `&key=${apiKey}`,
+      );
+
+      const data = await response.json();
+      const container = document.getElementById("events");
+      container.innerHTML = "";
+
+      if (!data.items || data.items.length === 0) {
+        container.innerHTML = "<p>Žiadne pripravované udalosti.</p>";
+        return;
+      }
+
+      const formatEventLabel = (event) => {
+        const start = event.start.dateTime ? new Date(event.start.dateTime) : new Date(event.start.date);
+        const end = event.end.dateTime ? new Date(event.end.dateTime) : new Date(event.end.date);
+        const dayName = start.toLocaleDateString("sk-SK", { weekday: "long" });
+
+        if (!event.start.dateTime) {
+          const adjustedEnd = new Date(end.getTime() - 24 * 60 * 60 * 1000);
+          const sameAllDay = start.toDateString() === adjustedEnd.toDateString();
+
+          if (!sameAllDay) {
+            const startLabel = start.toLocaleDateString("sk-SK", {
+              day: "numeric",
+            });
+            const endLabel = adjustedEnd.toLocaleDateString("sk-SK", {
+              day: "numeric",
+              month: "short",
+            });
+            return `${startLabel} – ${endLabel}`;
+          }
+
+          return `${dayName} • celý deň`;
+        }
+
+        const time = start.toLocaleTimeString("sk-SK", {
+          hour: "2-digit",
+          minute: "2-digit",
+        });
+        return `${dayName} • ${time}`;
+      };
+
+      data.items.forEach((event) => {
+        const start = new Date(event.start.dateTime || event.start.date);
+        const day = start.toLocaleString("sk-SK", { day: "2-digit" });
+        const month = start.toLocaleString("sk-SK", { month: "short" });
+        const label = formatEventLabel(event);
+
+        container.innerHTML += `
+          <div class="ev">
+            <div class="date"><b>${day}</b><span>${month}</span></div>
+            <div class="meta">
+              <b>${event.summary || "Udalosť"}</b>
+              <span>${label}</span>
+            </div>
+          </div>
+        `;
+      });
+    } catch (error) {
+      document.getElementById("events").innerHTML = "Nepodarilo sa načítať udalosti.";
+      console.error(error);
+    }
+  });
+</script>

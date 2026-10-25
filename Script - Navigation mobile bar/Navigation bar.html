@@ -1,0 +1,261 @@
+<nav class="aktivity-nav" aria-label="Navigácia aktivít">
+  <a href="#sekcia-domka" class="aktivity-nav__link"> Domka </a>
+  <a href="#sekcia-fk" class="aktivity-nav__link"> Futbalový klub </a>
+  <a href="#sekcia-orientacne-dni" class="aktivity-nav__link"> Orientačné dni </a>
+  <a href="#sekcia-garsonka" class="aktivity-nav__link"> Garsónka </a>
+  <a href="#sekcia-hudba" class="aktivity-nav__link"> Hudba </a>
+  <a href="#sekcia-obchodik" class="aktivity-nav__link"> Obchodík </a>
+  <a href="#sekcia-katechezky" class="aktivity-nav__link"> Katechézky</a>
+  <a href="#sekcia-zenska-konferencia" class="aktivity-nav__link"> Ženská konferencia </a>
+  <a href="#sekcia-dofe" class="aktivity-nav__link"> DofE </a>
+</nav>
+
+<style>
+  .aktivity-nav {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+
+    width: 100%;
+
+    overflow-x: auto;
+    overflow-y: hidden;
+
+    white-space: nowrap;
+
+    padding: 4px 2px;
+
+    scrollbar-width: none;
+
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .aktivity-nav::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* =================================
+   POLOŽKY
+   ================================= */
+
+  .aktivity-nav__link {
+    position: relative;
+
+    flex: 0 0 auto;
+
+    display: inline-flex;
+    align-items: center;
+
+    padding: 10px 0;
+
+    color: #1d2630;
+    text-decoration: none;
+
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 1.2;
+
+    transition:
+      color 0.2s ease,
+      font-weight 0.2s ease;
+  }
+
+  /* Hover */
+
+  .aktivity-nav__link:hover {
+    color: #161b23;
+  }
+
+  /* =================================
+   AKTÍVNA POLOŽKA
+   ================================= */
+
+  .aktivity-nav__link.active {
+    color: #161b23;
+    font-weight: 650;
+    text-decoration: underline;
+    text-decoration-thickness: 1.5px;
+    text-underline-offset: 4px;
+  }
+
+  html {
+    scroll-padding-top: 50px;
+  }
+
+  /* =================================
+   MOBILE
+   ================================= */
+
+  @media (max-width: 767px) {
+    .aktivity-nav {
+      gap: 22px;
+    }
+
+    .aktivity-nav__link {
+      font-size: 14px;
+      padding: 9px 0;
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const nav = document.querySelector(".aktivity-nav");
+
+    if (!nav) return;
+
+    const links = Array.from(nav.querySelectorAll(".aktivity-nav__link"));
+
+    const sections = links
+      .map(function (link) {
+        const selector = link.getAttribute("href");
+
+        if (!selector) return null;
+
+        return document.querySelector(selector);
+      })
+      .filter(Boolean);
+
+    if (!sections.length) return;
+
+    /*
+     * -1 znamená, že zatiaľ nie je
+     * nastavená žiadna aktívna položka.
+     */
+    let activeIndex = -1;
+    let isPreventingNavScroll = false;
+    let savedNavScrollLeft = 0;
+
+    function setActiveIndex(index, isClick) {
+      if (index < 0 || index >= links.length || index === activeIndex) {
+        return;
+      }
+
+      activeIndex = index;
+
+      links.forEach(function (link, i) {
+        link.classList.toggle("active", i === activeIndex);
+      });
+
+      /*
+       * Na mobile zabezpečíme,
+       * že aktívna položka zostane viditeľná.
+       * ALE nie pri kliknutí - vtedy sa má skrolovať iba webstránka.
+       */
+
+      if (!isClick && window.innerWidth <= 767) {
+        links[activeIndex].scrollIntoView({
+          behavior: "smooth",
+          block: "nearest",
+          inline: "center",
+        });
+      }
+    }
+
+    /*
+     * =================================
+     * KLIKNUTIE
+     * =================================
+     */
+
+    links.forEach(function (link, index) {
+      link.addEventListener("click", function (e) {
+        e.preventDefault();
+
+        isPreventingNavScroll = true;
+        savedNavScrollLeft = nav.scrollLeft;
+
+        setActiveIndex(index, true);
+
+        // Skrolovať stránku na správnu sekciu o 50px vyššie,
+        // aby nebola sekcia zakrytá navigáciou.
+        if (sections[index]) {
+          const section = sections[index];
+          const offset = 25;
+          const top = section.getBoundingClientRect().top + window.scrollY - offset;
+
+          window.scrollTo({
+            top: top,
+            behavior: "smooth",
+          });
+        }
+
+        // Vrátim horizontálnu pozíciu po skončení smooth scrollovania
+        setTimeout(() => {
+          isPreventingNavScroll = false;
+        }, 1000);
+      });
+    });
+
+    /*
+     * =================================
+     * AKTÍVNA SEKCIA PRI SCROLLOVANÍ
+     * =================================
+     */
+
+    function updateActiveSection() {
+      const scrollPosition = window.scrollY + window.innerHeight * 0.25;
+
+      let newIndex = 0;
+
+      sections.forEach(function (section, index) {
+        const sectionTop = section.getBoundingClientRect().top + window.scrollY;
+
+        if (sectionTop <= scrollPosition) {
+          newIndex = index;
+        }
+      });
+
+      setActiveIndex(newIndex);
+    }
+
+    /*
+     * =================================
+     * SCROLL
+     * =================================
+     */
+
+    let ticking = false;
+
+    window.addEventListener(
+      "scroll",
+      function () {
+        // Počas kliknutia vrátim horizontálnu pozíciu
+        if (isPreventingNavScroll) {
+          nav.scrollLeft = savedNavScrollLeft;
+        }
+
+        if (!ticking) {
+          window.requestAnimationFrame(function () {
+            updateActiveSection();
+
+            ticking = false;
+          });
+
+          ticking = true;
+        }
+      },
+      { passive: true },
+    );
+
+    /*
+     * =================================
+     * RESIZE
+     * =================================
+     */
+
+    window.addEventListener("resize", updateActiveSection);
+
+    /*
+     * =================================
+     * POČIATOČNÝ STAV
+     * =================================
+     *
+     * Nemáme nastavovať aktívnu položku na začiatku,
+     * aby Domka nebola podčiarknutá.
+     * Aktívna položka sa nastaví až pri scrollovaní.
+     */
+
+    // updateActiveSection();
+  });
+</script>

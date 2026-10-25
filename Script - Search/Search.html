@@ -1,0 +1,247 @@
+<div class="search-toggle" data-search-toggle>
+  <button
+    type="button"
+    class="search-toggle__button"
+    aria-label="Zobraziť vyhľadávanie"
+    aria-expanded="false"
+    aria-controls="mySearchDiv"
+    data-search-toggle-button
+  >
+    <span class="search-toggle__icon" aria-hidden="true">
+      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 512 512" focusable="false">
+        <path
+          d="M460.355,421.59L353.844,315.078c20.041-27.553,31.885-61.437,31.885-98.037C385.729,124.934,310.793,50,218.686,50C126.58,50,51.645,124.934,51.645,217.041c0,92.106,74.936,167.041,167.041,167.041c34.912,0,67.352-10.773,94.184-29.158L419.945,462L460.355,421.59z M100.631,217.041c0-65.096,52.959-118.056,118.055-118.056c65.098,0,118.057,52.959,118.057,118.056c0,65.096-52.959,118.056-118.057,118.056C153.59,335.097,100.631,282.137,100.631,217.041z"
+        ></path>
+      </svg>
+    </span>
+  </button>
+</div>
+
+<style>
+  .search-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .search-toggle__button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    color: currentColor;
+    cursor: pointer;
+    padding: 0;
+  }
+
+  .search-toggle__button:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 2px;
+  }
+
+  .search-toggle__icon {
+    display: inline-flex;
+    line-height: 0;
+  }
+
+  .search-toggle__icon svg {
+    display: block;
+    fill: #537891;
+  }
+
+  @media (max-width: 767px) {
+    .search-toggle__button {
+      width: 36px;
+    }
+  }
+
+  .promagnifier {
+    scale: 1.25;
+  }
+
+  /*
+   * DO NOT hide #mySearchDiv via `display: none`.
+   * Ajax Search Lite initializes its inputs on page load. Inside a
+   * `display: none` container ASL measures widths/offsets as 0, and later
+   * re-runs internal layout/sync routines on every focus, which on mobile
+   * blurs the input and instantly dismisses the on-screen keyboard.
+   *
+   * We keep the element in the layout (so ASL initializes correctly) and
+   * only hide it visually + block interaction while closed.
+   */
+  #mySearchDiv {
+    --search-panel-height: 0px;
+    visibility: hidden;
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+    pointer-events: none;
+    transform: translateY(-10px);
+    transition:
+      opacity 0.18s ease,
+      transform 0.18s ease,
+      max-height 0.18s ease,
+      visibility 0s linear 0.18s;
+  }
+
+  #mySearchDiv.is-open,
+  #mySearchDiv.is-closing {
+    visibility: visible;
+    max-height: var(--search-panel-height);
+  }
+
+  #mySearchDiv.is-open {
+    opacity: 1;
+    overflow: visible;
+    pointer-events: auto;
+    transform: translateY(0);
+    transition:
+      opacity 0.18s ease,
+      transform 0.18s ease,
+      max-height 0.18s ease,
+      visibility 0s linear 0s;
+  }
+
+  #mySearchDiv.is-closing {
+    opacity: 0;
+    overflow: hidden;
+    pointer-events: none;
+    transform: translateY(-10px);
+  }
+</style>
+
+<script>
+  // When the mobile keyboard opens, the browser shrinks only the viewport
+  // height (not the width). By default ScrollTrigger treats every resize as
+  // a signal to recalculate pinned/sticky positions, which causes a layout
+  // shift that steals focus and dismisses the keyboard.
+  //
+  // `ignoreMobileResize: true` tells ScrollTrigger to ignore height-only
+  // resizes on mobile, so sticky behaviour stays intact and the keyboard
+  // appears on the very first tap.
+  //
+  // After the keyboard closes we still do a single refresh (with a small
+  // delay so the viewport has time to restore) to keep scroll positions
+  // accurate if the user scrolled while typing.
+  (function () {
+    function applyConfig() {
+      if (window.ScrollTrigger) {
+        ScrollTrigger.config({ ignoreMobileResize: true });
+      }
+    }
+    // ScrollTrigger may load after this script runs
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", applyConfig);
+    } else {
+      applyConfig();
+    }
+    window.addEventListener("load", applyConfig);
+  })();
+
+  document.addEventListener("focusout", function (e) {
+    if (e.target.matches('input[type="search"], input[type="text"]')) {
+      if (window.ScrollTrigger) {
+        // Delay until the keyboard is fully closed and the viewport restored
+        setTimeout(function () {
+          ScrollTrigger.refresh();
+        }, 300);
+      }
+    }
+  });
+</script>
+
+<script>
+  (function () {
+    function initSearchToggle() {
+      var root = document.querySelector("[data-search-toggle]");
+      if (!root) return;
+
+      var button = root.querySelector("[data-search-toggle-button]");
+      var target = document.getElementById("mySearchDiv");
+      if (!button || !target) return;
+
+      var ignoreOutsidePointerUntil = 0;
+      var closeTimer = 0;
+      var closeDuration = 180;
+
+      function syncPanelHeight() {
+        var previousMaxHeight = target.style.maxHeight;
+        target.style.maxHeight = "none";
+        target.style.setProperty("--search-panel-height", target.scrollHeight + "px");
+        target.style.maxHeight = previousMaxHeight;
+      }
+
+      function setExpanded(expanded, options) {
+        var instant = options && options.instant;
+        button.setAttribute("aria-expanded", expanded ? "true" : "false");
+        if (closeTimer) {
+          clearTimeout(closeTimer);
+          closeTimer = 0;
+        }
+
+        if (expanded) {
+          syncPanelHeight();
+          target.classList.remove("is-closing");
+          target.classList.add("is-open");
+          ignoreOutsidePointerUntil = Date.now() + 350;
+          return;
+        }
+
+        target.classList.remove("is-open");
+
+        if (instant) {
+          target.classList.remove("is-closing");
+          return;
+        }
+
+        syncPanelHeight();
+        target.classList.add("is-closing");
+        closeTimer = setTimeout(function () {
+          target.classList.remove("is-closing");
+          closeTimer = 0;
+        }, closeDuration);
+      }
+
+      setExpanded(false, { instant: true });
+      syncPanelHeight();
+
+      window.addEventListener("resize", syncPanelHeight);
+
+      // Focus on open is handled natively by ASL via its admin setting:
+      // "Mobile specific → Auto focus when opening the navigation menu"
+      // with selector: [data-search-toggle-button]
+      // ASL manages the focus itself, so we do NOT call input.focus() here —
+      // doing so would conflict with ASL's own focus handlers and cause the
+      // keyboard to be dismissed on mobile.
+      button.addEventListener("click", function (event) {
+        event.stopPropagation();
+        var isExpanded = button.getAttribute("aria-expanded") === "true";
+        setExpanded(!isExpanded);
+      });
+
+      document.addEventListener("pointerdown", function (event) {
+        var isExpanded = button.getAttribute("aria-expanded") === "true";
+        if (!isExpanded) return;
+        if (Date.now() < ignoreOutsidePointerUntil) return;
+        if (root.contains(event.target) || target.contains(event.target)) return;
+        setExpanded(false);
+      });
+
+      document.addEventListener("keydown", function (event) {
+        if (event.key === "Escape") {
+          setExpanded(false);
+        }
+      });
+    }
+
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", initSearchToggle);
+    } else {
+      initSearchToggle();
+    }
+  })();
+</script>

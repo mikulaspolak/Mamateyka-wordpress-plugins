@@ -1,0 +1,2179 @@
+<!doctype html>
+<html lang="sk">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <title>Misia z budúcnosti</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg-0: #0a0f16;
+        --bg-1: #121b26;
+        --panel: rgba(18, 27, 38, 0.74);
+        --panel-border: rgba(63, 197, 232, 0.35);
+        --accent-1: #3fc5e8;
+        --accent-1-soft: #8fe6f5;
+        --accent-2: #f3a738;
+        --accent-2-soft: #ffc772;
+        --text: #eef4f7;
+        --text-dim: #7c9aa8;
+        --danger: #ff5a5f;
+        --ok: #3ddc97;
+        --radius: 18px;
+        --font-display: "Exo 2", sans-serif;
+        --font-body: "Exo 2", sans-serif;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        min-height: 100%;
+        background: var(--bg-0);
+        color: var(--text);
+        font-family: var(--font-body);
+      }
+
+      body {
+        position: relative;
+        overflow-x: hidden;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        background:
+          radial-gradient(
+            ellipse at 20% -10%,
+            rgba(63, 197, 232, 0.3),
+            transparent 55%
+          ),
+          radial-gradient(
+            ellipse at 85% 10%,
+            rgba(243, 167, 56, 0.16),
+            transparent 50%
+          ),
+          linear-gradient(180deg, var(--bg-1), var(--bg-0) 60%);
+      }
+
+      /* subtle animated scanline / grid backdrop */
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 0;
+        background-image:
+          linear-gradient(rgba(63, 197, 232, 0.08) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(63, 197, 232, 0.08) 1px, transparent 1px);
+        background-size: 38px 38px;
+        mask-image: radial-gradient(
+          ellipse at 50% 20%,
+          rgba(0, 0, 0, 0.6),
+          transparent 75%
+        );
+        animation: gridDrift 6s linear infinite;
+      }
+
+      @keyframes gridDrift {
+        0% {
+          background-position:
+            0 0,
+            0 0;
+        }
+        100% {
+          background-position:
+            38px 38px,
+            38px 38px;
+        }
+      }
+
+      body::after {
+        content: "";
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 0;
+        background: repeating-linear-gradient(
+          0deg,
+          rgba(255, 255, 255, 0.025) 0px,
+          rgba(255, 255, 255, 0.025) 1px,
+          transparent 2px,
+          transparent 4px
+        );
+        opacity: 0.4;
+      }
+
+      /* small light dots drifting across the grid, added once via JS */
+      .data-pulse {
+        position: fixed;
+        width: 4px;
+        height: 4px;
+        border-radius: 50%;
+        background: var(--accent-1);
+        box-shadow: 0 0 10px 2px rgba(63, 197, 232, 0.7);
+        pointer-events: none;
+        z-index: 0;
+        opacity: 0;
+        animation: pulseTravel linear infinite;
+      }
+
+      @keyframes pulseTravel {
+        0% {
+          opacity: 0;
+          transform: translate(0, 0);
+        }
+        10% {
+          opacity: 0.9;
+        }
+        90% {
+          opacity: 0.9;
+        }
+        100% {
+          opacity: 0;
+          transform: translate(var(--pulse-dx, 200px), var(--pulse-dy, 200px));
+        }
+      }
+
+      header.top {
+        position: relative;
+        z-index: 1;
+        text-align: center;
+        padding: 28px 16px 14px;
+      }
+
+      .hud-bar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        max-width: 480px;
+        margin: 0 auto 14px;
+        font-family: var(--font-display);
+        font-size: 10px;
+        letter-spacing: 0.25em;
+        text-transform: uppercase;
+        color: var(--text-dim);
+        opacity: 0.8;
+      }
+
+      .hud-dot {
+        display: inline-block;
+        width: 6px;
+        height: 6px;
+        margin-right: 6px;
+        border-radius: 50%;
+        background: var(--accent-1);
+        box-shadow: 0 0 6px var(--accent-1);
+        animation: hudDotPulse 2s ease-in-out infinite;
+      }
+
+      @keyframes hudDotPulse {
+        0%,
+        100% {
+          opacity: 0.4;
+          transform: scale(0.85);
+        }
+        50% {
+          opacity: 1;
+          transform: scale(1.15);
+        }
+      }
+
+      .site-logo-header {
+        display: block;
+        width: 40px;
+        max-width: 100%;
+        height: auto;
+        margin: 0 auto 10px;
+        border-radius: 6px;
+        filter: drop-shadow(0 0 10px rgba(63, 197, 232, 0.45));
+      }
+
+      header.top .eyebrow {
+        display: inline-block;
+        font-family: var(--font-body);
+        font-size: 12px;
+        letter-spacing: 0.35em;
+        text-transform: uppercase;
+        color: var(--accent-1);
+        margin-bottom: 8px;
+        animation: headerReveal 0.6s ease both;
+      }
+
+      @keyframes headerReveal {
+        from {
+          opacity: 0;
+          transform: translateY(-8px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      header.top h1 {
+        position: relative;
+        display: inline-block;
+        font-family: var(--font-display);
+        font-weight: 800;
+        font-size: clamp(22px, 6vw, 38px);
+        letter-spacing: 0.06em;
+        margin: 0;
+        background: linear-gradient(
+          90deg,
+          var(--accent-1),
+          var(--accent-1-soft)
+        );
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        text-shadow: 0 0 30px rgba(63, 197, 232, 0.35);
+        animation:
+          headerReveal 0.6s ease 0.15s both,
+          typeReveal 1.6s steps(24, end) 0.6s both;
+      }
+
+      header.top h1::after {
+        content: "";
+        position: absolute;
+        top: 4%;
+        right: -6px;
+        width: 2px;
+        height: 92%;
+        background: var(--accent-1);
+        box-shadow: 0 0 8px var(--accent-1);
+        animation:
+          caretBlink 0.8s step-end 4,
+          caretFade 0.1s linear 2.9s forwards;
+      }
+
+      @keyframes typeReveal {
+        from {
+          clip-path: inset(0 100% 0 0);
+        }
+        to {
+          clip-path: inset(0 0 0 0);
+        }
+      }
+
+      @keyframes caretBlink {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0;
+        }
+      }
+
+      @keyframes caretFade {
+        to {
+          opacity: 0;
+        }
+      }
+
+      header.top .sub {
+        margin-top: 6px;
+        font-size: 14px;
+        color: var(--text-dim);
+        letter-spacing: 0.02em;
+        animation: headerReveal 0.6s ease 0.3s both;
+      }
+
+      /* progress dots */
+      .progress {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        padding: 6px 16px 4px;
+        flex-wrap: wrap;
+      }
+
+      .progress .dot {
+        position: relative;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: var(--font-display);
+        font-size: 11px;
+        color: var(--text-dim);
+        border: 1px solid rgba(63, 197, 232, 0.3);
+        background: rgba(255, 255, 255, 0.02);
+        transition: all 0.3s ease;
+      }
+
+      .progress .dot.current {
+        border-color: var(--accent-2);
+        color: var(--accent-2);
+        animation: pulseGlow 2.2s ease-in-out infinite;
+      }
+
+      .progress .dot.current::before {
+        content: "";
+        position: absolute;
+        inset: -5px;
+        border-radius: 50%;
+        border: 1px dashed rgba(255, 199, 114, 0.65);
+        animation: rotateRing 14s linear infinite;
+      }
+
+      .progress .dot.solved {
+        border-color: var(--ok);
+        color: var(--ok);
+        background: rgba(61, 220, 151, 0.08);
+        animation: dotPop 0.4s ease;
+      }
+
+      @keyframes pulseGlow {
+        0%,
+        100% {
+          box-shadow: 0 0 10px rgba(243, 167, 56, 0.35);
+        }
+        50% {
+          box-shadow: 0 0 20px rgba(243, 167, 56, 0.75);
+        }
+      }
+
+      @keyframes rotateRing {
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      @keyframes dotPop {
+        0% {
+          transform: scale(0.7);
+        }
+        60% {
+          transform: scale(1.15);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+
+      main#app {
+        position: relative;
+        z-index: 1;
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 18px 14px 48px;
+      }
+
+      .card {
+        position: relative;
+        width: 100%;
+        max-width: 480px;
+        background: var(--panel);
+        border: 1px solid var(--panel-border);
+        border-radius: var(--radius);
+        padding: 22px 20px 26px;
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
+        box-shadow:
+          0 0 0 1px rgba(63, 197, 232, 0.1),
+          0 20px 60px -20px rgba(0, 0, 0, 0.8),
+          0 0 40px -10px rgba(63, 197, 232, 0.35);
+        animation:
+          fadeIn 0.45s ease both,
+          cardGlow 4s ease-in-out infinite;
+      }
+
+      .card::before {
+        content: "";
+        position: absolute;
+        inset: -8px;
+        pointer-events: none;
+        background:
+          linear-gradient(to right, var(--accent-1) 2px, transparent 2px) top
+            left / 22px 2px no-repeat,
+          linear-gradient(to bottom, var(--accent-1) 2px, transparent 2px) top
+            left / 2px 22px no-repeat,
+          linear-gradient(to left, var(--accent-1) 2px, transparent 2px) top
+            right / 22px 2px no-repeat,
+          linear-gradient(to bottom, var(--accent-1) 2px, transparent 2px) top
+            right / 2px 22px no-repeat,
+          linear-gradient(to right, var(--accent-1) 2px, transparent 2px) bottom
+            left / 22px 2px no-repeat,
+          linear-gradient(to top, var(--accent-1) 2px, transparent 2px) bottom
+            left / 2px 22px no-repeat,
+          linear-gradient(to left, var(--accent-1) 2px, transparent 2px) bottom
+            right / 22px 2px no-repeat,
+          linear-gradient(to top, var(--accent-1) 2px, transparent 2px) bottom
+            right / 2px 22px no-repeat;
+        animation: cornerPulse 3s ease-in-out infinite;
+      }
+
+      .card::after {
+        content: "";
+        position: absolute;
+        left: 6%;
+        width: 88%;
+        height: 2px;
+        top: 4%;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(63, 197, 232, 0.85),
+          transparent
+        );
+        pointer-events: none;
+        animation: scanSweep 5s ease-in-out infinite;
+      }
+
+      @keyframes cardGlow {
+        0%,
+        100% {
+          box-shadow:
+            0 0 0 1px rgba(63, 197, 232, 0.1),
+            0 20px 60px -20px rgba(0, 0, 0, 0.8),
+            0 0 40px -10px rgba(63, 197, 232, 0.35);
+        }
+        50% {
+          box-shadow:
+            0 0 0 1px rgba(63, 197, 232, 0.18),
+            0 20px 60px -20px rgba(0, 0, 0, 0.8),
+            0 0 55px -8px rgba(63, 197, 232, 0.55);
+        }
+      }
+
+      @keyframes cornerPulse {
+        0%,
+        100% {
+          opacity: 0.55;
+        }
+        50% {
+          opacity: 1;
+        }
+      }
+
+      @keyframes scanSweep {
+        0% {
+          top: 4%;
+          opacity: 0;
+        }
+        10% {
+          opacity: 0.35;
+        }
+        90% {
+          opacity: 0.35;
+        }
+        100% {
+          top: 94%;
+          opacity: 0;
+        }
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .card .tag {
+        font-family: var(--font-display);
+        font-size: 11px;
+        letter-spacing: 0.25em;
+        text-transform: uppercase;
+        color: var(--accent-1);
+        margin: 0 0 6px;
+      }
+
+      .card h2 {
+        position: relative;
+        font-family: var(--font-display);
+        font-size: 20px;
+        margin: 0 0 14px;
+        color: var(--text);
+        letter-spacing: 0.03em;
+        animation: glitchFlicker 6s ease-in-out infinite;
+      }
+
+      @keyframes glitchFlicker {
+        0%,
+        92%,
+        100% {
+          text-shadow: none;
+          transform: translate(0, 0);
+        }
+        93% {
+          text-shadow: -2px 0 rgba(63, 197, 232, 0.8);
+          transform: translate(-1px, 0);
+        }
+        94% {
+          text-shadow: 2px 0 rgba(243, 167, 56, 0.8);
+          transform: translate(1px, 0);
+        }
+        95% {
+          text-shadow: -1px 0 rgba(63, 197, 232, 0.6);
+          transform: translate(0, 0);
+        }
+        96%,
+        99% {
+          text-shadow: none;
+          transform: translate(0, 0);
+        }
+      }
+
+      .card p {
+        font-size: 16px;
+        line-height: 1.55;
+        color: var(--text);
+        margin: 0 0 16px;
+      }
+
+      .card p.dim {
+        color: var(--text-dim);
+        font-size: 14px;
+      }
+
+      .riddle-image-wrap {
+        border-radius: 12px;
+        overflow: hidden;
+        border: 1px solid rgba(63, 197, 232, 0.35);
+        margin-bottom: 18px;
+        background: rgba(0, 0, 0, 0.3);
+      }
+
+      .riddle-image-wrap img {
+        display: block;
+        width: 100%;
+        height: auto;
+      }
+
+      form.gate {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      label.field-label {
+        font-size: 12px;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: var(--text-dim);
+      }
+
+      input[type="text"] {
+        width: 100%;
+        padding: 14px 16px;
+        font-size: 16px;
+        font-family: var(--font-body);
+        font-weight: 600;
+        letter-spacing: 0.03em;
+        color: var(--text);
+        background: rgba(0, 0, 0, 0.35);
+        border: 1px solid rgba(63, 197, 232, 0.4);
+        border-radius: 10px;
+        outline: none;
+        transition:
+          border-color 0.2s ease,
+          box-shadow 0.2s ease;
+      }
+
+      input[type="text"]::placeholder {
+        color: rgba(124, 154, 168, 0.6);
+      }
+
+      input[type="text"]:focus {
+        border-color: var(--accent-1);
+        box-shadow: 0 0 0 3px rgba(63, 197, 232, 0.22);
+      }
+
+      input[type="text"].error {
+        border-color: var(--danger);
+        animation: shake 0.3s ease;
+      }
+
+      @keyframes shake {
+        0%,
+        100% {
+          transform: translateX(0);
+        }
+        25% {
+          transform: translateX(-6px);
+        }
+        75% {
+          transform: translateX(6px);
+        }
+      }
+
+      button.submit {
+        margin-top: 4px;
+        padding: 14px 16px;
+        font-family: var(--font-display);
+        font-size: 13px;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: var(--bg-0);
+        background: linear-gradient(
+          90deg,
+          var(--accent-2),
+          var(--accent-2-soft)
+        );
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        box-shadow: 0 0 20px rgba(243, 167, 56, 0.4);
+        transition:
+          transform 0.15s ease,
+          box-shadow 0.15s ease;
+      }
+
+      button.submit:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 0 26px rgba(243, 167, 56, 0.55);
+      }
+
+      button.submit:active {
+        transform: translateY(0);
+      }
+
+      .msg {
+        font-size: 14px;
+        margin-top: -2px;
+        min-height: 18px;
+      }
+
+      .msg.error {
+        color: var(--danger);
+      }
+
+      .msg.ok {
+        color: var(--ok);
+      }
+
+      .solved-panel {
+        border-radius: 12px;
+        padding: 16px;
+        background: rgba(61, 220, 151, 0.06);
+        border: 1px solid rgba(61, 220, 151, 0.3);
+      }
+
+      .solved-panel .tag {
+        color: var(--ok);
+      }
+
+      .solved-panel p + p {
+        margin-top: 10px;
+      }
+
+      .qr-instruction {
+        display: flex;
+        align-items: flex-start;
+        gap: 8px;
+        margin-top: 14px;
+        padding: 12px 14px;
+        border-radius: 10px;
+        background: rgba(243, 167, 56, 0.08);
+        border: 1px solid rgba(243, 167, 56, 0.35);
+        color: var(--accent-2);
+        font-weight: 600;
+        font-size: 14px;
+        line-height: 1.5;
+      }
+
+      .final-panel {
+        text-align: center;
+        border-radius: 14px;
+        padding: 24px 18px;
+        background: linear-gradient(
+          160deg,
+          rgba(243, 167, 56, 0.16),
+          rgba(255, 199, 114, 0.06)
+        );
+        border: 1px solid rgba(243, 167, 56, 0.45);
+        box-shadow: 0 0 36px rgba(243, 167, 56, 0.25);
+        animation: finalGlow 3s ease-in-out infinite;
+      }
+
+      @keyframes finalGlow {
+        0%,
+        100% {
+          box-shadow: 0 0 26px rgba(243, 167, 56, 0.2);
+        }
+        50% {
+          box-shadow: 0 0 44px rgba(243, 167, 56, 0.4);
+        }
+      }
+
+      .final-panel .badge {
+        font-size: 44px;
+        margin-bottom: 8px;
+      }
+
+      .final-panel .tag {
+        justify-content: center;
+        color: var(--accent-2);
+      }
+
+      .final-panel h2 {
+        font-size: 22px;
+        background: linear-gradient(90deg, var(--accent-2), var(--accent-1));
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+
+      .final-panel p {
+        text-align: left;
+      }
+
+      .author-line {
+        margin-top: 18px;
+        font-size: 15px;
+        line-height: 1.5;
+        color: var(--text);
+        text-align: left;
+        opacity: 0.9;
+      }
+
+      .support-toggle {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        margin-top: 18px;
+        padding: 14px 16px;
+        font-family: var(--font-display);
+        font-size: 13px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--bg-0);
+        background: linear-gradient(
+          90deg,
+          var(--accent-2),
+          var(--accent-2-soft)
+        );
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        box-shadow: 0 0 20px rgba(243, 167, 56, 0.4);
+        transition:
+          transform 0.15s ease,
+          box-shadow 0.15s ease;
+      }
+
+      .support-toggle:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 0 26px rgba(243, 167, 56, 0.55);
+      }
+
+      .support-toggle.hidden,
+      .support-form.hidden,
+      .support-success.hidden {
+        display: none;
+      }
+
+      .support-form {
+        display: grid;
+        gap: 14px;
+        width: 100%;
+        margin-top: 20px;
+        padding-top: 18px;
+        border-top: 1px solid rgba(63, 197, 232, 0.25);
+        text-align: left;
+      }
+
+      .support-form h3 {
+        margin: 0 0 4px;
+        font-family: var(--font-display);
+        font-size: 18px;
+        color: var(--text);
+        letter-spacing: 0.02em;
+      }
+
+      .support-form .field-grid {
+        display: grid;
+        gap: 12px;
+      }
+
+      .support-form .checkbox-list {
+        display: grid;
+        gap: 10px;
+        margin-top: 6px;
+      }
+
+      .support-form .checkbox-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        color: var(--text);
+        font-size: 14px;
+        line-height: 1.45;
+      }
+
+      .support-form .support-other {
+        display: grid;
+        gap: 6px;
+        margin: 0 0 2px 26px;
+      }
+
+      .support-form .support-other.hidden {
+        display: none;
+      }
+
+      .support-form input[type="checkbox"] {
+        accent-color: var(--accent-1);
+        width: 16px;
+        height: 16px;
+        margin-top: 2px;
+        flex-shrink: 0;
+      }
+
+      .support-form .inline-note {
+        font-size: 11px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--text-dim);
+      }
+
+      .support-form .form-message {
+        min-height: 18px;
+        font-size: 13px;
+        color: var(--danger);
+      }
+
+      .support-success {
+        margin-top: 18px;
+        padding: 16px 18px;
+        border-radius: 12px;
+        background: rgba(61, 220, 151, 0.06);
+        border: 1px solid rgba(61, 220, 151, 0.4);
+        color: var(--ok);
+        font-weight: 600;
+        text-align: center;
+      }
+
+      .error-screen {
+        text-align: center;
+      }
+
+      .already-solved-note {
+        color: var(--text-dim);
+        font-size: 12px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        margin-bottom: 6px;
+      }
+
+      .error-screen .glyph {
+        font-family: var(--font-display);
+        font-size: 48px;
+        color: var(--danger);
+        margin-bottom: 10px;
+        text-shadow: 0 0 30px rgba(255, 90, 95, 0.5);
+      }
+
+      .connection-intro {
+        position: fixed;
+        inset: 0;
+        z-index: 10;
+        display: grid;
+        place-items: center;
+        overflow: hidden;
+        padding: 24px;
+        background:
+          radial-gradient(
+            circle at center,
+            rgba(15, 54, 67, 0.5),
+            transparent 40%
+          ),
+          rgba(5, 10, 16, 0.97);
+        transition:
+          opacity 0.55s ease,
+          visibility 0.55s ease;
+      }
+
+      .connection-intro.is-leaving {
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+      }
+
+      .connection-intro::before,
+      .connection-intro::after {
+        content: "";
+        position: absolute;
+        pointer-events: none;
+      }
+
+      .connection-intro::before {
+        inset: 8%;
+        border: 1px solid rgba(63, 197, 232, 0.12);
+        clip-path: polygon(
+          0 0,
+          24% 0,
+          24% 1px,
+          76% 1px,
+          76% 0,
+          100% 0,
+          100% 24%,
+          99% 24%,
+          99% 76%,
+          100% 76%,
+          100% 100%,
+          76% 100%,
+          76% 99%,
+          24% 99%,
+          24% 100%,
+          0 100%,
+          0 76%,
+          1% 76%,
+          1% 24%,
+          0 24%
+        );
+      }
+
+      .connection-intro::after {
+        width: min(72vw, 460px);
+        height: 1px;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(63, 197, 232, 0.32),
+          transparent
+        );
+        box-shadow:
+          0 -120px 0 rgba(63, 197, 232, 0.08),
+          0 120px 0 rgba(63, 197, 232, 0.08);
+      }
+
+      .connection-panel {
+        position: relative;
+        z-index: 1;
+        width: min(100%, 520px);
+        text-align: center;
+        animation: introContentIn 0.8s ease both;
+      }
+
+      .connection-kicker,
+      .connection-status,
+      .connection-coordinates {
+        font-family: var(--font-display);
+        text-transform: uppercase;
+        letter-spacing: 0.22em;
+      }
+
+      .connection-kicker {
+        margin: 0 0 22px;
+        color: var(--accent-1);
+        font-size: 11px;
+        animation: introTextIn 0.7s ease 0.12s both;
+      }
+
+      .future-scanner {
+        position: relative;
+        width: min(62vw, 260px);
+        aspect-ratio: 1;
+        margin: 0 auto 28px;
+        border: 1px solid rgba(63, 197, 232, 0.42);
+        border-radius: 50%;
+        background:
+          linear-gradient(rgba(63, 197, 232, 0.13) 1px, transparent 1px)
+            center / 100% 25% no-repeat,
+          linear-gradient(90deg, rgba(63, 197, 232, 0.13) 1px, transparent 1px)
+            center / 25% 100% no-repeat,
+          radial-gradient(
+            circle,
+            rgba(63, 197, 232, 0.16),
+            rgba(63, 197, 232, 0.02) 48%,
+            transparent 70%
+          );
+        box-shadow:
+          0 0 0 10px rgba(63, 197, 232, 0.035),
+          0 0 0 28px rgba(63, 197, 232, 0.025),
+          0 0 48px rgba(63, 197, 232, 0.28);
+        animation: scannerBreathe 2.4s ease-in-out infinite;
+      }
+
+      .future-scanner::before,
+      .future-scanner::after {
+        content: "";
+        position: absolute;
+        inset: 13%;
+        border: 1px solid rgba(143, 230, 245, 0.52);
+        border-radius: 50%;
+      }
+
+      .future-scanner::before {
+        border-left-color: transparent;
+        border-bottom-color: transparent;
+        animation: rotateScanner 3.2s linear infinite;
+      }
+
+      .future-scanner::after {
+        inset: 25%;
+        border-color: rgba(243, 167, 56, 0.5);
+        border-right-color: transparent;
+        animation: rotateScannerReverse 2.2s linear infinite;
+      }
+
+      .scanner-sweep {
+        position: absolute;
+        inset: 0;
+        overflow: hidden;
+        border-radius: 50%;
+      }
+
+      .scanner-sweep::before {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 50%;
+        height: 1px;
+        transform-origin: left center;
+        background: linear-gradient(
+          90deg,
+          rgba(143, 230, 245, 0.95),
+          transparent
+        );
+        box-shadow: 0 0 8px var(--accent-1);
+        animation: scannerSweep 1.8s linear infinite;
+      }
+
+      .scanner-core {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 13px;
+        height: 13px;
+        transform: translate(-50%, -50%);
+        border: 2px solid var(--accent-1-soft);
+        border-radius: 50%;
+        background: var(--accent-1);
+        box-shadow:
+          0 0 0 7px rgba(63, 197, 232, 0.12),
+          0 0 24px 5px rgba(63, 197, 232, 0.75);
+        animation: corePulse 1.2s ease-in-out infinite;
+      }
+
+      .scanner-mark {
+        position: absolute;
+        color: rgba(143, 230, 245, 0.72);
+        font-family: var(--font-display);
+        font-size: 10px;
+        letter-spacing: 0.12em;
+      }
+
+      .scanner-mark.top {
+        top: -24px;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+
+      .scanner-mark.bottom {
+        bottom: -24px;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+
+      .connection-title {
+        max-width: 440px;
+        margin: 0 auto 12px;
+        color: var(--text);
+        font-family: var(--font-display);
+        font-size: clamp(20px, 5vw, 30px);
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        line-height: 1.25;
+        animation: introTextIn 0.7s ease 0.25s both;
+      }
+
+      .connection-status {
+        margin: 0;
+        color: var(--accent-2);
+        font-size: 10px;
+        animation: statusFlicker 1.4s steps(2, end) infinite;
+      }
+
+      .connection-coordinates {
+        margin: 24px 0 0;
+        color: var(--text-dim);
+        font-size: 9px;
+        opacity: 0.7;
+      }
+
+      @keyframes introContentIn {
+        from {
+          opacity: 0;
+          transform: scale(0.96);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+
+      @keyframes introTextIn {
+        from {
+          opacity: 0;
+          transform: translateY(8px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes scannerBreathe {
+        0%,
+        100% {
+          box-shadow:
+            0 0 0 10px rgba(63, 197, 232, 0.035),
+            0 0 0 28px rgba(63, 197, 232, 0.025),
+            0 0 48px rgba(63, 197, 232, 0.28);
+        }
+        50% {
+          box-shadow:
+            0 0 0 14px rgba(63, 197, 232, 0.05),
+            0 0 0 34px rgba(63, 197, 232, 0.035),
+            0 0 72px rgba(63, 197, 232, 0.5);
+        }
+      }
+
+      @keyframes rotateScanner {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      @keyframes rotateScannerReverse {
+        to {
+          transform: rotate(-360deg);
+        }
+      }
+
+      @keyframes scannerSweep {
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      @keyframes corePulse {
+        0%,
+        100% {
+          transform: translate(-50%, -50%) scale(0.8);
+          opacity: 0.75;
+        }
+        50% {
+          transform: translate(-50%, -50%) scale(1.2);
+          opacity: 1;
+        }
+      }
+
+      @keyframes statusFlicker {
+        0%,
+        48%,
+        52%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.45;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          animation-duration: 0.001ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.001ms !important;
+        }
+      }
+
+      @media (max-width: 420px) {
+        .connection-intro {
+          padding: 18px;
+        }
+
+        .future-scanner {
+          margin-bottom: 24px;
+        }
+
+        .connection-coordinates {
+          margin-top: 18px;
+        }
+      }
+
+      footer.bottom {
+        position: relative;
+        z-index: 1;
+        text-align: center;
+        padding: 10px 16px 24px;
+        font-size: 12px;
+        color: var(--text-dim);
+        letter-spacing: 0.08em;
+      }
+
+      footer.bottom .timeline {
+        display: block;
+        margin-top: 4px;
+        font-size: 10px;
+        letter-spacing: 0.2em;
+        opacity: 0.55;
+      }
+
+      footer.bottom .mission-timer {
+        display: block;
+        margin-top: 4px;
+        font-size: 10px;
+        letter-spacing: 0.15em;
+        opacity: 0.7;
+      }
+
+      footer.bottom .reset-link {
+        display: inline-block;
+        margin-top: 8px;
+        padding: 0;
+        font-family: inherit;
+        font-size: 10px;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: var(--text-dim);
+        background: none;
+        border: none;
+        text-decoration: underline;
+        cursor: pointer;
+        opacity: 0.7;
+      }
+
+      footer.bottom .reset-link:hover {
+        opacity: 1;
+        color: var(--accent-1);
+      }
+
+      .modal-overlay {
+        position: fixed;
+        inset: 0;
+        z-index: 20;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        background: rgba(5, 10, 16, 0.75);
+      }
+
+      .modal-overlay.hidden {
+        display: none;
+      }
+
+      .modal-box {
+        width: 100%;
+        max-width: 360px;
+        background: var(--bg-1);
+        color: var(--text);
+        border: 1px solid var(--panel-border);
+        border-radius: var(--radius);
+        padding: 22px 20px;
+        text-align: center;
+        box-shadow: 0 20px 60px -20px rgba(0, 0, 0, 0.8);
+      }
+
+      .modal-box p {
+        color: var(--text);
+      }
+
+      .modal-actions {
+        display: flex;
+        gap: 10px;
+        margin-top: 16px;
+      }
+
+      .modal-actions .submit {
+        flex: 1;
+        margin-top: 0;
+      }
+
+      .modal-cancel {
+        flex: 1;
+        padding: 14px 16px;
+        font-family: var(--font-display);
+        font-size: 13px;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: var(--text);
+        background: rgba(63, 197, 232, 0.12);
+        border: 1px solid var(--panel-border);
+        border-radius: 10px;
+        cursor: pointer;
+      }
+
+      .modal-cancel:hover {
+        background: rgba(63, 197, 232, 0.22);
+        border-color: var(--accent-1);
+      }
+
+      @media (min-width: 600px) {
+        .card {
+          padding: 32px 34px 34px;
+        }
+        header.top {
+          padding: 40px 16px 18px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <section
+      class="connection-intro"
+      id="connection-intro"
+      aria-label="Nadväzovanie spojenia s rokom 2056"
+    >
+      <div class="connection-panel">
+        <p class="connection-kicker">ČASOVÝ PROTOKOL // VSTUPNÝ UZOL</p>
+        <div class="future-scanner" aria-hidden="true">
+          <span class="scanner-mark top">ROK // 2056</span>
+          <span class="scanner-mark bottom"
+            >Nadväzujem spojenie s rokom 2056.</span
+          >
+          <span class="scanner-sweep"></span>
+          <span class="scanner-core"></span>
+        </div>
+        <h2 class="connection-title">Nadväzujem spojenie s rokom 2056.</h2>
+        <p class="connection-status">
+          SYNCHRONIZÁCIA ČASOVEJ LÍNIE <span aria-hidden="true">///</span>
+        </p>
+        <p class="connection-coordinates">
+          TEMPORÁLNA ODCHÝLKA: 00.0007 &nbsp; // &nbsp; SIGNÁL: HĽADÁM
+        </p>
+      </div>
+    </section>
+
+    <header class="top">
+      <div class="hud-bar">
+        <span>2056</span>
+        <span><span class="hud-dot"></span>Signál stabilný</span>
+      </div>
+      <img
+        class="site-logo-header"
+        src="/wp-content/uploads/2026/07/1996_logo.jpg"
+        alt="Logo"
+      />
+      <span class="eyebrow">Prísne tajné</span>
+      <h1>MISIA Z BUDÚCNOSTI</h1>
+      <p class="sub">
+        Rozlúšti odkazy, ktoré k tebe prišli z inej časovej línie.
+      </p>
+    </header>
+
+    <div class="progress" id="progress"></div>
+
+    <main id="app"></main>
+
+    <footer class="bottom">
+      © prenos dát cez časovú os
+      <span class="timeline">1997 &ndash; 2026 &ndash; 2056</span>
+      <span class="mission-timer" id="mission-timer"></span>
+      <button type="button" class="reset-link" id="reset-link" hidden>
+        Resetovať
+      </button>
+    </footer>
+
+    <div class="modal-overlay hidden" id="reset-modal">
+      <div class="modal-box">
+        <p>Chceš resetovať hru a ísť hrať od začiatku?</p>
+        <div class="modal-actions">
+          <button type="button" class="submit" id="reset-confirm">
+            Áno, resetovať
+          </button>
+          <button type="button" class="modal-cancel" id="reset-cancel">
+            Zrušiť
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      (function () {
+        "use strict";
+
+        // ---- Mini-databáza hádaniek (nahraď placeholdery reálnym obsahom) ----
+        // heslo = spravne riesenie TEJTO hadanky; zaroven sluzi ako heslo na odomknutie NASLEDUJUCEJ karty
+        // odpoved = text zobrazeny po vyrieseni (narativ + smerovanie na dalsiu misiu)
+        var RIDDLES = [
+          {
+            poradie: 1,
+            hash: "1a",
+            nazov: "Altánok",
+            obrazok:
+              "/wp-content/uploads/2026/09/Misia-z-buducnosti-hadanka1.jpg",
+            heslo: "Nádej",
+            odpoved: [
+              "Gratulujeme! Rozlúštili ste prvú správu. Prvá stopa vás zaviedla správnym smerom.",
+              "Ďalšia správa sa nachádza pri figovníku. Na jej odomknutie použite heslo, ktoré ste získali: NÁDEJ",
+            ],
+          },
+          {
+            poradie: 2,
+            hash: "2b",
+            nazov: "Figovník",
+            obrazok:
+              "/wp-content/uploads/2026/09/Misia-z-buducnosti-hadanka2.jpg",
+            heslo: "Božie deti",
+            odpoved: [
+              "Správne! Možno sa zmenili budovy. Možno sa zmenili ľudia. Možno sa zmenil celý svet. Ale niečo zostáva — všetci sme Božie deti.",
+              "V roku 1990 prišli saleziáni do Petržalky. Nemali ešte veľké stredisko ani ihriská, začínali iba v troch miestnostiach jedného paneláku. A aj po 30 rokoch chceme žiť evanjelium v našom stredisku.",
+              "Ďalšia stopa čaká pri šmykľavke.",
+            ],
+          },
+          {
+            poradie: 3,
+            hash: "3c",
+            nazov: "Šmykľavka",
+            obrazok:
+              "/wp-content/uploads/2026/09/Misia-z-buducnosti-hadanka3.jpg",
+            heslo: "Svätosť",
+            odpoved: [
+              "Svätosť je náš spoločný cieľ. Podarí sa nám k tomu priblížiť v priebehu najbližších 30 rokov?",
+              "Sv. Dominik Savio (patrón našej Kaplnky) hovoril: „Pre nás svätosť spočíva v tom, že sme stále veselí.“",
+              "Choďte k ďalšej správe. Nájdete ju pri striedačke.",
+            ],
+          },
+          {
+            poradie: 4,
+            hash: "4d",
+            nazov: "Striedačka",
+            obrazok:
+              "/wp-content/uploads/2026/09/Misia-z-buducnosti-hadanka4.jpg",
+            heslo: "Petržalka",
+            odpoved: [
+              "Výborne! Správa bola obnovená. Blížite sa k cieľu.",
+              "Ďalšia správa je ukrytá pri beachvolejbalovom ihrisku.",
+            ],
+          },
+          {
+            poradie: 5,
+            hash: "5e",
+            nazov: "Beachvolejbal",
+            obrazok:
+              "/wp-content/uploads/2026/09/Misia-z-buducnosti-hadanka5.jpg",
+            heslo: "Dôveruj",
+            odpoved: [
+              "Výborne! Získali ste posledné heslo: DÔVERUJ.",
+              "Aj Titus Zeman dôveroval Bohu vtedy, keď cesta pred ním nebola istá. Pomáhal mladým saleziánom dostať sa cez hranice, hoci za to neskôr tvrdo zaplatil. Dnes sa jeho meno spája aj s našou farnosťou na Mamateyovej.",
+              "Vydajte sa k poslednej správe. Nájdete ju na hokejbalovom ihrisku. Tam sa dozviete, prečo sme vám poslali túto správu z budúcnosti.",
+            ],
+          },
+          {
+            poradie: 6,
+            hash: "6f",
+            nazov: "Hokejbal",
+            obrazok: "",
+            heslo: "",
+            odpoved: [
+              "Možno ste čakali, že vám ukážeme, aká bude Mamateyka o 30 rokov. Nemôžeme — budúcnosť Mamateyky ešte neexistuje.",
+              "V roku 2056 sme pochopili, že ju nemôžeme predpovedať. Môžeme ju iba vytvoriť. A preto sme poslali túto správu práve vám.",
+              "Ďalšia kapitola je vo vašich rukách. Pozývame ťa, prilož ruku k dielu a buduj s nami Mamateyku. Mamateyka nie sú iba múry a história — sme to my všetci a budúcnosť taká, akú si ju urobíme.",
+              "Ďakujeme, že ste si zahrali túto hru a veríme, že sa vám páčila.",
+            ],
+          },
+        ];
+
+        // vyriesene hadanky sa ukladaju do localStorage - dalsia karta sa po nacitani QR odomkne automaticky
+        var PROGRESS_KEY = "misiaZBuducnosti.progress";
+
+        function normalize(str) {
+          return String(str || "")
+            .trim()
+            .toLowerCase()
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "");
+        }
+
+        function getRiddleByHash(hash) {
+          for (var i = 0; i < RIDDLES.length; i++) {
+            if (RIDDLES[i].hash === hash) return RIDDLES[i];
+          }
+          return null;
+        }
+
+        // zobrazuje sa namiesto nazvu hadanky, napr. "SPRÁVA 3/6"
+        function missionLabel(riddle) {
+          return "SPRÁVA " + riddle.poradie + "/" + RIDDLES.length;
+        }
+
+        function loadProgress() {
+          try {
+            var raw = localStorage.getItem(PROGRESS_KEY);
+            var parsed = raw ? JSON.parse(raw) : {};
+            return parsed && typeof parsed === "object" ? parsed : {};
+          } catch (e) {
+            return {};
+          }
+        }
+
+        function saveProgress(progress) {
+          try {
+            localStorage.setItem(PROGRESS_KEY, JSON.stringify(progress));
+          } catch (e) {
+            // localStorage nedostupne (napr. privatny rezim) - progres sa jednoducho neulozi
+          }
+        }
+
+        function getState(hash) {
+          var progress = loadProgress();
+          return progress[hash] || { solved: false };
+        }
+
+        function setState(hash, patch) {
+          var progress = loadProgress();
+          progress[hash] = Object.assign(
+            { solved: false },
+            progress[hash],
+            patch,
+          );
+          saveProgress(progress);
+        }
+
+        // hadanka 1 je vzdy odomknuta, dalsie sa odomknu az po vyrieseni predchadzajucej
+        function isRiddleUnlocked(riddle) {
+          if (riddle.poradie === 1) return true;
+          var previousRiddle = RIDDLES[riddle.poradie - 2];
+          return !!(previousRiddle && getState(previousRiddle.hash).solved);
+        }
+
+        // najblizsia nevyriesena hadanka v poradi - pouzite v hlaske pre este neodomknutu kartu
+        function getNextUnsolvedPoradie() {
+          for (var i = 0; i < RIDDLES.length; i++) {
+            if (!getState(RIDDLES[i].hash).solved) return RIDDLES[i].poradie;
+          }
+          return RIDDLES.length;
+        }
+
+        // casomiera prezije jednotlive nacitania stranky (sken noveho QR) cez localStorage
+        var STORAGE_KEYS = {
+          start: "misiaZBuducnosti.startTime",
+          end: "misiaZBuducnosti.endTime",
+        };
+
+        function getStoredTime(key) {
+          try {
+            var raw = localStorage.getItem(key);
+            return raw ? Number(raw) : null;
+          } catch (e) {
+            return null;
+          }
+        }
+
+        function setStoredTime(key, value) {
+          try {
+            localStorage.setItem(key, String(value));
+          } catch (e) {
+            // localStorage nedostupne (napr. privatny rezim) - casomiera sa jednoducho nezobrazi
+          }
+        }
+
+        function hasStarted() {
+          return getStoredTime(STORAGE_KEYS.start) !== null;
+        }
+
+        function startMission() {
+          if (!hasStarted()) {
+            setStoredTime(STORAGE_KEYS.start, Date.now());
+            trackEvent("start");
+          }
+        }
+
+        function finishMission() {
+          if (getStoredTime(STORAGE_KEYS.end) === null) {
+            setStoredTime(STORAGE_KEYS.end, Date.now());
+          }
+        }
+
+        function formatDuration(ms) {
+          var totalSeconds = Math.max(0, Math.floor(ms / 1000));
+          var minutes = Math.floor(totalSeconds / 60);
+          var seconds = totalSeconds % 60;
+          return (
+            String(minutes).padStart(2, "0") +
+            ":" +
+            String(seconds).padStart(2, "0")
+          );
+        }
+
+        var SESSION_ID_KEY = "misiaZBuducnosti.sessionId";
+
+        function getOrCreateSessionId() {
+          var id;
+          try {
+            id = localStorage.getItem(SESSION_ID_KEY);
+            if (!id) {
+              id =
+                window.crypto && window.crypto.randomUUID
+                  ? window.crypto.randomUUID()
+                  : Date.now().toString(36) +
+                    Math.random().toString(36).slice(2);
+              localStorage.setItem(SESSION_ID_KEY, id);
+            }
+          } catch (e) {
+            id = Date.now().toString(36) + Math.random().toString(36).slice(2);
+          }
+          return id;
+        }
+
+        // fire-and-forget: statistiky nesmu nikdy blokovat ani rozbit hru
+        function trackEvent(event, extra) {
+          try {
+            var payload = Object.assign(
+              { session_id: getOrCreateSessionId(), event: event },
+              extra || {},
+            );
+            fetch("/wp-json/mamateyka/v1/track", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(payload),
+              keepalive: true,
+            }).catch(function () {});
+          } catch (e) {
+            // ignorovane - trackovanie je best-effort
+          }
+        }
+
+        function currentHash() {
+          return decodeURIComponent(location.hash.replace(/^#/, ""));
+        }
+
+        function escapeHtml(str) {
+          var div = document.createElement("div");
+          div.textContent = String(str == null ? "" : str);
+          return div.innerHTML;
+        }
+
+        function renderProgress(activeHash) {
+          var progress = loadProgress();
+          var html = RIDDLES.map(function (r) {
+            var state = progress[r.hash] || {};
+            var cls = "dot";
+            if (r.hash === activeHash) cls += " current";
+            else if (state.solved) cls += " solved";
+            return (
+              '<div class="' +
+              cls +
+              '" title="' +
+              escapeHtml(r.nazov) +
+              '">' +
+              r.poradie +
+              "</div>"
+            );
+          }).join("");
+          document.getElementById("progress").innerHTML = html;
+        }
+
+        function renderError() {
+          document.getElementById("app").innerHTML =
+            '<div class="card error-screen">' +
+            '<div class="glyph">&#9888;</div>' +
+            "<h2>Neplatný odkaz</h2>" +
+            '<p class="dim">Identifikátor misie sa nepodarilo rozpoznať. Načítaný QR kód alebo URL link je poškodený. Skús prenos znova.</p>' +
+            "</div>";
+          document.getElementById("progress").innerHTML = "";
+        }
+
+        // zobrazi sa, ak hrac naskenuje QR karty, ktora je v poradi este pred nou nevyriesena predchadzajuca
+        function renderNotUnlocked(riddle) {
+          var nextPoradie = getNextUnsolvedPoradie();
+          var startHint = !hasStarted()
+            ? '<p class="dim">Prvú hádanku nájdeš v altánku pri sakristii.</p>'
+            : "";
+          document.getElementById("app").innerHTML =
+            '<div class="card error-screen">' +
+            '<div class="glyph">&#128274;</div>' +
+            "<h2>Táto hádanka ešte nebola odomknutá</h2>" +
+            '<p class="dim">Musíš ísť riešiť hádanky v postupnom poradí. Momentálne máš vyriešiť hádanku číslo ' +
+            nextPoradie +
+            ".</p>" +
+            startHint +
+            "</div>";
+        }
+
+        function renderIntro(riddle) {
+          document.getElementById("app").innerHTML =
+            '<div class="card">' +
+            '<p class="tag">' +
+            missionLabel(riddle) +
+            "</p>" +
+            "<h2>Vitaj, cestovateľ v čase</h2>" +
+            "<p>Pred tebou je " +
+            RIDDLES.length +
+            " zašifrovaných správ z roku 2056. Po spustení misie začne bežať časomiera, ktorá meria, ako rýchlo sa ti podarí rozlúštiť všetky odkazy.</p>" +
+            '<button type="button" class="submit" id="start-mission">Začať misiu</button>' +
+            "</div>";
+
+          document
+            .getElementById("start-mission")
+            .addEventListener("click", function () {
+              startMission();
+              render();
+            });
+        }
+
+        function renderPuzzle(riddle) {
+          document.getElementById("app").innerHTML =
+            '<div class="card">' +
+            '<p class="tag">Prijatý prenos</p>' +
+            "<h2>" +
+            missionLabel(riddle) +
+            "</h2>" +
+            '<div class="riddle-image-wrap">' +
+            '<img src="' +
+            escapeHtml(riddle.obrazok) +
+            '" alt="Hádanka: ' +
+            escapeHtml(riddle.nazov) +
+            '">' +
+            "</div>" +
+            '<form class="gate" id="answer-form" autocomplete="off">' +
+            '<label class="field-label" for="answer-input">Tvoja odpoveď</label>' +
+            '<input type="text" id="answer-input" name="answer" placeholder="Zadaj riešenie hádanky" autocomplete="off">' +
+            '<div class="msg error" id="answer-msg"></div>' +
+            '<button type="submit" class="submit">Potvrdiť riešenie</button>' +
+            "</form>" +
+            "</div>";
+
+          var form = document.getElementById("answer-form");
+          var input = document.getElementById("answer-input");
+          var msg = document.getElementById("answer-msg");
+
+          form.addEventListener("submit", function (e) {
+            e.preventDefault();
+            var ok = normalize(input.value) === normalize(riddle.heslo);
+            if (ok) {
+              setState(riddle.hash, { solved: true });
+              trackEvent("solved", {
+                hash: riddle.hash,
+                poradie: riddle.poradie,
+              });
+              render();
+            } else {
+              input.classList.add("error");
+              msg.textContent = "To nie je správne riešenie. Skús to znova.";
+              setTimeout(function () {
+                input.classList.remove("error");
+              }, 300);
+            }
+          });
+        }
+
+        // fixny text pripojeny po vyrieseni kazdej hadanky (nie je sucastou dat)
+        var QR_INSTRUCTION =
+          "Teraz sa presuňte na ďalšie miesto a tam naskenujte QR kód fotoaparátom vášho mobilu.";
+
+        function renderSolved(riddle) {
+          var paragraphs = riddle.odpoved
+            .map(function (p) {
+              return "<p>" + escapeHtml(p) + "</p>";
+            })
+            .join("");
+          document.getElementById("app").innerHTML =
+            '<div class="card">' +
+            '<div class="solved-panel">' +
+            '<p class="already-solved-note">Táto hádanka už bola vyriešená.</p>' +
+            '<p class="tag">' +
+            missionLabel(riddle) +
+            " &mdash; vyriešená</p>" +
+            paragraphs +
+            '<div class="qr-instruction">' +
+            escapeHtml(QR_INSTRUCTION) +
+            "</div>" +
+            "</div>" +
+            "</div>";
+        }
+
+        // posledna misia nema samostatnu hadanku - po odomknuti sa rovno zobrazi zaverecny text
+        function renderFinal(riddle) {
+          var paragraphs = riddle.odpoved
+            .map(function (p) {
+              return "<p>" + escapeHtml(p) + "</p>";
+            })
+            .join("");
+
+          var supportEndpoint =
+            (window.location.origin || "") + "/wp-json/mamateyka/v1/support";
+
+          var startTime = getStoredTime(STORAGE_KEYS.start);
+          var endTime = getStoredTime(STORAGE_KEYS.end);
+          var totalTimeText =
+            startTime !== null && endTime !== null
+              ? formatDuration(endTime - startTime)
+              : "—";
+
+          document.getElementById("app").innerHTML =
+            '<div class="card">' +
+            '<div class="final-panel">' +
+            '<div class="badge">\u{1F3C6}</div>' +
+            '<p class="tag">Misia splnená</p>' +
+            "<h2>Ďakujeme, cestovateľ v čase</h2>" +
+            '<p class="final-time">Celkový čas misie: ' +
+            totalTimeText +
+            "</p>" +
+            paragraphs +
+            '<p class="author-line">Autor: Mikuláš Polák.</p>' +
+            '<button type="button" class="support-toggle" id="support-toggle">Vyber si ako chceš pomôcť na Mamateyke</button>' +
+            '<form class="support-form hidden" id="support-form" novalidate>' +
+            "<h3>Vyber si ako chceš pomôcť na Mamateyke:</h3>" +
+            '<div class="field-grid">' +
+            "<div>" +
+            '<label class="field-label" for="support-name">Meno *</label>' +
+            '<input type="text" id="support-name" name="name" placeholder="Zadaj svoje meno" required>' +
+            "</div>" +
+            "<div>" +
+            '<label class="field-label" for="support-email">Email *</label>' +
+            '<input type="text" id="support-email" name="email" placeholder="tvoj@email.sk" required>' +
+            "</div>" +
+            "</div>" +
+            "<div>" +
+            '<div class="inline-note">Spôsob pomoci (checkboxy)</div>' +
+            '<div class="checkbox-list">' +
+            '<label class="checkbox-item"><input type="checkbox" name="help" value="Fotografovanie a natáčanie videí"> Fotografovanie a natáčanie videí</label>' +
+            '<label class="checkbox-item"><input type="checkbox" name="help" value="Ozvučenie a technická podpora"> Ozvučenie a technická podpora</label>' +
+            '<label class="checkbox-item"><input type="checkbox" name="help" value="Grafika, web a IT"> Grafika, web a IT</label>' +
+            '<label class="checkbox-item"><input type="checkbox" name="help" value="Marketing a sociálne siete"> Marketing a sociálne siete</label>' +
+            '<label class="checkbox-item"><input type="checkbox" name="help" value="Organizovanie podujatí"> Organizovanie podujatí</label>' +
+            '<label class="checkbox-item"><input type="checkbox" name="help" value="Práce okolo budovy a záhrady"> Práce okolo budovy a záhrady</label>' +
+            '<label class="checkbox-item"><input type="checkbox" name="help" value="Pomoc s deťmi a mládežou"> Pomoc s deťmi a mládežou</label>' +
+            '<label class="checkbox-item"><input type="checkbox" name="help" value="Administratívna a právna výpomoc"> Administratívna a právna výpomoc</label>' +
+            '<label class="checkbox-item"><input type="checkbox" name="help" value="Sponzorská alebo materiálna pomoc"> Sponzorská alebo materiálna pomoc</label>' +
+            '<label class="checkbox-item"><input type="checkbox" name="help-other-toggle" id="support-other-toggle"> Inak</label>' +
+            '<div class="support-other hidden" id="support-other-wrap">' +
+            '<input type="text" id="support-other" name="help-other" placeholder="Napíš, ako chceš pomôcť" maxlength="300">' +
+            "</div>" +
+            "</div>" +
+            "</div>" +
+            '<div class="form-message" id="support-message" aria-live="polite"></div>' +
+            '<button type="submit" class="submit">Odoslať</button>' +
+            "</form>" +
+            '<div class="support-success hidden" id="support-success">Vďaka za odoslanie.</div>' +
+            "</div>" +
+            "</div>";
+
+          var toggle = document.getElementById("support-toggle");
+          var form = document.getElementById("support-form");
+          var success = document.getElementById("support-success");
+          var msg = document.getElementById("support-message");
+          var otherToggle = document.getElementById("support-other-toggle");
+          var otherWrap = document.getElementById("support-other-wrap");
+          var otherInput = document.getElementById("support-other");
+
+          if (toggle && form) {
+            toggle.addEventListener("click", function () {
+              toggle.classList.add("hidden");
+              form.classList.remove("hidden");
+              if (msg) msg.textContent = "";
+            });
+          }
+
+          if (otherToggle && otherWrap && otherInput) {
+            otherToggle.addEventListener("change", function () {
+              otherWrap.classList.toggle("hidden", !otherToggle.checked);
+              otherInput.required = otherToggle.checked;
+              otherInput.classList.remove("error");
+              if (!otherToggle.checked) otherInput.value = "";
+              if (msg) msg.textContent = "";
+              if (otherToggle.checked) otherInput.focus();
+            });
+          }
+
+          if (form) {
+            form.addEventListener("submit", function (event) {
+              event.preventDefault();
+
+              var nameInput = document.getElementById("support-name");
+              var emailInput = document.getElementById("support-email");
+              var name =
+                nameInput && nameInput.value ? nameInput.value.trim() : "";
+              var email =
+                emailInput && emailInput.value ? emailInput.value.trim() : "";
+
+              if (!name || !email) {
+                if (msg) msg.textContent = "Vyplňte meno a email.";
+                return;
+              }
+
+              var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+              if (!emailPattern.test(email)) {
+                if (msg) msg.textContent = "Zadajte platný email.";
+                return;
+              }
+
+              var otherHelp =
+                otherInput && otherInput.value ? otherInput.value.trim() : "";
+              if (otherToggle && otherToggle.checked && !otherHelp) {
+                otherInput.classList.add("error");
+                if (msg) msg.textContent = "Napíšte, ako chcete pomôcť.";
+                otherInput.focus();
+                return;
+              }
+
+              var selected = Array.prototype.slice
+                .call(form.querySelectorAll('input[name="help"]:checked'))
+                .map(function (input) {
+                  return input.value;
+                });
+
+              if (otherToggle && otherToggle.checked) {
+                selected.push("Inak: " + otherHelp);
+              }
+
+              var payload = {
+                name: name,
+                email: email,
+                help: selected,
+                session_id: getOrCreateSessionId(),
+              };
+
+              if (msg) msg.textContent = "Odosielam...";
+
+              fetch(supportEndpoint, {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                  Accept: "application/json",
+                },
+                body: JSON.stringify(payload),
+              })
+                .then(function (response) {
+                  return response.json().then(function (data) {
+                    return {
+                      status: response.status,
+                      data: data,
+                    };
+                  });
+                })
+                .then(function (result) {
+                  if (
+                    result.status >= 400 ||
+                    !result.data ||
+                    !result.data.success
+                  ) {
+                    throw new Error(
+                      result.data && result.data.message
+                        ? result.data.message
+                        : "Nepodarilo sa odoslať formulár.",
+                    );
+                  }
+
+                  form.classList.add("hidden");
+                  if (success) {
+                    success.classList.remove("hidden");
+                    success.textContent = "Vďaka za odoslanie.";
+                  }
+                })
+                .catch(function (error) {
+                  if (msg) {
+                    msg.textContent = "Nepodarilo sa odoslať formulár.";
+                  }
+
+                  var fallbackBody = [
+                    "Meno: " + name,
+                    "Email: " + email,
+                    "",
+                    "Spôsob pomoci:",
+                    selected.length ? selected.join("\n") : "-",
+                  ].join("\n");
+
+                  var fallbackSubject = encodeURIComponent(
+                    "Misia z budúcnosti - Mamateyka formulár",
+                  );
+                  var fallbackMailto =
+                    "mailto:polmiki@gmail.com?subject=" +
+                    fallbackSubject +
+                    "&body=" +
+                    encodeURIComponent(fallbackBody);
+
+                  window.location.href = fallbackMailto;
+                });
+            });
+          }
+        }
+
+        function updateTimerDisplay() {
+          var el = document.getElementById("mission-timer");
+          var resetLink = document.getElementById("reset-link");
+          if (!el) return;
+          var startTime = getStoredTime(STORAGE_KEYS.start);
+          if (startTime === null) {
+            el.textContent = "";
+            if (resetLink) resetLink.hidden = true;
+            return;
+          }
+          var endTime = getStoredTime(STORAGE_KEYS.end);
+          var elapsed = (endTime !== null ? endTime : Date.now()) - startTime;
+          el.textContent = "Čas misie: " + formatDuration(elapsed);
+          if (resetLink) resetLink.hidden = false;
+        }
+
+        function render() {
+          var hash = currentHash();
+
+          if (!hash) {
+            renderError();
+            return;
+          }
+
+          var riddle = getRiddleByHash(hash);
+          if (!riddle) {
+            renderError();
+            return;
+          }
+
+          renderProgress(hash);
+
+          var state = getState(hash);
+          var isFirst = riddle.poradie === 1;
+          var isLast = riddle.poradie === RIDDLES.length;
+          var unlocked = isRiddleUnlocked(riddle);
+
+          if (isLast) {
+            if (unlocked) {
+              var alreadyFinished = getStoredTime(STORAGE_KEYS.end) !== null;
+              finishMission();
+              setState(riddle.hash, { solved: true });
+              if (!alreadyFinished) {
+                var startTime = getStoredTime(STORAGE_KEYS.start);
+                var endTime = getStoredTime(STORAGE_KEYS.end);
+                trackEvent("finish", {
+                  duration_ms:
+                    startTime !== null && endTime !== null
+                      ? endTime - startTime
+                      : 0,
+                });
+              }
+              renderFinal(riddle);
+            } else {
+              renderNotUnlocked(riddle);
+            }
+            return;
+          }
+
+          if (state.solved) {
+            renderSolved(riddle);
+            return;
+          }
+
+          if (isFirst) {
+            if (!hasStarted()) {
+              renderIntro(riddle);
+            } else {
+              renderPuzzle(riddle);
+            }
+            return;
+          }
+
+          if (unlocked) {
+            renderPuzzle(riddle);
+            return;
+          }
+
+          renderNotUnlocked(riddle);
+        }
+
+        // par lahko putujucich bodiek na pozadi, vytvorene raz, nesuvisi so stavom hry
+        function initBackgroundPulses() {
+          var count = 5;
+          for (var i = 0; i < count; i++) {
+            var dot = document.createElement("div");
+            dot.className = "data-pulse";
+            var startX = Math.random() * 100;
+            var startY = Math.random() * 100;
+            var dx =
+              (Math.random() > 0.5 ? 1 : -1) * (120 + Math.random() * 220);
+            var dy =
+              (Math.random() > 0.5 ? 1 : -1) * (120 + Math.random() * 220);
+            dot.style.left = startX + "vw";
+            dot.style.top = startY + "vh";
+            dot.style.setProperty("--pulse-dx", dx + "px");
+            dot.style.setProperty("--pulse-dy", dy + "px");
+            dot.style.animationDuration = 6 + Math.random() * 6 + "s";
+            dot.style.animationDelay = Math.random() * 6 + "s";
+            document.body.appendChild(dot);
+          }
+        }
+
+        function initResetControls() {
+          var resetLink = document.getElementById("reset-link");
+          var resetModal = document.getElementById("reset-modal");
+          var resetConfirm = document.getElementById("reset-confirm");
+          var resetCancel = document.getElementById("reset-cancel");
+          if (!resetLink || !resetModal || !resetConfirm || !resetCancel)
+            return;
+
+          resetLink.addEventListener("click", function () {
+            resetModal.classList.remove("hidden");
+          });
+
+          resetCancel.addEventListener("click", function () {
+            resetModal.classList.add("hidden");
+          });
+
+          resetConfirm.addEventListener("click", function () {
+            var startTime = getStoredTime(STORAGE_KEYS.start);
+            var elapsed = startTime !== null ? Date.now() - startTime : 0;
+            trackEvent("reset", { duration_ms: elapsed });
+
+            try {
+              localStorage.removeItem(STORAGE_KEYS.start);
+              localStorage.removeItem(STORAGE_KEYS.end);
+              localStorage.removeItem(PROGRESS_KEY);
+              localStorage.removeItem(SESSION_ID_KEY);
+            } catch (e) {
+              // localStorage nedostupne - reset sa aspon prejavi v aktualnom stave
+            }
+
+            resetModal.classList.add("hidden");
+            render();
+            updateTimerDisplay();
+          });
+        }
+
+        window.addEventListener("hashchange", render);
+        document.addEventListener("DOMContentLoaded", function () {
+          render();
+          initBackgroundPulses();
+          initResetControls();
+          updateTimerDisplay();
+          setInterval(updateTimerDisplay, 1000);
+
+          var intro = document.getElementById("connection-intro");
+          setTimeout(function () {
+            intro.classList.add("is-leaving");
+            setTimeout(function () {
+              intro.remove();
+            }, 600);
+          }, 2000);
+        });
+      })();
+    </script>
+  </body>
+</html>

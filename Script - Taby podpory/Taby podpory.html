@@ -1,0 +1,219 @@
+<style>
+  .custom-tabs {
+    --tabs-accent: #537891;
+    --tabs-accent-dark: #3f6178;
+    --tabs-border: #d9e2e8;
+    --tabs-surface: #e9eef1;
+    --tabs-inactive: #e9eef1;
+    --tabs-inactive-hover: #dbe6ec;
+    --tabs-text: #29404e;
+    --tabs-inactive-text: #70818b;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    background: var(--tabs-surface);
+    box-sizing: border-box;
+  }
+
+  .custom-tabs__list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0;
+    width: 100%;
+  }
+
+  .custom-tabs__button {
+    min-width: 0;
+    min-height: 3.25rem;
+    padding: 0.75rem 1rem;
+    border: 0;
+    border-radius: 0;
+    background: var(--tabs-inactive);
+    color: var(--tabs-inactive-text);
+    cursor: pointer;
+    font: inherit;
+    font-weight: 700;
+    line-height: 1.25;
+    letter-spacing: 0.02em;
+    text-align: center;
+    transition:
+      background-color 180ms ease,
+      box-shadow 180ms ease,
+      color 180ms ease,
+      transform 180ms ease;
+    position: relative;
+  }
+
+  .custom-tabs__button:focus-visible {
+    outline: 3px solid rgba(83, 120, 145, 0.35);
+    outline-offset: 2px;
+  }
+
+  .custom-tabs__button.active {
+    background: var(--tabs-accent);
+    box-shadow: 0 0.25rem 0.75rem rgba(63, 97, 120, 0.2);
+    color: #fff;
+    border-radius: 20px 20px 0 0;
+  }
+
+  /* Hover only for real pointers: touch taps would otherwise get stuck in :hover, keeping the darker shade active */
+  @media (hover: hover) and (pointer: fine) {
+    .custom-tabs__button:hover {
+      background: var(--tabs-inactive-hover);
+      color: var(--tabs-accent-dark);
+      transform: translateY(-1px);
+    }
+
+    .custom-tabs__button.active:hover {
+      background: var(--tabs-accent-dark);
+      color: #fff;
+    }
+  }
+
+  .custom-tabs__content {
+    opacity: 0;
+    transform: translateY(0.5rem);
+    transition:
+      opacity 260ms ease,
+      transform 260ms ease;
+  }
+
+  .custom-tabs__content--visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @media (max-width: 480px) {
+    .custom-tabs__button {
+      min-height: 3rem;
+      padding: 0.625rem 0.5rem;
+      font-size: 0.9375rem;
+    }
+
+    .custom-tabs__button.active {
+      border-radius: 10px 10px 0 0;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .custom-tabs__button,
+    .custom-tabs__content {
+      transition-duration: 0.01ms;
+    }
+  }
+</style>
+
+<nav class="custom-tabs" aria-label="Možnosti podpory">
+  <div class="custom-tabs__list" role="tablist" aria-orientation="horizontal">
+    <button
+      id="tab-button-financne"
+      class="custom-tabs__button"
+      type="button"
+      role="tab"
+      data-tab="podporit-financne"
+      aria-controls="tab-podporit-financne"
+      aria-selected="false"
+    >
+      Podporiť finančne
+    </button>
+    <button
+      id="tab-button-zapojit"
+      class="custom-tabs__button"
+      type="button"
+      role="tab"
+      data-tab="zapojit-sa"
+      aria-controls="tab-zapojit-sa"
+      aria-selected="false"
+    >
+      Zapojiť sa
+    </button>
+  </div>
+</nav>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const buttons = {
+      "podporit-financne": document.querySelector(
+        '[data-tab="podporit-financne"]',
+      ),
+      "zapojit-sa": document.querySelector('[data-tab="zapojit-sa"]'),
+    };
+
+    const contents = {
+      "podporit-financne": document.getElementById("tab-podporit-financne"),
+      "zapojit-sa": document.getElementById("tab-zapojit-sa"),
+    };
+
+    function showTab(tab, updateUrl = true) {
+      // Skry všetky obsahové bloky
+      Object.values(contents).forEach(function (content) {
+        if (content) {
+          content.classList.remove("custom-tabs__content--visible");
+          content.style.display = "none";
+        }
+      });
+
+      // Zruš aktívny stav tlačidiel
+      Object.values(buttons).forEach(function (button) {
+        if (button) {
+          button.classList.remove("active");
+          button.setAttribute("aria-selected", "false");
+        }
+      });
+
+      // Zobraz vybraný obsah
+      if (contents[tab]) {
+        contents[tab].classList.add("custom-tabs__content");
+        contents[tab].style.display = "block";
+
+        requestAnimationFrame(function () {
+          contents[tab].classList.add("custom-tabs__content--visible");
+        });
+      }
+
+      // Označ aktívne tlačidlo
+      if (buttons[tab]) {
+        buttons[tab].classList.add("active");
+        buttons[tab].setAttribute("aria-selected", "true");
+      }
+
+      // Aktualizuj URL
+      if (updateUrl) {
+        history.pushState(null, "", "#" + tab);
+      }
+    }
+
+    function getTabFromUrl() {
+      const hash = window.location.hash.replace("#", "");
+
+      if (hash === "zapojit-sa") {
+        return "zapojit-sa";
+      }
+
+      return "podporit-financne";
+    }
+
+    // Kliknutie na tlačidlá
+    Object.keys(buttons).forEach(function (tab) {
+      if (buttons[tab]) {
+        buttons[tab].addEventListener("click", function (event) {
+          event.preventDefault();
+          showTab(tab);
+        });
+      }
+    });
+
+    // Otvor správny tab podľa URL
+    showTab(getTabFromUrl(), false);
+
+    // Fungovanie tlačidiel Späť / Dopredu v prehliadači
+    window.addEventListener("popstate", function () {
+      showTab(getTabFromUrl(), false);
+    });
+
+    // Reakcia aj na zmenu hashu
+    window.addEventListener("hashchange", function () {
+      showTab(getTabFromUrl(), false);
+    });
+  });
+</script>

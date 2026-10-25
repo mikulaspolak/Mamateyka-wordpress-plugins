@@ -1,0 +1,37 @@
+<div class="hero-carousel-wrapper">
+  <div class="carousel-container" id="carouselContainer">
+    <div class="carousel-loading" id="loadingState">
+      <div class="spinner"></div>
+    </div>
+
+    <div class="carousel-empty" id="emptyState">
+      <p class="carousel-empty-text" id="emptyMessage"></p>
+    </div>
+
+    <div class="carousel-track" id="carouselTrack"></div>
+
+    <button
+      class="carousel-nav carousel-nav-prev"
+      id="prevBtn"
+      type="button"
+      aria-label="Predchadzajuci obrazok"
+    >
+      <svg viewBox="0 0 24 24">
+        <polyline points="15 18 9 12 15 6"></polyline>
+      </svg>
+    </button>
+
+    <button
+      class="carousel-nav carousel-nav-next"
+      id="nextBtn"
+      type="button"
+      aria-label="Dalsi obrazok"
+    >
+      <svg viewBox="0 0 24 24">
+        <polyline points="9 18 15 12 9 6"></polyline>
+      </svg>
+    </button>
+  </div>
+
+  <div class="carousel-thumbnails" id="thumbnailContainer"></div>
+</div>
