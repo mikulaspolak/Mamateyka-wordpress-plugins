@@ -1044,14 +1044,26 @@
     var progressEl = document.getElementById("nast-progress");
     if (!root || !body) return;
 
+    var posterColumnOverride =
+      (location.hash.match(/(?:^#|&)columns=(1|2)(?:&|$)/) || [])[1];
     var rozpisSlot = document.getElementById("nast-rozpis-slot");
+    var massTitle = document.getElementById("nast-mass-title");
+    var defaultMassTitle = massTitle ? massTitle.textContent : "";
+    var updateMassScreen = function () {
+      if (!rozpisSlot) return;
+      var liveEvent = rozpisSlot.querySelector(".priest-card--live");
+      var showMassScreen = !!liveEvent && posterColumnOverride !== "1";
+      if (massTitle) {
+        var serviceTag = liveEvent && liveEvent.querySelector(".service-tag");
+        var serviceName = serviceTag ? serviceTag.textContent.trim() : "";
+        massTitle.textContent =
+          serviceName && serviceName.toLocaleLowerCase("sk-SK") !== "svätá omša"
+            ? "Práve prebieha " + serviceName.toLocaleLowerCase("sk-SK")
+            : defaultMassTitle;
+      }
+      root.classList.toggle("nast-mass-active", showMassScreen);
+    };
     if (rozpisSlot && window.MutationObserver) {
-      var updateMassScreen = function () {
-        root.classList.toggle(
-          "nast-mass-active",
-          !!rozpisSlot.querySelector(".priest-card--live"),
-        );
-      };
       var massScreenObserver = new MutationObserver(updateMassScreen);
       massScreenObserver.observe(rozpisSlot, {
         attributes: true,
@@ -1059,8 +1071,8 @@
         childList: true,
         subtree: true,
       });
-      updateMassScreen();
     }
+    updateMassScreen();
 
     var progressFooterEl = progressEl && progressEl.parentElement;
     var qrCardEl = root.querySelector(".nast-qr-card");
@@ -1445,13 +1457,10 @@
     var embedZoom = 1;
     var rozpisZoom = 1;
 
-    // TV = velka obrazovka na vysku; ?layout=tv/list ovlada automatiku a #columns=1/2 vynuti stlpce plagatov.
+    // #columns=1/2 vynuti rozlozenie plagatov; inak sa zvoli automaticky podla obrazovky.
     var TV_MIN_SHORT_SIDE = 1080;
-    var layoutOverride = (location.search.match(/[?&]layout=(tv|list)/) || [])[1];
-    var posterColumnOverride = (location.hash.match(/(?:^#|&)columns=(1|2)(?:&|$)/) || [])[1];
     var isTvLayout = function () {
       if (posterColumnOverride) return posterColumnOverride === "2";
-      if (layoutOverride) return layoutOverride === "tv";
       var scr = window.screen;
       var shortSide = scr ? Math.min(scr.width, scr.height) : 0;
       return window.innerHeight > window.innerWidth && shortSide >= TV_MIN_SHORT_SIDE;
@@ -1491,14 +1500,6 @@
       setInterval(syncScaledHeights, 500);
     }
 
-    var debugEl = null;
-    if (/[?&]debug(=|&|$)/.test(location.search)) {
-      debugEl = document.createElement("div");
-      debugEl.style.cssText =
-        "position:absolute;top:0;left:0;z-index:5;padding:4px 8px;background:rgba(0,0,0,.75);color:#0f0;font:12px/1.3 monospace;white-space:pre;pointer-events:none";
-      root.appendChild(debugEl);
-    }
-
     var updateZoom = function () {
       var w = window.innerWidth || root.clientWidth;
       var h = window.innerHeight || root.clientHeight;
@@ -1519,31 +1520,6 @@
       root.style.setProperty("--nast-chrome-zoom", String(chromeZoom));
       if (typeof layoutAll === "function") layoutAll();
       syncScaledHeights();
-      if (debugEl) {
-        debugEl.textContent =
-          w +
-          "x" +
-          h +
-          " @" +
-          (window.devicePixelRatio || 1) +
-          "\nstage " +
-          Math.round(stageW) +
-          "px font " +
-          fontPx.toFixed(1) +
-          "px" +
-          "\nembed x" +
-          embedZoom.toFixed(2) +
-          " rozpis x" +
-          rozpisZoom.toFixed(2) +
-          " user x" +
-          userZoom.toFixed(2) +
-          " chrome x" +
-          chromeZoom.toFixed(2) +
-          "\nlayout " +
-          (isTvLayout() ? "tv" : "list") +
-          "\n" +
-          navigator.userAgent;
-      }
     };
     updateZoom();
     window.addEventListener("resize", updateZoom);
