@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Rozpis svätých omší - zjednotený shortcode [rozpis typ="horizontal|vertical|nastenka"]
  *
@@ -2144,7 +2145,7 @@ HORIZONTAL_JS;
       display: grid;
       grid-template-columns: minmax(85px, 140px) minmax(0, 1fr) minmax(
           220px,
-          340px
+          420px
         );
       gap: 10px 12px;
       align-items: center;
@@ -2470,7 +2471,7 @@ HORIZONTAL_JS;
       .rozpis-omsi.rozpis-omsi--vertical .priest-card {
         grid-template-columns: minmax(80px, 120px) minmax(0, 1.1fr) minmax(
             180px,
-            260px
+            320px
           );
         gap: 10px;
       }
@@ -2735,7 +2736,7 @@ VERTICAL_CSS;
     }
 
     .rozpis-omsi.rozpis-omsi--nastenka .priest-card {
-      grid-template-columns: minmax(125px, 170px) minmax(0, 1fr) minmax(
+      grid-template-columns: minmax(125px, 170px) minmax(0, 0.4fr) minmax(
           240px,
           1fr
         );
@@ -2858,7 +2859,7 @@ VERTICAL_CSS;
       }
 
       .rozpis-omsi.rozpis-omsi--nastenka .priest-card {
-        grid-template-columns: minmax(100px, 140px) minmax(0, 1fr) minmax(
+        grid-template-columns: minmax(100px, 140px) minmax(0, 0.4fr) minmax(
             180px,
             1fr
           );

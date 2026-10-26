@@ -513,10 +513,6 @@
     display: none;
   }
 
-  #nastenka .nast-body.nast-noscroll {
-    overflow-y: hidden;
-  }
-
   #nastenka .nast-body.nast-transparent {
     opacity: 0;
     transform: translateY(-10px);
@@ -1007,7 +1003,7 @@
         id: "nastenka-2",
         title: "Rozpis omší",
         durationSeconds: 15,
-        scroll: false,
+        scroll: false, // vypne len automaticky posun; manuálny scroll myšou/dotykom ostáva povolený
         reveal: ".nast-section-title, .rozpis-omsi--nastenka .day-column",
       },
       {
@@ -1912,7 +1908,6 @@
       mountRozpis();
       randomizePosters(slides[index].el);
       body.classList.toggle("nast-board", !!slides[index].board);
-      body.classList.toggle("nast-noscroll", !slides[index].scroll);
       slides.forEach(function (s, i) {
         s.el.classList.toggle("nast-hidden", i !== index);
         dots[i].classList.toggle("nast-active", i === index);
