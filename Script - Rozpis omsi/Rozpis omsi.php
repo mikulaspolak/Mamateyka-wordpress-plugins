@@ -1622,19 +1622,79 @@ VERTICAL_JS;
 
   const core = window.RozpisOmsiEngine.core;
 
+  // Panel je v <body> s position: fixed, aby ho neorezali overflow/transform rodičov (Breakdance, day-column)
+  const ZOOM_GAP = 14;
+  const ZOOM_MARGIN = 8;
+  let zoomPanel = null;
+  let zoomItem = null;
+
+  function getZoomPanel() {
+    if (!zoomPanel) {
+      zoomPanel = document.createElement("div");
+      zoomPanel.className = "rozpis-zoom-floating";
+      zoomPanel.setAttribute("aria-hidden", "true");
+      document.body.appendChild(zoomPanel);
+      window.addEventListener("scroll", hideZoom, { capture: true, passive: true });
+      window.addEventListener("resize", hideZoom);
+      document.addEventListener("click", (e) => {
+        if (!e.target.closest || !e.target.closest(".photo-zoom")) hideZoom();
+      });
+    }
+    return zoomPanel;
+  }
+
+  function hideZoom() {
+    zoomItem = null;
+    if (zoomPanel) zoomPanel.classList.remove("is-visible");
+  }
+
+  function showZoom(item) {
+    const source = item.querySelector(".photo-zoom__panel");
+    if (!source) return;
+    zoomItem = item;
+
+    const panel = getZoomPanel();
+    const clones = Array.from(source.children).map((child) => {
+      const clone = child.cloneNode(true);
+      clone.removeAttribute("onerror");
+      return clone;
+    });
+    panel.replaceChildren(...clones);
+
+    const anchor = item.getBoundingClientRect();
+    const width = panel.offsetWidth;
+    const height = panel.offsetHeight;
+    const viewportW = document.documentElement.clientWidth;
+    const viewportH = document.documentElement.clientHeight;
+
+    let left = anchor.right + ZOOM_GAP;
+    if (left + width > viewportW - ZOOM_MARGIN) left = anchor.left - ZOOM_GAP - width;
+    left = Math.max(ZOOM_MARGIN, Math.min(left, viewportW - width - ZOOM_MARGIN));
+
+    const top = anchor.top + anchor.height / 2 - height / 2;
+    panel.style.left = `${left}px`;
+    panel.style.top = `${Math.max(ZOOM_MARGIN, Math.min(top, viewportH - height - ZOOM_MARGIN))}px`;
+    panel.classList.add("is-visible");
+  }
+
   function bindPhotoZoom(rootEl) {
-    if (window.matchMedia("(pointer: coarse)").matches) return;
+    // Prekreslenie môže odstrániť element, na ktorom visel panel (mouseleave sa nespustí)
+    hideZoom();
+    const isTouch = window.matchMedia("(pointer: coarse)").matches;
 
     rootEl.querySelectorAll(".photo-zoom").forEach((item) => {
       if (item.dataset.zoomBound === "true") return;
 
-      item.addEventListener("mouseenter", () => {
-        item.classList.add("is-visible");
-      });
-
-      item.addEventListener("mouseleave", () => {
-        item.classList.remove("is-visible");
-      });
+      if (isTouch) {
+        // Na dotyku nie je hover - ťuknutie prepína panel
+        item.addEventListener("click", () => {
+          if (zoomItem === item) hideZoom();
+          else showZoom(item);
+        });
+      } else {
+        item.addEventListener("mouseenter", () => showZoom(item));
+        item.addEventListener("mouseleave", hideZoom);
+      }
 
       item.dataset.zoomBound = "true";
     });
@@ -3374,10 +3434,15 @@ NASTENKA_CSS;
     }
 
     .rozpis-omsi.rozpis-omsi--horizontal .photo-zoom__panel {
-      position: absolute;
-      z-index: 10;
-      top: 50%;
-      left: calc(100% + 14px);
+      display: none;
+    }
+
+    .rozpis-zoom-floating {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 99999;
+      box-sizing: border-box;
       width: 170px;
       padding: 8px 8px 10px;
       border-radius: 18px;
@@ -3387,20 +3452,19 @@ NASTENKA_CSS;
       border: 1px solid rgba(148, 169, 182, 0.35);
       box-shadow: 0 22px 40px -28px rgba(29, 40, 58, 0.38);
       backdrop-filter: blur(8px);
-      transform: translateY(-50%) scale(0.96);
+      transform: scale(0.96);
       transition:
         opacity 0.18s ease,
         transform 0.18s ease;
-      overflow: hidden;
+      font-family: "Fira Sans", sans-serif;
     }
 
-    .rozpis-omsi.rozpis-omsi--horizontal .photo-zoom.is-visible .photo-zoom__panel,
-    .rozpis-omsi.rozpis-omsi--horizontal .photo-zoom:hover .photo-zoom__panel {
+    .rozpis-zoom-floating.is-visible {
       opacity: 1;
-      transform: translateY(-50%) scale(1);
+      transform: scale(1);
     }
 
-    .rozpis-omsi.rozpis-omsi--horizontal .photo-zoom__image {
+    .rozpis-zoom-floating .photo-zoom__image {
       width: 100%;
       height: 150px;
       display: block;
@@ -3409,14 +3473,14 @@ NASTENKA_CSS;
       background: linear-gradient(145deg, #edf4f7 0%, #c6d6df 100%);
     }
 
-    .rozpis-omsi.rozpis-omsi--horizontal .photo-zoom__name {
+    .rozpis-zoom-floating .photo-zoom__name {
       display: block;
       margin-top: 8px;
       text-align: center;
       font-size: 0.72rem;
       font-weight: 700;
       letter-spacing: 0.04em;
-      color: var(--primary-color);
+      color: #1d283a;
       text-transform: capitalize;
       line-height: 1.2;
     }
