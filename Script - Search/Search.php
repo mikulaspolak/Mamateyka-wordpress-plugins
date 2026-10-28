@@ -1,7 +1,14 @@
 <?php
 /*
- * Mamateyka - výsledky vyhľadávania.
- * Shortcode: [mamateyka_search_results]  (voliteľne pages_visible="6" per_page="9")
+ * Mamateyka - vyhľadávanie (jeden snippet pre celé vyhľadávanie).
+ *
+ * Shortcody:
+ *   [mamateyka_search]          lupa a rozbaľovací panel so živými návrhmi (vkladá sa do navigácie)
+ *                               voliteľne: placeholder="…" recent="5"
+ *                               links="Názov|/adresa;Názov 2|/adresa-2" (rýchle odkazy v prázdnom poli)
+ *   [mamateyka_search_results]  stránka výsledkov vyhľadávania (voliteľne pages_visible="6" per_page="9")
+ *
+ * REST endpoint pre návrhy: /wp-json/mamateyka/v1/search?q=…
  *
  * Code Snippets: spustiť "Všade" (nie len na frontende), aby sa index textu
  * stránok z Breakdance aktualizoval aj pri ukladaní v administrácii.
@@ -111,43 +118,102 @@ if ( ! function_exists( 'msr_fold' ) ) {
         return $out . esc_html( mb_substr( $text, $cursor, null, 'UTF-8' ) );
     }
 
-    // Z prvého textu, v ktorom sa nájde hľadaný výraz, urobí krátky úryvok so zvýraznením.
-    function msr_snippet( array $sources, array $terms, $max = 170 ) {
-        $chosen = '';
-        $pos    = false;
+    /*
+     * Úryvok so zvýraznením: vyberie text s najväčším počtom hľadaných výrazov a okno
+     * dlhé $max znakov, ktoré ich obsahuje čo najviac a začína tesne pred prvou zhodou,
+     * aby zvýraznené slovo bolo viditeľné hneď na začiatku.
+     */
+    function msr_snippet( array $sources, array $terms, $max = 170, $lead = 35 ) {
+        $chosen      = '';
+        $chosen_fold = '';
+        $best        = -1;
         foreach ( $sources as $source ) {
             $source = trim( (string) $source );
             if ( '' === $source ) {
                 continue;
             }
-            if ( '' === $chosen ) {
-                $chosen = $source;
-            }
-            $fold = msr_fold( $source );
+            $fold  = msr_fold( $source );
+            $count = 0;
             foreach ( $terms as $term ) {
-                $found = mb_strpos( $fold, msr_fold( $term ), 0, 'UTF-8' );
-                if ( false !== $found ) {
-                    $chosen = $source;
-                    $pos    = $found;
-                    break 2;
+                if ( false !== mb_strpos( $fold, msr_fold( $term ), 0, 'UTF-8' ) ) {
+                    $count++;
                 }
+            }
+            if ( $count > $best ) {
+                $best        = $count;
+                $chosen      = $source;
+                $chosen_fold = $fold;
             }
         }
         if ( '' === $chosen ) {
             return '';
         }
 
-        $len   = mb_strlen( $chosen, 'UTF-8' );
-        $start = ( false !== $pos && $pos > 50 ) ? $pos - 50 : 0;
+        $len = mb_strlen( $chosen, 'UTF-8' );
+
+        // Kandidáti na okno: výskyty výrazov (max. 40) a okno s najviac rôznymi výrazmi.
+        $positions = [];
+        foreach ( $terms as $term ) {
+            $needle = msr_fold( $term );
+            $nlen   = mb_strlen( $needle, 'UTF-8' );
+            $offset = 0;
+            $taken  = 0;
+            while ( $nlen > 0 && $taken < 10 && false !== ( $pos = mb_strpos( $chosen_fold, $needle, $offset, 'UTF-8' ) ) ) {
+                $positions[] = $pos;
+                $offset      = $pos + $nlen;
+                $taken++;
+            }
+        }
+        sort( $positions );
+        $positions = array_slice( $positions, 0, 40 );
+
+        $start = 0;
+        if ( $positions ) {
+            $best_score = -1;
+            foreach ( $positions as $candidate ) {
+                $from  = max( 0, $candidate - $lead );
+                $slice = mb_substr( $chosen_fold, $from, $max, 'UTF-8' );
+                $score = 0;
+                foreach ( $terms as $term ) {
+                    if ( false !== mb_strpos( $slice, msr_fold( $term ), 0, 'UTF-8' ) ) {
+                        $score++;
+                    }
+                }
+                if ( $score > $best_score ) {
+                    $best_score = $score;
+                    $start      = $from;
+                }
+            }
+        }
+
+        // Začiatok okna posunúť na začiatok slova, ale nie za prvú zhodu.
         if ( $start > 0 ) {
+            $first = $start;
+            foreach ( $positions as $candidate ) {
+                if ( $candidate >= $start ) {
+                    $first = $candidate;
+                    break;
+                }
+            }
             $space = mb_strpos( $chosen, ' ', $start, 'UTF-8' );
-            if ( false !== $space && $space < $pos ) {
+            if ( false !== $space && $space - $start < 15 && $space + 1 <= $first ) {
                 $start = $space + 1;
             }
         }
-        $slice  = trim( mb_substr( $chosen, $start, $max, 'UTF-8' ) );
+
+        $slice = mb_substr( $chosen, $start, $max, 'UTF-8' );
+        $end   = $start + mb_strlen( $slice, 'UTF-8' );
+        // Koniec okna orezať na celé slovo.
+        if ( $end < $len ) {
+            $cut = mb_strrpos( $slice, ' ', 0, 'UTF-8' );
+            if ( false !== $cut && $cut > $max * 0.6 ) {
+                $slice = mb_substr( $slice, 0, $cut, 'UTF-8' );
+                $end   = $start + $cut;
+            }
+        }
+        $slice  = trim( $slice );
         $prefix = $start > 0 ? '… ' : '';
-        $suffix = ( $start + $max < $len ) ? ' …' : '';
+        $suffix = ( $end < $len ) ? ' …' : '';
 
         return $prefix . msr_highlight( $slice, $terms ) . $suffix;
     }
@@ -466,6 +532,7 @@ if ( ! function_exists( 'msr_fold' ) ) {
     function msr_icon( $name ) {
         static $icons = [
             'search'   => '<circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/>',
+            'clock'    => '<circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>',
             'arrow'    => '<path d="M5 12h14M13 6l6 6-6 6"/>',
             'calendar' => '<rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/>',
             'news'     => '<path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2M18 14h-8M15 18h-5M10 6h8v4h-8V6Z"/>',
@@ -607,7 +674,7 @@ if ( ! function_exists( 'msr_fold' ) ) {
         $snippet = msr_snippet(
             [ msr_plain( $post->post_excerpt ), $index, msr_plain( $post->post_content ) ],
             $terms,
-            120
+            190
         );
 
         ob_start();
@@ -631,7 +698,7 @@ if ( ! function_exists( 'msr_fold' ) ) {
 
     function msr_render_post_card( $post, array $terms ) {
         $thumb   = get_the_post_thumbnail( $post->ID, 'medium_large', [ 'loading' => 'lazy', 'decoding' => 'async', 'alt' => '' ] );
-        $snippet = msr_snippet( [ msr_plain( $post->post_excerpt ), msr_plain( $post->post_content ) ], $terms, 150 );
+        $snippet = msr_snippet( [ msr_plain( $post->post_excerpt ), msr_plain( $post->post_content ) ], $terms, 230 );
 
         ob_start();
         ?>
@@ -662,14 +729,14 @@ if ( ! function_exists( 'msr_fold' ) ) {
         <style>
             .msr {
                 --msr-ink: #1d2630;
-                --msr-heading: #161b23;
-                --msr-muted: #64717c;
+                --msr-muted: #5f6a73;
                 --msr-blue: #537891;
                 --msr-blue-dark: #3f6174;
-                --msr-orange: #f3a738;
                 --msr-border: #dfe8ee;
                 --msr-soft: #eaf1f5;
                 --msr-surface: #fff;
+                --msr-w-heading: 600;
+                --msr-w-medium: 500;
                 --msr-shadow: 0 5px 18px rgba(29, 38, 48, .06);
                 --msr-shadow-hover: 0 12px 28px rgba(29, 38, 48, .12);
                 width: 100%;
@@ -685,7 +752,7 @@ if ( ! function_exists( 'msr_fold' ) ) {
             .msr mark {
                 padding: 0 .12em;
                 border-radius: 3px;
-                background: rgba(243, 167, 56, .38);
+                background: rgba(83, 120, 145, .2);
                 color: inherit;
             }
 
@@ -697,15 +764,15 @@ if ( ! function_exists( 'msr_fold' ) ) {
                 margin-bottom: .6rem;
                 color: var(--msr-blue);
                 font-size: .8rem;
-                font-weight: 600;
+                font-weight: var(--msr-w-medium);
                 letter-spacing: .1em;
                 text-transform: uppercase;
             }
             .msr-eyebrow svg { width: 18px; height: 18px; }
             .msr-title {
-                color: var(--msr-heading);
+                color: var(--msr-ink);
                 font-size: clamp(1.9rem, 4.5vw, 2.75rem);
-                font-weight: 700;
+                font-weight: var(--msr-w-heading);
                 line-height: 1.15;
             }
             .msr-title em { color: var(--msr-blue); font-style: normal; }
@@ -750,7 +817,7 @@ if ( ! function_exists( 'msr_fold' ) ) {
                 background: var(--msr-blue);
                 color: #fff;
                 font: inherit;
-                font-weight: 600;
+                font-weight: var(--msr-w-medium);
                 cursor: pointer;
                 transition: background .2s ease;
             }
@@ -767,13 +834,13 @@ if ( ! function_exists( 'msr_fold' ) ) {
                 margin-bottom: 1.1rem;
             }
             .msr-section__title {
-                color: var(--msr-heading);
+                color: var(--msr-ink);
                 font-size: clamp(1.5rem, 3vw, 2rem);
-                font-weight: 700;
+                font-weight: var(--msr-w-heading);
                 line-height: 1.2;
             }
             .msr-section__lead { flex-basis: 100%; color: var(--msr-muted); }
-            .msr-section__lead strong { color: var(--msr-ink); }
+            .msr-section__lead strong { color: var(--msr-ink); font-weight: var(--msr-w-medium); }
 
             .msr-sort {
                 display: inline-flex;
@@ -781,12 +848,12 @@ if ( ! function_exists( 'msr_fold' ) ) {
                 border-radius: 999px;
                 background: var(--msr-soft);
             }
-            .msr-sort__option {
+            .msr-sort__option, .msr a.msr-sort__option {
                 padding: .4rem 1rem;
                 border-radius: 999px;
                 color: var(--msr-blue-dark);
                 font-size: .88rem;
-                font-weight: 600;
+                font-weight: var(--msr-w-medium);
                 text-decoration: none;
                 transition: background .2s ease, color .2s ease;
             }
@@ -817,7 +884,6 @@ if ( ! function_exists( 'msr_fold' ) ) {
                 color: var(--tone-fg);
             }
             .msr-tone--blue   { --tone-bg: #dbe8f1; --tone-fg: #2f6b94; }
-            .msr-tone--orange { --tone-bg: #fde9c9; --tone-fg: #c77d0a; }
 
             .msr-arrow {
                 display: inline-flex;
@@ -833,7 +899,7 @@ if ( ! function_exists( 'msr_fold' ) ) {
             }
             .msr-arrow svg { width: 16px; height: 16px; }
 
-            .msr-pagecard {
+            .msr a.msr-pagecard {
                 display: flex;
                 align-items: center;
                 gap: 1rem;
@@ -850,16 +916,16 @@ if ( ! function_exists( 'msr_fold' ) ) {
             .msr-pagecard__body { display: flex; flex: 1 1 auto; flex-direction: column; gap: .2rem; min-width: 0; }
             .msr-pagecard__crumbs { color: var(--msr-muted); font-size: .78rem; }
             .msr-pagecard__title {
-                color: var(--msr-heading);
+                color: var(--msr-ink);
                 font-size: 1.15rem;
-                font-weight: 700;
+                font-weight: var(--msr-w-medium);
                 line-height: 1.25;
                 overflow-wrap: anywhere;
             }
             .msr-pagecard__text {
                 display: -webkit-box;
                 -webkit-box-orient: vertical;
-                -webkit-line-clamp: 2;
+                -webkit-line-clamp: 3;
                 overflow: hidden;
                 color: var(--msr-muted);
                 font-size: .9rem;
@@ -874,7 +940,7 @@ if ( ! function_exists( 'msr_fold' ) ) {
                 overflow: hidden;
                 transition: transform .2s ease, box-shadow .2s ease;
             }
-            .msr-post__link {
+            .msr a.msr-post__link {
                 display: flex;
                 flex-direction: column;
                 height: 100%;
@@ -899,16 +965,16 @@ if ( ! function_exists( 'msr_fold' ) ) {
             .msr-post__media.is-empty svg { width: 44px; height: 44px; opacity: .55; }
             .msr-post__body { display: flex; flex: 1 1 auto; flex-direction: column; gap: .5rem; padding: 1.1rem 1.2rem 1.2rem; }
             .msr-post__title {
-                color: var(--msr-heading);
+                color: var(--msr-ink);
                 font-size: 1.25rem;
-                font-weight: 700;
+                font-weight: var(--msr-w-medium);
                 line-height: 1.25;
                 overflow-wrap: anywhere;
             }
             .msr-post__text {
                 display: -webkit-box;
                 -webkit-box-orient: vertical;
-                -webkit-line-clamp: 3;
+                -webkit-line-clamp: 4;
                 overflow: hidden;
                 color: var(--msr-muted);
                 font-size: .92rem;
@@ -947,7 +1013,7 @@ if ( ! function_exists( 'msr_fold' ) ) {
                 background: transparent;
                 color: var(--msr-blue);
                 font: inherit;
-                font-weight: 600;
+                font-weight: var(--msr-w-medium);
                 cursor: pointer;
                 transition: background .2s ease, color .2s ease;
             }
@@ -963,7 +1029,8 @@ if ( ! function_exists( 'msr_fold' ) ) {
                 gap: .4rem;
                 margin-top: 1.75rem;
             }
-            .msr-pagination__num, .msr-pagination__nav, .msr-pagination__gap {
+            .msr-pagination__num, .msr-pagination__nav, .msr-pagination__gap,
+            .msr a.msr-pagination__num, .msr a.msr-pagination__nav {
                 display: inline-flex;
                 align-items: center;
                 justify-content: center;
@@ -972,11 +1039,11 @@ if ( ! function_exists( 'msr_fold' ) ) {
                 padding: 0 .85rem;
                 border-radius: 12px;
                 color: var(--msr-blue-dark);
-                font-weight: 600;
+                font-weight: var(--msr-w-medium);
                 text-decoration: none;
             }
             .msr-pagination__num, .msr-pagination__nav { background: var(--msr-surface); box-shadow: var(--msr-shadow); transition: background .2s ease, color .2s ease; }
-            .msr-pagination a:hover { background: var(--msr-blue); color: #fff; }
+            .msr .msr-pagination a:hover { background: var(--msr-blue); color: #fff; }
             .msr-pagination__num.is-current { background: var(--msr-blue); color: #fff; }
 
             .msr-empty {
@@ -988,19 +1055,19 @@ if ( ! function_exists( 'msr_fold' ) ) {
             }
             .msr-empty .msr-icon { width: 64px; height: 64px; margin-bottom: 1rem; }
             .msr-empty .msr-icon svg { width: 30px; height: 30px; }
-            .msr-empty h2 { margin-bottom: .5rem; color: var(--msr-heading); font-size: clamp(1.4rem, 3vw, 1.8rem); font-weight: 700; }
+            .msr-empty h2 { margin-bottom: .5rem; color: var(--msr-ink); font-size: clamp(1.4rem, 3vw, 1.8rem); font-weight: var(--msr-w-heading); }
             .msr-empty p { max-width: 520px; margin: 0 auto; color: var(--msr-muted); }
             .msr-empty__links { display: flex; flex-wrap: wrap; justify-content: center; gap: .6rem; margin-top: 1.25rem; }
-            .msr-empty__links a {
+            .msr .msr-empty__links a {
                 padding: .55rem 1.1rem;
                 border-radius: 999px;
                 background: var(--msr-blue);
                 color: #fff;
-                font-weight: 600;
+                font-weight: var(--msr-w-medium);
                 text-decoration: none;
                 transition: background .2s ease;
             }
-            .msr-empty__links a:hover { background: var(--msr-blue-dark); }
+            .msr .msr-empty__links a:hover { background: var(--msr-blue-dark); color: #fff; }
 
             @media (max-width: 1023px) {
                 .msr-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -1106,7 +1173,7 @@ if ( ! function_exists( 'msr_fold' ) ) {
                 </div>
             <?php elseif ( 0 === $pages_count && 0 === $posts_count ) : ?>
                 <div class="msr-empty">
-                    <span class="msr-icon msr-tone--orange"><?php echo msr_icon( 'search' ); ?></span>
+                    <span class="msr-icon msr-tone--blue"><?php echo msr_icon( 'search' ); ?></span>
                     <h2>Nič sme nenašli</h2>
                     <p>Pre výraz „<?php echo esc_html( $query ); ?>“ sme nenašli žiadnu stránku ani článok. Skúste iné slovo, kratší výraz alebo skontrolujte preklepy.</p>
                     <div class="msr-empty__links">
@@ -1156,6 +1223,661 @@ if ( ! function_exists( 'msr_fold' ) ) {
                 <?php endif; ?>
 
             <?php endif; ?>
+        </div>
+        <?php
+        return $output . ob_get_clean();
+    } );
+
+    /* =====================================================================
+     * Živé vyhľadávanie v navigácii: [mamateyka_search]
+     * ================================================================== */
+
+    function msr_live_version() {
+        return (string) get_option( 'msr_live_ver', '1' );
+    }
+
+    // Zmena obsahu zneplatní cache návrhov.
+    function msr_live_bump( $post_id ) {
+        if ( wp_is_post_revision( $post_id ) || ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) ) {
+            return;
+        }
+        update_option( 'msr_live_ver', (string) microtime( true ) );
+    }
+    add_action( 'save_post', 'msr_live_bump' );
+    add_action( 'deleted_post', 'msr_live_bump' );
+    add_action( 'trashed_post', 'msr_live_bump' );
+
+    // Max. 4 stránky a 4 články + celkové počty; rovnaké pravidlá ako stránka výsledkov.
+    function msr_live_search( $raw_query ) {
+        $terms = msr_terms( $raw_query );
+        if ( ! $terms ) {
+            return [ 'pages' => [], 'posts' => [], 'pages_total' => 0, 'posts_total' => 0 ];
+        }
+
+        $key    = 'msr_live_' . md5( msr_live_version() . '|' . msr_fold( implode( ' ', $terms ) ) );
+        $cached = get_transient( $key );
+        if ( is_array( $cached ) ) {
+            return $cached;
+        }
+
+        msr_ensure_index();
+        $all_pages = msr_rank_pages( msr_query( 'page', $terms, 60 )->posts, $terms );
+        $posts_q   = msr_query( 'post', $terms, 4 );
+
+        $pages = [];
+        foreach ( array_slice( $all_pages, 0, 4 ) as $page ) {
+            $crumbs = [];
+            foreach ( array_reverse( get_post_ancestors( $page ) ) as $ancestor_id ) {
+                $crumbs[] = msr_title( $ancestor_id );
+            }
+            $index   = (string) get_post_meta( $page->ID, MSR_INDEX_KEY, true );
+            $pages[] = [
+                'title'   => msr_highlight( msr_title( $page ), $terms ),
+                'url'     => get_permalink( $page ),
+                'crumb'   => implode( ' › ', $crumbs ),
+                'snippet' => msr_snippet( [ msr_plain( $page->post_excerpt ), $index, msr_plain( $page->post_content ) ], $terms, 140 ),
+            ];
+        }
+
+        $posts = [];
+        foreach ( $posts_q->posts as $post ) {
+            $thumb   = get_the_post_thumbnail_url( $post->ID, 'thumbnail' );
+            $posts[] = [
+                'title' => msr_highlight( msr_title( $post ), $terms ),
+                'url'   => get_permalink( $post ),
+                'date'  => get_the_date( 'd.m.Y', $post ),
+                'thumb' => $thumb ? $thumb : '',
+            ];
+        }
+
+        $data = [
+            'pages'       => $pages,
+            'posts'       => $posts,
+            'pages_total' => count( $all_pages ),
+            'posts_total' => (int) $posts_q->found_posts,
+        ];
+        set_transient( $key, $data, 10 * MINUTE_IN_SECONDS );
+        return $data;
+    }
+
+    add_action( 'rest_api_init', function () {
+        register_rest_route( 'mamateyka/v1', '/search', [
+            'methods'             => 'GET',
+            'permission_callback' => '__return_true',
+            'args'                => [
+                'q' => [ 'type' => 'string', 'required' => true, 'sanitize_callback' => 'sanitize_text_field' ],
+            ],
+            'callback'            => function ( WP_REST_Request $request ) {
+                $query    = mb_substr( (string) $request->get_param( 'q' ), 0, 100, 'UTF-8' );
+                $response = rest_ensure_response( msr_live_search( $query ) );
+                $response->header( 'Cache-Control', 'public, max-age=60' );
+                return $response;
+            },
+        ] );
+    } );
+
+    // "Názov|/adresa;Názov 2|/adresa-2" -> [ [názov, url], ... ]
+    function msl_parse_links( $value ) {
+        $links = [];
+        foreach ( explode( ';', (string) $value ) as $part ) {
+            $pieces = array_map( 'trim', explode( '|', $part, 2 ) );
+            if ( 2 !== count( $pieces ) || '' === $pieces[0] || '' === $pieces[1] ) {
+                continue;
+            }
+            $url     = ( 0 === strpos( $pieces[1], '/' ) ) ? home_url( $pieces[1] ) : $pieces[1];
+            $links[] = [ $pieces[0], $url ];
+        }
+        return $links;
+    }
+
+    function msl_assets() {
+        ob_start();
+        ?>
+        <style>
+            .msl {
+                --msl-ink: #1d2630;
+                --msl-muted: #5f6a73;
+                --msl-blue: #537891;
+                --msl-blue-dark: #3f6174;
+                --msl-border: #dfe8ee;
+                --msl-soft: #eef4f8;
+                position: relative;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                color: var(--msl-ink);
+                font-family: "Fira Sans", sans-serif;
+                font-size: 1rem;
+                line-height: 1.4;
+            }
+            .msl *, .msl *::before, .msl *::after { box-sizing: border-box; }
+            .msl svg { display: block; flex: none; }
+            .msl mark { padding: 0 .1em; border-radius: 3px; background: rgba(83, 120, 145, .2); color: inherit; }
+
+            .msl__button {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                width: 44px;
+                height: 44px;
+                margin: 0;
+                padding: 0;
+                border: 0;
+                border-radius: 0;
+                background: transparent;
+                color: currentColor;
+                cursor: pointer;
+            }
+            .msl__button:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
+            .msl__button svg { width: 22px; height: 22px; fill: var(--msl-blue); }
+            @media (max-width: 767px) { .msl__button { width: 36px; } }
+
+            .msl__panel {
+                position: absolute;
+                top: calc(100% + 8px);
+                right: 0;
+                z-index: 9999;
+                width: min(420px, calc(100vw - 20px));
+                border: 1px solid var(--msl-border);
+                border-radius: 18px;
+                background: #fff;
+                box-shadow: 0 18px 40px rgba(29, 38, 48, .16);
+                overflow: hidden;
+                text-align: left;
+                visibility: hidden;
+                opacity: 0;
+                pointer-events: none;
+                transform: translateY(-8px);
+                transition: opacity .18s ease, transform .18s ease, visibility 0s linear .18s;
+            }
+            .msl.is-open .msl__panel {
+                visibility: visible;
+                opacity: 1;
+                pointer-events: auto;
+                transform: none;
+                transition: opacity .18s ease, transform .18s ease, visibility 0s;
+            }
+
+            .msl__form { display: flex; align-items: center; gap: .5rem; margin: 0; padding: .75rem; border-bottom: 1px solid var(--msl-border); }
+            .msl__input {
+                flex: 1 1 auto;
+                min-width: 0;
+                height: 44px;
+                margin: 0;
+                padding: 0 .9rem;
+                border: 1.5px solid rgba(83, 120, 145, .25);
+                border-radius: 12px;
+                background: #fff;
+                color: var(--msl-ink);
+                font: inherit;
+                font-size: 16px;
+                box-shadow: none;
+                outline: none;
+                -webkit-appearance: none;
+                appearance: none;
+            }
+            .msl__input:focus { border-color: var(--msl-blue); box-shadow: 0 0 0 3px rgba(83, 120, 145, .16); }
+            .msl__submit {
+                display: inline-flex;
+                flex: none;
+                align-items: center;
+                justify-content: center;
+                width: 44px;
+                height: 44px;
+                margin: 0;
+                padding: 0;
+                border: 0;
+                border-radius: 12px;
+                background: var(--msl-blue);
+                color: #fff;
+                cursor: pointer;
+                transition: background .2s ease;
+            }
+            .msl__submit:hover { background: var(--msl-blue-dark); }
+            .msl__submit svg { width: 18px; height: 18px; }
+
+            .msl__body { max-height: var(--msl-body-max, 60vh); padding: .4rem .5rem .6rem; overflow-y: auto; overscroll-behavior: contain; transition: opacity .15s ease; }
+            .msl.is-loading .msl__body { opacity: .6; }
+            .msl__heading {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: .6rem .5rem .3rem;
+                color: var(--msl-muted);
+                font-size: .72rem;
+                font-weight: 500;
+                letter-spacing: .08em;
+                text-transform: uppercase;
+            }
+            .msl__clear { margin: 0; padding: 0; border: 0; background: transparent; color: var(--msl-blue); font: inherit; font-size: .78rem; font-weight: 500; letter-spacing: 0; text-transform: none; cursor: pointer; }
+            .msl__clear:hover { text-decoration: underline; }
+
+            .msl a.msl__item {
+                display: flex;
+                align-items: center;
+                gap: .75rem;
+                padding: .55rem .6rem;
+                border-radius: 12px;
+                color: var(--msl-ink);
+                text-decoration: none;
+            }
+            .msl a.msl__item:hover, .msl a.msl__item.is-active { background: var(--msl-soft); color: var(--msl-ink); }
+            .msl a.msl__item:focus-visible { outline: 2px solid var(--msl-blue); outline-offset: -2px; }
+            .msl__icon {
+                display: inline-flex;
+                flex: none;
+                align-items: center;
+                justify-content: center;
+                width: 40px;
+                height: 40px;
+                overflow: hidden;
+                border-radius: 10px;
+                background: #dbe8f1;
+                color: #2f6b94;
+            }
+            .msl__icon img { width: 100%; height: 100%; object-fit: cover; }
+            .msl__icon svg { width: 20px; height: 20px; }
+            .msl__text { display: flex; flex: 1 1 auto; flex-direction: column; min-width: 0; }
+            .msl__title { overflow: hidden; font-weight: 500; text-overflow: ellipsis; white-space: nowrap; }
+            .msl__meta { overflow: hidden; color: var(--msl-muted); font-size: .8rem; text-overflow: ellipsis; white-space: nowrap; }
+            .msl__snippet { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; color: var(--msl-muted); font-size: .85rem; line-height: 1.4; }
+            .msl__recent-item svg { width: 18px; height: 18px; color: var(--msl-muted); }
+            .msl a.msl__recent-item { gap: .6rem; padding: .45rem .6rem; }
+
+            .msl__chips { display: flex; flex-wrap: wrap; gap: .4rem; padding: .25rem .5rem .5rem; }
+            .msl a.msl__chip {
+                padding: .4rem .9rem;
+                border-radius: 999px;
+                background: var(--msl-soft);
+                color: var(--msl-blue-dark);
+                font-size: .9rem;
+                font-weight: 500;
+                text-decoration: none;
+                transition: background .2s ease, color .2s ease;
+            }
+            .msl a.msl__chip:hover, .msl a.msl__chip.is-active { background: var(--msl-blue); color: #fff; }
+            .msl__empty { padding: 1.1rem .75rem; color: var(--msl-muted); text-align: center; }
+
+            .msl a.msl__all {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: .5rem;
+                padding: .8rem 1rem;
+                border-top: 1px solid var(--msl-border);
+                background: var(--msl-soft);
+                color: var(--msl-blue-dark);
+                font-weight: 500;
+                text-decoration: none;
+            }
+            .msl a.msl__all:hover, .msl a.msl__all.is-active { background: #e2ecf2; color: var(--msl-blue-dark); }
+            .msl__all svg { width: 16px; height: 16px; }
+            .msl a.msl__all[hidden], .msl [hidden] { display: none; }
+            .msl__status { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+            @media (prefers-reduced-motion: reduce) {
+                .msl *, .msl *::before, .msl *::after { transition: none !important; }
+            }
+        </style>
+        <script>
+            (function () {
+                // Zatvorenie mobilnej klávesnice mení iba výšku viewportu; ScrollTrigger to nesmie brať ako zmenu rozloženia.
+                function applyConfig() {
+                    if (window.ScrollTrigger) { ScrollTrigger.config({ ignoreMobileResize: true }); }
+                }
+                if (document.readyState === 'loading') {
+                    document.addEventListener('DOMContentLoaded', applyConfig);
+                } else {
+                    applyConfig();
+                }
+                window.addEventListener('load', applyConfig);
+                document.addEventListener('focusout', function (e) {
+                    if (e.target.matches && e.target.matches('input[type="search"], input[type="text"]') && window.ScrollTrigger) {
+                        setTimeout(function () { ScrollTrigger.refresh(); }, 300);
+                    }
+                });
+
+                function el(tag, cls, text) {
+                    var node = document.createElement(tag);
+                    if (cls) { node.className = cls; }
+                    if (text) { node.textContent = text; }
+                    return node;
+                }
+
+                function init(root) {
+                    var q = function (s) { return root.querySelector(s); };
+                    var button = q('[data-msl-button]'), panel = q('[data-msl-panel]'), input = q('[data-msl-input]'),
+                        form = q('[data-msl-form]'), body = q('[data-msl-body]'), initial = q('[data-msl-initial]'),
+                        results = q('[data-msl-results]'), footer = q('[data-msl-all]'), status = q('[data-msl-status]'),
+                        recentBox = q('[data-msl-recent]'), recentList = q('[data-msl-recent-list]'), clearBtn = q('[data-msl-clear]');
+                    if (!button || !panel || !input || !results) { return; }
+
+                    var endpoint = root.getAttribute('data-endpoint');
+                    var action = root.getAttribute('data-action') || '/';
+                    var maxRecent = parseInt(root.getAttribute('data-recent'), 10) || 5;
+                    var icons = {};
+                    try { icons = JSON.parse(root.getAttribute('data-icons') || '{}'); } catch (e) { icons = {}; }
+
+                    var MIN = 2, DELAY = 250, STORE = 'msl_recent';
+                    var timer = 0, controller = null, cache = {}, active = -1, ignoreUntil = 0, seq = 0;
+
+                    function allUrl(term) { return action + (action.indexOf('?') > -1 ? '&' : '?') + 's=' + encodeURIComponent(term); }
+                    function icon(name) { var s = el('span', 'msl__icon'); s.innerHTML = icons[name] || ''; return s; }
+
+                    /* --- posledné hľadania --- */
+                    function getRecent() {
+                        try {
+                            var list = JSON.parse(localStorage.getItem(STORE) || '[]');
+                            return Array.isArray(list) ? list.filter(function (x) { return typeof x === 'string'; }).slice(0, maxRecent) : [];
+                        } catch (e) { return []; }
+                    }
+                    function saveRecent(term) {
+                        term = (term || '').trim();
+                        if (term.length < MIN) { return; }
+                        try {
+                            var list = getRecent().filter(function (x) { return x.toLowerCase() !== term.toLowerCase(); });
+                            list.unshift(term);
+                            localStorage.setItem(STORE, JSON.stringify(list.slice(0, maxRecent)));
+                        } catch (e) { /* súkromný režim: preskočiť */ }
+                    }
+                    function renderRecent() {
+                        if (!recentBox || !recentList) { return; }
+                        var list = getRecent();
+                        recentList.textContent = '';
+                        recentBox.hidden = list.length === 0;
+                        list.forEach(function (term) {
+                            var a = navLink(allUrl(term), 'msl__item msl__recent-item');
+                            var ic = el('span'); ic.innerHTML = icons.clock || '';
+                            a.appendChild(ic);
+                            a.appendChild(el('span', 'msl__title', term));
+                            recentList.appendChild(a);
+                        });
+                    }
+
+                    /* --- navigácia klávesnicou --- */
+                    function navLink(url, cls) {
+                        var a = el('a', cls);
+                        a.href = url;
+                        a.id = root.id + '-o' + (seq++);
+                        a.setAttribute('role', 'option');
+                        a.setAttribute('data-msl-nav', '');
+                        return a;
+                    }
+                    function navItems() {
+                        var scope = results.hidden ? initial : results;
+                        var items = Array.prototype.slice.call(scope.querySelectorAll('[data-msl-nav]'));
+                        if (!footer.hidden) { items.push(footer); }
+                        return items;
+                    }
+                    function setActive(index) {
+                        var items = navItems();
+                        items.forEach(function (item) { item.classList.remove('is-active'); });
+                        active = index;
+                        if (index >= 0 && items[index]) {
+                            items[index].classList.add('is-active');
+                            input.setAttribute('aria-activedescendant', items[index].id);
+                            items[index].scrollIntoView({ block: 'nearest' });
+                        } else {
+                            active = -1;
+                            input.removeAttribute('aria-activedescendant');
+                        }
+                    }
+
+                    /* --- zobrazenia --- */
+                    function say(text) { if (status) { status.textContent = text; } }
+                    function showInitial() {
+                        if (controller) { controller.abort(); }
+                        root.classList.remove('is-loading');
+                        results.hidden = true;
+                        results.textContent = '';
+                        footer.hidden = true;
+                        initial.hidden = false;
+                        setActive(-1);
+                    }
+                    function group(label, count, nodes) {
+                        var head = el('div', 'msl__heading');
+                        head.appendChild(el('span', '', label + ' · ' + count));
+                        results.appendChild(head);
+                        nodes.forEach(function (n) { results.appendChild(n); });
+                    }
+                    function showMessage(text, term) {
+                        results.textContent = '';
+                        results.appendChild(el('div', 'msl__empty', text));
+                        results.hidden = false;
+                        initial.hidden = true;
+                        footer.hidden = !term;
+                        if (term) { footer.href = allUrl(term); footer.firstChild.textContent = 'Hľadať na celom webe'; }
+                        setActive(-1);
+                        say(text);
+                    }
+                    function render(data, term) {
+                        results.textContent = '';
+                        if (!data.pages.length && !data.posts.length) {
+                            showMessage('Nič sme nenašli. Skúste iné slovo alebo kratší výraz.', '');
+                            return;
+                        }
+                        if (data.pages.length) {
+                            group('Stránky', data.pages_total, data.pages.map(function (p) {
+                                var a = navLink(p.url, 'msl__item');
+                                a.appendChild(icon('file'));
+                                var t = el('span', 'msl__text');
+                                var title = el('span', 'msl__title'); title.innerHTML = p.title; t.appendChild(title);
+                                if (p.crumb) { t.appendChild(el('span', 'msl__meta', p.crumb)); }
+                                if (p.snippet) { var sn = el('span', 'msl__snippet'); sn.innerHTML = p.snippet; t.appendChild(sn); }
+                                a.appendChild(t);
+                                return a;
+                            }));
+                        }
+                        if (data.posts.length) {
+                            group('Články', data.posts_total, data.posts.map(function (p) {
+                                var a = navLink(p.url, 'msl__item');
+                                var ic = icon('news');
+                                if (p.thumb) { ic.textContent = ''; var img = el('img'); img.src = p.thumb; img.alt = ''; img.loading = 'lazy'; ic.appendChild(img); }
+                                a.appendChild(ic);
+                                var t = el('span', 'msl__text');
+                                var title = el('span', 'msl__title'); title.innerHTML = p.title; t.appendChild(title);
+                                t.appendChild(el('span', 'msl__meta', p.date));
+                                a.appendChild(t);
+                                return a;
+                            }));
+                        }
+                        results.hidden = false;
+                        initial.hidden = true;
+                        footer.href = allUrl(term);
+                        footer.firstChild.textContent = 'Zobraziť všetky výsledky (' + (data.pages_total + data.posts_total) + ')';
+                        footer.hidden = false;
+                        setActive(-1);
+                        say('Nájdené: ' + data.pages_total + ' stránok, ' + data.posts_total + ' článkov.');
+                    }
+
+                    function run(term) {
+                        if (term.length < MIN) { showInitial(); return; }
+                        if (cache[term]) { render(cache[term], term); return; }
+                        if (controller) { controller.abort(); }
+                        controller = window.AbortController ? new AbortController() : null;
+                        root.classList.add('is-loading');
+                        var url = endpoint + (endpoint.indexOf('?') > -1 ? '&' : '?') + 'q=' + encodeURIComponent(term);
+                        fetch(url, { signal: controller ? controller.signal : undefined, credentials: 'same-origin', headers: { Accept: 'application/json' } })
+                            .then(function (r) { if (!r.ok) { throw new Error('http'); } return r.json(); })
+                            .then(function (data) {
+                                root.classList.remove('is-loading');
+                                cache[term] = data;
+                                if (input.value.trim() === term) { render(data, term); }
+                            })
+                            .catch(function (err) {
+                                if (err && err.name === 'AbortError') { return; }
+                                root.classList.remove('is-loading');
+                                if (input.value.trim() === term) {
+                                    showMessage('Vyhľadávanie sa nepodarilo. Stlačte Enter a zobrazíme všetky výsledky.', term);
+                                }
+                            });
+                    }
+
+                    /* --- otváranie a umiestnenie --- */
+                    function layout() {
+                        var vw = document.documentElement.clientWidth;
+                        var width = Math.min(420, vw - 20);
+                        var rect = root.getBoundingClientRect();
+                        var left = Math.max(10, Math.min(rect.right - width, vw - width - 10));
+                        panel.style.width = width + 'px';
+                        panel.style.right = 'auto';
+                        panel.style.left = (left - rect.left) + 'px';
+
+                        var header = root.closest('section, header');
+                        var anchorBottom = header ? header.getBoundingClientRect().bottom : rect.bottom;
+                        var top = Math.max(rect.bottom, anchorBottom) + 6;
+                        panel.style.top = (top - rect.top) + 'px';
+                        var vh = window.visualViewport ? window.visualViewport.height : window.innerHeight;
+                        panel.style.setProperty('--msl-body-max', Math.max(180, vh - top - 140) + 'px');
+                    }
+                    function open() {
+                        layout();
+                        root.classList.add('is-open');
+                        button.setAttribute('aria-expanded', 'true');
+                        input.setAttribute('aria-expanded', 'true');
+                        ignoreUntil = Date.now() + 350;
+                        renderRecent();
+                        var term = input.value.trim();
+                        if (term.length >= MIN) { run(term); } else { showInitial(); }
+                        // Zaostrenie priamo v kliknutí, inak mobilný prehliadač klávesnicu nezobrazí.
+                        input.focus({ preventScroll: true });
+                    }
+                    function close() {
+                        root.classList.remove('is-open');
+                        button.setAttribute('aria-expanded', 'false');
+                        input.setAttribute('aria-expanded', 'false');
+                        if (controller) { controller.abort(); }
+                        root.classList.remove('is-loading');
+                        setActive(-1);
+                    }
+                    function isOpen() { return root.classList.contains('is-open'); }
+
+                    button.addEventListener('click', function (event) {
+                        event.stopPropagation();
+                        if (isOpen()) { close(); } else { open(); }
+                    });
+                    document.addEventListener('pointerdown', function (event) {
+                        if (!isOpen() || Date.now() < ignoreUntil || root.contains(event.target)) { return; }
+                        close();
+                    });
+                    document.addEventListener('keydown', function (event) {
+                        if (event.key === 'Escape' && isOpen()) { close(); button.focus(); }
+                    });
+                    window.addEventListener('resize', function () { if (isOpen()) { layout(); } });
+                    if (window.visualViewport) {
+                        window.visualViewport.addEventListener('resize', function () { if (isOpen()) { layout(); } });
+                    }
+
+                    input.addEventListener('input', function () {
+                        clearTimeout(timer);
+                        var term = input.value.trim();
+                        if (term.length < MIN) { showInitial(); return; }
+                        timer = setTimeout(function () { run(term); }, DELAY);
+                    });
+                    input.addEventListener('keydown', function (event) {
+                        var items = navItems();
+                        if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+                            if (!items.length) { return; }
+                            event.preventDefault();
+                            var step = event.key === 'ArrowDown' ? 1 : -1;
+                            var next = active + step;
+                            if (next < 0) { next = items.length - 1; }
+                            if (next >= items.length) { next = 0; }
+                            setActive(next);
+                        } else if (event.key === 'Enter' && active >= 0 && items[active]) {
+                            event.preventDefault();
+                            saveRecent(input.value);
+                            window.location.href = items[active].href;
+                        }
+                    });
+                    form.addEventListener('submit', function () { saveRecent(input.value); });
+                    panel.addEventListener('click', function (event) {
+                        var link = event.target.closest ? event.target.closest('a[data-msl-nav], a[data-msl-all]') : null;
+                        if (link && !link.classList.contains('msl__recent-item')) { saveRecent(input.value); }
+                    });
+                    if (clearBtn) {
+                        clearBtn.addEventListener('click', function () {
+                            try { localStorage.removeItem(STORE); } catch (e) { /* ignorovať */ }
+                            renderRecent();
+                            input.focus({ preventScroll: true });
+                        });
+                    }
+                }
+
+                function start() {
+                    document.querySelectorAll('[data-msl]').forEach(init);
+                }
+                if (document.readyState === 'loading') {
+                    document.addEventListener('DOMContentLoaded', start);
+                } else {
+                    start();
+                }
+            })();
+        </script>
+        <?php
+        return ob_get_clean();
+    }
+
+    add_shortcode( 'mamateyka_search', function ( $atts = [] ) {
+        $atts = shortcode_atts( [
+            'placeholder' => 'Hľadať na webe…',
+            'links'       => 'Farské oznamy|/farnost/#sekcia-oznamy;Kalendár|/kalendar/;Aktuality|/aktuality/;Kontakt|/kontakt/;Podpor nás|/podpor-nas/',
+            'recent'      => 5,
+        ], $atts, 'mamateyka_search' );
+
+        static $assets_printed = false;
+        static $instance = 0;
+        $instance++;
+        $id     = 'msl-' . $instance;
+        $output = '';
+        if ( ! $assets_printed ) {
+            $assets_printed = true;
+            $output         = msl_assets();
+        }
+
+        $icons = [
+            'file'  => msr_icon( 'file' ),
+            'news'  => msr_icon( 'news' ),
+            'clock' => msr_icon( 'clock' ),
+        ];
+        $prefill = is_search() ? (string) get_search_query( false ) : '';
+        $links   = msl_parse_links( $atts['links'] );
+
+        ob_start();
+        ?>
+        <div class="msl" id="<?php echo esc_attr( $id ); ?>" data-msl
+            data-endpoint="<?php echo esc_attr( wp_make_link_relative( rest_url( 'mamateyka/v1/search' ) ) ); ?>"
+            data-action="<?php echo esc_attr( wp_make_link_relative( home_url( '/' ) ) ); ?>"
+            data-recent="<?php echo (int) $atts['recent']; ?>"
+            data-icons="<?php echo esc_attr( wp_json_encode( $icons ) ); ?>">
+            <button type="button" class="msl__button" data-msl-button aria-label="Zobraziť vyhľadávanie" aria-expanded="false" aria-controls="<?php echo esc_attr( $id ); ?>-panel">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" aria-hidden="true" focusable="false"><path d="M460.355,421.59L353.844,315.078c20.041-27.553,31.885-61.437,31.885-98.037C385.729,124.934,310.793,50,218.686,50C126.58,50,51.645,124.934,51.645,217.041c0,92.106,74.936,167.041,167.041,167.041c34.912,0,67.352-10.773,94.184-29.158L419.945,462L460.355,421.59z M100.631,217.041c0-65.096,52.959-118.056,118.055-118.056c65.098,0,118.057,52.959,118.057,118.056c0,65.096-52.959,118.056-118.057,118.056C153.59,335.097,100.631,282.137,100.631,217.041z"></path></svg>
+            </button>
+            <div class="msl__panel" id="<?php echo esc_attr( $id ); ?>-panel" data-msl-panel role="dialog" aria-label="Vyhľadávanie">
+                <form class="msl__form" data-msl-form role="search" method="get" action="<?php echo esc_url( home_url( '/' ) ); ?>">
+                    <input class="msl__input" data-msl-input type="search" name="s" value="<?php echo esc_attr( $prefill ); ?>" placeholder="<?php echo esc_attr( $atts['placeholder'] ); ?>" aria-label="Hľadať na webe" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="<?php echo esc_attr( $id ); ?>-results" autocomplete="off" autocapitalize="off" spellcheck="false" enterkeyhint="search">
+                    <button class="msl__submit" type="submit" aria-label="Hľadať"><?php echo msr_icon( 'search' ); ?></button>
+                </form>
+                <div class="msl__body" data-msl-body>
+                    <div data-msl-initial>
+                        <div data-msl-recent hidden>
+                            <div class="msl__heading"><span>Posledné hľadania</span><button type="button" class="msl__clear" data-msl-clear>Vymazať</button></div>
+                            <div data-msl-recent-list role="listbox" aria-label="Posledné hľadania"></div>
+                        </div>
+                        <?php if ( $links ) : ?>
+                            <div class="msl__heading"><span>Rýchle odkazy</span></div>
+                            <div class="msl__chips" role="listbox" aria-label="Rýchle odkazy">
+                                <?php foreach ( $links as $index => $link ) : ?>
+                                    <a class="msl__chip" role="option" data-msl-nav id="<?php echo esc_attr( $id . '-q' . $index ); ?>" href="<?php echo esc_url( $link[1] ); ?>"><?php echo esc_html( $link[0] ); ?></a>
+                                <?php endforeach; ?>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                    <div data-msl-results id="<?php echo esc_attr( $id ); ?>-results" role="listbox" aria-label="Návrhy" hidden></div>
+                </div>
+                <a class="msl__all" data-msl-all id="<?php echo esc_attr( $id ); ?>-all" role="option" href="<?php echo esc_url( home_url( '/' ) ); ?>" hidden><span>Zobraziť všetky výsledky</span><?php echo msr_icon( 'arrow' ); ?></a>
+                <div class="msl__status" data-msl-status role="status" aria-live="polite"></div>
+            </div>
         </div>
         <?php
         return $output . ob_get_clean();
