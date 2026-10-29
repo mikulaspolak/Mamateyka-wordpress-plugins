@@ -1040,15 +1040,21 @@
     var progressEl = document.getElementById("nast-progress");
     if (!root || !body) return;
 
-    var posterColumnOverride =
-      (location.hash.match(/(?:^#|&)columns=(1|2)(?:&|$)/) || [])[1];
+    var displayOverride =
+      (location.hash.match(/(?:^#|&)display=(small|large)(?:&|$)/) || [])[1];
+    if (!displayOverride) {
+      var legacyColumnOverride =
+        (location.hash.match(/(?:^#|&)columns=(1|2)(?:&|$)/) || [])[1];
+      displayOverride =
+        legacyColumnOverride === "1" ? "small" : legacyColumnOverride === "2" ? "large" : "";
+    }
     var rozpisSlot = document.getElementById("nast-rozpis-slot");
     var massTitle = document.getElementById("nast-mass-title");
     var defaultMassTitle = massTitle ? massTitle.textContent : "";
     var updateMassScreen = function () {
       if (!rozpisSlot) return;
       var liveEvent = rozpisSlot.querySelector(".priest-card--live");
-      var showMassScreen = !!liveEvent && posterColumnOverride !== "1";
+      var showMassScreen = !!liveEvent && displayOverride !== "small";
       if (massTitle) {
         var serviceTag = liveEvent && liveEvent.querySelector(".service-tag");
         var serviceName = serviceTag ? serviceTag.textContent.trim() : "";
@@ -1453,10 +1459,10 @@
     var embedZoom = 1;
     var rozpisZoom = 1;
 
-    // #columns=1/2 vynuti rozlozenie plagatov; inak sa zvoli automaticky podla obrazovky.
+    // #display=small/large vynuti rozlozenie plagatov; inak sa zvoli automaticky podla obrazovky.
     var TV_MIN_SHORT_SIDE = 1080;
     var isTvLayout = function () {
-      if (posterColumnOverride) return posterColumnOverride === "2";
+      if (displayOverride) return displayOverride === "large";
       var scr = window.screen;
       var shortSide = scr ? Math.min(scr.width, scr.height) : 0;
       return window.innerHeight > window.innerWidth && shortSide >= TV_MIN_SHORT_SIDE;
