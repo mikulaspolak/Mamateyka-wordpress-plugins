@@ -15,8 +15,8 @@ if (class_exists('Oznamy_Mass_Intentions')) {
 class Oznamy_Mass_Intentions
 {
     const DOCUMENT_NAME = 'Úmysly svätých omší';
-    const CACHE_KEY_PREFIX = 'oznamy_cache_intentions_v3_';
-    const STALE_CACHE_KEY_PREFIX = 'oznamy_stale_intentions_v2_';
+    const CACHE_KEY_PREFIX = 'oznamy_cache_intentions_v4_';
+    const STALE_CACHE_KEY_PREFIX = 'oznamy_stale_intentions_v3_';
 
     /**
      * Render [umysly-svatych-omsi].
@@ -260,14 +260,6 @@ class Oznamy_Mass_Intentions
 
         if (empty($intention_dates)) {
             return new WP_Error('oznamy_intentions_no_entries', 'V dokumente sa nenašli platné dátumy s úmyslami omší.');
-        }
-
-        $first_intention_date = reset($intention_dates);
-        $last_intention_date = end($intention_dates);
-        foreach ($days as $date => $day_data) {
-            if ($date < $first_intention_date || $date > $last_intention_date) {
-                unset($days[$date]);
-            }
         }
 
         return array(
