@@ -83,8 +83,10 @@ class Oznamy_Shortcode
     public static function render_embed($request)
     {
         if ('obrazky' === $request['typ']) {
-            self::$lightbox_rendered = true; // Display-only embed, no lightbox.
+            // Display-only embed (monitor vo vestibule): vždy plné originály, nie miniatúry.
+            self::$original_images = true;
             $html = self::render_images(array('columns' => '2'));
+            self::$original_images = false;
         } else {
             $html = self::render_modern(array());
         }
@@ -1673,25 +1675,26 @@ class Oznamy_Shortcode
                 } else {
                     $cached_images = array();
                     foreach ($images as $image) {
-                        $url = self::ensure_image_cached(
+                        $cached = self::ensure_image_cached(
                             $image['id'],
                             $image['name'],
                             $selected['id'],
                             $client,
                             $image['modifiedTime']
                         );
-                        if (is_wp_error($url)) {
-                            Oznamy_Load_Health::record_issue('archive_images', $url->get_error_message());
-                            error_log('[Oznamy] Archive image cache error: ' . $url->get_error_message());
+                        if (is_wp_error($cached)) {
+                            Oznamy_Load_Health::record_issue('archive_images', $cached->get_error_message());
+                            error_log('[Oznamy] Archive image cache error: ' . $cached->get_error_message());
                             wp_send_json_error(array('code' => 'archive_unavailable'), 503);
                         }
-                        $cached_images[] = array('url' => $url, 'name' => $image['name']);
+                        $cached['name'] = $image['name'];
+                        $cached_images[] = $cached;
                     }
 
                     usort($cached_images, static function ($a, $b) {
                         return strcasecmp($a['name'], $b['name']);
                     });
-                    $gallery_html = self::build_images_html($cached_images, false);
+                    $gallery_html = self::build_images_html($cached_images);
                     set_transient($images_key, $gallery_html, $ttl);
                     Oznamy_Load_Health::resolve_issue('archive_images');
                 }
@@ -1875,6 +1878,27 @@ class Oznamy_Shortcode
             ));
         }
         wp_enqueue_script('oznamy-archive');
+    }
+
+    /**
+     * Enqueue the gallery lightbox. It builds its own markup, so cached gallery HTML stays free of it.
+     */
+    private static function enqueue_lightbox_script()
+    {
+        if (self::$original_images) {
+            return;
+        }
+
+        if (! wp_script_is('oznamy-lightbox', 'registered')) {
+            wp_register_script(
+                'oznamy-lightbox',
+                OZNAMY_PLUGIN_URL . 'assets/lightbox.js',
+                array(),
+                OZNAMY_VERSION,
+                true
+            );
+        }
+        wp_enqueue_script('oznamy-lightbox');
     }
 
     /**
@@ -2924,14 +2948,17 @@ class Oznamy_Shortcode
         $two_columns = '2' === $columns;
 
         self::enqueue_archive_script();
+        self::enqueue_lightbox_script();
 
+        // Miniatúry a originály majú oddelenú cache, aby sa nikdy nemiešali.
+        $variant   = self::$original_images ? '_full' : '';
         $settings  = get_option(OZNAMY_OPTION_KEY, array());
         self::schedule_next_release_cache_purge($settings);
         $publication = self::resolve_current_publication(self::resolve_render_mode($settings));
         self::prevent_page_cache_for_fallback($publication, $settings);
         $slug      = self::get_current_cycle_slug($settings, $publication);
-        $stale_slug = 'latest';
-        $cache_key = OZNAMY_CACHE_KEY_PREFIX . 'images_' . $slug;
+        $stale_slug = 'latest' . $variant;
+        $cache_key = OZNAMY_CACHE_KEY_PREFIX . 'images_' . $slug . $variant;
         $cached    = get_transient($cache_key);
 
         if (false !== $cached) {
@@ -2987,6 +3014,8 @@ class Oznamy_Shortcode
         if (self::has_unsupported_attributes($atts)) {
             return '';
         }
+
+        self::enqueue_lightbox_script();
 
         $settings  = get_option(OZNAMY_OPTION_KEY, array());
         self::schedule_next_release_cache_purge($settings);
@@ -3127,15 +3156,13 @@ class Oznamy_Shortcode
 
         $cached_images = array();
         foreach ($images as $image) {
-            $url = self::ensure_image_cached($image['id'], $image['name'], $subfolder['id'], $client);
-            if (! is_wp_error($url)) {
-                $cached_images[] = array(
-                    'url'  => $url,
-                    'name' => $image['name'],
-                );
+            $cached = self::ensure_image_cached($image['id'], $image['name'], $subfolder['id'], $client);
+            if (! is_wp_error($cached)) {
+                $cached['name'] = $image['name'];
+                $cached_images[] = $cached;
             } else {
-                Oznamy_Load_Health::record_issue($source, $url->get_error_message());
-                error_log('[Oznamy] Failed to cache image ' . $image['name'] . ': ' . $url->get_error_message());
+                Oznamy_Load_Health::record_issue($source, $cached->get_error_message());
+                error_log('[Oznamy] Failed to cache image ' . $image['name'] . ': ' . $cached->get_error_message());
             }
         }
 
@@ -3165,154 +3192,62 @@ class Oznamy_Shortcode
         );
     }
 
-    /** @var bool Whether the lightbox markup has already been output on this page. */
-    private static $lightbox_rendered = false;
+    /** @var bool When true, galleries use the full originals instead of thumbnails (monitor embed). */
+    private static $original_images = false;
 
     /**
-     * Build masonry image grid HTML with inline lightbox.
+     * Build masonry image grid HTML. The lightbox lives in assets/lightbox.js, so the (cached)
+     * markup contains only the figures.
      *
-     * @param array<int, array{url: string, name: string}> $images
+     * @param array<int, array{url: string, name: string, thumb_url?: string, thumb_width?: int, thumb_height?: int}> $images
      * @return string
      */
-    private static function build_images_html($images, $include_lightbox = true)
+    private static function build_images_html($images)
     {
         ob_start();
 
-        if ($include_lightbox && ! self::$lightbox_rendered) {
-            self::$lightbox_rendered = true;
-        ?>
-            <div id="oznamy-lightbox" role="dialog" aria-modal="true" tabindex="-1" style="display:none">
-                <button type="button" id="oznamy-lightbox-close" aria-label="<?php esc_attr_e('Zavrieť', 'oznamy-gdocs'); ?>">&times;</button>
-                <button type="button" id="oznamy-lightbox-prev" class="oznamy-lightbox-nav oznamy-lightbox-nav-prev" aria-label="<?php esc_attr_e('Predchádzajúci obrázok', 'oznamy-gdocs'); ?>">‹</button>
-                <img id="oznamy-lightbox-img" src="" alt="">
-                <button type="button" id="oznamy-lightbox-next" class="oznamy-lightbox-nav oznamy-lightbox-nav-next" aria-label="<?php esc_attr_e('Nasledujúci obrázok', 'oznamy-gdocs'); ?>">›</button>
-            </div>
-            <script>
-                (function() {
-                    var lb = document.getElementById('oznamy-lightbox');
-                    var img = document.getElementById('oznamy-lightbox-img');
-                    var btn = document.getElementById('oznamy-lightbox-close');
-                    var btnPrev = document.getElementById('oznamy-lightbox-prev');
-                    var btnNext = document.getElementById('oznamy-lightbox-next');
-                    var currentIndex = -1;
-                    var allImages = [];
-
-                    function openLb(src, alt, index) {
-                        img.src = src;
-                        img.alt = alt || '';
-                        currentIndex = index;
-                        lb.style.display = 'flex';
-                        document.body.style.overflow = 'hidden';
-                        lb.focus();
-                    }
-
-                    function closeLb() {
-                        lb.style.display = 'none';
-                        document.body.style.overflow = '';
-                        img.src = '';
-                        currentIndex = -1;
-                    }
-
-                    function showNextImage() {
-                        if (currentIndex >= 0 && currentIndex < allImages.length - 1) {
-                            var next = allImages[currentIndex + 1];
-                            openLb(next.src, next.alt, currentIndex + 1);
-                        }
-                    }
-
-                    function showPreviousImage() {
-                        if (currentIndex > 0 && currentIndex < allImages.length) {
-                            var prev = allImages[currentIndex - 1];
-                            openLb(prev.src, prev.alt, currentIndex - 1);
-                        }
-                    }
-
-                    btn.addEventListener('click', closeLb);
-                    btnNext.addEventListener('click', showNextImage);
-                    btnPrev.addEventListener('click', showPreviousImage);
-
-                    lb.addEventListener('click', function(e) {
-                        if (e.target === lb) closeLb();
-                    });
-
-                    document.addEventListener('keydown', function(e) {
-                        if (lb.style.display !== 'none') {
-                            if (e.key === 'Escape' || e.keyCode === 27) {
-                                closeLb();
-                            } else if (e.key === 'ArrowRight' || e.keyCode === 39) {
-                                showNextImage();
-                            } else if (e.key === 'ArrowLeft' || e.keyCode === 37) {
-                                showPreviousImage();
-                            }
-                        }
-                    });
-
-                    function findItem(el) {
-                        while (el) {
-                            if (el.classList && el.classList.contains('oznamy-img-item')) return el;
-                            el = el.parentElement;
-                        }
-                        return null;
-                    }
-
-                    // Collect all images on the page
-                    function initializeImages() {
-                        allImages = [];
-                        var items = document.querySelectorAll('.oznamy-img-item');
-                        items.forEach(function(item) {
-                            allImages.push({
-                                src: item.getAttribute('data-src'),
-                                alt: item.getAttribute('data-alt')
-                            });
-                        });
-                    }
-
-                    // Initialize images when DOM is ready
-                    if (document.readyState === 'loading') {
-                        document.addEventListener('DOMContentLoaded', initializeImages);
-                    } else {
-                        initializeImages();
-                    }
-
-                    document.addEventListener('click', function(e) {
-                        var item = findItem(e.target);
-                        if (item) {
-                            initializeImages();
-                            var index = allImages.findIndex(function(img) {
-                                return img.src === item.getAttribute('data-src');
-                            });
-                            openLb(item.getAttribute('data-src'), item.getAttribute('data-alt'), index);
-                        }
-                    });
-
-                    document.addEventListener('keydown', function(e) {
-                        if ((e.key === 'Enter' || e.keyCode === 13) && lb.style.display === 'none') {
-                            var item = findItem(document.activeElement);
-                            if (item) {
-                                initializeImages();
-                                var index = allImages.findIndex(function(img) {
-                                    return img.src === item.getAttribute('data-src');
-                                });
-                                openLb(item.getAttribute('data-src'), item.getAttribute('data-alt'), index);
-                            }
-                        }
-                    });
-                })();
-            </script>
-<?php
-        }
+        $total = count($images);
+        $position = 0;
 
         echo '<div class="oznamy-images">';
         foreach ($images as $image) {
-            $src = esc_url($image['url']);
-            $alt = esc_attr($image['name']);
+            $position++;
+            $src   = esc_url($image['url']);
+            $alt   = esc_attr(self::image_alt_text($image['name'], $position, $total));
+            $thumb = (! self::$original_images && ! empty($image['thumb_url'])) ? esc_url($image['thumb_url']) : $src;
+
+            $size_attrs = '';
+            if ($thumb !== $src && ! empty($image['thumb_width']) && ! empty($image['thumb_height'])) {
+                $size_attrs = ' width="' . (int) $image['thumb_width'] . '" height="' . (int) $image['thumb_height'] . '"';
+            }
+
             echo '<figure class="oznamy-img-item" data-src="' . $src . '" data-alt="' . $alt . '" role="button" tabindex="0">';
-            echo '<img src="' . $src . '" alt="' . $alt . '" loading="lazy">';
+            echo '<img src="' . $thumb . '" alt="' . $alt . '"' . $size_attrs . ' loading="lazy" decoding="async">';
             echo '</figure>';
         }
         echo '</div>';
 
         return (string) ob_get_clean();
+    }
+
+    /**
+     * Alt text for a gallery image: "Príloha 2 z 6", plus the Drive file name when it reads like a title.
+     * Names such as "1.jpg" or "FB_IMG_1793048914160.jpg" say nothing to a screen reader, so they are skipped.
+     */
+    private static function image_alt_text($name, $position, $total)
+    {
+        $label = sprintf(__('Príloha %1$d z %2$d', 'oznamy-gdocs'), $position, $total);
+
+        $title = preg_replace('/\.(jpe?g|png|gif|webp)$/i', '', (string) $name);
+        $title = trim((string) preg_replace('/[_\s]+/u', ' ', $title));
+
+        $letters = (int) preg_match_all('/\p{L}/u', $title);
+        $visible = (int) mb_strlen((string) preg_replace('/\s+/u', '', $title));
+        if ($letters >= 4 && $visible > 0 && $letters / $visible >= 0.6) {
+            return $label . ': ' . $title;
+        }
+
+        return $label;
     }
 
     // -------------------------------------------------------------------------
@@ -3333,30 +3268,134 @@ class Oznamy_Shortcode
             . '/' . rawurlencode($safe_filename);
     }
 
+    /** Longest side (px) of the gallery thumbnail; the full original stays next to it for the lightbox. */
+    const THUMB_MAX_SIDE = 480;
+    const THUMB_QUALITY = 80;
+    // Skenované plagáty môžu byť obrovské; nad touto hranicou sa miniatúra nerobí, aby nepadol PHP kvôli pamäti.
+    const THUMB_MAX_SOURCE_PIXELS = 50000000;
+
     /**
-     * Ensure an image is downloaded to the local cache. Returns the public URL or WP_Error.
+     * Ensure an image is downloaded to the local cache together with its thumbnail.
      *
-     * @return string|WP_Error
+     * @return array{url:string,thumb_url:string,thumb_width:int,thumb_height:int}|WP_Error
      */
     private static function ensure_image_cached($file_id, $filename, $subfolder_id, $client, $modified_time = '')
     {
-        $safe_name = sanitize_file_name($filename);
+        $safe_name = self::versioned_image_filename(sanitize_file_name($filename), $file_id, $modified_time);
         $dir       = self::get_image_cache_dir($subfolder_id);
         $path      = $dir . '/' . $safe_name;
 
-        $safe_name = self::versioned_image_filename($safe_name, $file_id, $modified_time);
-        $path      = $dir . '/' . $safe_name;
-
-        if (file_exists($path) && filesize($path) > 0) {
-            return self::get_image_cache_url($subfolder_id, $safe_name);
+        if (! file_exists($path) || filesize($path) <= 0) {
+            $result = $client->fetch_image_to_file($file_id, $path);
+            if (is_wp_error($result)) {
+                return $result;
+            }
         }
 
-        $result = $client->fetch_image_to_file($file_id, $path);
-        if (is_wp_error($result)) {
-            return $result;
+        $cached = array(
+            'url'          => self::get_image_cache_url($subfolder_id, $safe_name),
+            'thumb_url'    => '',
+            'thumb_width'  => 0,
+            'thumb_height' => 0,
+        );
+
+        // Miniatúra je len optimalizácia: ak sa nepodarí, galéria použije originál.
+        $thumb = self::ensure_image_thumbnail($path);
+        if ($thumb) {
+            $cached['thumb_url']    = self::get_image_cache_url($subfolder_id, $thumb['file']);
+            $cached['thumb_width']  = $thumb['width'];
+            $cached['thumb_height'] = $thumb['height'];
         }
 
-        return self::get_image_cache_url($subfolder_id, $safe_name);
+        return $cached;
+    }
+
+    /**
+     * Create (or reuse) a small thumbnail next to the cached original.
+     *
+     * @return array{file:string,width:int,height:int}|null Null when no thumbnail is needed or possible.
+     */
+    private static function ensure_image_thumbnail($path)
+    {
+        $info = pathinfo($path);
+
+        $source = @getimagesize($path);
+        if (! $source) {
+            return null;
+        }
+
+        // Typ sa berie z obsahu súboru, lebo príloha z Drive nemusí mať v názve príponu.
+        $types = array(IMAGETYPE_JPEG => 'jpg', IMAGETYPE_PNG => 'png');
+        if (defined('IMAGETYPE_WEBP')) {
+            $types[IMAGETYPE_WEBP] = 'webp';
+        }
+        $ext = $types[$source[2]] ?? '';
+        if ('' === $ext) {
+            return null;
+        }
+
+        // PNG sú často fotky; ako WebP sú pri rovnakej kvalite oveľa menšie a priehľadnosť zachovajú.
+        $target_ext = $ext;
+        if ('png' === $ext && wp_image_editor_supports(array('mime_type' => 'image/webp'))) {
+            $target_ext = 'webp';
+        }
+
+        $thumb_file = $info['filename'] . '-oznamy-' . self::THUMB_MAX_SIDE . '.' . $target_ext;
+        $thumb_path = $info['dirname'] . '/' . $thumb_file;
+
+        if (max($source[0], $source[1]) <= self::THUMB_MAX_SIDE) {
+            return null;
+        }
+        if ($source[0] * $source[1] > self::THUMB_MAX_SOURCE_PIXELS) {
+            return null;
+        }
+
+        if (file_exists($thumb_path) && filesize($thumb_path) > 0 && filemtime($thumb_path) >= filemtime($path)) {
+            $existing = @getimagesize($thumb_path);
+            if ($existing) {
+                return array('file' => $thumb_file, 'width' => (int) $existing[0], 'height' => (int) $existing[1]);
+            }
+        }
+
+        wp_raise_memory_limit('image');
+
+        $editor = wp_get_image_editor($path);
+        if (is_wp_error($editor)) {
+            error_log('[Oznamy] Thumbnail skipped: ' . $editor->get_error_message());
+            return null;
+        }
+
+        // Prehliadač originál otočí podľa EXIF, preto musí byť otočená aj miniatúra.
+        if (method_exists($editor, 'maybe_exif_rotate')) {
+            $editor->maybe_exif_rotate();
+        }
+        $editor->set_quality(self::THUMB_QUALITY);
+
+        $resized = $editor->resize(self::THUMB_MAX_SIDE, self::THUMB_MAX_SIDE, false);
+        if (is_wp_error($resized)) {
+            error_log('[Oznamy] Thumbnail resize failed: ' . $resized->get_error_message());
+            return null;
+        }
+
+        // Zapisuje sa do dočasného súboru, aby návštevník nikdy nedostal napoly zapísaný obrázok.
+        $tmp_path = $info['dirname'] . '/' . $info['filename'] . '-oznamy-tmp-' . wp_generate_password(8, false) . '.' . $target_ext;
+        $saved    = $editor->save($tmp_path);
+        if (is_wp_error($saved) || ! file_exists($tmp_path) || filesize($tmp_path) <= 0) {
+            @unlink($tmp_path);
+            error_log('[Oznamy] Thumbnail save failed' . (is_wp_error($saved) ? ': ' . $saved->get_error_message() : '.'));
+            return null;
+        }
+
+        if (! @rename($tmp_path, $thumb_path)) {
+            @unlink($tmp_path);
+            return null;
+        }
+
+        return array(
+            'file'   => $thumb_file,
+            'width'  => (int) ($saved['width'] ?? 0),
+            'height' => (int) ($saved['height'] ?? 0),
+        );
     }
 
     /**

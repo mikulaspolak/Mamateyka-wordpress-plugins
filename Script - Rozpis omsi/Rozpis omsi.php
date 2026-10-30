@@ -63,6 +63,78 @@ if (!function_exists('rozpis_omsi_shortcode')) {
     );
   }
 
+  // Fotky kňazov: meno (malými písmenami, bez diakritiky) => súbor v knižnici médií (relatívne k uploads).
+  // Nový kňaz = nový riadok tu (a prípadne alias v JS); veľkosti obrázkov sa zisťujú automaticky.
+  function rozpis_omsi_photo_files()
+  {
+    return array(
+      'jozef skala' => '2026/08/Jozef-Skala.jpg',
+      'bohus levko' => '2026/08/Bohus-Levko-1.jpg',
+      'dusan vilhan' => '2026/08/Dusan-Vilhan.jpg',
+      'marian valabek' => '2026/08/Marian-Valabek.jpg',
+      'jozef postenyi' => '2026/08/Jozef-Postenyi.jpg',
+      'jan capla' => '2026/08/Jan-Capla.png',
+      'jan cvercko' => '2026/08/Jan-Cvercko.png',
+      'robert flamik' => '2026/08/Robert-Flamik.png',
+    );
+  }
+
+  /**
+   * URL originálu a veľkostí, ktoré WordPress k fotke naozaj vytvoril.
+   * Malé originály nemajú napr. -300x300, preto sa URL nedá skladať z názvu súboru.
+   */
+  function rozpis_omsi_photo_data()
+  {
+    static $data = null;
+    if (null !== $data) {
+      return $data;
+    }
+
+    $cached = get_transient('rozpis_omsi_photo_data');
+    if (is_array($cached)) {
+      $data = $cached;
+      return $data;
+    }
+
+    $uploads = wp_get_upload_dir();
+    $base = trailingslashit($uploads['baseurl']);
+    $data = array();
+    $complete = true;
+
+    foreach (rozpis_omsi_photo_files() as $name => $relative) {
+      $full = $base . $relative;
+      $thumb = $full;
+      $zoom = $full;
+
+      $attachment_id = attachment_url_to_postid($full);
+      if ($attachment_id) {
+        $thumb_src = wp_get_attachment_image_src($attachment_id, 'thumbnail');
+        $zoom_src = wp_get_attachment_image_src($attachment_id, 'medium');
+        $thumb = $thumb_src ? $thumb_src[0] : $full;
+        $zoom = $zoom_src ? $zoom_src[0] : $full;
+      } else {
+        $complete = false;
+      }
+
+      $data[$name] = array('full' => $full, 'thumb' => $thumb, 'zoom' => $zoom);
+    }
+
+    // Ak sa niektorá fotka v knižnici nenašla, cache je krátka, aby sa to čoskoro samo opravilo.
+    set_transient('rozpis_omsi_photo_data', $data, $complete ? 6 * HOUR_IN_SECONDS : 5 * MINUTE_IN_SECONDS);
+
+    return $data;
+  }
+
+  function rozpis_omsi_flush_photo_data($value = null)
+  {
+    delete_transient('rozpis_omsi_photo_data');
+    return $value;
+  }
+  add_action('add_attachment', 'rozpis_omsi_flush_photo_data');
+  add_action('edit_attachment', 'rozpis_omsi_flush_photo_data');
+  add_action('delete_attachment', 'rozpis_omsi_flush_photo_data');
+  add_filter('wp_update_attachment_metadata', 'rozpis_omsi_flush_photo_data');
+
   function rozpis_omsi_cache_ttl()
   {
     return MINUTE_IN_SECONDS;
@@ -839,17 +911,8 @@ if (!function_exists('rozpis_omsi_shortcode')) {
   const NUM_DAYS = 7;
   const REFRESH_INTERVAL = 5 * 60 * 1000;
   const LIVE_STATUS_TICK = 60 * 1000;
-  const PHOTO_BASE_URL = "https://www.mamateyka.sk";
-  const PHOTO_FILES = {
-    "jozef skala": "wp-content/uploads/2026/08/Jozef-Skala.jpg",
-    "bohus levko": "wp-content/uploads/2026/08/Bohus-Levko-1.jpg",
-    "dusan vilhan": "wp-content/uploads/2026/08/Dusan-Vilhan.jpg",
-    "marian valabek": "wp-content/uploads/2026/08/Marian-Valabek.jpg",
-    "jozef postenyi": "wp-content/uploads/2026/08/Jozef-Postenyi.jpg",
-    "jan capla": "wp-content/uploads/2026/08/Jan-Capla.png",
-    "jan cvercko": "wp-content/uploads/2026/08/Jan-Cvercko.png",
-    "robert flamik": "wp-content/uploads/2026/08/Robert-Flamik.png",
-  };
+  // Fotky kňazov (celé URL + existujúce veľkosti) pripravuje PHP z knižnice médií: rozpis_omsi_photo_data()
+  const PHOTOS = CONFIG.photos || {};
   const PHOTO_ALIASES = {
     cvercko: "jan cvercko",
     capla: "jan capla",
@@ -862,7 +925,7 @@ if (!function_exists('rozpis_omsi_shortcode')) {
   };
   // Katalóg všetkých rozpoznateľných mien (aj aliasov) pre extrakciu mena z textu s navyše slovami
   const KNOWN_NAME_CATALOG = Array.from(
-    new Set([...Object.keys(PHOTO_FILES), ...Object.keys(PHOTO_ALIASES)]),
+    new Set([...Object.keys(PHOTOS), ...Object.keys(PHOTO_ALIASES)]),
   )
     .map((name) => name.split(" "))
     .sort((a, b) => b.length - a.length);
@@ -982,13 +1045,18 @@ if (!function_exists('rozpis_omsi_shortcode')) {
     return Array.from(variants).filter(Boolean);
   }
 
-  // WordPress generuje k originálu menšie varianty "<meno>-<šírka>x<výška>.<prípona>"
+  // Veľkosti, ktoré WordPress k fotke naozaj vytvoril, určuje PHP (malé originály nemajú variant -300x300)
   const PHOTO_THUMB_SIZE = 150;
   const PHOTO_ZOOM_SIZE = 300;
+  const PHOTO_VARIANTS_BY_URL = {};
+  Object.keys(PHOTOS).forEach((name) => {
+    PHOTO_VARIANTS_BY_URL[PHOTOS[name].full] = PHOTOS[name];
+  });
 
   function photoVariantUrl(url, size) {
-    if (!url || !size) return url || "";
-    return url.replace(/(\.[a-z0-9]+)$/i, `-${size}x${size}$1`);
+    const photo = PHOTO_VARIANTS_BY_URL[url];
+    if (!photo) return url || "";
+    return (size === PHOTO_ZOOM_SIZE ? photo.zoom : photo.thumb) || photo.full;
   }
 
   // Pri chybe (napr. chýbajúci variant) skúsi originál, až potom fotku odstráni
@@ -1016,9 +1084,9 @@ if (!function_exists('rozpis_omsi_shortcode')) {
     for (const variant of variants) {
       const alias = PHOTO_ALIASES[variant];
       const candidate = alias ? alias : variant;
-      const direct = PHOTO_FILES[candidate];
-      if (direct) {
-        return `${PHOTO_BASE_URL.replace(/\/$/, "")}/${direct.replace(/^\/+/, "")}`;
+      const photo = PHOTOS[candidate];
+      if (photo) {
+        return photo.full;
       }
     }
 
@@ -3976,6 +4044,7 @@ HORIZONTAL_CSS;
       echo '<script>window.RozpisOmsiConfig = ' . wp_json_encode(array_merge(rozpis_omsi_calendar_config(), array(
         'eventsUrl' => rest_url('rozpis-omsi/v1/events'),
         'timeZone' => wp_timezone()->getName(),
+        'photos' => rozpis_omsi_photo_data(),
       ))) . ';</script>';
       echo '<script>' . rozpis_omsi_engine_js() . '</script>';
     }

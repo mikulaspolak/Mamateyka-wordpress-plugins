@@ -3,7 +3,7 @@
 /**
  * Plugin Name: Farské oznamy
  * Description: Automatically fetches parish announcements and Mass intentions from Google Docs.
- * Version:     1.131.0
+ * Version:     1.133.0
  * Requires at least: 5.9
  * Requires PHP: 7.0
  * Author:      Mikulas Polak
@@ -11,6 +11,8 @@
  * Text Domain: oznamy-gdocs
  *
  * Changelog:
+ *   1.133.0 - Release package generated.
+ *   1.132.0 - Release package generated.
  *   1.131.0 - Release package generated.
  *   1.130.0 - Release package generated.
  *   1.129.0 - Release package generated.
@@ -152,8 +154,8 @@ if (! defined('ABSPATH')) {
 
 define('OZNAMY_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('OZNAMY_PLUGIN_URL', plugin_dir_url(__FILE__));
-define('OZNAMY_VERSION', '1.131.0');
-define('OZNAMY_DB_VERSION', '1.131.0');
+define('OZNAMY_VERSION', '1.133.0');
+define('OZNAMY_DB_VERSION', '1.133.0');
 define('OZNAMY_OPTION_KEY', 'oznamy_settings');
 define('OZNAMY_CACHE_KEY_PREFIX', 'oznamy_cache_');
 define('OZNAMY_HISTORY_KEY', 'oznamy_sync_history');
@@ -178,7 +180,8 @@ function oznamy_check_version()
 
 function oznamy_run_upgrade($installed_version)
 {
-    $purge_shortcode_pages_cache = version_compare((string) $installed_version, '1.92.0', '<');
+    $purge_gallery_markup = version_compare((string) $installed_version, '1.132.0', '<');
+    $purge_shortcode_pages_cache = $purge_gallery_markup || version_compare((string) $installed_version, '1.92.0', '<');
     $purge_legacy_image_cache = version_compare((string) $installed_version, '1.66.0', '<');
 
     if (version_compare((string) $installed_version, '1.4.0', '<')) {
@@ -219,6 +222,20 @@ function oznamy_run_upgrade($installed_version)
                 '_transient_timeout_oznamy_cache_images_%',
                 '_transient_oznamy_cache_future_images_%',
                 '_transient_timeout_oznamy_cache_future_images_%'
+            )
+        );
+    }
+
+    if ($purge_gallery_markup) {
+        // Galérie majú nové značenie (miniatúry, lightbox mimo cache), preto sa starý HTML zahodí.
+        global $wpdb;
+        $wpdb->query(
+            $wpdb->prepare(
+                "DELETE FROM {$wpdb->options} WHERE option_name LIKE %s OR option_name LIKE %s OR option_name LIKE %s OR option_name LIKE %s",
+                '\_transient\_oznamy\_cache\_%images\_%',
+                '\_transient\_timeout\_oznamy\_cache\_%images\_%',
+                'oznamy\_stale\_images\_%',
+                'oznamy\_stale\_future\_images\_%'
             )
         );
     }
