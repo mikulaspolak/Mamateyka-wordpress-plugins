@@ -2,11 +2,17 @@
 /*
  * Mamateyka - vyhľadávanie (jeden snippet pre celé vyhľadávanie).
  *
- * Shortcody:
- *   [mamateyka_search]          lupa a rozbaľovací panel so živými návrhmi (vkladá sa do navigácie)
+ * Shortcody (jednotný vzor mamateyka_search_*):
+ *   [mamateyka_search_icon]     lupa a rozbaľovací panel so živými návrhmi (vkladá sa do navigácie)
  *                               voliteľne: placeholder="…" recent="5"
  *                               links="Názov|/adresa;Názov 2|/adresa-2" (rýchle odkazy v prázdnom poli)
+ *   [mamateyka_search_input]    vyhľadávacie pole priamo v stránke (napr. 404) so živými návrhmi pod poľom;
+ *                               Enter / tlačidlo prejde na stránku výsledkov
+ *                               voliteľne: placeholder="…" recent="5" links="…" prefill="yes|no"
+ *                               (prefill="yes" na 404 predvyplní výraz z adresy)
  *   [mamateyka_search_results]  stránka výsledkov vyhľadávania (voliteľne pages_visible="6" per_page="9")
+ *
+ * Pôvodný [mamateyka_search] bol premenovaný na [mamateyka_search_icon] – použitia na webe treba prepísať.
  *
  * REST endpoint pre návrhy: /wp-json/mamateyka/v1/search?q=…
  *
@@ -1229,7 +1235,7 @@ if ( ! function_exists( 'msr_fold' ) ) {
     } );
 
     /* =====================================================================
-     * Živé vyhľadávanie v navigácii: [mamateyka_search]
+     * Živé vyhľadávanie: [mamateyka_search_icon] a [mamateyka_search_input]
      * ================================================================== */
 
     function msr_live_version() {
@@ -1515,6 +1521,21 @@ if ( ! function_exists( 'msr_fold' ) ) {
             .msl a.msl__all[hidden], .msl [hidden] { display: none; }
             .msl__status { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
+            /* [mamateyka_search_input]: pole priamo v stránke, návrhy v rozbaľovacom zozname pod ním */
+            .msl.msl--input { display: block; width: 100%; max-width: 640px; text-align: left; }
+            .msl--input .msl__form { position: relative; display: block; padding: 0; border: 0; }
+            .msl--input .msl__input {
+                width: 100%;
+                height: 56px;
+                padding: 0 4rem 0 1.4rem;
+                border-radius: 999px;
+                box-shadow: 0 10px 28px rgba(29, 38, 48, .08);
+            }
+            .msl--input .msl__input:focus { box-shadow: 0 10px 28px rgba(29, 38, 48, .08), 0 0 0 3px rgba(83, 120, 145, .16); }
+            .msl--input .msl__submit { position: absolute; top: 6px; right: 6px; width: 44px; height: 44px; border-radius: 50%; }
+            .msl--input .msl__panel { top: calc(100% + 8px); left: 0; right: auto; width: 100%; border-radius: 24px; }
+            .msl--input .msl__body { max-height: min(60vh, 420px); }
+
             @media (prefers-reduced-motion: reduce) {
                 .msl *, .msl *::before, .msl *::after { transition: none !important; }
             }
@@ -1546,11 +1567,12 @@ if ( ! function_exists( 'msr_fold' ) ) {
 
                 function init(root) {
                     var q = function (s) { return root.querySelector(s); };
+                    var inline = root.hasAttribute('data-msl-inline');
                     var button = q('[data-msl-button]'), panel = q('[data-msl-panel]'), input = q('[data-msl-input]'),
                         form = q('[data-msl-form]'), body = q('[data-msl-body]'), initial = q('[data-msl-initial]'),
                         results = q('[data-msl-results]'), footer = q('[data-msl-all]'), status = q('[data-msl-status]'),
                         recentBox = q('[data-msl-recent]'), recentList = q('[data-msl-recent-list]'), clearBtn = q('[data-msl-clear]');
-                    if (!button || !panel || !input || !results) { return; }
+                    if ((!button && !inline) || !panel || !input || !results) { return; }
 
                     var endpoint = root.getAttribute('data-endpoint');
                     var action = root.getAttribute('data-action') || '/';
@@ -1715,6 +1737,7 @@ if ( ! function_exists( 'msr_fold' ) ) {
 
                     /* --- otváranie a umiestnenie --- */
                     function layout() {
+                        if (inline) { return; }
                         var vw = document.documentElement.clientWidth;
                         var width = Math.min(420, vw - 20);
                         var rect = root.getBoundingClientRect();
@@ -1730,38 +1753,56 @@ if ( ! function_exists( 'msr_fold' ) ) {
                         var vh = window.visualViewport ? window.visualViewport.height : window.innerHeight;
                         panel.style.setProperty('--msl-body-max', Math.max(180, vh - top - 140) + 'px');
                     }
-                    function open() {
+                    function setExpanded(value) {
+                        if (button) { button.setAttribute('aria-expanded', value); }
+                        input.setAttribute('aria-expanded', value);
+                    }
+                    function hasInitial() {
+                        return (recentBox && !recentBox.hidden) || !!initial.querySelector('[data-msl-nav]');
+                    }
+                    function open(skipRun) {
                         layout();
                         root.classList.add('is-open');
-                        button.setAttribute('aria-expanded', 'true');
-                        input.setAttribute('aria-expanded', 'true');
+                        setExpanded('true');
                         ignoreUntil = Date.now() + 350;
                         renderRecent();
                         var term = input.value.trim();
-                        if (term.length >= MIN) { run(term); } else { showInitial(); }
+                        if (term.length >= MIN) {
+                            if (!skipRun) { run(term); }
+                        } else {
+                            showInitial();
+                            if (inline && !hasInitial()) { close(); return; }
+                        }
                         // Zaostrenie priamo v kliknutí, inak mobilný prehliadač klávesnicu nezobrazí.
-                        input.focus({ preventScroll: true });
+                        if (!inline) { input.focus({ preventScroll: true }); }
                     }
                     function close() {
                         root.classList.remove('is-open');
-                        button.setAttribute('aria-expanded', 'false');
-                        input.setAttribute('aria-expanded', 'false');
+                        setExpanded('false');
                         if (controller) { controller.abort(); }
                         root.classList.remove('is-loading');
                         setActive(-1);
                     }
                     function isOpen() { return root.classList.contains('is-open'); }
 
-                    button.addEventListener('click', function (event) {
-                        event.stopPropagation();
-                        if (isOpen()) { close(); } else { open(); }
-                    });
+                    if (button) {
+                        button.addEventListener('click', function (event) {
+                            event.stopPropagation();
+                            if (isOpen()) { close(); } else { open(); }
+                        });
+                    }
+                    if (inline) {
+                        input.addEventListener('focus', function () { if (!isOpen()) { open(); } });
+                    }
                     document.addEventListener('pointerdown', function (event) {
                         if (!isOpen() || Date.now() < ignoreUntil || root.contains(event.target)) { return; }
                         close();
                     });
                     document.addEventListener('keydown', function (event) {
-                        if (event.key === 'Escape' && isOpen()) { close(); button.focus(); }
+                        if (event.key === 'Escape' && isOpen()) { close(); if (button) { button.focus(); } }
+                    });
+                    root.addEventListener('focusout', function (event) {
+                        if (inline && isOpen() && event.relatedTarget && !root.contains(event.relatedTarget)) { close(); }
                     });
                     window.addEventListener('resize', function () { if (isOpen()) { layout(); } });
                     if (window.visualViewport) {
@@ -1770,8 +1811,13 @@ if ( ! function_exists( 'msr_fold' ) ) {
 
                     input.addEventListener('input', function () {
                         clearTimeout(timer);
+                        if (inline && !isOpen()) { open(true); }
                         var term = input.value.trim();
-                        if (term.length < MIN) { showInitial(); return; }
+                        if (term.length < MIN) {
+                            showInitial();
+                            if (inline && !hasInitial()) { close(); }
+                            return;
+                        }
                         timer = setTimeout(function () { run(term); }, DELAY);
                     });
                     input.addEventListener('keydown', function (event) {
@@ -1818,13 +1864,21 @@ if ( ! function_exists( 'msr_fold' ) ) {
         return ob_get_clean();
     }
 
-    add_shortcode( 'mamateyka_search', function ( $atts = [] ) {
-        $atts = shortcode_atts( [
-            'placeholder' => 'Hľadať na webe…',
-            'links'       => 'Farské oznamy|/farnost/#sekcia-oznamy;Kalendár|/kalendar/;Aktuality|/aktuality/;Kontakt|/kontakt/;Podpor nás|/podpor-nas/',
-            'recent'      => 5,
-        ], $atts, 'mamateyka_search' );
+    // Z adresy neexistujúcej stránky vytvorí návrh hľadaného výrazu (/farske-oznamy-2020 -> "farske oznamy 2020").
+    function msl_guess_query() {
+        if ( ! is_404() || empty( $_SERVER['REQUEST_URI'] ) ) {
+            return '';
+        }
+        $path = (string) wp_parse_url( wp_unslash( $_SERVER['REQUEST_URI'] ), PHP_URL_PATH );
+        $slug = rawurldecode( basename( rtrim( $path, '/' ) ) );
+        $slug = preg_replace( '/\.(html?|php|aspx?)$/i', '', $slug );
+        $slug = trim( preg_replace( '/[\s\-_+.]+/u', ' ', $slug ) );
+        $slug = sanitize_text_field( mb_substr( $slug, 0, 60, 'UTF-8' ) );
+        return ( mb_strlen( $slug, 'UTF-8' ) < 2 || ctype_digit( str_replace( ' ', '', $slug ) ) ) ? '' : $slug;
+    }
 
+    // Spoločný výstup pre [mamateyka_search_icon] (lupa s panelom) a [mamateyka_search_input] (pole priamo v stránke).
+    function msl_render( array $atts, $inline ) {
         static $assets_printed = false;
         static $instance = 0;
         $instance++;
@@ -1841,23 +1895,34 @@ if ( ! function_exists( 'msr_fold' ) ) {
             'clock' => msr_icon( 'clock' ),
         ];
         $prefill = is_search() ? (string) get_search_query( false ) : '';
-        $links   = msl_parse_links( $atts['links'] );
+        if ( '' === $prefill && $inline && 'no' !== $atts['prefill'] ) {
+            $prefill = msl_guess_query();
+        }
+        $links = msl_parse_links( $atts['links'] );
+
+        $form = '<form class="msl__form" data-msl-form role="search" method="get" action="' . esc_url( home_url( '/' ) ) . '">'
+            . '<input class="msl__input" data-msl-input type="search" name="s" value="' . esc_attr( $prefill ) . '" placeholder="' . esc_attr( $atts['placeholder'] ) . '" aria-label="Hľadať na webe" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="' . esc_attr( $id ) . '-results" autocomplete="off" autocapitalize="off" spellcheck="false" enterkeyhint="search">'
+            . '<button class="msl__submit" type="submit" aria-label="Hľadať">' . msr_icon( 'search' ) . '</button>'
+            . '</form>';
 
         ob_start();
         ?>
-        <div class="msl" id="<?php echo esc_attr( $id ); ?>" data-msl
+        <div class="msl<?php echo $inline ? ' msl--input' : ''; ?>" id="<?php echo esc_attr( $id ); ?>" data-msl<?php echo $inline ? ' data-msl-inline' : ''; ?>
             data-endpoint="<?php echo esc_attr( wp_make_link_relative( rest_url( 'mamateyka/v1/search' ) ) ); ?>"
             data-action="<?php echo esc_attr( wp_make_link_relative( home_url( '/' ) ) ); ?>"
             data-recent="<?php echo (int) $atts['recent']; ?>"
             data-icons="<?php echo esc_attr( wp_json_encode( $icons ) ); ?>">
-            <button type="button" class="msl__button" data-msl-button aria-label="Zobraziť vyhľadávanie" aria-expanded="false" aria-controls="<?php echo esc_attr( $id ); ?>-panel">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" aria-hidden="true" focusable="false"><path d="M460.355,421.59L353.844,315.078c20.041-27.553,31.885-61.437,31.885-98.037C385.729,124.934,310.793,50,218.686,50C126.58,50,51.645,124.934,51.645,217.041c0,92.106,74.936,167.041,167.041,167.041c34.912,0,67.352-10.773,94.184-29.158L419.945,462L460.355,421.59z M100.631,217.041c0-65.096,52.959-118.056,118.055-118.056c65.098,0,118.057,52.959,118.057,118.056c0,65.096-52.959,118.056-118.057,118.056C153.59,335.097,100.631,282.137,100.631,217.041z"></path></svg>
-            </button>
-            <div class="msl__panel" id="<?php echo esc_attr( $id ); ?>-panel" data-msl-panel role="dialog" aria-label="Vyhľadávanie">
-                <form class="msl__form" data-msl-form role="search" method="get" action="<?php echo esc_url( home_url( '/' ) ); ?>">
-                    <input class="msl__input" data-msl-input type="search" name="s" value="<?php echo esc_attr( $prefill ); ?>" placeholder="<?php echo esc_attr( $atts['placeholder'] ); ?>" aria-label="Hľadať na webe" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="<?php echo esc_attr( $id ); ?>-results" autocomplete="off" autocapitalize="off" spellcheck="false" enterkeyhint="search">
-                    <button class="msl__submit" type="submit" aria-label="Hľadať"><?php echo msr_icon( 'search' ); ?></button>
-                </form>
+            <?php if ( $inline ) : ?>
+                <?php echo $form; // phpcs:ignore WordPress.Security.EscapeOutput ?>
+            <?php else : ?>
+                <button type="button" class="msl__button" data-msl-button aria-label="Zobraziť vyhľadávanie" aria-expanded="false" aria-controls="<?php echo esc_attr( $id ); ?>-panel">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" aria-hidden="true" focusable="false"><path d="M460.355,421.59L353.844,315.078c20.041-27.553,31.885-61.437,31.885-98.037C385.729,124.934,310.793,50,218.686,50C126.58,50,51.645,124.934,51.645,217.041c0,92.106,74.936,167.041,167.041,167.041c34.912,0,67.352-10.773,94.184-29.158L419.945,462L460.355,421.59z M100.631,217.041c0-65.096,52.959-118.056,118.055-118.056c65.098,0,118.057,52.959,118.057,118.056c0,65.096-52.959,118.056-118.057,118.056C153.59,335.097,100.631,282.137,100.631,217.041z"></path></svg>
+                </button>
+            <?php endif; ?>
+            <div class="msl__panel" id="<?php echo esc_attr( $id ); ?>-panel" data-msl-panel role="<?php echo $inline ? 'region' : 'dialog'; ?>" aria-label="Vyhľadávanie">
+                <?php if ( ! $inline ) : ?>
+                    <?php echo $form; // phpcs:ignore WordPress.Security.EscapeOutput ?>
+                <?php endif; ?>
                 <div class="msl__body" data-msl-body>
                     <div data-msl-initial>
                         <div data-msl-recent hidden>
@@ -1881,5 +1946,25 @@ if ( ! function_exists( 'msr_fold' ) ) {
         </div>
         <?php
         return $output . ob_get_clean();
+    }
+
+    add_shortcode( 'mamateyka_search_icon', function ( $atts = [] ) {
+        $atts = shortcode_atts( [
+            'placeholder' => 'Hľadať na webe…',
+            'links'       => 'Farské oznamy|/farnost/#sekcia-oznamy;Kalendár|/kalendar/;Aktuality|/aktuality/;Kontakt|/kontakt/;Podpor nás|/podpor-nas/',
+            'recent'      => 5,
+            'prefill'     => 'no',
+        ], $atts, 'mamateyka_search_icon' );
+        return msl_render( $atts, false );
+    } );
+
+    add_shortcode( 'mamateyka_search_input', function ( $atts = [] ) {
+        $atts = shortcode_atts( [
+            'placeholder' => 'Hľadať na webe…',
+            'links'       => '',
+            'recent'      => 5,
+            'prefill'     => 'yes',
+        ], $atts, 'mamateyka_search_input' );
+        return msl_render( $atts, true );
     } );
 }
