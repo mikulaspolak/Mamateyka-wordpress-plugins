@@ -4,17 +4,34 @@
   var widgets = document.querySelectorAll("[data-oznamy-intentions]");
 
   Array.prototype.forEach.call(widgets, function (widget) {
-    var monthPicker = widget.querySelector("[data-oznamy-intentions-month-picker]");
-    var monthTrigger = monthPicker && monthPicker.querySelector("[data-oznamy-intentions-month-trigger]");
-    var monthList = monthPicker && monthPicker.querySelector('[role="listbox"]');
-    var monthOptions = monthList ? monthList.querySelectorAll("[data-oznamy-intentions-month-option]") : [];
+    var monthPicker = widget.querySelector(
+      "[data-oznamy-intentions-month-picker]",
+    );
+    var monthTrigger =
+      monthPicker &&
+      monthPicker.querySelector("[data-oznamy-intentions-month-trigger]");
+    var monthList =
+      monthPicker && monthPicker.querySelector('[role="listbox"]');
+    var monthOptions = monthList
+      ? monthList.querySelectorAll("[data-oznamy-intentions-month-option]")
+      : [];
     var panels = widget.querySelectorAll("[data-oznamy-intentions-panel]");
     var days = widget.querySelectorAll(".oznamy-intentions__day[data-date]");
     var searchInput = widget.querySelector("[data-oznamy-intentions-search]");
-    var searchReset = widget.querySelector("[data-oznamy-intentions-search-reset]");
-    var searchNoResults = widget.querySelector("[data-oznamy-intentions-search-no-results]");
-    var currentHeading = widget.querySelector("[data-oznamy-intentions-current-heading]");
+    var searchReset = widget.querySelector(
+      "[data-oznamy-intentions-search-reset]",
+    );
+    var searchNoResults = widget.querySelector(
+      "[data-oznamy-intentions-search-no-results]",
+    );
+    var searchStatus = widget.querySelector(
+      "[data-oznamy-intentions-search-status]",
+    );
+    var currentHeading = widget.querySelector(
+      "[data-oznamy-intentions-current-heading]",
+    );
     var selectedMonth = null;
+    var searchAnnouncementTimer = null;
     var dayRecords = Array.prototype.map.call(days, function (day) {
       var intentions = day.querySelectorAll(".oznamy-intentions__text");
       return {
@@ -32,11 +49,17 @@
     });
 
     function normalizeSearchText(value) {
-      return Array.from(value).map(function (character) {
-        return character.normalize("NFD")
-          .replace(/[\u0300-\u036f\u1ab0-\u1aff\u1dc0-\u1dff\u20d0-\u20ff\ufe20-\ufe2f]/g, "")
-          .toLowerCase();
-      }).join("");
+      return Array.from(value)
+        .map(function (character) {
+          return character
+            .normalize("NFD")
+            .replace(
+              /[\u0300-\u036f\u1ab0-\u1aff\u1dc0-\u1dff\u20d0-\u20ff\ufe20-\ufe2f]/g,
+              "",
+            )
+            .toLowerCase();
+        })
+        .join("");
     }
 
     function normalizeSearchTextWithOffsets(value) {
@@ -68,6 +91,49 @@
 
     function activeSearchQuery() {
       return searchInput ? searchInput.value.trim() : "";
+    }
+
+    function isMobileSearch() {
+      return (
+        window.matchMedia &&
+        window.matchMedia("(max-width: 600px), (pointer: coarse)").matches
+      );
+    }
+
+    function afterViewportSettles(callback) {
+      var viewport = window.visualViewport;
+      var timeout;
+
+      function finish() {
+        window.clearTimeout(timeout);
+        if (viewport) {
+          viewport.removeEventListener("resize", onResize);
+        }
+        callback();
+      }
+
+      function onResize() {
+        window.clearTimeout(timeout);
+        timeout = window.setTimeout(finish, 120);
+      }
+
+      if (viewport) {
+        viewport.addEventListener("resize", onResize);
+      }
+      timeout = window.setTimeout(finish, viewport ? 450 : 300);
+    }
+
+    function scrollSearchInputIntoView() {
+      var bounds = searchInput.getBoundingClientRect();
+      var viewportHeight = window.visualViewport
+        ? window.visualViewport.height
+        : window.innerHeight;
+
+      if (bounds.top >= 80 && bounds.bottom <= viewportHeight - 16) {
+        return;
+      }
+
+      searchInput.scrollIntoView({ behavior: "auto", block: "start" });
     }
 
     function todayOnUserComputer() {
@@ -108,7 +174,8 @@
         return;
       }
       Array.prototype.forEach.call(panels, function (panel) {
-        var isSelected = panel.getAttribute("data-oznamy-intentions-panel") === month;
+        var isSelected =
+          panel.getAttribute("data-oznamy-intentions-panel") === month;
         panel.hidden = !isSelected;
         panel.classList.toggle("is-active", isSelected);
       });
@@ -122,11 +189,18 @@
 
       selectedMonth = month;
       Array.prototype.forEach.call(monthOptions, function (option) {
-        option.setAttribute("aria-selected", option === selectedOption ? "true" : "false");
+        option.setAttribute(
+          "aria-selected",
+          option === selectedOption ? "true" : "false",
+        );
       });
 
-      var label = selectedOption.querySelector(".oznamy-intentions__month-option-label");
-      var visibleLabel = monthTrigger.querySelector(".oznamy-intentions__month-label");
+      var label = selectedOption.querySelector(
+        ".oznamy-intentions__month-option-label",
+      );
+      var visibleLabel = monthTrigger.querySelector(
+        ".oznamy-intentions__month-label",
+      );
       if (label && visibleLabel) {
         visibleLabel.textContent = label.textContent;
       }
@@ -158,7 +232,9 @@
         var end = normalized.ends[matchIndex + query.length - 1];
         if (start >= cursor && end >= start) {
           if (start > cursor) {
-            fragment.appendChild(document.createTextNode(intention.text.slice(cursor, start)));
+            fragment.appendChild(
+              document.createTextNode(intention.text.slice(cursor, start)),
+            );
           }
           var highlight = document.createElement("mark");
           highlight.className = "oznamy-intentions__match";
@@ -170,7 +246,9 @@
       }
 
       if (cursor < intention.text.length) {
-        fragment.appendChild(document.createTextNode(intention.text.slice(cursor)));
+        fragment.appendChild(
+          document.createTextNode(intention.text.slice(cursor)),
+        );
       }
       intention.element.appendChild(fragment);
       return true;
@@ -195,12 +273,17 @@
         var matched = false;
 
         Array.prototype.forEach.call(day.intentions, function (intention) {
-          var intentionMatches = isActive && normalizedQuery.length > 0
-            && intention.normalized.value.indexOf(normalizedQuery) >= 0;
+          var intentionMatches =
+            isActive &&
+            normalizedQuery.length > 0 &&
+            intention.normalized.value.indexOf(normalizedQuery) >= 0;
           if (intentionMatches) {
             matched = true;
           }
-          renderHighlightedText(intention, intentionMatches ? normalizedQuery : "");
+          renderHighlightedText(
+            intention,
+            intentionMatches ? normalizedQuery : "",
+          );
         });
 
         day.element.hidden = isActive && !matched;
@@ -221,7 +304,9 @@
           var hasMatches = panelResult.count > 0;
           panelResult.panel.hidden = !hasMatches;
           panelResult.panel.classList.toggle("is-active", hasMatches);
-          var heading = panelResult.panel.querySelector("[data-oznamy-intentions-month-heading]");
+          var heading = panelResult.panel.querySelector(
+            "[data-oznamy-intentions-month-heading]",
+          );
           if (heading) {
             heading.hidden = !hasMatches || Boolean(currentHeading);
           }
@@ -231,7 +316,9 @@
           showSelectedMonth(selectedMonth);
         }
         Array.prototype.forEach.call(panels, function (panel) {
-          var heading = panel.querySelector("[data-oznamy-intentions-month-heading]");
+          var heading = panel.querySelector(
+            "[data-oznamy-intentions-month-heading]",
+          );
           if (heading) {
             heading.hidden = true;
           }
@@ -246,6 +333,23 @@
         searchNoResults.textContent = isActive
           ? widget.getAttribute("data-search-no-results-label")
           : "";
+      }
+
+      if (searchStatus) {
+        window.clearTimeout(searchAnnouncementTimer);
+        searchStatus.hidden = !isActive;
+        if (!isActive) {
+          searchStatus.textContent = "";
+        } else {
+          searchAnnouncementTimer = window.setTimeout(function () {
+            searchStatus.textContent =
+              matchedDays > 0
+                ? searchStatus.getAttribute("data-results-label") +
+                  " " +
+                  matchedDays
+                : widget.getAttribute("data-search-no-results-label");
+          }, 300);
+        }
       }
     }
 
@@ -265,7 +369,9 @@
       Array.prototype.forEach.call(days, function (day) {
         var isToday = day.getAttribute("data-date") === today;
         day.classList.toggle("is-today", isToday);
-        var existingLabel = day.querySelector(".oznamy-intentions__today-label");
+        var existingLabel = day.querySelector(
+          ".oznamy-intentions__today-label",
+        );
         if (existingLabel) {
           existingLabel.remove();
         }
@@ -351,16 +457,27 @@
           focusMonthOption(activeIndex < 0 ? 0 : activeIndex + 1);
         } else if (event.key === "ArrowUp") {
           event.preventDefault();
-          focusMonthOption(activeIndex < 0 ? monthOptions.length - 1 : activeIndex - 1);
+          focusMonthOption(
+            activeIndex < 0 ? monthOptions.length - 1 : activeIndex - 1,
+          );
         } else if (event.key === "Home") {
           event.preventDefault();
           focusMonthOption(0);
         } else if (event.key === "End") {
           event.preventDefault();
           focusMonthOption(monthOptions.length - 1);
-        } else if (event.key === "Enter" || event.key === " " || event.key === "Spacebar") {
+        } else if (
+          event.key === "Enter" ||
+          event.key === " " ||
+          event.key === "Spacebar"
+        ) {
           event.preventDefault();
-          if (activeIndex >= 0 && setSelectedMonth(monthOptions[activeIndex].getAttribute("data-month"))) {
+          if (
+            activeIndex >= 0 &&
+            setSelectedMonth(
+              monthOptions[activeIndex].getAttribute("data-month"),
+            )
+          ) {
             closeMonthList(true);
           }
         } else if (event.key === "Escape") {
@@ -380,6 +497,25 @@
 
     if (searchInput) {
       searchInput.addEventListener("input", updateSearch);
+      searchInput.addEventListener("focus", function () {
+        if (!isMobileSearch()) {
+          return;
+        }
+
+        afterViewportSettles(function () {
+          if (document.activeElement === searchInput) {
+            scrollSearchInputIntoView();
+          }
+        });
+      });
+      searchInput.addEventListener("keydown", function (event) {
+        if (event.key !== "Enter" || event.isComposing || !isMobileSearch()) {
+          return;
+        }
+
+        event.preventDefault();
+        searchInput.blur();
+      });
     }
     if (searchReset) {
       searchReset.addEventListener("click", clearSearch);

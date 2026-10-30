@@ -1226,6 +1226,7 @@
   width: 100%;
   max-width: 100%;
   min-height: 44px;
+  scroll-margin-top: 5rem;
   padding: 0.55rem 2.75rem 0.55rem 0.85rem;
   border: 1px solid #d5e8f1;
   border-radius: 24px;
@@ -1325,6 +1326,20 @@
 }
 
 @media (max-width: 600px) {
+  .oznamy-intentions__search {
+    flex: 0 0 100%;
+    width: 100%;
+  }
+
+  .oznamy-intentions__search-field {
+    width: 100%;
+  }
+
+  .oznamy-intentions__search-no-results,
+  .oznamy-intentions__day {
+    scroll-margin-top: 1rem;
+  }
+
   .oznamy-intentions__month-picker {
     flex: 0 0 100%;
     width: 100%;

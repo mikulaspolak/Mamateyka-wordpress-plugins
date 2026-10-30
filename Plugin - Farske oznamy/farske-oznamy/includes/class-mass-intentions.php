@@ -410,7 +410,8 @@ class Oznamy_Mass_Intentions
             . esc_html__('Vyhľadať úmysel', 'oznamy-gdocs') . '</label>'
             . '<div class="oznamy-intentions__search-field">'
             . '<input class="oznamy-intentions__search-input" type="search" id="' . esc_attr($search_id) . '"'
-            . ' data-oznamy-intentions-search placeholder="' . esc_attr__('Hľadať úmysel', 'oznamy-gdocs') . '"'
+            . ' data-oznamy-intentions-search enterkeyhint="search"'
+            . ' placeholder="' . esc_attr__('Hľadať úmysel', 'oznamy-gdocs') . '"'
             . ' autocomplete="off">'
             . '<button class="oznamy-intentions__search-reset" type="button"'
             . ' data-oznamy-intentions-search-reset aria-label="' . esc_attr__('Vymazať hľadaný text', 'oznamy-gdocs') . '"'
@@ -419,7 +420,11 @@ class Oznamy_Mass_Intentions
             . '<path d="M5 5l10 10M15 5L5 15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>'
             . '</svg></button></div></div></div>'
             . '<p class="oznamy-intentions__search-no-results" data-oznamy-intentions-search-no-results'
-            . ' role="status" hidden></p>';
+            . ' hidden></p>'
+            . '<p class="oznamy-intentions__screen-reader-text" data-oznamy-intentions-search-status'
+            . ' role="status" aria-live="polite" aria-atomic="true"'
+            . ' data-results-label="' . esc_attr__('Počet nájdených dní:', 'oznamy-gdocs') . '"'
+            . ' hidden></p>';
 
         $output .= '<div class="oznamy-intentions__months" id="' . esc_attr($month_picker_id) . '-days">';
 
