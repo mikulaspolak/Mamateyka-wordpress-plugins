@@ -7,12 +7,13 @@ only follows URLs on the sitemap's host.
 
 ## Where to find the screenshots
 
-Each run saves one artifact named `website-screenshots-<run number>` for 90
-days (the maximum for a public repository). Open **Actions → Weekly website
-screenshots → a run → Artifacts** and download the ZIP. It contains the dated
-folder with one PNG per page and a `manifest.json`. Artifacts are not committed
-to the repository. Download any screenshots you need to keep longer than 90
-days.
+Each run saves one artifact for 90 days (the maximum for a public repository).
+Open **Actions → Weekly website screenshots → a run → Artifacts** and download
+`YYYY.MM.DD Mamateyka screenshots.zip`. It contains one PNG per page, named
+after the page title without the ` - Mamateyka` suffix (for example
+`Kontakt.png`). If any page could not be captured, the ZIP also contains
+`failed_screenshots.txt` listing those URLs. Artifacts are not committed to the
+repository. Download any screenshots you need to keep longer than 90 days.
 
 ## Schedule and local run
 
@@ -31,9 +32,17 @@ npx playwright install chromium
 npm run capture
 ```
 
-By default, local screenshots are written under `screenshots/YYYY-MM-DD/`.
+By default, local screenshots are written to `screenshots/`.
 Set `SITEMAP_URL`, `OUTPUT_DIR`, or `SCREENSHOT_TIME_ZONE` to override the
 defaults.
+
+Each page is given time to finish its animations: the script waits for the page
+to load, waits 5 seconds, scrolls through the page to trigger scroll-based
+animations, returns to the top, and waits another 5 seconds. It then enlarges
+the browser window to the full page height (up to 16,000 px) so that every
+section stays in view, waits once more, and takes the screenshot. Set
+`PAGE_SETTLE_MS` (milliseconds, default `5000`) to lengthen or shorten these
+waits if some animations are still captured mid-way.
 
 GitHub stores the automation code; screenshot files are kept as workflow
 artifacts and are not committed to the repository.

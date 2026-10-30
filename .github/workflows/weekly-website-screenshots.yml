@@ -44,12 +44,17 @@ jobs:
           SITEMAP_URL: https://mamateyka.sk/page-sitemap.xml
         run: npm run capture
 
+      - name: Get capture date
+        id: capture-date
+        run: echo "date=$(TZ=Europe/Bratislava date +%Y.%m.%d)" >> "$GITHUB_OUTPUT"
+
       - name: Save screenshots as a workflow artifact
         if: ${{ !cancelled() }}
         uses: actions/upload-artifact@v4
         with:
-          name: website-screenshots-${{ github.run_number }}
+          name: ${{ steps.capture-date.outputs.date }} Mamateyka screenshots
           path: ${{ runner.temp }}/mamateyka-screenshots
           retention-days: 90
           compression-level: 0
+          overwrite: true
           if-no-files-found: error
