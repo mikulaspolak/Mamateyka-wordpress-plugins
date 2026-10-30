@@ -20,8 +20,7 @@ repository. Download any screenshots you need to keep longer than 90 days.
 The workflow runs every Monday at 03:17 UTC (04:17 in Slovakia during standard
 time, 05:17 during daylight-saving time). GitHub may start scheduled workflows a
 few minutes later than requested. It can also be started manually from the
-Actions tab, and it runs when this tool or its workflow changes on `main`. To
-run it daily, change the cron expression to `17 3 * * *`.
+Actions tab. To run it daily, change the cron expression to `17 3 * * *`.
 
 To run the capture locally, install the dependencies and Chromium from this
 directory:
