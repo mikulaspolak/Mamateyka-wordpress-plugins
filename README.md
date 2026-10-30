@@ -31,6 +31,13 @@ and validates the package before saving it under `Releases/`.
 The three scripts share the same name and workflow, while retaining the
 plugin-specific version fields and release notes.
 
+## Weekly website screenshots
+
+The GitHub Actions workflow captures full-page screenshots of every URL in the
+Mamateyka page sitemap and keeps them as downloadable workflow artifacts for 90
+days. See
+[the screenshot tool guide](<./Tool - Screenshots/README.md>) for details.
+
 ## Copyright and permitted use
 
 Copyright (c) 2026 Mikulas Polak. All rights reserved.

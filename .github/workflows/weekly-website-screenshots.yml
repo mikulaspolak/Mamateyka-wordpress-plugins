@@ -1,0 +1,55 @@
+name: Weekly website screenshots
+
+on:
+  schedule:
+    - cron: '17 3 * * 1'
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/weekly-website-screenshots.yml'
+      - 'Tool - Screenshots/**'
+
+permissions:
+  contents: read
+
+jobs:
+  capture:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: "Tool - Screenshots/package-lock.json"
+
+      - name: Install dependencies
+        working-directory: "Tool - Screenshots"
+        run: npm ci
+
+      - name: Install Chromium
+        working-directory: "Tool - Screenshots"
+        run: npx playwright install --with-deps chromium
+
+      - name: Capture sitemap pages
+        working-directory: "Tool - Screenshots"
+        env:
+          OUTPUT_DIR: ${{ runner.temp }}/mamateyka-screenshots
+          SCREENSHOT_TIME_ZONE: Europe/Bratislava
+          SITEMAP_URL: https://mamateyka.sk/page-sitemap.xml
+        run: npm run capture
+
+      - name: Save screenshots as a workflow artifact
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: website-screenshots-${{ github.run_number }}
+          path: ${{ runner.temp }}/mamateyka-screenshots
+          retention-days: 90
+          compression-level: 0
+          if-no-files-found: error
