@@ -982,6 +982,32 @@ if (!function_exists('rozpis_omsi_shortcode')) {
     return Array.from(variants).filter(Boolean);
   }
 
+  // WordPress generuje k originálu menšie varianty "<meno>-<šírka>x<výška>.<prípona>"
+  const PHOTO_THUMB_SIZE = 150;
+  const PHOTO_ZOOM_SIZE = 300;
+
+  function photoVariantUrl(url, size) {
+    if (!url || !size) return url || "";
+    return url.replace(/(\.[a-z0-9]+)$/i, `-${size}x${size}$1`);
+  }
+
+  // Pri chybe (napr. chýbajúci variant) skúsi originál, až potom fotku odstráni
+  document.addEventListener(
+    "error",
+    (e) => {
+      const img = e.target;
+      if (!img || img.tagName !== "IMG" || !img.classList.contains("avatar-img")) return;
+      const full = img.dataset.full;
+      if (full && img.getAttribute("src") !== full) {
+        img.src = full;
+        return;
+      }
+      const wrapper = img.closest(".photo-zoom") || img.closest(".avatar");
+      if (wrapper) wrapper.remove();
+    },
+    true,
+  );
+
   function resolvePhotoUrl(rawName) {
     const name = String(rawName || "").trim();
     if (!name) return "";
@@ -1470,6 +1496,9 @@ if (!function_exists('rozpis_omsi_shortcode')) {
       getEmptyStateMessage,
       buildDayColumnsHtml,
       resolvePhotoUrl,
+      photoVariantUrl,
+      PHOTO_THUMB_SIZE,
+      PHOTO_ZOOM_SIZE,
       addDonPrefix,
     },
     layouts,
@@ -1570,7 +1599,7 @@ ENGINE_JS;
                           core.resolvePhotoUrl(confessorName);
                         return `
                           <span class="confession-person">
-                            ${confessorPhotoUrl ? `<span class="avatar avatar--small"><img class="avatar-img" src="${confessorPhotoUrl}" alt="${confessorName || "Spovedník"}" onerror="this.parentElement.remove()" /></span>` : ""}
+                            ${confessorPhotoUrl ? `                            <span class="avatar avatar--small"><img class="avatar-img" src="${core.photoVariantUrl(confessorPhotoUrl, core.PHOTO_THUMB_SIZE)}" data-full="${confessorPhotoUrl}" alt="${confessorName || "Spovedník"}" decoding="async" /></span>` : ""}
                             <span class="confession-person-name">${s}</span>
                           </span>
                         `;
@@ -1592,7 +1621,7 @@ ENGINE_JS;
                             <span class="time">${time}</span>
                         </div>
                         ${hasCelebrant ? `<div class="service-main">
-                          ${priestPhotoUrl ? `<span class="avatar"><img class="avatar-img" src="${priestPhotoUrl}" alt="${priestSourceName || "Kňaz"}" onerror="this.parentElement.remove()" /></span>` : ""}
+                          ${priestPhotoUrl ? `<span class="avatar"><img class="avatar-img" src="${core.photoVariantUrl(priestPhotoUrl, core.PHOTO_THUMB_SIZE)}" data-full="${priestPhotoUrl}" alt="${priestSourceName || "Kňaz"}" decoding="async" /></span>` : ""}
                             <div class="service-copy">
                             <div class="name">${omsiar}</div>
                             </div>
@@ -1660,6 +1689,7 @@ VERTICAL_JS;
       return clone;
     });
     panel.replaceChildren(...clones);
+    loadZoomImage(item, panel.querySelector(".photo-zoom__image"));
 
     const anchor = item.getBoundingClientRect();
     const width = panel.offsetWidth;
@@ -1677,6 +1707,91 @@ VERTICAL_JS;
     panel.classList.add("is-visible");
   }
 
+  // Pri false sa väčšie fotky sťahujú až pri hover/ťuknutí (menej dát, ale prvé zobrazenie chvíľu trvá)
+  const PRELOAD_ZOOM_IMAGES = true;
+  // Dekódované obrázky držíme v pamäti, aby sa ďalšie zobrazenie nenačítavalo znova
+  const zoomImageCache = new Map();
+
+  function preloadZoomImage(mediumSrc, fullSrc) {
+    const key = mediumSrc || fullSrc;
+    if (!key) return null;
+    const cached = zoomImageCache.get(key);
+    if (cached) return cached;
+
+    const entry = { src: null, image: null, promise: null };
+    const attempt = (src) =>
+      new Promise((resolve, reject) => {
+        const loader = new Image();
+        entry.image = loader;
+        loader.src = src;
+        loader.decode().then(
+          () => resolve(src),
+          () => {
+            if (src !== fullSrc && fullSrc) attempt(fullSrc).then(resolve, reject);
+            else reject();
+          },
+        );
+      });
+    entry.promise = attempt(key).then(
+      (src) => {
+        entry.src = src;
+        return src;
+      },
+      () => {
+        zoomImageCache.delete(key);
+        return null;
+      },
+    );
+    zoomImageCache.set(key, entry);
+    return entry;
+  }
+
+  // Hotový obrázok sa zobrazí hneď; inak je vidieť miniatúra a po načítaní sa vymení
+  function loadZoomImage(item, img) {
+    if (!img) return;
+    const entry = preloadZoomImage(img.dataset.src, img.dataset.full);
+    if (entry && entry.src) {
+      img.src = entry.src;
+      return;
+    }
+    const thumb = item.querySelector(".avatar-img");
+    img.src = (thumb && (thumb.currentSrc || thumb.src)) || img.dataset.src || img.dataset.full;
+    if (entry) {
+      entry.promise.then((src) => {
+        if (src && img.isConnected) img.src = src;
+      });
+    }
+  }
+
+  function preloadItemZoomImage(item) {
+    const img = item.querySelector(".photo-zoom__image");
+    if (img) preloadZoomImage(img.dataset.src, img.dataset.full);
+  }
+
+  function canPreloadZoomImages() {
+    if (!PRELOAD_ZOOM_IMAGES) return false;
+    const conn = navigator.connection;
+    return !(conn && (conn.saveData || /(^|-)2g$|3g/.test(conn.effectiveType || "")));
+  }
+
+  // Viditeľné fotky sa dotiahnu vopred v pokoji, aby zväčšenie bolo okamžité
+  let zoomPreloadObserver = null;
+  function observeZoomPreload(item) {
+    if (!canPreloadZoomImages() || !("IntersectionObserver" in window)) return;
+    if (!zoomPreloadObserver) {
+      zoomPreloadObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          zoomPreloadObserver.unobserve(entry.target);
+          const run = () => preloadItemZoomImage(entry.target);
+          if ("requestIdleCallback" in window) requestIdleCallback(run, { timeout: 3000 });
+          else setTimeout(run, 1500);
+        });
+      });
+    }
+    zoomPreloadObserver.observe(item);
+  }
+
   function bindPhotoZoom(rootEl) {
     // Prekreslenie môže odstrániť element, na ktorom visel panel (mouseleave sa nespustí)
     hideZoom();
@@ -1685,7 +1800,10 @@ VERTICAL_JS;
     rootEl.querySelectorAll(".photo-zoom").forEach((item) => {
       if (item.dataset.zoomBound === "true") return;
 
+      observeZoomPreload(item);
+
       if (isTouch) {
+        item.addEventListener("touchstart", () => preloadItemZoomImage(item), { passive: true });
         // Na dotyku nie je hover - ťuknutie prepína panel
         item.addEventListener("click", () => {
           if (zoomItem === item) hideZoom();
@@ -2009,7 +2127,7 @@ VERTICAL_JS;
                         const confessorDisplayName = s || "Spovedník";
                         return `
                           <span class="confession-person">
-                            ${confessorPhotoUrl ? `<span class="photo-zoom photo-zoom--small"><span class="avatar avatar--small"><img class="avatar-img" src="${confessorPhotoUrl}" alt="${confessorName || "Spovedník"}" onerror="this.parentElement.parentElement.remove()" /></span><span class="photo-zoom__panel" aria-hidden="true"><img class="photo-zoom__image" src="${confessorPhotoUrl}" alt="${confessorName || "Spovedník"}" onerror="this.parentElement.parentElement.remove()" /><span class="photo-zoom__name">${confessorDisplayName}</span></span></span>` : ""}
+                            ${confessorPhotoUrl ? `<span class="photo-zoom photo-zoom--small"><span class="avatar avatar--small"><img class="avatar-img" src="${core.photoVariantUrl(confessorPhotoUrl, core.PHOTO_THUMB_SIZE)}" data-full="${confessorPhotoUrl}" alt="${confessorName || "Spovedník"}" decoding="async" /></span><span class="photo-zoom__panel" aria-hidden="true"><img class="photo-zoom__image" data-src="${core.photoVariantUrl(confessorPhotoUrl, core.PHOTO_ZOOM_SIZE)}" data-full="${confessorPhotoUrl}" alt="${confessorName || "Spovedník"}" /><span class="photo-zoom__name">${confessorDisplayName}</span></span></span>` : ""}
                             <span class="confession-person-name">${s}</span>
                           </span>
                         `;
@@ -2027,7 +2145,7 @@ VERTICAL_JS;
                             ${hasServiceDetails || specialServiceLabel ? `<div class="service-info">
                               <span class="service-tag">${specialServiceLabel || "Svätá omša"}</span>
                               ${hasCelebrant ? `<div class="service-main">
-                                ${priestPhotoUrl ? `<span class="photo-zoom"><span class="avatar"><img class="avatar-img" src="${priestPhotoUrl}" alt="${priestSourceName || "Kňaz"}" onerror="this.parentElement.parentElement.remove()" /></span><span class="photo-zoom__panel" aria-hidden="true"><img class="photo-zoom__image" src="${priestPhotoUrl}" alt="${priestSourceName || "Kňaz"}" onerror="this.parentElement.parentElement.remove()" /><span class="photo-zoom__name">${omsiar || (priestSourceName ? core.addDonPrefix(priestSourceName) : "Kňaz")}</span></span></span>` : ""}
+                                ${priestPhotoUrl ? `<span class="photo-zoom"><span class="avatar"><img class="avatar-img" src="${core.photoVariantUrl(priestPhotoUrl, core.PHOTO_THUMB_SIZE)}" data-full="${priestPhotoUrl}" alt="${priestSourceName || "Kňaz"}" decoding="async" /></span><span class="photo-zoom__panel" aria-hidden="true"><img class="photo-zoom__image" data-src="${core.photoVariantUrl(priestPhotoUrl, core.PHOTO_ZOOM_SIZE)}" data-full="${priestPhotoUrl}" alt="${priestSourceName || "Kňaz"}" /><span class="photo-zoom__name">${omsiar || (priestSourceName ? core.addDonPrefix(priestSourceName) : "Kňaz")}</span></span></span>` : ""}
                                     <div class="service-copy">
                                   <div class="name">${omsiar}</div>
                                     </div>

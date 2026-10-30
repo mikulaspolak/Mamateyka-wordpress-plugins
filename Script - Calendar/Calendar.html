@@ -1,13 +1,33 @@
 <div class="custom-kalendar-kontajner">
   <iframe
-    src="https://calendar.google.com/calendar/embed?src=9j6qtv0ic0pgieobm312t1kc9k%40group.calendar.google.com&ctz=Europe%2FBratislava&color=%23537891&showTitle=0&showPrint=0&showTabs=0&showCalendars=0&showTz=0"
+    data-src="https://calendar.google.com/calendar/embed?src=9j6qtv0ic0pgieobm312t1kc9k%40group.calendar.google.com&ctz=Europe%2FBratislava&color=%23537891&showTitle=0&showPrint=0&showTabs=0&showCalendars=0&showTz=0"
     style="border: 0"
     width="100%"
     height="600px"
     frameborder="0"
     scrolling="no"
+    loading="lazy"
+    title="Kalendár podujatí Mamateyka"
   ></iframe>
 </div>
+
+<script>
+  (() => {
+    const calendar = document.querySelector(".custom-kalendar-kontajner iframe");
+    const desktop = window.matchMedia("(min-width: 1024px)");
+
+    const updateCalendar = () => {
+      if (desktop.matches) {
+        calendar.src = calendar.dataset.src;
+      } else {
+        calendar.removeAttribute("src");
+      }
+    };
+
+    updateCalendar();
+    desktop.addEventListener("change", updateCalendar);
+  })();
+</script>
 
 <style>
   .custom-kalendar-kontajner {
