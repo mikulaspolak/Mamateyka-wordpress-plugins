@@ -1406,13 +1406,117 @@ if (! function_exists('msr_fold')) {
                 function init() {
                     document.querySelectorAll('.msr').forEach(function(root) {
                         root.classList.add('msr--js');
-                        var button = root.querySelector('[data-msr-more]');
-                        if (!button) {
-                            return;
-                        }
-                        button.addEventListener('click', function() {
+                        root.addEventListener('click', function(event) {
+                            var button = event.target.closest && event.target.closest('[data-msr-more]');
+                            if (!button || !root.contains(button)) {
+                                return;
+                            }
                             root.classList.add('msr--expanded');
                             button.hidden = true;
+                        });
+
+                        var form = root.querySelector('[data-msr-live-form]');
+                        var input = form && form.querySelector('[data-msr-live-input]');
+                        var results = root.querySelector('[data-msr-live-results]');
+                        var title = root.querySelector('.msr-title');
+                        if (!form || !input || !results || !title) {
+                            return;
+                        }
+
+                        var timer = 0;
+                        var controller = null;
+                        var requestId = 0;
+
+                        function updateTitle(term) {
+                            title.textContent = '';
+                            if (!term) {
+                                title.textContent = 'Čo hľadáte?';
+                                return;
+                            }
+                            title.appendChild(document.createTextNode('Hľadaný výraz: '));
+                            var value = document.createElement('em');
+                            value.textContent = '„' + term + '“';
+                            title.appendChild(value);
+                        }
+
+                        function showMessage(headingText, messageText) {
+                            results.textContent = '';
+                            var empty = document.createElement('div');
+                            empty.className = 'msr-empty';
+                            var heading = document.createElement('h2');
+                            heading.textContent = headingText;
+                            var message = document.createElement('p');
+                            message.textContent = messageText;
+                            empty.appendChild(heading);
+                            empty.appendChild(message);
+                            results.appendChild(empty);
+                        }
+
+                        input.addEventListener('input', function() {
+                            var term = input.value.trim();
+                            window.clearTimeout(timer);
+                            requestId++;
+                            var currentRequest = requestId;
+                            if (controller) {
+                                controller.abort();
+                                controller = null;
+                            }
+                            updateTitle(term);
+
+                            if (term.length < 2) {
+                                results.setAttribute('aria-busy', 'false');
+                                showMessage(
+                                    term ? 'Výraz je príliš krátky' : 'Zadajte hľadaný výraz',
+                                    term ? 'Zadajte aspoň dva znaky, aby sme mohli prehľadať stránky aj články.' : 'Napíšte slovo alebo meno a výsledky sa zobrazia priamo na tejto stránke.'
+                                );
+                                return;
+                            }
+
+                            timer = window.setTimeout(function() {
+                                controller = window.AbortController ? new AbortController() : null;
+                                results.setAttribute('aria-busy', 'true');
+                                var url = new URL(form.action, window.location.href);
+                                url.searchParams.set('s', term);
+                                url.searchParams.delete('msr_page');
+                                fetch(url.toString(), {
+                                        signal: controller ? controller.signal : undefined,
+                                        credentials: 'same-origin',
+                                        headers: {
+                                            Accept: 'text/html'
+                                        }
+                                    })
+                                    .then(function(response) {
+                                        if (!response.ok) {
+                                            throw new Error('http');
+                                        }
+                                        return response.text();
+                                    })
+                                    .then(function(html) {
+                                        if (currentRequest !== requestId || input.value.trim() !== term) {
+                                            return;
+                                        }
+                                        var documentResult = new DOMParser().parseFromString(html, 'text/html');
+                                        var updatedResults = documentResult.querySelector('[data-msr-live-results]');
+                                        if (!updatedResults) {
+                                            throw new Error('results');
+                                        }
+                                        results.innerHTML = updatedResults.innerHTML;
+                                    })
+                                    .catch(function(error) {
+                                        if (error && error.name === 'AbortError') {
+                                            return;
+                                        }
+                                        if (currentRequest === requestId) {
+                                            showMessage('Výsledky sa nepodarilo načítať', 'Stlačte Enter a načítame výsledkovú stránku znova.');
+                                        }
+                                    })
+                                    .finally(function() {
+                                        if (currentRequest === requestId) {
+                                            results.setAttribute('aria-busy', 'false');
+                                            controller = null;
+                                        }
+                                    });
+                            }, 300);
                         });
                     });
                 }
@@ -1474,77 +1578,79 @@ if (! function_exists('msr_fold')) {
                 <?php else : ?>
                     <h1 class="msr-title">Čo hľadáte?</h1>
                 <?php endif; ?>
-                <form class="msr-form" role="search" method="get" action="<?php echo esc_url(home_url('/')); ?>">
-                    <input type="search" name="s" value="<?php echo esc_attr($query); ?>" placeholder="Hľadať na webe…" aria-label="Hľadať na webe" autocomplete="off">
+                <form class="msr-form" data-msr-live-form role="search" method="get" action="<?php echo esc_url(home_url('/')); ?>">
+                    <input type="search" data-msr-live-input name="s" value="<?php echo esc_attr($query); ?>" placeholder="Hľadať na webe…" aria-label="Hľadať na webe" autocomplete="off">
                     <button type="submit"><?php echo msr_icon('search'); ?><span>Hľadať</span></button>
                 </form>
             </header>
 
-            <?php if (! $terms) : ?>
-                <div class="msr-empty">
-                    <span class="msr-icon msr-tone--blue"><?php echo msr_icon('search'); ?></span>
-                    <?php if ('' !== $query) : ?>
-                        <h2>Výraz je príliš krátky</h2>
-                        <p>Zadajte aspoň dva znaky, aby sme mohli prehľadať stránky aj články.</p>
-                    <?php else : ?>
-                        <h2>Zadajte hľadaný výraz</h2>
-                        <p>Napíšte slovo alebo meno do poľa vyššie a prehľadáme stránky aj články Mamateyky.</p>
-                    <?php endif; ?>
-                </div>
-            <?php elseif (0 === $pages_count && 0 === $posts_count) : ?>
-                <div class="msr-empty">
-                    <span class="msr-icon msr-tone--blue"><?php echo msr_icon('search'); ?></span>
-                    <h2>Nič sme nenašli</h2>
-                    <p>Pre výraz „<?php echo esc_html($query); ?>“ sme nenašli žiadnu stránku ani článok. Skúste iné slovo, kratší výraz alebo skontrolujte preklepy.</p>
-                    <div class="msr-empty__links">
-                        <a href="<?php echo esc_url(home_url('/')); ?>">Domov</a>
-                        <a href="<?php echo esc_url(home_url('/aktuality/')); ?>">Aktuality</a>
+            <div data-msr-live-results aria-busy="false" aria-live="polite">
+                <?php if (! $terms) : ?>
+                    <div class="msr-empty">
+                        <span class="msr-icon msr-tone--blue"><?php echo msr_icon('search'); ?></span>
+                        <?php if ('' !== $query) : ?>
+                            <h2>Výraz je príliš krátky</h2>
+                            <p>Zadajte aspoň dva znaky, aby sme mohli prehľadať stránky aj články.</p>
+                        <?php else : ?>
+                            <h2>Zadajte hľadaný výraz</h2>
+                            <p>Napíšte slovo alebo meno do poľa vyššie a prehľadáme stránky aj články Mamateyky.</p>
+                        <?php endif; ?>
                     </div>
-                </div>
-            <?php else : ?>
+                <?php elseif (0 === $pages_count && 0 === $posts_count) : ?>
+                    <div class="msr-empty">
+                        <span class="msr-icon msr-tone--blue"><?php echo msr_icon('search'); ?></span>
+                        <h2>Nič sme nenašli</h2>
+                        <p>Pre výraz „<?php echo esc_html($query); ?>“ sme nenašli žiadnu stránku ani článok. Skúste iné slovo, kratší výraz alebo skontrolujte preklepy.</p>
+                        <div class="msr-empty__links">
+                            <a href="<?php echo esc_url(home_url('/')); ?>">Domov</a>
+                            <a href="<?php echo esc_url(home_url('/aktuality/')); ?>">Aktuality</a>
+                        </div>
+                    </div>
+                <?php else : ?>
 
-                <?php if ($pages_count) : ?>
-                    <section class="msr-section" id="msr-pages" aria-labelledby="msr-pages-title">
-                        <div class="msr-panel">
+                    <?php if ($pages_count) : ?>
+                        <section class="msr-section" id="msr-pages" aria-labelledby="msr-pages-title">
+                            <div class="msr-panel">
+                                <div class="msr-section__head">
+                                    <h2 class="msr-section__title" id="msr-pages-title">Nájdené stránky:</h2>
+                                    <p class="msr-section__lead">Našli sme <strong><?php echo (int) $pages_count; ?></strong> <?php echo esc_html(msr_plural($pages_count, 'podstránku, ktorá obsahuje', 'podstránky, ktoré obsahujú', 'podstránok, ktoré obsahujú')); ?> hľadaný výraz.</p>
+                                </div>
+                                <div class="msr-grid">
+                                    <?php
+                                    foreach ($page_list as $index => $page) {
+                                        echo msr_render_page_card($page, $terms, $index >= $visible); // phpcs:ignore WordPress.Security.EscapeOutput
+                                    }
+                                    ?>
+                                </div>
+                                <?php if ($pages_count > $visible) : ?>
+                                    <button type="button" class="msr-more" data-msr-more>Zobraziť všetky stránky (<?php echo (int) $pages_count; ?>)</button>
+                                <?php endif; ?>
+                            </div>
+                        </section>
+                    <?php endif; ?>
+
+                    <?php if ($posts_count) : ?>
+                        <section class="msr-section" id="msr-articles" aria-labelledby="msr-articles-title">
                             <div class="msr-section__head">
-                                <h2 class="msr-section__title" id="msr-pages-title">Nájdené stránky:</h2>
-                                <p class="msr-section__lead">Našli sme <strong><?php echo (int) $pages_count; ?></strong> <?php echo esc_html(msr_plural($pages_count, 'podstránku, ktorá obsahuje', 'podstránky, ktoré obsahujú', 'podstránok, ktoré obsahujú')); ?> hľadaný výraz.</p>
+                                <h2 class="msr-section__title" id="msr-articles-title">Nájdené články:</h2>
+                                <?php echo $posts_count > 1 ? msr_render_sort($query, $sort) : ''; // phpcs:ignore WordPress.Security.EscapeOutput 
+                                ?>
+                                <p class="msr-section__lead">Našli sme <strong><?php echo (int) $posts_count; ?></strong> <?php echo esc_html(msr_plural($posts_count, 'článok, ktorý obsahuje', 'články, ktoré obsahujú', 'článkov, ktoré obsahujú')); ?> hľadaný výraz.</p>
                             </div>
                             <div class="msr-grid">
                                 <?php
-                                foreach ($page_list as $index => $page) {
-                                    echo msr_render_page_card($page, $terms, $index >= $visible); // phpcs:ignore WordPress.Security.EscapeOutput
+                                foreach ($posts->posts as $post_item) {
+                                    echo msr_render_post_card($post_item, $terms); // phpcs:ignore WordPress.Security.EscapeOutput
                                 }
                                 ?>
                             </div>
-                            <?php if ($pages_count > $visible) : ?>
-                                <button type="button" class="msr-more" data-msr-more>Zobraziť všetky stránky (<?php echo (int) $pages_count; ?>)</button>
-                            <?php endif; ?>
-                        </div>
-                    </section>
-                <?php endif; ?>
-
-                <?php if ($posts_count) : ?>
-                    <section class="msr-section" id="msr-articles" aria-labelledby="msr-articles-title">
-                        <div class="msr-section__head">
-                            <h2 class="msr-section__title" id="msr-articles-title">Nájdené články:</h2>
-                            <?php echo $posts_count > 1 ? msr_render_sort($query, $sort) : ''; // phpcs:ignore WordPress.Security.EscapeOutput 
+                            <?php echo msr_render_pagination($query, $paged, (int) $posts->max_num_pages, $sort); // phpcs:ignore WordPress.Security.EscapeOutput 
                             ?>
-                            <p class="msr-section__lead">Našli sme <strong><?php echo (int) $posts_count; ?></strong> <?php echo esc_html(msr_plural($posts_count, 'článok, ktorý obsahuje', 'články, ktoré obsahujú', 'článkov, ktoré obsahujú')); ?> hľadaný výraz.</p>
-                        </div>
-                        <div class="msr-grid">
-                            <?php
-                            foreach ($posts->posts as $post_item) {
-                                echo msr_render_post_card($post_item, $terms); // phpcs:ignore WordPress.Security.EscapeOutput
-                            }
-                            ?>
-                        </div>
-                        <?php echo msr_render_pagination($query, $paged, (int) $posts->max_num_pages, $sort); // phpcs:ignore WordPress.Security.EscapeOutput 
-                        ?>
-                    </section>
-                <?php endif; ?>
+                        </section>
+                    <?php endif; ?>
 
-            <?php endif; ?>
+                <?php endif; ?>
+            </div>
         </div>
         <?php
         return $output . ob_get_clean();
@@ -2605,6 +2711,10 @@ if (! function_exists('msr_fold')) {
                     }
 
                     function run(term) {
+                        if (inline) {
+                            root.classList.add('is-open');
+                            setExpanded('true');
+                        }
                         if (term.length < MIN) {
                             showInitial();
                             return;
