@@ -2,7 +2,7 @@
 Contributors: mikulaspolak
 Requires at least: 6.0
 Requires PHP: 7.4
-Stable tag: 1.2.0
+Stable tag: 1.6.0
 License: Proprietary - All rights reserved
 
 Slovak translation of the Breakdance interface (editor and admin pages).
@@ -44,6 +44,18 @@ Run `build-release.ps1` from the parent project folder (PowerShell 7 and Node.js
 
 
 
+
+
+
+
+= 1.6.0 =
+- version bump to 1.6.0
+= 1.5.0 =
+- version bump to 1.5.0
+= 1.4.0 =
+- version bump to 1.4.0
+= 1.3.0 =
+- version bump to 1.3.0
 = 1.2.0 =
 - version bump to 1.2.0
 = 1.1.0 =

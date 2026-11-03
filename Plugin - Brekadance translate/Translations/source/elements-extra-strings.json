@@ -1,0 +1,205 @@
+{
+  "meta": {
+    "file": "Texty z kódu prvkov Breakdance (PHP/Twig), ktoré nie sú v POT súboroch. Generuje extract-element-strings.mjs; ručne neupravuj.",
+    "source": "Breakdance 2.8.3: breakdance-elements/{elements,macros,lib,presets}"
+  },
+  "entries": [
+    {
+      "domain": "breakdance",
+      "id": "Back to top",
+      "src": "js+php",
+      "refs": [
+        "elements/Back_to_Top/html.twig:17"
+      ]
+    },
+    {
+      "domain": "breakdance",
+      "id": "Close search",
+      "src": "js+php",
+      "refs": [
+        "elements/Search_Form/html.twig:70"
+      ]
+    },
+    {
+      "domain": "breakdance",
+      "id": "Open Menu",
+      "src": "js+php",
+      "refs": [
+        "macros/menu.twig:20"
+      ]
+    },
+    {
+      "domain": "breakdance",
+      "id": "Read Less",
+      "src": "js+php",
+      "refs": [
+        "elements/Content_Reveal/html.twig:7"
+      ]
+    },
+    {
+      "domain": "breakdance",
+      "id": "Read More",
+      "src": "js+php",
+      "refs": [
+        "elements/Content_Reveal/html.twig:6"
+      ]
+    },
+    {
+      "domain": "breakdance",
+      "id": "Toggle search",
+      "src": "js+php",
+      "refs": [
+        "elements/Search_Form/html.twig:20"
+      ]
+    },
+    {
+      "domain": "breakdance-elements",
+      "id": "%s Submenu",
+      "src": "php",
+      "refs": [
+        "elements/Menu_Custom_Dropdown/html.twig:15",
+        "elements/Menu_Dropdown/html.twig:15"
+      ]
+    },
+    {
+      "domain": "breakdance-elements",
+      "id": "After",
+      "src": "php",
+      "refs": [
+        "elements/Image_Comparison/html.twig:21"
+      ]
+    },
+    {
+      "domain": "breakdance-elements",
+      "id": "All",
+      "src": "php",
+      "refs": [
+        "lib/filter-bar.php:40",
+        "macros/atom-v1-tabs-css.twig:291",
+        "macros/atom-v1-tabs-css.twig:313"
+      ]
+    },
+    {
+      "domain": "breakdance-elements",
+      "id": "Before",
+      "src": "php",
+      "refs": [
+        "elements/Image_Comparison/html.twig:20"
+      ]
+    },
+    {
+      "domain": "breakdance-elements",
+      "id": "Click Here",
+      "src": "php",
+      "refs": [
+        "macros/atom-v1-button-html.twig:56"
+      ]
+    },
+    {
+      "domain": "breakdance-elements",
+      "id": "Close",
+      "src": "php",
+      "refs": [
+        "macros/menu.twig:72"
+      ]
+    },
+    {
+      "domain": "breakdance-elements",
+      "id": "Content tabs",
+      "src": "php",
+      "refs": [
+        "macros/atom-v1-tabs-css.twig:289",
+        "macros/atom-v1-tabs-css.twig:310"
+      ]
+    },
+    {
+      "domain": "breakdance-elements",
+      "id": "Draft posts can't have comments",
+      "src": "php",
+      "refs": [
+        "elements/Comment_Form/ssr.php:56"
+      ]
+    },
+    {
+      "domain": "breakdance-elements",
+      "id": "Have questions? We're here to help. <a href=\"%s\" target=\"_blank\">Click here</a> to contact support.",
+      "src": "php",
+      "refs": [
+        "elements/missing-element/ssr.php:17"
+      ]
+    },
+    {
+      "domain": "breakdance-elements",
+      "id": "New Tab",
+      "src": "php",
+      "refs": [
+        "macros/atom-v1-tabs-css.twig:322"
+      ]
+    },
+    {
+      "domain": "breakdance-elements",
+      "id": "No media selected.",
+      "src": "php",
+      "refs": [
+        "elements/Gallery/html.twig:111"
+      ]
+    },
+    {
+      "domain": "breakdance-elements",
+      "id": "Read more",
+      "src": "php",
+      "refs": [
+        "lib/post-list.php:57"
+      ]
+    },
+    {
+      "domain": "breakdance-elements",
+      "id": "Read more about %s",
+      "src": "php",
+      "refs": [
+        "lib/post-list.php:58"
+      ]
+    },
+    {
+      "domain": "breakdance-elements",
+      "id": "Search",
+      "src": "php",
+      "refs": [
+        "elements/Search_Form/html.twig:36",
+        "elements/Search_Form/html.twig:40"
+      ]
+    },
+    {
+      "domain": "breakdance-elements",
+      "id": "Search for:",
+      "src": "php",
+      "refs": [
+        "elements/Search_Form/html.twig:49"
+      ]
+    },
+    {
+      "domain": "breakdance-elements",
+      "id": "Table of contents",
+      "src": "php",
+      "refs": [
+        "elements/Table_Of_Contents/html.twig:23"
+      ]
+    },
+    {
+      "domain": "breakdance-elements",
+      "id": "There are no headings in this document.",
+      "src": "php",
+      "refs": [
+        "elements/Table_Of_Contents/html.twig:23"
+      ]
+    },
+    {
+      "domain": "breakdance-elements",
+      "id": "This element is missing. Please check the browser console for details.",
+      "src": "php",
+      "refs": [
+        "elements/missing-element/ssr.php:12"
+      ]
+    }
+  ]
+}

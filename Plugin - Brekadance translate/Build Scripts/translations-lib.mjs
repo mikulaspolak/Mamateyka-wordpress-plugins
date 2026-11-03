@@ -7,6 +7,7 @@ export const SCRIPT_DIR = path.dirname(fileURLToPath(import.meta.url));
 export const PROJECT_ROOT = path.resolve(SCRIPT_DIR, "..");
 export const DB_DIR = path.join(PROJECT_ROOT, "Translations");
 export const DB_PATH = path.join(DB_DIR, "breakdance-sk_SK.json");
+export const SOURCE_DIR = path.join(DB_DIR, "source");
 export const PLUGIN_LANG_DIR = path.join(PROJECT_ROOT, "breakdance-slovak-ui", "languages");
 export const DEFAULT_DOMAIN = "breakdance";
 export const STATUSES = ["todo", "ai", "reviewed"];
@@ -16,19 +17,34 @@ export function loadDb(file = DB_PATH) {
   return JSON.parse(readFileSync(file, "utf8"));
 }
 
-// Same layout as the committed file: meta pretty-printed, one entry per line.
-function fmt(value) {
-  if (Array.isArray(value)) return "[" + value.map(fmt).join(", ") + "]";
-  if (value && typeof value === "object") {
-    return "{" + Object.entries(value).map(([k, v]) => JSON.stringify(k) + ": " + fmt(v)).join(", ") + "}";
+// The committed file has hand-edited formatting, so it is never re-serialized: new entries are
+// appended as text and 'src' of touched entries is patched in place. Everything else stays byte-identical.
+export function writeDbChanges({ added = [], srcChanges = [] }, file = DB_PATH) {
+  let text = readFileSync(file, "utf8");
+
+  for (const { n, src } of srcChanges) {
+    const start = text.indexOf(`\n      "n": ${n},`);
+    const at = start < 0 ? -1 : text.indexOf('"src": "', start);
+    if (at < 0) throw new Error(`Položku n=${n} sa nepodarilo nájsť na úpravu 'src'.`);
+    const end = text.indexOf('"', at + 8);
+    text = text.slice(0, at + 8) + src + text.slice(end);
   }
-  return JSON.stringify(value);
+
+  if (added.length > 0) {
+    const tail = "\n    }\n  ]\n}\n";
+    if (!text.endsWith(tail)) throw new Error("Neočakávaný koniec súboru s prekladmi; nové položky sa nedajú pridať.");
+    const body = added.map((e) => JSON.stringify(e, null, 2).replace(/^/gm, "    ")).join(",\n");
+    text = text.slice(0, -"\n  ]\n}\n".length) + ",\n" + body + "\n  ]\n}\n";
+  }
+
+  writeFileSync(file, text, "utf8");
 }
 
-export function saveDb(db, file = DB_PATH) {
-  const meta = JSON.stringify(db.meta, null, "\t").replace(/\n/g, "\n\t");
-  const entries = db.entries.map((e) => "\t\t" + fmt(e)).join(",\n");
-  writeFileSync(file, `{\n\t"meta": ${meta},\n\t"entries": [\n${entries}\n\t]\n}\n`, "utf8");
+// Elements that only exist for WooCommerce (not used on this site) are never imported.
+const WOO_SEGMENT_RE = /^(?:Woo|Product(?:Builder|_Reviews)?$|Related_Products$|Upsell_Products$|MiniCart$|MenuCart$|CheckoutBuilder$|woocommerce$)/;
+export function isWooPath(ref) {
+  const parts = ref.split(":")[0].split("/");
+  return parts.some((p, i) => i > 0 && WOO_SEGMENT_RE.test(p));
 }
 
 export const entryDomain = (e) => e.domain || DEFAULT_DOMAIN;

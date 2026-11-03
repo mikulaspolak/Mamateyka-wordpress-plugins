@@ -1,0 +1,5827 @@
+# Breakdance Builder POT file
+# Copyright (C) 2026
+# This file is distributed under the same license as the Breakdance Builder package.
+msgid ""
+msgstr ""
+"Project-Id-Version: Breakdance Builder 1.0.0\n"
+"Report-Msgid-Bugs-To: support@breakdance.com\n"
+"POT-Creation-Date: 2026-05-24 00:50-0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: BREAKDANCE <support@breakdance.com>\n"
+"Language-Team: BREAKDANCE <support@breakdance.com>\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: builder/src/components/Reusable/CustomInputs/ClassInput/AddClass.vue:12
+msgid ".my-cool-class"
+msgstr ""
+
+#: builder/src/components/Settings/Selectors/AddSelector.vue:5
+#: builder/src/oxygen/classes/panel/OxyAddSelector.vue:5
+msgid ".your.css > #selector-69::after"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/ClassInput/ClassInput.vue:135
+msgid "\"%s\" is not a valid class name."
+msgstr ""
+
+#: builder/src/lib/selectors/selectors.ts:92
+#. translators: %s: CSS selector name
+msgid "\"%s\" is not a valid CSS selector."
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioConditionInput.vue:28
+#. translators: %s: Condition title
+msgid "(AND) %s for '{path}'"
+msgstr ""
+
+#: builder/src/components/Canvas/OverlaidUI/NodeGhostTitlebar.vue:38
+#: builder/src/components/Canvas/OverlaidUI/NodeTitlebar.vue:36
+msgid "(Draft)"
+msgstr ""
+
+#: builder/src/oxygen/variables/OverrideVariablesInput.vue:100
+#: builder/src/oxygen/variables/OverrideVariablesInput.vue:104
+msgid "(empty)"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/GlobalBlockInput.vue:80
+msgid "(Empty)"
+msgstr ""
+
+#: builder/src/oxygen/variables/VariableChip.vue:26
+#: builder/src/oxygen/variables/VariableChooserList.vue:21
+msgid "(no name)"
+msgstr ""
+
+#: builder/src/components/Builder/TopBar/PreviewChooser/PreviewChooserText.vue:24
+#: builder/src/components/Builder/TopBar/PreviewChooser/PreviewChooserText.vue:44
+msgid "(no title)"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioAdditionalClasses.vue:43
+msgid "(the returned value is trimmed for spaces and newlines)"
+msgstr ""
+
+#: builder/src/components/ElementPropertiesPanel/Titlebar.vue:100
+msgid "%1$s (%2$s selected)"
+msgstr ""
+
+#: builder/src/components/Notifications/Types/AjaxCodeError.vue:74
+#. translators: 1: friendly error name, 2: error code
+msgid "%s - Error Code %s"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/GlobalColorsInput.vue:154
+msgid "%s #%s"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioAction.vue:82
+#. translators: %s: Tag names (SELECTOR and ID)
+msgid "%s are also available."
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioPresets.vue:781
+msgid "%s couldn't be found"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/CodeInput/CodeInputDialog.vue:5
+msgid "%s Editor"
+msgstr ""
+
+#: builder/src/components/AI/AIWriter.vue:141
+#. translators: %s: Element name
+msgid "%s Element"
+msgstr ""
+
+#: builder/src/components/Notifications/Types/LoggedOutError.vue:5
+#: builder/src/components/Notifications/Types/NetworkError.vue:7
+#: builder/src/components/Notifications/Types/SessionExpiredError.vue:5
+msgid "%s failed"
+msgstr ""
+
+#: builder/src/components/AI/AIWriter.vue:133
+#. translators: %s: Field label
+msgid "%s Field in"
+msgstr ""
+
+#: builder/src/components/Notifications/Types/Util/ErrorNextSteps.vue:64
+#. translators: %s: Plugin name
+msgid "%s generated an email you can send to your web host for help:"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/ClassInput/ClassInput.vue:153
+#. translators: %s: CSS class name
+msgid "%s is already present on the element."
+msgstr ""
+
+#: builder/src/lib/selectors/selectors.ts:62
+#. translators: %s: CSS selector name
+msgid "%s is already present."
+msgstr ""
+
+#: builder/src/lib/selectors/selectors.ts:36
+#. translators: %s: CSS selector name
+msgid "%s is not a valid CSS class name."
+msgstr ""
+
+#: builder/src/lib/selectors/selectors.ts:46
+#. translators: %s: CSS selector name
+msgid "%s is not a valid CSS selector."
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/ApiKeyInput.vue:266
+#. translators: 1: API key name, 2: settings page link
+msgid "%s not present. Set it in the %s."
+msgstr ""
+
+#: builder/src/components/Settings/Selectors/EditSelector.vue:56
+msgid "%s on page"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/DynamicInput.vue:128
+#. translators: %s: Dynamic field label
+msgid "%s Options"
+msgstr ""
+
+#: builder/src/oxygen/classes/panel/OxySelectorsPanel.vue:212
+msgid "%s selectors imported. %s existing selectors were kept."
+msgstr ""
+
+#: builder/src/oxygen/classes/panel/OxySelectorsPanel.vue:196
+msgid "%s selectors imported. All existing selectors were replaced."
+msgstr ""
+
+#: builder/src/subapps/design-library/DesignLibraryConfirmImportDialog.vue:148
+#. translators: %s: Plugin name
+msgid "%s Settings, and also import all Pages, Posts, and Templates from the design set."
+msgstr ""
+
+#: builder/src/oxygen/variables/panel/VariablesPanel.vue:264
+msgid "%s variables imported. %s existing variables were kept."
+msgstr ""
+
+#: builder/src/subapps/manage-templates/EditGlobalBlockModal.vue:171
+#: builder/src/subapps/manage-templates/ManageGlobalBlocks.vue:188
+msgid "%s was not saved"
+msgstr ""
+
+#: builder/src/subapps/manage-templates/EditTemplateModal.vue:582
+#. translators: %s: Template type name
+msgid "%s was not saved, or it was saved but the value is invalid"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/ApiKeyInput.vue:247
+msgid "%s. Set it in the %s."
+msgstr ""
+
+#: builder/src/components/Builder/TopBar/BreakpointsSelection.vue:62
+#. translators: %s: Breakpoint minimum width
+msgid "%spx and above"
+msgstr ""
+
+#: builder/src/components/Builder/TopBar/BreakpointsSelection.vue:54
+#. translators: %s: Breakpoint maximum width
+msgid "%spx and below"
+msgstr ""
+
+#: builder/src/oxygen/classes/OxyClassToken.vue:395
+msgid "⚠️ (deleted)"
+msgstr ""
+
+#: builder/src/components/AI/InlineAI.vue:446
+msgid "⚠️ Could not generate content, please try again."
+msgstr ""
+
+#: builder/src/components/Onboarding/FirstTimeVisit.vue:13
+msgid "👋 Do you want to start with a template?"
+msgstr ""
+
+#: builder/src/subapps/manage-templates/lib/quick-add-templates.ts:71
+msgid "404 Not Found"
+msgstr ""
+
+#: builder/src/subapps/manage-templates/EditGlobalBlockModal.vue:156
+msgid "A %s with the title \"%s\" already exists. Please select another title."
+msgstr ""
+
+#: builder/src/components/Notifications/Types/Util/ErrorNextSteps.vue:44
+msgid "A 403 error is almost caused by your host, firewall, or CDN blocking the request"
+msgstr ""
+
+#: builder/src/components/Notifications/Types/Util/ErrorNextSteps.vue:11
+msgid "A 500 error is usually a server issue and must be resolved by your web hosting provider or server administrator. It can also be caused by a broken plugin."
+msgstr ""
+
+#: builder/src/components/ElementPropertiesPanel/TabsAndControls.vue:31
+msgid "A preset is currently selected for this element."
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/GlobalColorSettingsDropdown.vue:61
+msgid "A variable named %s already exists."
+msgstr ""
+
+#: builder/src/components/Settings/Preferences/CustomFonts/components/UpdateFontFace.vue:144
+msgid "A weight is required"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioMediaOptions.vue:22
+msgid "Accepted File Types"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioDynPropPaths.vue:29
+msgid "Accepts:"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/WpQuery/WpQuery.vue:701
+msgid "ACF"
+msgstr ""
+
+#: builder/src/components/Builder/TopBar/PreviewChooser/PreviewChooserSettings.vue:120
+msgid "ACF Flexible Content"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/WpQuery/WpQuery.vue:645
+msgid "ACF Relationship"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/LinkInput/LinkInputSettings.vue:213
+#: builder/src/components/Reusable/CustomInputs/LinkInput/LinkInputSettings.vue:266
+#: builder/src/components/Reusable/CustomInputs/LinkInput/LinkInputSettings.vue:436
+#: builder/src/oxygen/interactions/InteractionsInput.vue:200
+#: builder/src/oxygen/interactions/InteractionsInput.vue:207
+msgid "Action"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioTabsAndPanels.vue:714
+msgid "Action will only run for the specified path."
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioTabsAndPanels.vue:735
+msgid "Action will only run if element being moved is of that type, OR if the element was moved onto an element with that type."
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioTabsAndPanels.vue:757
+msgid "Action will only run if the deleted element was inside a Section element."
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioTabsAndPanels.vue:716
+msgid "Action will run for any control below 'background'."
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioTabsAndPanels.vue:99
+#: builder/src/oxygen/interactions/InteractionsInput.vue:194
+msgid "Actions"
+msgstr ""
+
+#: builder/src/subapps/manage-templates/EditTemplateModal.vue:196
+#: builder/src/subapps/manage-templates/ManageTemplates.vue:120
+msgid "Active"
+msgstr ""
+
+#: builder/src/components/Add/AddPanel.vue:4
+#: builder/src/components/Builder/TopBar/AddButton.vue:11
+#: builder/src/components/ElementPropertiesPanel/BlankSidebarContent.vue:21
+#: builder/src/components/Reusable/CustomInputs/ClassInput/AddClass.vue:33
+#: builder/src/components/Settings/ElementPresets/AddPreset.vue:17
+#: builder/src/components/Settings/Preferences/Breakpoints/EditBreakpoints.vue:49
+#: builder/src/components/Settings/Preferences/CustomFonts/CustomFontFamilies.vue:111
+#: builder/src/components/Settings/Preferences/CustomFonts/CustomFontFamilies.vue:180
+#: builder/src/components/Settings/Preferences/CustomUiSettings.vue:240
+#: builder/src/components/Settings/Selectors/AddSelector.vue:11
+#: builder/src/components/Structure/StructurePanel.vue:85
+#: builder/src/oxygen/classes/panel/OxyAddSelector.vue:15
+msgid "Add"
+msgstr ""
+
+#: builder/src/components/Settings/Preferences/CustomFonts/CustomFontFamilies.vue:48
+#. translators: %s: Plugin name
+msgid "Add a font family to %s's font family dropdowns, and optionally upload associated .woff/.woff2 files."
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/3rdPartyWrappers/TipTapWrapper.vue:50
+msgid "Add a link"
+msgstr ""
+
+#: builder/src/oxygen/interactions/InteractionsInput.vue:201
+msgid "Add Action"
+msgstr ""
+
+#: builder/src/components/Structure/StructurePanel.vue:78
+msgid "Add an element to your page and it will show up here."
+msgstr ""
+
+#: builder/src/components/ElementPropertiesPanel/BlankSidebarContent.vue:9
+msgid "Add an element to your page or click an existing element to edit it."
+msgstr ""
+
+#: builder/src/components/Settings/Preferences/Breakpoints/EditBreakpoints.vue:18
+#: builder/src/components/Settings/Preferences/Breakpoints/EditBreakpoints.vue:61
+msgid "Add Breakpoint"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioAdditionalClasses.vue:8
+msgid "Add Class"
+msgstr ""
+
+#: builder/src/oxygen/classes/panel/OxySelectorsPanel.vue:12
+#: builder/src/oxygen/variables/panel/VariablesPanel.vue:12
+msgid "Add Collection"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/Conditions/ConditionsMatrix.vue:30
+#: builder/src/components/Reusable/CustomInputs/Conditions/ConditionsModal.vue:55
+msgid "Add Condition"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ControlSectionOrControl.vue:799
+msgid "Add Control"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioControls.vue:27
+msgid "Add Control Section"
+msgstr ""
+
+#: builder/src/components/Settings/Preferences/CustomFonts/CustomFontFamilies.vue:191
+msgid "Add CSS URL"
+msgstr ""
+
+#: builder/src/components/Add/library/DesignLibraryModal.vue:83
+#: builder/src/subapps/design-library/ManageDesignLibrary.vue:16
+msgid "Add custom Design Sets to start building with pre-made designs."
+msgstr ""
+
+#: builder/src/subapps/manage-templates/AddTemplateDropdown.vue:39
+#: builder/src/subapps/manage-templates/EditTemplateModal.vue:242
+msgid "Add Custom Template"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioAction.vue:100
+msgid "Add dependency"
+msgstr ""
+
+#: builder/src/components/Builder/TopBar/AddButton.vue:20
+msgid "Add Element"
+msgstr ""
+
+#: builder/src/components/Settings/Preferences/CustomFonts/CustomFontFamilies.vue:145
+msgid "Add External CSS"
+msgstr ""
+
+#: builder/src/components/Settings/Preferences/CustomFonts/CustomFontFamilies.vue:42
+#: builder/src/components/Settings/Preferences/CustomFonts/CustomFontFamilies.vue:62
+#: builder/src/components/Settings/Preferences/CustomFonts/CustomFontFamilies.vue:124
+msgid "Add Font"
+msgstr ""
+
+#: builder/src/subapps/manage-templates/ManageTemplates.vue:39
+msgid "Add Footer"
+msgstr ""
+
+#: builder/src/subapps/manage-templates/ManageTemplates.vue:36
+msgid "Add Header"
+msgstr ""
+
+#: builder/src/oxygen/interactions/InteractionsInput.vue:117
+msgid "Add Interaction"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/Repeater/Repeater.vue:235
+msgid "Add Item"
+msgstr ""
+
+#: builder/src/components/AI/AISettings.vue:50
+msgid "Add Macro"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/MediaInput/WPMediaInput.vue:37
+msgid "Add Media"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/InlineRepeater.vue:155
+msgid "Add new"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioConditionInput.vue:32
+#. translators: Element Studio. %s: Condition title
+msgid "Add new (AND) %s"
+msgstr ""
+
+#: builder/src/components/Settings/Preferences/Breakpoints/EditBreakpoints.vue:26
+msgid "Add New Breakpoint"
+msgstr ""
+
+#: builder/src/oxygen/CollectionsInput.vue:212
+msgid "Add new collection"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioDefaultElements.vue:109
+msgid "Add new default element"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioDynPropPaths.vue:8
+msgid "Add new Dynamic Property Path"
+msgstr ""
+
+#: builder/src/components/Settings/Preferences/CustomFonts/CustomFontFamilies.vue:86
+msgid "Add New Font"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioAttributes.vue:13
+msgid "Add new HTML attribute"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioConditionInput.vue:12
+msgid "Add new OR condition"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioSpacingBars.vue:9
+msgid "Add new spacing bar"
+msgstr ""
+
+#: builder/src/components/Settings/Preferences/CustomFonts/CustomFontFamilies.vue:84
+msgid "Add New Variable Font"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioTabsAndPanels.vue:535
+msgid "Add panel rules"
+msgstr ""
+
+#: builder/src/subapps/manage-templates/ManageTemplates.vue:42
+msgid "Add Popup"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ControlSectionOrControl.vue:810
+#: builder/src/components/ElementStudio/ElementStudioControls.vue:30
+msgid "Add Preset"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioAction.vue:24
+msgid "Add script"
+msgstr ""
+
+#: builder/src/components/Canvas/OverlaidUI/Onboarding/NodeOnboardingAddSectionButton.vue:8
+#: builder/src/components/Canvas/OverlaidUI/Singularity/AddAnotherSectionButton.vue:15
+#: builder/src/components/Canvas/OverlaidUI/Singularity/AddAnotherSectionButton.vue:28
+msgid "Add Section"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/ShadowInput/ShadowInput.vue:117
+msgid "Add Shadow"
+msgstr ""
+
+#: builder/src/components/Builder/TopBar/PreviewChooser/PreviewChooserNoResults.vue:25
+msgid "Add some content to your site that matches the template settings."
+msgstr ""
+
+#: builder/src/subapps/manage-templates/AddTemplateDropdown.vue:11
+#: builder/src/subapps/manage-templates/AddTemplateDropdown.vue:54
+msgid "Add Template"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/Typography/GlobalTypographySaveDialog.vue:8
+msgid "Add Typography Preset"
+msgstr ""
+
+#: builder/src/oxygen/variables/GlobalVariablesInput.vue:88
+#: builder/src/oxygen/variables/OverrideVariablesInput.vue:68
+msgid "Add Variable"
+msgstr ""
+
+#: builder/src/components/Settings/Preferences/CustomFonts/CustomFontFamilies.vue:70
+#: builder/src/components/Settings/Preferences/CustomFonts/CustomFontFamilies.vue:132
+msgid "Add Variable Font"
+msgstr ""
+
+#: builder/src/components/Settings/Preferences/Breakpoints/EditBreakpoints.vue:58
+msgid "Add your first breakpoint by clicking the button below."
+msgstr ""
+
+#: builder/src/components/Add/ElementsList.vue:33
+msgid "advanced"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/LinkInput/LinkInputSettings.vue:286
+#: builder/src/components/Reusable/CustomInputs/LinkInput/LinkInputSettings.vue:292
+#: builder/src/components/Reusable/CustomInputs/Typography/CustomTypographyInput.vue:304
+#: builder/src/oxygen/interactions/InteractionsInput.vue:281
+msgid "Advanced"
+msgstr ""
+
+#: builder/src/subapps/manage-templates/EditTemplateModal.vue:255
+msgid "Advanced Template Settings"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioSpacingBar.vue:10
+msgid "Affected property path"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/WpQuery/WpQuery.vue:267
+msgid "After Date"
+msgstr ""
+
+#: builder/src/components/AI/AIPanel.vue:4
+msgid "AI Assistant"
+msgstr ""
+
+#: builder/src/components/Builder/TopBar/SettingsDropdown.vue:89
+msgid "AI Site Creation Experience"
+msgstr ""
+
+#: builder/src/components/Notifications/Types/AjaxCodeError.vue:93
+#: builder/src/components/Notifications/Types/NetworkError.vue:83
+msgid "AJAX Error"
+msgstr ""
+
+#: builder/src/components/Notifications/Types/Util/InternalServerErrorErrorDetails.vue:42
+msgid "Ajax Handler Error"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/WpQuery/WpQuery.vue:732
+msgid "All"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/BorderComplex.vue:90
+msgid "All Borders"
+msgstr ""
+
+#: builder/src/components/Builder/TopBar/BreakpointsSelection.vue:49
+msgid "All device widths"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioMediaOptions.vue:28
+msgid "All file types are allowed by default."
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/IconInput/IconChooserDialog.vue:244
+msgid "All Icons"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioVideoOptions.vue:11
+msgid "All providers are allowed by default."
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioMediaOptions.vue:15
+msgid "Allow only certain file types"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioTabsAndPanels.vue:556
+msgid "Allowed post type"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioUnitOptions.vue:5
+msgid "Allowed types"
+msgstr ""
+
+#: builder/src/components/Canvas/OverlaidUI/Canvas/ClipboardDialog.vue:26
+msgid "Alternatively, you can use your keyboard shortcuts:"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioTabsAndPanels.vue:537
+msgid "Always hide element from the Add Panel"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/WpQuery/WpQuery.vue:100
+msgid "Amount"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/ConditionInput/ConditionPreviewRule.vue:5
+msgid "And"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/Conditions/TemplateRuleGroupInput.vue:23
+msgid "AND"
+msgstr ""
+
+#: builder/src/oxygen/properties-panel/OxyTabsAndControls.vue:62
+msgid "Animations"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/GlobalColorSettingsDropdown.vue:100
+msgid "Any elements currently using this color variable will need to be updated to use the new variable name."
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/ApiKeyInput.vue:277
+msgid "API Key"
+msgstr ""
+
+#: builder/src/subapps/manage-templates/ManageTemplates.vue:112
+msgid "Applies to"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/MediaSize/MediaCropper.vue:15
+msgid "Apply"
+msgstr ""
+
+#: builder/src/subapps/manage-templates/EditTemplateModal.vue:64
+#. translators: %s: Template type name
+msgid "Apply %s to..."
+msgstr ""
+
+#: builder/src/oxygen/classes/inputs/spacing/OxyMarginPaddingInputDragBar.vue:214
+msgid "Apply all (=)"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/SpacingComplex.vue:84
+msgid "Apply All (=)"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/Conditions/ConditionsModal.vue:66
+msgid "Apply Conditions"
+msgstr ""
+
+#: builder/src/oxygen/classes/inputs/spacing/OxyMarginPaddingInputDragBar.vue:215
+msgid "Apply opposite"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/WpQuery/WpQuery.vue:323
+msgid "Apply Query"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/IconInput/IconChooserDialog.vue:382
+#. translators: %s: Icon set name
+msgid "Are you sure you want to delete %s?"
+msgstr ""
+
+#: builder/src/oxygen/CollectionsInput.vue:96
+#. translators: %s: Collection name
+msgid "Are you sure you want to delete the collection \"%s\"?"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/IconInput/IconChooserDialog.vue:403
+#. translators: %s: Icon name
+msgid "Are you sure you want to delete the icon %s?"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/Repeater/Repeater.vue:248
+msgid "Are you sure you want to delete this?"
+msgstr ""
+
+#: builder/src/oxygen/classes/OxyClassProperties.vue:231
+msgid "Are you sure you want to edit?"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/GlobalColorSettingsDropdown.vue:115
+msgid "Are you sure you want to proceed?"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioDefaultProperties.vue:138
+msgid "are you sure?"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/WpQuery/WpQuery.vue:8
+msgid "Array"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/WpQuery/WpQuery.vue:723
+msgid "Ascending"
+msgstr ""
+
+#: builder/src/components/Add/library/DesignLibraryModal.vue:86
+msgid "Ask your site administrator to add custom Design Sets in Settings."
+msgstr ""
+
+#: builder/src/oxygen/properties-panel/OxyHtmlAttributes.vue:29
+#: builder/src/oxygen/properties-panel/OxyHtmlAttributes.vue:33
+msgid "Attribute"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioAttributes.vue:20
+msgid "Attribute Name"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioAttributes.vue:29
+msgid "Attribute Value"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/LinkInput/LinkInputSettings.vue:315
+#: builder/src/oxygen/properties-panel/OxyTabsAndControls.vue:111
+msgid "Attributes"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioTabsAndPanels.vue:662
+msgid "Attributes are added to the container of the element"
+msgstr ""
+
+#: builder/src/components/Settings/Preferences/CustomUiSettings.vue:13
+msgid "Auto-scroll to active element"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ControlSectionOrControl.vue:118
+msgid "Autofocus"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioTabsAndPanels.vue:584
+#: builder/src/components/ElementStudio/ElementStudioTabsAndPanels.vue:587
+msgid "Available In"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioRepeaterOptions.vue:16
+msgid "Available variables:"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioAction.vue:54
+msgid "Available within the action's code:"
+msgstr ""
+
+#: builder/src/subapps/manage-templates/ManageGlobalBlocks.vue:69
+#: builder/src/subapps/manage-templates/ManageTemplates.vue:90
+#: builder/src/subapps/onboarding/components/BottomNav.vue:4
+msgid "Back"
+msgstr ""
+
+#: builder/src/components/UI/InvalidPostDialog.vue:59
+msgid "Back to WordPress admin"
+msgstr ""
+
+#: builder/src/components/Builder/TopBar/PreviewSize.vue:81
+msgid "Background Color"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioTabsAndPanels.vue:183
+msgid "Badge Background"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioTabsAndPanels.vue:202
+msgid "Badge Label"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioTabsAndPanels.vue:195
+msgid "Badge Text"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioTabsAndPanels.vue:710
+msgid "Based on the control's path."
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioTabsAndPanels.vue:752
+msgid "Based on the deleted element's parent type."
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioTabsAndPanels.vue:730
+msgid "Based on the element's and moved-on element's type."
+msgstr ""
+
+#: builder/src/oxygen/classes/inputs/align/OxyAlignInput.vue:64
+msgid "Baseline"
+msgstr ""
+
+#: builder/src/components/AI/AIWriter.vue:62
+msgid "Be funny"
+msgstr ""
+
+#: builder/src/components/AI/AIWriter.vue:65
+msgid "Be verbose"
+msgstr ""
+
+#: builder/src/components/AI/AIWriter.vue:64
+msgid "Be very concise"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/WpQuery/WpQuery.vue:260
+msgid "Before Date"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudio.vue:42
+msgid "before use."
+msgstr ""
+
+#: builder/src/components/Notifications/Types/Util/EmailForHost.vue:70
+msgid "Best Regards,"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioAction.vue:148
+msgid "beware that the Twig code running in the action will be with the child's data, including tags"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ControlSectionOrControl.vue:195
+msgid "Big Button Bar"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/ShadowInput/ShadowInput.vue:52
+msgid "Blur"
+msgstr ""
+
+#: builder/src/subapps/onboarding/components/ManageTypography.vue:7
+msgid "Body"
+msgstr ""
+
+#: builder/src/components/Notifications/Types/TroubleshootingModal.vue:45
+#: builder/src/components/Notifications/Types/Util/InternalServerErrorRequestDetails.vue:12
+msgid "Body:"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/BorderComplex.vue:42
+msgid "Border Bottom"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/BorderComplex.vue:131
+msgid "Border Color"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/BorderComplex.vue:59
+msgid "Border Left"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/BorderComplex.vue:76
+msgid "Border Right"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/BorderComplex.vue:25
+msgid "Border Top"
+msgstr ""
+
+#: builder/src/oxygen/classes/inputs/align/OxyAlignInput.vue:59
+msgid "Bottom"
+msgstr ""
+
+#: builder/src/components/Builder/TopBar/PreviewChooser/PreviewChooserNoResults.vue:20
+msgid "Breakdance > Templates > Edit Template"
+msgstr ""
+
+#: builder/src/subapps/onboarding/views/OnboardingSelectType.vue:49
+msgid "Breakdance Barebones"
+msgstr ""
+
+#: builder/src/components/AI/AIPluginNotInstalled.vue:10
+msgid "Breakdance uses OpenAI's GPT-3.5 to rewrite your content. Please install the Breakdance AI plugin to use this feature."
+msgstr ""
+
+#: builder/src/components/Settings/Preferences/Breakpoints/EditBreakpoints.vue:38
+msgid "Breakpoint name, ie. iPhone X or tablet"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioBreakpointOptions.vue:3
+msgid "Breakpoint options"
+msgstr ""
+
+#: builder/src/components/Settings/Preferences/Breakpoints/CustomBreakpointsPanel.vue:10
+#: builder/src/components/Settings/Preferences/PreferencesModal.vue:44
+msgid "Breakpoints"
+msgstr ""
+
+#: builder/src/components/BrowseMode/BrowseModeToggle.vue:6
+msgid "browse"
+msgstr ""
+
+#: builder/src/components/Settings/Preferences/CustomFonts/components/FontFileUpload.vue:11
+msgid "browse..."
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioDependencies.vue:305
+msgid "Builder Condition (empty)"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioDependencies.vue:302
+msgid "Builder Condition (present)"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioTabsAndPanels.vue:519
+msgid "Builder Only"
+msgstr ""
+
+#: builder/src/subapps/onboarding/views/OnboardingComplete.vue:45
+msgid "Building your website..."
+msgstr ""
+
+#: builder/src/components/AI/AISettings.vue:8
+msgid "Business Name"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioRepeaterOptions.vue:37
+msgid "Button Name"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ControlSectionOrControl.vue:222
+msgid "Button Text"
+msgstr ""
+
+#: builder/src/subapps/onboarding/components/ManageButtons.vue:2
+msgid "Buttons & Forms"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioTabsAndPanels.vue:456
+msgid "Bypass Pointer Events"
+msgstr ""
+
+#: builder/src/components/AI/AIWriter.vue:31
+msgid "Call to action section on services page"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioDependencies.vue:338
+msgid "Can run Twig and JS code."
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioDependencies.vue:414
+msgid "Can run Twig and PHP code."
+msgstr ""
+
+#: builder/src/components/Add/library/DesignLibraryDependencyWarning.vue:96
+#: builder/src/components/Add/library/DesignLibraryDesignPresets.vue:68
+#: builder/src/components/Builder/TopBar/DocumentChooser/DocumentChooserCreateDialog.vue:124
+#: builder/src/components/ElementStudio/ElementStudioDefaultProperties.vue:57
+#: builder/src/components/ElementStudio/ElementStudioSaveNewDialog.vue:52
+#: builder/src/components/ElementStudio/ElementStudioTopBar.vue:207
+#: builder/src/components/Reusable/CustomInputs/3rdPartyWrappers/TipTapWrapper.vue:68
+#: builder/src/components/Reusable/CustomInputs/GlobalColorSettingsDropdown.vue:83
+#: builder/src/components/Reusable/CustomInputs/Repeater/Repeater.vue:126
+#: builder/src/components/Reusable/CustomInputs/Typography/GlobalTypographySaveDialog.vue:13
+#: builder/src/components/Reusable/CustomInputs/WpQuery/WpQuery.vue:318
+#: builder/src/components/Reusable/GlobalBlockDialog.vue:24
+#: builder/src/components/Settings/DocumentOrGlobalSettings/ImportExportDropdownMenu.vue:74
+#: builder/src/components/Settings/ElementPresets/PresetDialog.vue:20
+#: builder/src/components/Settings/Preferences/Breakpoints/EditBreakpoint.vue:74
+#: builder/src/components/UI/ConfirmDialog.vue:59
+#: builder/src/oxygen/variables/SaveVariableDropdown.vue:59
+#: builder/src/subapps/design-library/DesignLibraryConfirmImportDialog.vue:200
+#: builder/src/subapps/manage-templates/EditGlobalBlockModal.vue:47
+#: builder/src/subapps/manage-templates/EditTemplateModal.vue:214
+#: builder/src/subapps/manage-templates/EditTemplateModal.vue:269
+#: builder/src/subapps/onboarding/components/ToastNotification.vue:10
+msgid "Cancel"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioTabsAndPanels.vue:170
+msgid "Category"
+msgstr ""
+
+#: builder/src/oxygen/classes/inputs/align/OxyAlignInput.vue:52
+#: builder/src/oxygen/classes/inputs/align/OxyAlignInput.vue:58
+msgid "Center"
+msgstr ""
+
+#: builder/src/oxygen/classes/inputs/spacing/OxyMarginPaddingInputDragBar.vue:218
+msgid "Center horizontally"
+msgstr ""
+
+#: builder/src/components/Canvas/OverlaidUI/Singularity/components/EditIconButton.vue:3
+msgid "Change Icon"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioTabsAndPanels.vue:1076
+msgid "Changing the slug of an existing element will make it obsolete in all pages, everywhere. Continue anyway?"
+msgstr ""
+
+#: builder/src/components/Notifications/Types/IoTsError.vue:13
+msgid "Check browser console for debug information."
+msgstr ""
+
+#: builder/src/oxygen/interactions/InteractionsInput.vue:272
+msgid "Children of Target"
+msgstr ""
+
+#: builder/src/components/Builder/TopBar/PreviewChooser/PreviewChooserText.vue:55
+#: builder/src/components/Builder/TopBar/PreviewChooser/PreviewChooserText.vue:77
+msgid "choose"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/Conditions/TemplateRuleInput.vue:109
+#: builder/src/components/Reusable/CustomInputs/MediaInput/MediaChooserLayer.vue:29
+msgid "Choose"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/GlobalBlockInput.vue:10
+#. translators: %s: Global block label
+msgid "Choose a %s"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/BreakpointInput.vue:10
+msgid "Choose a Breakpoint"
+msgstr ""
+
+#: builder/src/components/Canvas/Empty/EmptyColumns.vue:4
+msgid "Choose a column structure"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/ComponentInput.vue:8
+msgid "Choose a Component"
+msgstr ""
+
+#: builder/src/components/Builder/TopBar/DocumentChooser/DocumentChooser.vue:40
+msgid "choose a document to edit"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/BreakpointInput.vue:10
+msgid "Choose Breakpoints"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/Conditions/TemplateRuleInput.vue:8
+msgid "Choose condition..."
+msgstr ""
+
+#: builder/src/components/ElementPropertiesPanel/ElementPresetChooser.vue:12
+msgid "Choose Design Preset"
+msgstr ""
+
+#: builder/src/subapps/onboarding/views/OnboardingSelectType.vue:44
+msgid "Choose one of the options below."
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/Conditions/TemplateRuleInput.vue:39
+msgid "Choose operand..."
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/WpQuery/WpQuery.vue:58
+msgid "Choose post type"
+msgstr ""
+
+#: builder/src/subapps/onboarding/components/OnboardingStartForm.vue:55
+msgid "Choose the category that best describes your website."
+msgstr ""
+
+#: builder/src/subapps/onboarding/components/OnboardingStartForm.vue:66
+msgid "Choose the goals that best describe your website."
+msgstr ""
+
+#: builder/src/subapps/onboarding/components/OnboardingStartForm.vue:77
+msgid "Choose the writing style that best describes your website."
+msgstr ""
+
+#: builder/src/components/Add/library/DesignLibraryDependencyWarning.vue:57
+msgid "Choose what to import:"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioAdditionalClasses.vue:7
+#. translators: %s: Class name
+msgid "Class %s"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioAdditionalClasses.vue:28
+msgid "Class Condition Twig Template"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioAdditionalClasses.vue:19
+#: builder/src/components/ElementStudio/ElementStudioTabsAndPanels.vue:153
+msgid "Class Name"
+msgstr ""
+
+#: builder/src/oxygen/properties-panel/OxyTabsAndControls.vue:105
+msgid "Classes"
+msgstr ""
+
+#: builder/src/components/Subscription/FreeModeAlertForSelectors.vue:6
+#. translators: %s: Plugin name
+msgid "Classes & selectors are only available in %s Pro. They won't work on the frontend."
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioTabsAndPanels.vue:670
+msgid "Classes are added to the container of the element"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/BorderComplex.vue:103
+msgid "clear"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioDefaultProperties.vue:20
+#: builder/src/oxygen/properties-panel/OxyCopyPasteContextMenu.vue:148
+msgid "Clear"
+msgstr ""
+
+#: builder/src/components/Notifications/Notifications.vue:10
+msgid "Clear All"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioTabsAndPanels.vue:213
+msgid "Clear Badge"
+msgstr ""
+
+#: builder/src/components/ElementPropertiesPanel/SearchBoxEmptyState.vue:35
+msgid "Clear Search"
+msgstr ""
+
+#: builder/src/components/ElementPropertiesPanel/ElementPresetChooser.vue:67
+msgid "Clear Styles"
+msgstr ""
+
+#: builder/src/oxygen/variables/VariableChip.vue:34
+msgid "Clear Variable"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/RichTextInput/RichTextInput.vue:18
+msgid "Click here to edit content"
+msgstr ""
+
+#: builder/src/components/AI/AINoApiKey.vue:21
+msgid "Click here to set up your API key"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioDefaultProperties.vue:26
+#. translators: %s: Element slug name
+msgid "Click IMPORT to set the default properties to the properties of the currently active element. Active element must be a %s."
+msgstr ""
+
+#: builder/src/components/AI/AINoElementSelected.vue:8
+msgid "Click on an element in the editor to rewrite it with AI."
+msgstr ""
+
+#: builder/src/components/Notifications/Types/Util/ErrorNextSteps.vue:18
+msgid "Click the Error Details tab above and read the error message. If one is not available, consult your server's error log."
+msgstr ""
+
+#: builder/src/components/Settings/Preferences/Breakpoints/EditBreakpoint.vue:15
+msgid "Click to set min and max widths."
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/LinkInput/LinkInputSettings.vue:534
+#: builder/src/subapps/design-library/DesignLibraryImportingDialog.vue:105
+msgid "Close"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioTopBar.vue:220
+msgid "Close %s"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioTopBar.vue:245
+msgid "Close Element Studio Panel"
+msgstr ""
+
+#: builder/src/components/Add/library/DesignLibraryModal.vue:69
+msgid "Close modal"
+msgstr ""
+
+#: builder/src/components/Builder/TopBar/PreviewModeCloseButton.vue:43
+msgid "Close Preview"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioIconsAutocomplete.vue:5
+msgid "CloseIcon"
+msgstr ""
+
+#: builder/src/oxygen/interactions/InteractionsInput.vue:184
+#: builder/src/oxygen/interactions/InteractionsInput.vue:268
+msgid "Closest Parent"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioPresets.vue:34
+#: builder/src/components/ElementStudio/ElementStudioPresets.vue:64
+msgid "Code Help"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ControlSectionOrControl.vue:475
+msgid "Code input options"
+msgstr ""
+
+#: builder/src/components/Partners/CodeBoxButtonForCodeEditor.vue:59
+msgid "Code was not saved."
+msgstr ""
+
+#: builder/src/components/Structure/StructurePanel.vue:14
+#: builder/src/components/Structure/StructurePanel.vue:35
+#: builder/src/components/Structure/StructurePanel.vue:36
+msgid "Collapse"
+msgstr ""
+
+#: builder/src/oxygen/variables/SaveVariableDropdown.vue:51
+msgid "Collection"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/BorderComplex.vue:127
+#: builder/src/components/Reusable/CustomInputs/Typography/CustomTypographyInput.vue:463
+msgid "Color"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/Color/ColorPicker.vue:20
+msgid "Color Picker"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ControlSectionOrControl.vue:388
+msgid "Color Type"
+msgstr ""
+
+#: builder/src/subapps/onboarding/components/ManagePalettes.vue:2
+msgid "Colors"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/WpQuery/WpQuery.vue:686
+msgid "Comments count"
+msgstr ""
+
+#: builder/src/components/Notifications/ComponentRootTagWarning.vue:27
+msgid "Components must have a single root tag."
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/Conditions/ConditionsModal.vue:22
+#: builder/src/components/Reusable/CustomInputs/WpQuery/WpQuery.vue:155
+#: builder/src/oxygen/properties-panel/OxyTabsAndControls.vue:51
+#: builder/src/subapps/manage-templates/EditTemplateModal.vue:86
+#: builder/src/subapps/manage-templates/ManageTemplates.vue:113
+msgid "Conditions"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioDefaultProperties.vue:66
+msgid "Confirm"
+msgstr ""
+
+#: builder/src/components/Add/library/DesignLibraryDependencyWarning.vue:104
+#: builder/src/components/Add/library/DesignLibraryDesignPresets.vue:72
+#: builder/src/subapps/design-library/DesignLibraryConfirmImportDialog.vue:203
+msgid "Confirm Overwrite & Import"
+msgstr ""
+
+#: builder/src/components/Builder/TopBar/PreviewSize.vue:37
+msgid "Constrain Preview Size"
+msgstr ""
+
+#: builder/src/components/Notifications/Types/Util/ErrorNextSteps.vue:111
+#. translators: 1: Troubleshooting guide start tag, 2: Closing tag, 3: Plugin name
+msgid "Consult our %stroubleshooting guide for the \"403\" error code%s which contains information your host can use to whitelist all requests coming from %s."
+msgstr ""
+
+#: builder/src/components/Notifications/Types/Util/ErrorNextSteps.vue:97
+#. translators: 1: Troubleshooting guide start tag, 2: Closing tag
+msgid "Consult our %stroubleshooting guide for the \"500\" error code%s"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/LinkInput/LinkInputSettings.vue:431
+msgid "Contact"
+msgstr ""
+
+#: builder/src/components/Notifications/Types/Util/ErrorNextSteps.vue:29
+msgid "Contact your hosting provider with the prewritten email below."
+msgstr ""
+
+#: builder/src/components/Canvas/OverlaidUI/Canvas/RightClickWrapMenu.vue:35
+msgid "Container"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/ConditionalFieldInput.vue:196
+msgid "contains"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioTabsAndPanels.vue:35
+#: builder/src/components/Notifications/Types/TroubleshootingModal.vue:83
+#: builder/src/oxygen/properties-panel/OxyTabsAndControls.vue:86
+msgid "Content"
+msgstr ""
+
+#: builder/src/subapps/manage-templates/EditTemplateModal.vue:273
+msgid "Continue"
+msgstr ""
+
+#: builder/src/components/AI/InlineAI.vue:292
+msgid "Continue writing"
+msgstr ""
+
+#: builder/src/components/AI/InlineAI.vue:293
+msgid "Continue writing the text"
+msgstr ""
+
+#: builder/src/components/Reusable/ControlsTree/ComponentEditablePropertySettings.vue:11
+msgid "Control Label"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/LinkInput/LinkInputSettings.vue:455
+msgid "Control Slider"
+msgstr ""
+
+#: builder/src/subapps/onboarding/views/OnboardingComplete.vue:158
+msgid "Copied!"
+msgstr ""
+
+#: builder/src/components/Canvas/OverlaidUI/Canvas/ClipboardDialog.vue:31
+#: builder/src/components/Notifications/Types/Util/EmailForHost.vue:10
+msgid "copy"
+msgstr ""
+
+#: builder/src/components/Canvas/OverlaidUI/Canvas/RightClickMenu.vue:18
+#: builder/src/components/ElementStudio/ControlSectionOrControl.vue:735
+#: builder/src/components/ElementStudio/Copyable.vue:10
+#: builder/src/oxygen/properties-panel/OxyCopyPasteContextMenu.vue:137
+msgid "Copy"
+msgstr ""
+
+#: builder/src/components/Structure/StructurePanelDropdownMenu.vue:22
+msgid "Copy All Elements"
+msgstr ""
+
+#: builder/src/components/Reusable/ControlsTree/DynamicData/DynamicDataField.vue:60
+msgid "Copy as text"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/GlobalColorSettingsDropdown.vue:49
+#: builder/src/oxygen/variables/VariableRepeaterItem.vue:171
+msgid "Copy CSS"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/IconInput/IconInput.vue:29
+msgid "Copy SVG"
+msgstr ""
+
+#: builder/src/components/Help/KeyboardShortcutsHelpModal.vue:95
+msgid "Copy the active element"
+msgstr ""
+
+#: builder/src/components/Reusable/CopyButton.vue:5
+msgid "Copy to clipboard"
+msgstr ""
+
+#: builder/src/components/Builder/TopBar/Exit.vue:44
+#: builder/src/subapps/onboarding/views/OnboardingComplete.vue:33
+msgid "Copy URL"
+msgstr ""
+
+#: builder/src/subapps/onboarding/components/ManageButtons.vue:5
+msgid "Corners"
+msgstr ""
+
+#: builder/src/components/AI/InlineAI.vue:307
+msgid "Correct grammar"
+msgstr ""
+
+#: builder/src/components/AI/InlineAI.vue:308
+msgid "Correct the grammar of the text"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/MediaInput/MediaUploadDialog.vue:149
+msgid "Could not load media data."
+msgstr ""
+
+#: builder/src/subapps/design-library/DesignLibraryImportingDialog.vue:196
+msgid "Couldn't import site, something went wrong"
+msgstr ""
+
+#: builder/src/subapps/manage-templates/ManageGlobalBlocks.vue:277
+msgid "Couldn't load blocks data"
+msgstr ""
+
+#: builder/src/components/Builder/TopBar/DocumentChooser/DocumentChooserItem.vue:105
+msgid "Couldn't load Global Blocks data"
+msgstr ""
+
+#: builder/src/components/Builder/TopBar/DocumentChooser/DocumentChooserItem.vue:123
+#: builder/src/components/Builder/TopBar/DocumentChooser/DocumentChooserItem.vue:146
+#: builder/src/subapps/manage-templates/ManageTemplates.vue:441
+msgid "Couldn't load templates data"
+msgstr ""
+
+#: builder/src/lib/wordpress/regenerate-posts-cache.ts:90
+msgid "Couldn't recreate the cache for post \"%s\". Please re-save that post manually."
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioSaveNewDialog.vue:60
+#: builder/src/oxygen/classes/OxyClassDropdownCreateItem.vue:5
+msgid "Create"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/ClassInput/AddClass.vue:87
+#. translators: %s: CSS class name
+msgid "Create %s"
+msgstr ""
+
+#: builder/src/components/ElementPropertiesPanel/ElementPresetChooser.vue:39
+#. translators: %s: Preset name
+msgid "Create %s preset"
+msgstr ""
+
+#: builder/src/components/AI/InlineAI.vue:313
+msgid "Create a new, original piece of text that complements and enhances the existing material."
+msgstr ""
+
+#: builder/src/oxygen/variables/VariableChooserEmpty.vue:12
+msgid "Create and manage variables in the"
+msgstr ""
+
+#: builder/src/components/Canvas/OverlaidUI/Canvas/RightClickMenu.vue:80
+#: builder/src/components/Settings/ElementPresets/PresetDialog.vue:8
+msgid "Create Design Preset"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioSaveNewDialog.vue:6
+#. translators: %s: Item type (element, macro, preset)
+msgid "Create new %s"
+msgstr ""
+
+#: builder/src/components/Builder/TopBar/DocumentChooser/DocumentChooserCreateDialog.vue:103
+msgid "Create Post"
+msgstr ""
+
+#: builder/src/components/ElementPropertiesPanel/ElementPresetChooser.vue:34
+msgid "Create preset from design"
+msgstr ""
+
+#: builder/src/oxygen/classes/OxyClassTokenActions.vue:215
+msgid "Create Selector"
+msgstr ""
+
+#: builder/src/components/Builder/TopBar/DocumentChooser/DocumentChooserFilters.vue:20
+msgid "Created: Newest first"
+msgstr ""
+
+#: builder/src/components/Builder/TopBar/DocumentChooser/DocumentChooserFilters.vue:21
+msgid "Created: Oldest first"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioDependencies.vue:264
+#: builder/src/components/ElementStudio/ElementStudioTabsAndPanels.vue:56
+msgid "CSS"
+msgstr ""
+
+#: builder/src/oxygen/interactions/InteractionsInput.vue:153
+#: builder/src/oxygen/interactions/InteractionsInput.vue:160
+#: builder/src/oxygen/interactions/InteractionsInput.vue:233
+#: builder/src/oxygen/interactions/InteractionsInput.vue:244
+msgid "CSS Selector"
+msgstr ""
+
+#: builder/src/components/Settings/Preferences/CustomFonts/CustomFontFamilies.vue:158
+msgid "CSS URL"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/GlobalColorSettingsDropdown.vue:24
+msgid "CSS Variable Name"
+msgstr ""
+
+#: builder/src/components/Settings/RevisionsPanel.vue:155
+msgid "Current"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioDefaultProperties.vue:35
+msgid "Current Default Properties"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/GlobalColorSettingsDropdown.vue:107
+msgid "Current name:"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/ApiKeyInput.vue:16
+#: builder/src/components/Reusable/CustomInputs/Typography/TypographyInput.vue:11
+#: builder/src/components/Reusable/CustomInputs/WpQuery/WpQuery.vue:6
+#: builder/src/components/Reusable/CustomInputs/WpQuery/WpQuery.vue:757
+msgid "Custom"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioSaveNewDialog.vue:114
+msgid "Custom Elements"
+msgstr ""
+
+#: builder/src/components/Settings/Preferences/CustomFonts/CustomFontFamilies.vue:98
+msgid "Custom font name, ie. Helvetica"
+msgstr ""
+
+#: builder/src/components/Settings/Preferences/CustomFonts/CustomFontFamilies.vue:10
+#: builder/src/components/Settings/Preferences/PreferencesModal.vue:39
+msgid "Custom Fonts"
+msgstr ""
+
+#: builder/src/components/Settings/Preferences/Breakpoints/EditBreakpoint.vue:61
+msgid "Custom width (px)"
+msgstr ""
+
+#: builder/src/oxygen/properties-panel/OxyTagChooser.vue:144
+#. translators: %s: Custom HTML tag name
+msgid "Custom: %s"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/MediaSize/MediaSizeInput.vue:141
+msgid "Custom..."
+msgstr ""
+
+#: builder/src/components/Canvas/OverlaidUI/Canvas/ClipboardDialog.vue:36
+msgid "cut"
+msgstr ""
+
+#: builder/src/components/Help/KeyboardShortcutsHelpModal.vue:125
+msgid "Cycle to the next breakpoint"
+msgstr ""
+
+#: builder/src/components/Settings/Preferences/CustomUiSettings.vue:32
+msgid "Dark Mode"
+msgstr ""
+
+#: builder/src/components/Builder/TopBar/OxyMenuDropdown.vue:20
+msgid "Dashboard"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/WpQuery/WpQuery.vue:246
+#: builder/src/components/Reusable/CustomInputs/WpQuery/WpQuery.vue:674
+msgid "Date"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ControlSectionOrControl.vue:153
+msgid "Date picker options"
+msgstr ""
+
+#: builder/src/components/Help/KeyboardShortcutsHelpModal.vue:110
+msgid "De-activate the active element or close modal"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioDependencies.vue:332
+msgid "Decides if the dependencies are added to the builder"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioDependencies.vue:408
+msgid "Decides if the dependencies are added to the frontend"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/Typography/CustomTypographyInput.vue:395
+msgid "Decoration"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/ApiKeyInput.vue:15
+msgid "Default"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioDefaultElements.vue:3
+msgid "Default Children"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioTabsAndPanels.vue:63
+msgid "Default CSS"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioDefaultElements.vue:107
+msgid "Default Element"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioTabsAndPanels.vue:70
+msgid "Default Elements"
+msgstr ""
+
+#: builder/src/components/Settings/Preferences/Breakpoints/EditBreakpoint.vue:41
+#: builder/src/components/Settings/Preferences/Breakpoints/EditBreakpoint.vue:44
+msgid "Default Preview Width"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioDefaultProperties.vue:3
+msgid "Default Properties"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioTabsAndPanels.vue:222
+msgid "Default Tag"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioRepeaterOptions.vue:28
+msgid "Default Title"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioUnitOptions.vue:15
+#: builder/src/components/ElementStudio/ElementStudioUnitOptions.vue:17
+msgid "Default Type"
+msgstr ""
+
+#: builder/src/components/Settings/Preferences/CustomUiSettings.vue:129
+msgid "Default Unit Type"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioRepeaterOptions.vue:42
+msgid "Defaults to \"Add Item\"."
+msgstr ""
+
+#: builder/src/components/Canvas/OverlaidUI/Canvas/RightClickMenu.vue:58
+#: builder/src/components/ElementStudio/ElementStudioTopBar.vue:194
+#: builder/src/components/ElementStudio/ElementStudioTopBar.vue:210
+#: builder/src/components/Reusable/CustomInputs/3rdPartyWrappers/TipTapWrapper.vue:76
+#: builder/src/components/Reusable/CustomInputs/IconInput/IconChooserDialog.vue:65
+#: builder/src/components/Reusable/CustomInputs/InlineRepeater.vue:36
+#: builder/src/components/Reusable/CustomInputs/Repeater/Repeater.vue:129
+#: builder/src/oxygen/CollectionsInput.vue:194
+#: builder/src/oxygen/classes/OxyClassTokenActions.vue:195
+msgid "Delete"
+msgstr ""
+
+#: builder/src/components/Help/KeyboardShortcutsHelpModal.vue:120
+msgid "Delete active element"
+msgstr ""
+
+#: builder/src/oxygen/classes/OxyClassToken.vue:166
+msgid "Delete nested selector permanently?"
+msgstr ""
+
+#: builder/src/subapps/manage-templates/BlockRow.vue:54
+#: builder/src/subapps/manage-templates/BlockRow.vue:56
+#: builder/src/subapps/manage-templates/TemplateRow.vue:72
+#: builder/src/subapps/manage-templates/TemplateRow.vue:74
+msgid "Delete permanently"
+msgstr ""
+
+#: builder/src/components/Canvas/OverlaidUI/Canvas/RightClickMenu.vue:56
+msgid "Delete selected (%s)"
+msgstr ""
+
+#: builder/src/oxygen/classes/OxyClassToken.vue:169
+msgid "Delete selector permanently?"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/Repeater/Repeater.vue:122
+msgid "Delete?"
+msgstr ""
+
+#: builder/src/oxygen/variables/VariableChip.vue:43
+msgid "Deleted"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioDependencies.vue:3
+#: builder/src/components/ElementStudio/ElementStudioTabsAndPanels.vue:92
+msgid "Dependencies"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioAction.vue:99
+#: builder/src/components/ElementStudio/ElementStudioDependencies.vue:10
+msgid "Dependency"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/WpQuery/WpQuery.vue:719
+msgid "Descending"
+msgstr ""
+
+#: builder/src/components/AI/AIWriter.vue:7
+msgid "Describe This Section"
+msgstr ""
+
+#: builder/src/components/AI/AISettings.vue:28
+msgid "Describe Your Business"
+msgstr ""
+
+#: builder/src/subapps/onboarding/components/OnboardingStartForm.vue:33
+msgid "Describe your website in a sentence or two"
+msgstr ""
+
+#: builder/src/components/Help/KeyboardShortcutsHelpModal.vue:15
+msgid "Description"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioTabsAndPanels.vue:42
+#: builder/src/oxygen/properties-panel/OxyTabsAndControls.vue:92
+msgid "Design"
+msgstr ""
+
+#: builder/src/components/Add/AddPanel.vue:13
+#: builder/src/subapps/design-library/ManageDesignLibrary.vue:7
+msgid "Design Library"
+msgstr ""
+
+#: builder/src/BrowseMode.vue:58
+#: builder/src/components/Add/library/DesignLibraryDependencyWarning.vue:71
+#: builder/src/components/Add/library/DesignLibraryDependencyWarning.vue:264
+#: builder/src/components/Builder/TopBar/SettingsDropdown.vue:50
+#: builder/src/components/Settings/ElementPresets/ManagePresets.vue:4
+#: builder/src/subapps/design-library/DesignLibraryConfirmImportDialog.vue:135
+#: builder/src/subapps/design-library/DesignLibraryImportingDialog.vue:294
+msgid "Design Presets"
+msgstr ""
+
+#: builder/src/components/Subscription/FreeModeAlertForPresets.vue:6
+#. translators: %s: Plugin name
+msgid "Design Presets are only available in %s Pro. They won't work on the frontend."
+msgstr ""
+
+#: builder/src/components/Add/library/DesignProviderDropdown.vue:12
+msgid "Design Set"
+msgstr ""
+
+#: builder/src/components/Add/library/DesignProviderDropdown.vue:18
+msgid "Design Set:"
+msgstr ""
+
+#: builder/src/subapps/onboarding/views/OnboardingSelectType.vue:54
+msgid "Design Template"
+msgstr ""
+
+#: builder/src/oxygen/variables/VariableChooser.vue:43
+msgid "Detach"
+msgstr ""
+
+#: builder/src/components/ElementPropertiesPanel/ElementPresetChooser.vue:57
+#: builder/src/components/ElementPropertiesPanel/ElementPresetChooser.vue:60
+msgid "Detach Styles"
+msgstr ""
+
+#: builder/src/components/Notifications/Types/AjaxCodeError.vue:15
+#: builder/src/components/Notifications/Types/InternalServerError.vue:21
+#: builder/src/components/Notifications/Types/NetworkError.vue:17
+msgid "Details & Troubleshooting"
+msgstr ""
+
+#: builder/src/components/Builder/TopBar/PreviewSize.vue:43
+msgid "Dimensions"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/Typography/CustomTypographyInput.vue:549
+msgid "Direction"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioTabsAndPanels.vue:472
+msgid "Disable AI"
+msgstr ""
+
+#: builder/src/oxygen/interactions/InteractionsInput.vue:300
+msgid "Disable At"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/LinkInput/LinkInputSettings.vue:111
+msgid "Disable Autoplay"
+msgstr ""
+
+#: builder/src/components/Settings/Preferences/CustomUiSettings.vue:71
+msgid "Disable Code Editor Line Wrapping"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioUnitOptions.vue:24
+#: builder/src/components/Settings/Preferences/CustomUiSettings.vue:122
+msgid "Disable Custom Unit Dropdown"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ControlSectionOrControl.vue:510
+#: builder/src/components/ElementStudio/ControlSectionOrControl.vue:706
+msgid "Disable In FutureLayer"
+msgstr ""
+
+#: builder/src/oxygen/classes/OxyClassTokenActions.vue:145
+msgid "Disable In-builder Preview"
+msgstr ""
+
+#: builder/src/components/Settings/Preferences/CustomUiSettings.vue:51
+msgid "Disable Message For Empty SSR Elements"
+msgstr ""
+
+#: builder/src/components/Reusable/ControlsTree/DynamicData/DynamicDataFields.vue:16
+msgid "Disable Type Safety:"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioTabsAndPanels.vue:503
+msgid "Disable Wrapper HTML Tag (frontend-only)"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioTabsAndPanels.vue:350
+msgid "Disallow if others are present"
+msgstr ""
+
+#: builder/src/components/UI/ConfirmDialog.vue:80
+msgid "Discard"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioTopBar.vue:273
+msgid "Discard my changes"
+msgstr ""
+
+#: builder/src/components/Canvas/OverlaidUI/Canvas/RightClickWrapMenu.vue:47
+msgid "Div"
+msgstr ""
+
+#: builder/src/subapps/manage-templates/EditTemplateModal.vue:153
+msgid "Do not show this popup if any other popup has already shown"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudio.vue:40
+msgid "documentation"
+msgstr ""
+
+#: builder/src/components/Builder/TopBar/OxyMenuDropdown.vue:69
+msgid "Documentation"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/ConditionalFieldInput.vue:198
+msgid "does not contain"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioMediaSizeOptions.vue:22
+msgid "Don't add srcset attribute to the Image object"
+msgstr ""
+
+#: builder/src/oxygen/CollectionsInput.vue:188
+msgid "Download"
+msgstr ""
+
+#: builder/src/components/Settings/Preferences/CustomFonts/components/FontFileUpload.vue:9
+msgid "drag .woff or .woff2 files or"
+msgstr ""
+
+#: builder/src/components/Settings/DocumentOrGlobalSettings/ImportExportDropdownMenu.vue:52
+#. translators: %s: Settings file name
+msgid "Drag %s.json here"
+msgstr ""
+
+#: builder/src/components/Canvas/OverlaidUI/NodeGhostTitlebar.vue:15
+#: builder/src/components/Canvas/OverlaidUI/NodeTitlebar.vue:16
+msgid "Drag element"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/IconInput/IconUpload.vue:10
+msgid "Drag SVGs or an IcoMoon symbol-defs.svg file here or click to choose a file"
+msgstr ""
+
+#: builder/src/oxygen/CollectionsInput.vue:200
+msgid "Drag to reorder"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioDropdownOptions.vue:138
+msgid "Dropdown items"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioDropdownOptions.vue:3
+msgid "Dropdown options"
+msgstr ""
+
+#: builder/src/components/Add/ElementsList.vue:42
+msgid "dump search results"
+msgstr ""
+
+#: builder/src/components/Canvas/OverlaidUI/NodeTitlebar.vue:71
+#: builder/src/oxygen/classes/OxyClassTokenActions.vue:182
+#: builder/src/subapps/manage-templates/BlockRow.vue:40
+#: builder/src/subapps/manage-templates/TemplateRow.vue:63
+#: builder/src/subapps/manage-templates/TemplateRow.vue:66
+msgid "Duplicate"
+msgstr ""
+
+#: builder/src/components/Help/KeyboardShortcutsHelpModal.vue:105
+msgid "Duplicate the active element"
+msgstr ""
+
+#: builder/src/subapps/manage-templates/ManageTemplates.vue:308
+#. translators: %s: Template ID
+msgid "Duplicating template \"%s\" failed"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioProjectManagement.vue:26
+msgid "Dynamic Behavior Works"
+msgstr ""
+
+#: builder/src/components/Add/ElementsList.vue:67
+msgid "Dynamic Behavior Works:"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ControlSectionOrControl.vue:409
+msgid "Dynamic Property"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioDynPropPaths.vue:16
+msgid "Dynamic Property Path"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioManagePropertyPaths.vue:10
+msgid "Dynamic Property Paths (deprecated)"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ControlSectionOrControl.vue:430
+msgid "Dynamic Property Type"
+msgstr ""
+
+#: builder/src/components/ElementPropertiesPanel/ElementPresetChooser.vue:78
+#: builder/src/components/ElementPropertiesPanel/ElementPresetChooser.vue:82
+msgid "Edit"
+msgstr ""
+
+#: builder/src/oxygen/classes/OxyClassProperties.vue:235
+msgid "Edit anyway"
+msgstr ""
+
+#: builder/src/components/Settings/ElementPresets/EditPreset.vue:105
+msgid "Edit Anyway"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/ComponentInput.vue:26
+msgid "Edit Component"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/Conditions/ConditionsModal.vue:18
+msgid "Edit Conditions"
+msgstr ""
+
+#: builder/src/subapps/manage-templates/BlockRow.vue:18
+#: builder/src/subapps/manage-templates/BlockRow.vue:23
+#. translators: %s: Plugin name
+msgid "Edit in %s"
+msgstr ""
+
+#: builder/src/subapps/onboarding/views/OnboardingComplete.vue:22
+msgid "Edit in Builder"
+msgstr ""
+
+#: builder/src/components/Canvas/OverlaidUI/Singularity/components/EditLinkButton.vue:3
+msgid "Edit Link"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/WpQuery/WpQuery.vue:22
+msgid "Edit Query"
+msgstr ""
+
+#: builder/src/components/Builder/TopBar/DocumentChooser/DocumentChooserItem.vue:202
+msgid "Edit Settings"
+msgstr ""
+
+#: builder/src/components/UI/TemplateDialog.vue:75
+msgid "Edit Template"
+msgstr ""
+
+#: builder/src/components/Builder/TopBar/PreviewChooser/PreviewChooserNoResults.vue:16
+msgid "Edit the template anyway - this is not an error."
+msgstr ""
+
+#: builder/src/components/Reusable/ControlsTree/HoverEnabler.vue:15
+msgid "editing hover style"
+msgstr ""
+
+#: builder/src/components/Settings/ElementPresets/EditPreset.vue:4
+msgid "Editing Preset"
+msgstr ""
+
+#: builder/src/components/Settings/Selectors/EditSelector.vue:4
+msgid "Editing Selector"
+msgstr ""
+
+#: builder/src/components/Settings/ElementPresets/AddPreset.vue:11
+msgid "Element"
+msgstr ""
+
+#: builder/src/components/Canvas/OverlaidUI/Onboarding/NodeOnboardingReplaceSectionButton.vue:49
+msgid "Element activated"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioTabsAndPanels.vue:436
+msgid "Element depends on global scripts to work"
+msgstr ""
+
+#: builder/src/components/Settings/Preferences/CustomUiSettings.vue:244
+msgid "Element Properties"
+msgstr ""
+
+#: builder/src/components/Builder/TopBar/SettingsDropdown.vue:77
+msgid "Element Studio"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudio.vue:34
+msgid "Element Studio is for developers and is provided as-is."
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioDefaultElements.vue:16
+msgid "Element that will be automatically added inside this current element"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioTabsAndPanels.vue:328
+msgid "Element to be a descendant of"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioTabsAndPanels.vue:306
+msgid "Element to be a direct child of"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioTabsAndPanels.vue:398
+msgid "Element Type"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioTabsAndPanels.vue:636
+msgid "Element's class:"
+msgstr ""
+
+#: builder/src/components/Add/AddPanel.vue:26
+#: builder/src/components/ElementStudio/ElementStudioHideControlInput.vue:11
+msgid "Elements"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/LinkInput/LinkInputSettings.vue:139
+#: builder/src/components/Reusable/CustomInputs/LinkInput/LinkInputSettings.vue:446
+msgid "Email"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/VideoInput.vue:65
+msgid "Embedding..."
+msgstr ""
+
+#: builder/src/subapps/manage-templates/ManageGlobalBlocks.vue:59
+#: builder/src/subapps/manage-templates/ManageTemplates.vue:81
+msgid "Empty Trash"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ControlSectionOrControl.vue:412
+msgid "Enable dynamic property"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioMediaOptions.vue:7
+#: builder/src/components/ElementStudio/ElementStudioRepeaterOptions.vue:47
+msgid "Enable gallery mode"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioFocusPointOptions.vue:6
+msgid "Enable Grid Mode"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ControlSectionOrControl.vue:550
+msgid "Enable Hover"
+msgstr ""
+
+#: builder/src/oxygen/classes/OxyClassTokenActions.vue:146
+msgid "Enable In-builder Preview"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ControlSectionOrControl.vue:538
+msgid "Enable Media Queries"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioBreakpointOptions.vue:14
+#: builder/src/components/ElementStudio/ElementStudioBreakpointOptions.vue:16
+msgid "Enable Never"
+msgstr ""
+
+#: builder/src/components/Canvas/OverlaidUI/Canvas/ClipboardDialog.vue:8
+msgid "Enable Paste"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ControlSectionOrControl.vue:715
+msgid "Enable spacing bars"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioVariableOptions.vue:6
+msgid "Enable variables"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ControlSectionOrControl.vue:561
+msgid "Enable Variables"
+msgstr ""
+
+#: builder/src/oxygen/CollectionsInput.vue:176
+msgid "Enter a name"
+msgstr ""
+
+#: builder/src/oxygen/classes/lib/rename.ts:12
+msgid "Enter name"
+msgstr ""
+
+#: builder/src/components/Add/library/DesignLibraryPassword.vue:87
+msgid "Enter Password"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioDropdownOptions.vue:99
+msgid "Enter the name of a function that returns dropdown options."
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/GlobalColorSettingsDropdown.vue:30
+msgid "Enter variable name"
+msgstr ""
+
+#: builder/src/components/Notifications/Types/TroubleshootingModal.vue:14
+msgid "Environment & details"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/ConditionalFieldInput.vue:186
+msgid "equals"
+msgstr ""
+
+#: builder/src/components/Notifications/Types/Util/EmailForHost.vue:59
+msgid "Error Code: %s"
+msgstr ""
+
+#: builder/src/components/Notifications/Types/FriendlyMultiError.vue:69
+msgid "Error Details"
+msgstr ""
+
+#: builder/src/components/Add/library/DesignLibraryDependencyWarning.vue:372
+#. translators: 1: import type label, 2: provider name
+msgid "Error importing %s for \"%s\""
+msgstr ""
+
+#: builder/src/subapps/design-library/DesignLibraryImportingDialog.vue:84
+msgid "Error importing %s."
+msgstr ""
+
+#: builder/src/components/Add/library/DesignLibraryDesignPresets.vue:145
+#. translators: %s: Provider name or URL
+msgid "Error importing Design Presets for \"%s\""
+msgstr ""
+
+#: builder/src/oxygen/classes/panel/OxySelectorsPanel.vue:184
+msgid "Error importing Selectors - the file is empty."
+msgstr ""
+
+#: builder/src/oxygen/classes/panel/OxySelectorsPanel.vue:169
+msgid "Error importing Selectors - the file is invalid."
+msgstr ""
+
+#: builder/src/oxygen/variables/panel/VariablesPanel.vue:221
+msgid "Error importing Variables - the file is invalid or empty."
+msgstr ""
+
+#: builder/src/oxygen/variables/panel/VariablesPanel.vue:232
+msgid "Error importing Variables - the file is invalid."
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioSpacingBar.vue:84
+msgid "Error saving new space bar, please fill out all fields"
+msgstr ""
+
+#: builder/src/subapps/design-library/DesignLibraryImportingDialog.vue:51
+msgid "Error trashing existing Templates, Headers, Footers, %s, and Popups."
+msgstr ""
+
+#: builder/src/components/Add/AddPanel.vue:53
+#: builder/src/components/Reusable/CustomInputs/AddRegisteredChildrenControl.vue:37
+msgid "error: failed to load elements"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioSaveNewDialog.vue:120
+msgid "Error: no registered saving locations. Using the %s plugin will automatically register a saving location."
+msgstr ""
+
+#: builder/src/oxygen/interactions/InteractionsInput.vue:176
+#: builder/src/oxygen/interactions/InteractionsInput.vue:187
+#: builder/src/oxygen/interactions/InteractionsInput.vue:260
+#: builder/src/oxygen/interactions/InteractionsInput.vue:275
+msgid "Everywhere"
+msgstr ""
+
+#: builder/src/components/AI/AISettings.vue:77
+msgid "Example:\nShorten the following text"
+msgstr ""
+
+#: builder/src/components/AI/AIWriter.vue:27
+#: builder/src/components/AI/AIWriter.vue:59
+msgid "Examples:"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioDependencies.vue:146
+msgid "Execute code"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/ClassInput/AddClass.vue:95
+msgid "Existing Classes"
+msgstr ""
+
+#: builder/src/components/Builder/TopBar/Exit.vue:9
+msgid "Exit"
+msgstr ""
+
+#: builder/src/components/Builder/TopBar/Exit.vue:24
+msgid "Exit to Frontend"
+msgstr ""
+
+#: builder/src/components/Builder/TopBar/Exit.vue:34
+msgid "Exit to WordPress"
+msgstr ""
+
+#: builder/src/components/Structure/StructurePanel.vue:12
+#: builder/src/components/Structure/StructurePanel.vue:33
+msgid "Expand"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioTabsAndPanels.vue:449
+msgid "Experimental Element?"
+msgstr ""
+
+#: builder/src/components/Settings/Preferences/CustomUiSettings.vue:112
+msgid "Experimental: Show Previous Breakpoint Value As Placeholder"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/IconInput/IconChooserDialog.vue:76
+#: builder/src/components/Settings/ElementPresets/ImportExportPresets.vue:26
+msgid "Export"
+msgstr ""
+
+#: builder/src/components/Settings/DocumentOrGlobalSettings/ImportExportDropdownMenu.vue:32
+#. translators: %s: Settings name
+msgid "Export %s"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioConditionInput.vue:47
+msgid "External conditions can't be edited"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioMacros.vue:279
+#: builder/src/components/ElementStudio/ElementStudioPresets.vue:740
+msgid "Failed to delete element"
+msgstr ""
+
+#: builder/src/lib/icons/ajax.ts:114
+msgid "Failed to export icon set."
+msgstr ""
+
+#: builder/src/lib/ai/ai.ts:604
+msgid "Failed to get a response from OpenAI API, please try again."
+msgstr ""
+
+#: builder/src/components/AI/AIPanel.vue:241
+msgid "Failed to get Unsplash keywords from OpenAI API."
+msgstr ""
+
+#: builder/src/subapps/design-library/DesignLibraryImportingDialog.vue:89
+msgid "Failed to import all %s."
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/WpQuery/WpQuery.vue:423
+msgid "Failed to load necessary post types for the Wp Query control"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ControlSectionOrControl.vue:1102
+#: builder/src/components/ElementStudio/ElementStudioPresets.vue:879
+#: builder/src/components/ElementStudio/ElementStudioTabsAndPanels.vue:1047
+msgid "Failed to save element, check console"
+msgstr ""
+
+#: builder/src/subapps/manage-templates/EditTemplateModal.vue:182
+msgid "Fallback"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioDropdownOptions.vue:78
+msgid "Fetch context path"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioDropdownOptions.vue:68
+msgid "Fetch data action route name"
+msgstr ""
+
+#: builder/src/components/AI/AIUnsplash.vue:7
+msgid "Fetch images from Unsplash to use in your content, they are automatically added to Image elements in the selected section."
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/WpQuery/WpQuery.vue:66
+#: builder/src/components/Reusable/CustomInputs/WpQuery/WpQuery.vue:198
+#: builder/src/components/Reusable/CustomInputs/WpQuery/WpQuery.vue:217
+msgid "Field"
+msgstr ""
+
+#: builder/src/components/AI/AISettings.vue:83
+msgid "Field's Value"
+msgstr ""
+
+#: builder/src/components/Settings/DocumentOrGlobalSettings/ImportExportDropdownMenu.vue:57
+msgid "File accepted"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/MediaInput/MediaPreview.vue:35
+msgid "File:"
+msgstr ""
+
+#: builder/src/components/AI/AIUnsplash.vue:38
+msgid "Fill Empty Images Only"
+msgstr ""
+
+#: builder/src/components/Add/library/DesignLibrarySidebar.vue:15
+msgid "Filter by type"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioDropdownOptions.vue:128
+#: builder/src/components/ElementStudio/ElementStudioVariableOptions.vue:85
+msgid "Filtering"
+msgstr ""
+
+#: builder/src/lib/wordpress/regenerate-posts-cache.ts:102
+msgid "Finished recreating all posts cache"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioFocusPointOptions.vue:3
+msgid "Focus Point Options"
+msgstr ""
+
+#: builder/src/components/Help/KeyboardShortcutsHelpModal.vue:168
+msgid "Focus the properties search box and toggle the option to search advanced settings (element properties panel only)."
+msgstr ""
+
+#: builder/src/components/Help/KeyboardShortcutsHelpModal.vue:163
+msgid "Focus the properties search box."
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/Typography/CustomTypographyInput.vue:250
+msgid "Font Family"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/Typography/CustomTypographyInput.vue:260
+msgid "Font Size"
+msgstr ""
+
+#: builder/src/components/Settings/Preferences/CustomFonts/components/UpdateFontFace.vue:81
+msgid "Font Weight"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/Typography/CustomTypographyInput.vue:226
+msgid "Font Width"
+msgstr ""
+
+#: builder/src/subapps/manage-templates/ManageTemplates.vue:385
+msgid "Footer"
+msgstr ""
+
+#: builder/src/subapps/design-library/DesignLibraryConfirmImportDialog.vue:65
+#: builder/src/subapps/design-library/DesignLibraryImportingDialog.vue:270
+#: builder/src/subapps/manage-templates/ManageTemplates.vue:395
+msgid "Footers"
+msgstr ""
+
+#: builder/src/subapps/manage-templates/EditTemplateModal.vue:142
+msgid "Forever"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/CodeInput/CodeInputDialog.vue:27
+#. translators: %s: Keyboard shortcut
+msgid "Format Code (%s)"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/DatePickerInput.vue:76
+#. translators: 1: start date, 2: end date
+msgid "from %s to %s"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioDependencies.vue:381
+msgid "Frontend Condition (empty)"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioDependencies.vue:378
+msgid "Frontend Condition (present)"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/MediaSize/MediaSizeInput.vue:7
+msgid "Full"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioDropdownOptions.vue:93
+msgid "Function name (must be available on window object)"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioRepeaterOptions.vue:55
+msgid "Gallery Media Path"
+msgstr ""
+
+#: builder/src/subapps/onboarding/components/OnboardingStartForm.vue:19
+msgid "Generate example"
+msgstr ""
+
+#: builder/src/subapps/onboarding/views/barebones/OnboardingBarebonesSitemap.vue:21
+msgid "Generating your sitemap..."
+msgstr ""
+
+#: builder/src/components/Subscription/FreeModeAlertForPopupTriggers.vue:7
+#. translators: %s: Plugin name
+msgid "Get %s Pro to get access to all popup triggers."
+msgstr ""
+
+#: builder/src/components/Subscription/FreeModeAlertForConditionsUsed.vue:7
+#. translators: %s: Plugin name
+msgid "Get %s Pro to get access to all the conditions."
+msgstr ""
+
+#: builder/src/components/Subscription/ProOnlyAlertBox.vue:16
+msgid "Get Pro"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioTabsAndPanels.vue:246
+msgid "Get the Tag from a Control's path"
+msgstr ""
+
+#: builder/src/subapps/design-library/DesignLibraryImportingDialog.vue:533
+msgid "Getting Posts IDs to import"
+msgstr ""
+
+#: builder/src/subapps/design-library/DesignLibraryImportingDialog.vue:705
+msgid "Getting template IDs to import"
+msgstr ""
+
+#: builder/src/BrowseMode.vue:48
+#: builder/src/components/Add/library/DesignLibraryDependencyWarning.vue:63
+#: builder/src/components/Add/library/DesignLibraryDependencyWarning.vue:260
+#: builder/src/components/Builder/TopBar/SettingsDropdown.vue:30
+#: builder/src/components/Settings/DocumentOrGlobalSettings/GlobalSettingsPanel.vue:14
+#: builder/src/components/Settings/Preferences/CustomUiSettings.vue:259
+#: builder/src/subapps/design-library/DesignLibraryConfirmImportDialog.vue:131
+#: builder/src/subapps/design-library/DesignLibraryImportingDialog.vue:287
+msgid "Global Settings"
+msgstr ""
+
+#: builder/src/components/Settings/DocumentOrGlobalSettings/GlobalSettingsPanel.vue:5
+msgid "Globals"
+msgstr ""
+
+#: builder/src/components/UI/TemplateDialog.vue:77
+msgid "Go back"
+msgstr ""
+
+#: builder/src/components/Add/library/DesignLibraryModal.vue:14
+msgid "Go home"
+msgstr ""
+
+#: builder/src/components/Add/library/DesignLibraryModal.vue:91
+#: builder/src/subapps/design-library/ManageDesignLibrary.vue:22
+msgid "Go to Design Library Settings"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/LinkInput/LinkInputSettings.vue:464
+msgid "Go To Slide"
+msgstr ""
+
+#: builder/src/components/Help/KeyboardShortcutsHelpModal.vue:115
+msgid "Go to the parent of the active element"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ControlSectionOrControl.vue:402
+msgid "Gradient Only"
+msgstr ""
+
+#: builder/src/subapps/onboarding/views/OnboardingSelectType.vue:25
+msgid "Hang tight..."
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioDependencies.vue:76
+#: builder/src/components/ElementStudio/ElementStudioDependencies.vue:215
+msgid "Hardcode a value:"
+msgstr ""
+
+#: builder/src/components/Add/ElementsList.vue:46
+msgid "Has Dynamic Stuff"
+msgstr ""
+
+#: builder/src/subapps/manage-templates/ManageTemplates.vue:386
+msgid "Header"
+msgstr ""
+
+#: builder/src/subapps/design-library/DesignLibraryConfirmImportDialog.vue:64
+#: builder/src/subapps/design-library/DesignLibraryImportingDialog.vue:266
+#: builder/src/subapps/manage-templates/ManageTemplates.vue:396
+msgid "Headers"
+msgstr ""
+
+#: builder/src/subapps/onboarding/components/ManageTypography.vue:12
+msgid "Headings"
+msgstr ""
+
+#: builder/src/components/Builder/TopBar/PreviewSize.vue:65
+#: builder/src/components/Reusable/CustomInputs/MediaSize/MediaCropper.vue:12
+msgid "Height"
+msgstr ""
+
+#: builder/src/components/Notifications/Types/TroubleshootingModal.vue:27
+msgid "Here's what happened:"
+msgstr ""
+
+#: builder/src/components/Notifications/Types/Util/EmailForHost.vue:53
+msgid "Hi Hosting Provider Support,"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioHideControlInput.vue:5
+msgid "Hide Control From Specific Elements"
+msgstr ""
+
+#: builder/src/subapps/onboarding/components/OnboardingFeedback.vue:9
+msgid "Hide Feedback"
+msgstr ""
+
+#: builder/src/components/Settings/DocumentOrGlobalSettings/GlobalSettingsPanel.vue:9
+#: builder/src/components/Settings/ElementPresets/ManagePresets.vue:10
+#: builder/src/components/Settings/Selectors/ManageSelectors.vue:10
+msgid "history"
+msgstr ""
+
+#: builder/src/BrowseMode.vue:66
+#: builder/src/components/Builder/TopBar/SettingsDropdown.vue:55
+#: builder/src/components/HistoryAndRevisions/HistoryAndRevisionsPanel.vue:10
+#: builder/src/components/HistoryAndRevisions/HistoryAndRevisionsPanel.vue:15
+#: builder/src/oxygen/classes/panel/OxySelectorsPanel.vue:21
+#: builder/src/oxygen/variables/panel/VariablesPanel.vue:21
+msgid "History"
+msgstr ""
+
+#: builder/src/components/Settings/Preferences/CustomUiSettings.vue:252
+msgid "History & Revisions"
+msgstr ""
+
+#: builder/src/components/AI/AIWriter.vue:29
+msgid "Homepage hero section"
+msgstr ""
+
+#: builder/src/subapps/onboarding/components/OnboardingFeedback.vue:41
+msgid "How can we improve this experience?"
+msgstr ""
+
+#: builder/src/subapps/onboarding/views/OnboardingSelectType.vue:41
+msgid "How would you like to get started?"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ControlSectionOrControl.vue:343
+#: builder/src/components/ElementStudio/ElementStudioTabsAndPanels.vue:49
+#: builder/src/components/Reusable/CustomInputs/3rdPartyWrappers/TipTapWrapper.vue:9
+msgid "HTML"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioAttributes.vue:11
+msgid "HTML Attribute"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioTabsAndPanels.vue:78
+#: builder/src/oxygen/properties-panel/OxyHtmlAttributes.vue:21
+msgid "HTML Attributes"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioTabsAndPanels.vue:217
+msgid "HTML Tag options"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioTopBar.vue:280
+msgid "I'll save them"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioIconsAutocomplete.vue:3
+msgid "Icon"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/IconInput/IconChooserDialog.vue:9
+msgid "Icon Library"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioIconOptions.vue:4
+msgid "Icon Options"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/LinkInput/LinkInputSettings.vue:304
+msgid "ID"
+msgstr ""
+
+#: builder/src/components/Builder/TopBar/PreviewChooser/PreviewChooserText.vue:23
+#: builder/src/components/Builder/TopBar/PreviewChooser/PreviewChooserText.vue:42
+#. translators: %s: ID number
+msgid "ID %s"
+msgstr ""
+
+#: builder/src/subapps/onboarding/components/OnboardingStartForm.vue:25
+msgid "ie. ACME Studios"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/ConditionInput/ConditionPreviewRule.vue:4
+msgid "If"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioDependencies.vue:348
+#: builder/src/components/ElementStudio/ElementStudioDependencies.vue:424
+#. translators: %s: Code value 'true'
+msgid "If any code is present and the result returns a %s value the dependencies will be added."
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioDependencies.vue:359
+#: builder/src/components/ElementStudio/ElementStudioDependencies.vue:435
+#. translators: %s: Code value 'false'
+msgid "If it returns %s no dependencies are added."
+msgstr ""
+
+#: builder/src/components/Notifications/Types/Util/EmailForHost.vue:66
+msgid "If this isn't something you can fix, please send me the full text of the error from the relevant error log file."
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/GlobalColorSettingsDropdown.vue:55
+msgid "If this variable name is already referenced in your site's CSS, renaming it could break existing styles."
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/WpQuery/WpQuery.vue:277
+msgid "Ignore current post"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/WpQuery/WpQuery.vue:289
+msgid "Ignore sticky posts"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/LinkInput/LinkInputSettings.vue:50
+#: builder/src/components/Reusable/CustomInputs/LinkInput/LinkInputSettings.vue:415
+msgid "Image"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioFocusPointOptions.vue:14
+#: builder/src/components/ElementStudio/ElementStudioMediaSizeOptions.vue:6
+msgid "Image Path"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioDefaultProperties.vue:11
+#: builder/src/components/Settings/DocumentOrGlobalSettings/ImportExportDropdownMenu.vue:78
+#: builder/src/components/Settings/ElementPresets/ImportExportPresets.vue:9
+#: builder/src/subapps/design-library/DesignLibraryItem.vue:62
+msgid "Import"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioDefaultElements.vue:48
+msgid "Import all children of the currently active element"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioDefaultElements.vue:52
+msgid "Import Children"
+msgstr ""
+
+#: builder/src/components/Add/library/DesignLibraryDesignPresets.vue:45
+msgid "Import Design Presets"
+msgstr ""
+
+#: builder/src/components/AI/AIUnsplash.vue:68
+msgid "Import Images From Unsplash"
+msgstr ""
+
+#: builder/src/components/Add/library/DesignLibraryModal.vue:40
+msgid "Import Page"
+msgstr ""
+
+#: builder/src/components/Add/library/DesignLibraryDependencyWarning.vue:33
+msgid "Import Settings"
+msgstr ""
+
+#: builder/src/components/Add/library/DesignLibraryDependencyWarning.vue:394
+#. translators: 1: import type label, 2: provider name
+msgid "Imported %s from \"%s\""
+msgstr ""
+
+#: builder/src/components/Add/library/DesignLibraryDesignPresets.vue:161
+#. translators: %s: Provider name or URL
+msgid "Imported Design Presets from \"%s\""
+msgstr ""
+
+#: builder/src/subapps/design-library/DesignLibraryImportingDialog.vue:71
+msgid "Importing %s."
+msgstr ""
+
+#: builder/src/subapps/design-library/DesignLibraryConfirmImportDialog.vue:129
+msgid "Importing a full site will replace your site's"
+msgstr ""
+
+#: builder/src/subapps/design-library/DesignLibraryImportingDialog.vue:563
+msgid "Importing all post and pages"
+msgstr ""
+
+#: builder/src/subapps/design-library/DesignLibraryImportingDialog.vue:427
+msgid "Importing Design Presets"
+msgstr ""
+
+#: builder/src/components/Add/library/DesignLibraryDependencyWarning.vue:49
+msgid "Importing from this design set will replace some of your current settings."
+msgstr ""
+
+#: builder/src/subapps/design-library/DesignLibraryImportingDialog.vue:400
+msgid "Importing Global Settings"
+msgstr ""
+
+#: builder/src/subapps/design-library/DesignLibraryImportingDialog.vue:839
+msgid "Importing homepage id"
+msgstr ""
+
+#: builder/src/subapps/design-library/DesignLibraryImportingDialog.vue:487
+msgid "Importing Oxy Selectors"
+msgstr ""
+
+#: builder/src/subapps/design-library/DesignLibraryImportingDialog.vue:804
+msgid "Importing template with ID \"%s\""
+msgstr ""
+
+#: builder/src/subapps/design-library/DesignLibraryImportingDialog.vue:12
+#. translators: %s: Site name
+msgid "Importing the \"%s\" site"
+msgstr ""
+
+#: builder/src/components/Canvas/OverlaidUI/Onboarding/NodeOnboardingAIRewriteButton.vue:11
+#: builder/src/subapps/design-library/DesignLibraryStatusIcon.vue:7
+msgid "Importing the data"
+msgstr ""
+
+#: builder/src/subapps/design-library/DesignLibraryImportingDialog.vue:457
+msgid "Importing Variables"
+msgstr ""
+
+#: builder/src/components/Notifications/Types/Util/InternalServerErrorErrorDetails.vue:8
+msgid "in"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/WpQuery/WpQuery.vue:52
+msgid "Include"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/WpQuery/WpQuery.vue:84
+msgid "Include by"
+msgstr ""
+
+#: builder/src/components/Settings/Preferences/CustomUiSettings.vue:91
+msgid "Include Custom Breakpoints in Breakpoint Dropdowns"
+msgstr ""
+
+#: builder/src/components/ElementPropertiesPanel/SearchBox.vue:39
+msgid "Include Settings"
+msgstr ""
+
+#: builder/src/lib/undo/undo.ts:88
+msgid "Initial State"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioTabsAndPanels.vue:372
+msgid "Inline Editable"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioTabsAndPanels.vue:387
+msgid "Inline Editable Block Path"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioDependencies.vue:112
+#. translators: %s: Number of inline scripts
+msgid "Inline Scripts (%s)"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioDependencies.vue:251
+#. translators: %s: Number of inline styles
+msgid "Inline Styles (%s)"
+msgstr ""
+
+#: builder/src/subapps/onboarding/components/ManageButtons.vue:16
+msgid "Input"
+msgstr ""
+
+#: builder/src/components/AI/InlineAICompletion.vue:46
+msgid "Insert"
+msgstr ""
+
+#: builder/src/components/Reusable/ControlsTree/DynamicData/DynamicDataDialog.vue:11
+msgid "Insert Dynamic Data"
+msgstr ""
+
+#: builder/src/components/AI/AIPluginNotInstalled.vue:16
+msgid "Install now"
+msgstr ""
+
+#: builder/src/components/AI/InlineAiPluginNotInstalled.vue:29
+msgid "Install Now"
+msgstr ""
+
+#: builder/src/oxygen/interactions/InteractionsInput.vue:116
+msgid "Interaction"
+msgstr ""
+
+#: builder/src/oxygen/interactions/InteractionsInput.vue:108
+#: builder/src/oxygen/properties-panel/OxyTabsAndControls.vue:56
+msgid "Interactions"
+msgstr ""
+
+#: builder/src/components/Add/ElementsList.vue:39
+msgid "Internal Element Project Management Tool"
+msgstr ""
+
+#: builder/src/components/Notifications/Types/InternalServerError.vue:9
+#: builder/src/components/Notifications/Types/InternalServerError.vue:90
+msgid "Internal Server Error"
+msgstr ""
+
+#: builder/src/oxygen/classes/OxyClassDropdown.vue:268
+#: builder/src/oxygen/classes/lib/rename.ts:52
+msgid "Invalid class name"
+msgstr ""
+
+#: builder/src/components/Add/library/DesignLibraryPassword.vue:95
+msgid "Invalid password. Please try again."
+msgstr ""
+
+#: builder/src/components/UI/InvalidPostDialog.vue:3
+msgid "Invalid post"
+msgstr ""
+
+#: builder/src/components/Settings/Selectors/EditSelector.vue:86
+msgid "invalid selector name"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/ConditionalFieldInput.vue:207
+#: builder/src/components/Reusable/CustomInputs/ConditionalFieldInput.vue:214
+msgid "is after"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/ConditionalFieldInput.vue:206
+#: builder/src/components/Reusable/CustomInputs/ConditionalFieldInput.vue:213
+msgid "is before"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/ConditionalFieldInput.vue:220
+msgid "is greater than"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/ConditionalFieldInput.vue:221
+msgid "is less than"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/ConditionalFieldInput.vue:195
+msgid "is none of"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/ConditionalFieldInput.vue:181
+#: builder/src/components/Reusable/CustomInputs/ConditionalFieldInput.vue:189
+msgid "is not set"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/ConditionalFieldInput.vue:194
+msgid "is one of"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioTabsAndPanels.vue:424
+msgid "Is Pro Only"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/ConditionalFieldInput.vue:180
+#: builder/src/components/Reusable/CustomInputs/ConditionalFieldInput.vue:188
+msgid "is set"
+msgstr ""
+
+#: builder/src/components/Notifications/Types/Util/ErrorNextSteps.vue:51
+msgid "It can also be caused by misconfigured security plugins (if you're using Wordfence, put it into learning mode)"
+msgstr ""
+
+#: builder/src/components/Settings/Preferences/CustomFonts/components/UpdateFontFace.vue:98
+msgid "Italic"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/Repeater/Repeater.vue:231
+msgid "Item"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioDependencies.vue:124
+msgid "JavaScript"
+msgstr ""
+
+#: builder/src/components/AI/AIUnsplash.vue:13
+#: builder/src/components/ElementStudio/ControlSectionOrControl.vue:592
+msgid "Keywords"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ControlSectionOrControl.vue:57
+#: builder/src/components/ElementStudio/ElementStudioDropdownOptions.vue:42
+#: builder/src/components/ElementStudio/ElementStudioDropdownOptions.vue:147
+#: builder/src/components/ElementStudio/ElementStudioVariableOptions.vue:20
+#: builder/src/components/ElementStudio/ElementStudioVariableOptions.vue:70
+#: builder/src/components/Reusable/ControlsTree/ComponentEditablePropertySettings.vue:5
+msgid "Label"
+msgstr ""
+
+#: builder/src/components/AI/AIUnsplash.vue:110
+msgid "Landscape"
+msgstr ""
+
+#: builder/src/components/Builder/TopBar/DocumentChooser/DocumentChooserFilters.vue:18
+msgid "Last edited: Newest first"
+msgstr ""
+
+#: builder/src/components/Builder/TopBar/DocumentChooser/DocumentChooserFilters.vue:19
+msgid "Last edited: Oldest first"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/WpQuery/WpQuery.vue:678
+msgid "Last modified date"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ControlSectionOrControl.vue:570
+msgid "Layout"
+msgstr ""
+
+#: builder/src/subapps/onboarding/components/OnboardingFeedback.vue:12
+msgid "Leave Feedback"
+msgstr ""
+
+#: builder/src/components/Settings/Preferences/CustomUiSettings.vue:323
+msgid "left"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/FocusPointInput/FocusPointInput.vue:47
+#: builder/src/oxygen/classes/inputs/align/OxyAlignInput.vue:51
+msgid "Left"
+msgstr ""
+
+#: builder/src/subapps/onboarding/components/OnboardingStartForm.vue:5
+msgid "Let's get started"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/Typography/CustomTypographyInput.vue:341
+msgid "Letter Spacing"
+msgstr ""
+
+#: builder/src/components/Add/AddPanel.vue:32
+msgid "Library"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/LinkInput/LinkInputSettings.vue:430
+msgid "Lightbox"
+msgstr ""
+
+#: builder/src/subapps/manage-templates/EditTemplateModal.vue:114
+msgid "Limit how often this popup shows"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/Typography/CustomTypographyInput.vue:409
+msgid "Line"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/Typography/CustomTypographyInput.vue:281
+msgid "Line Height"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/Typography/CustomTypographyInput.vue:318
+msgid "Line Height (deprecated)"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/Color/ColorPicker.vue:183
+msgid "Linear"
+msgstr ""
+
+#: builder/src/components/Canvas/OverlaidUI/Canvas/RightClickWrapMenu.vue:39
+#: builder/src/components/Canvas/OverlaidUI/Canvas/RightClickWrapMenu.vue:51
+msgid "Link"
+msgstr ""
+
+#: builder/src/subapps/design-library/DesignLibraryItem.vue:35
+msgid "Live Preview"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioMacros.vue:61
+#: builder/src/components/ElementStudio/ElementStudioPresets.vue:121
+msgid "Live preview changes"
+msgstr ""
+
+#: builder/src/components/Builder/TopBar/DocumentChooser/DocumentChooserItem.vue:202
+#: builder/src/components/Reusable/CustomInputs/DropdownInput.vue:156
+#: builder/src/subapps/onboarding/components/BottomNav.vue:12
+msgid "Loading..."
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioSpacingBar.vue:3
+#: builder/src/subapps/manage-templates/EditTemplateModal.vue:59
+msgid "Location"
+msgstr ""
+
+#: builder/src/subapps/manage-templates/EditTemplateModal.vue:666
+msgid "Location is required"
+msgstr ""
+
+#: builder/src/oxygen/classes/OxyClassTokenActions.vue:201
+msgid "Lock"
+msgstr ""
+
+#: builder/src/oxygen/classes/panel/OxySelectorsList.vue:28
+msgid "Lock all"
+msgstr ""
+
+#: builder/src/components/Notifications/Types/AjaxCodeError.vue:40
+#: builder/src/components/Notifications/Types/LoggedOutError.vue:39
+#: builder/src/components/Notifications/Types/NetworkError.vue:47
+msgid "Login"
+msgstr ""
+
+#: builder/src/subapps/onboarding/components/OnboardingStartForm.vue:14
+msgid "Looking for inspiration?"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioProjectManagement.vue:4
+msgid "Looks Good"
+msgstr ""
+
+#: builder/src/components/Add/ElementsList.vue:49
+msgid "Looks Good:"
+msgstr ""
+
+#: builder/src/components/AI/AISettings.vue:49
+#: builder/src/components/ElementStudio/ElementStudioMacros.vue:31
+msgid "Macro"
+msgstr ""
+
+#: builder/src/components/AI/AISettings.vue:39
+msgid "Macros"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ControlSectionOrControl.vue:646
+msgid "Make all control values in this section available in all breakpoints"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ControlSectionOrControl.vue:421
+msgid "Make dynamic data Pro only"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioTabsAndPanels.vue:26
+msgid "Make into a macro"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ControlSectionOrControl.vue:759
+msgid "Make into a Preset"
+msgstr ""
+
+#: builder/src/components/Add/library/DesignLibraryModal.vue:53
+msgid "Make modal full screen"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ControlSectionOrControl.vue:661
+msgid "Make the element SSR when any child control value changes"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ControlSectionOrControl.vue:126
+msgid "Make the element SSR when this control's value changes"
+msgstr ""
+
+#: builder/src/components/AI/InlineAI.vue:303
+msgid "Make the text more formal"
+msgstr ""
+
+#: builder/src/components/AI/InlineAI.vue:298
+msgid "Make the text more interesting"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ControlSectionOrControl.vue:104
+msgid "Make this control's value available in all breakpoints"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/Button/ButtonPresetInput.vue:64
+#: builder/src/components/Reusable/CustomInputs/Typography/TypographyInput.vue:34
+msgid "Manage Presets"
+msgstr ""
+
+#: builder/src/components/Settings/Preferences/CustomFonts/CustomFontFamilies.vue:17
+#. translators: %s: Plugin name
+msgid "Managing custom fonts is only available in %s Pro"
+msgstr ""
+
+#: builder/src/oxygen/classes/inputs/spacing/OxySpacingInput.vue:14
+msgid "Margin"
+msgstr ""
+
+#: builder/src/oxygen/interactions/InteractionsInput.vue:169
+#: builder/src/oxygen/interactions/InteractionsInput.vue:253
+msgid "Match"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioRangeOptions.vue:27
+msgid "Max (Integer)"
+msgstr ""
+
+#: builder/src/components/Settings/Preferences/Breakpoints/EditBreakpoint.vue:23
+msgid "Maximum width (px)"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioMediaSizeOptions.vue:4
+msgid "Media Size Options"
+msgstr ""
+
+#: builder/src/components/AI/AIWriter.vue:67
+msgid "Mention apples, oranges, and bananas"
+msgstr ""
+
+#: builder/src/components/Builder/TopBar/OxyMenuDropdown.vue:9
+msgid "Menu"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/WpQuery/WpQuery.vue:690
+msgid "Menu order"
+msgstr ""
+
+#: builder/src/components/Settings/DocumentOrGlobalSettings/ImportExportDropdownMenu.vue:64
+#. translators: %s: Settings name
+msgid "Merge with the existing %s."
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/LinkInput/LinkInputSettings.vue:172
+msgid "Message"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/WpQuery/WpQuery.vue:708
+msgid "Meta Box"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/WpQuery/WpQuery.vue:169
+msgid "Meta Query"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioRangeOptions.vue:17
+msgid "Min (Integer)"
+msgstr ""
+
+#: builder/src/components/Settings/Preferences/Breakpoints/EditBreakpoint.vue:32
+msgid "Minimum width (px)"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioTabsAndPanels.vue:395
+msgid "Misc options"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ControlSectionOrControl.vue:506
+msgid "Misc Options"
+msgstr ""
+
+#: builder/src/components/ElementPropertiesPanel/ElementBadge.vue:3
+msgid "Missing badge label"
+msgstr ""
+
+#: builder/src/components/ElementPropertiesPanel/SearchBox.vue:32
+msgid "Modified"
+msgstr ""
+
+#: builder/src/components/AI/InlineAI.vue:302
+msgid "More formal"
+msgstr ""
+
+#: builder/src/components/AI/InlineAI.vue:297
+msgid "More interesting"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ControlSectionOrControl.vue:327
+msgid "Multiline"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ControlSectionOrControl.vue:205
+msgid "Multiline Bar"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioPostChooserOptions.vue:15
+msgid "Multiple"
+msgstr ""
+
+#: builder/src/components/ElementPropertiesPanel/ElementPresetChooser.vue:13
+msgid "Multiple Design Presets"
+msgstr ""
+
+#: builder/src/components/AI/AISettings.vue:58
+#: builder/src/components/ElementStudio/ElementStudioMacros.vue:53
+#: builder/src/components/ElementStudio/ElementStudioPresets.vue:113
+#: builder/src/components/ElementStudio/ElementStudioSaveNewDialog.vue:27
+#: builder/src/components/ElementStudio/ElementStudioTabsAndPanels.vue:133
+#: builder/src/components/Reusable/CustomInputs/LinkInput/LinkInputSettings.vue:332
+#: builder/src/components/Reusable/CustomInputs/Typography/GlobalTypographySaveDialog.vue:10
+#: builder/src/components/Settings/ElementPresets/AddPreset.vue:5
+#: builder/src/oxygen/variables/SaveVariableDropdown.vue:32
+msgid "Name"
+msgstr ""
+
+#: builder/src/oxygen/classes/lib/rename.ts:26
+#: builder/src/oxygen/classes/lib/rename.ts:46
+#: builder/src/oxygen/classes/lib/rename.ts:56
+msgid "Name is already in use"
+msgstr ""
+
+#: builder/src/oxygen/classes/lib/rename.ts:22
+#: builder/src/oxygen/classes/lib/rename.ts:41
+msgid "Name must be 1 character or more"
+msgstr ""
+
+#: builder/src/oxygen/classes/OxyClassTokenActions.vue:212
+msgid "Nested Selectors"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioTabsAndPanels.vue:303
+msgid "Nesting rules"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/BreakpointInput.vue:71
+msgid "Never"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioTabsAndPanels.vue:1311
+msgid "New Control"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/GlobalColorSettingsDropdown.vue:111
+msgid "New name:"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioTabsAndPanels.vue:1311
+msgid "New Section"
+msgstr ""
+
+#: builder/src/subapps/onboarding/components/BottomNav.vue:13
+msgid "Next"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/LinkInput/LinkInputSettings.vue:462
+msgid "Next Slide"
+msgstr ""
+
+#: builder/src/components/Notifications/Types/FriendlyMultiError.vue:67
+#: builder/src/components/Notifications/Types/Util/ErrorNextSteps.vue:7
+#: builder/src/components/Notifications/Types/Util/ErrorNextSteps.vue:40
+msgid "Next Steps"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/PostChooserInput.vue:20
+#. translators: %s: Post type name
+msgid "No %s found :("
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/WpQuery/WpQuery.vue:207
+msgid "No ACF fields found"
+msgstr ""
+
+#: builder/src/components/ElementPropertiesPanel/Titlebar.vue:95
+msgid "No Active Element"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ControlSectionOrControl.vue:449
+msgid "No available extra elements."
+msgstr ""
+
+#: builder/src/components/Reusable/ControlsTree/DynamicData/DynamicDataField.vue:26
+#: builder/src/components/Reusable/CustomInputs/DynamicInput.vue:28
+msgid "No Available Label"
+msgstr ""
+
+#: builder/src/components/ElementStudio/TwigCodeHelper.vue:7
+#. translators: %s: Control type name
+msgid "No code help available for %s control type"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/Conditions/ConditionsModal.vue:45
+msgid "No conditions yet."
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/DropdownInput.vue:164
+msgid "No data available"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioConditionInput.vue:62
+msgid "No data. Select a path first"
+msgstr ""
+
+#: builder/src/components/Structure/StructurePanel.vue:76
+msgid "No Elements"
+msgstr ""
+
+#: builder/src/components/AI/AIPanel.vue:270
+msgid "No elements were returned from OpenAI API."
+msgstr ""
+
+#: builder/src/components/Reusable/ControlsTree/DynamicData/DynamicDataFields.vue:69
+msgid "No fields were found matching the criteria."
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/IconInput/IconChooserDialog.vue:125
+msgid "No icons found."
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/MediaSize/MediaSizeInput.vue:119
+msgid "No image chosen"
+msgstr ""
+
+#: builder/src/components/AI/AIUnsplash.vue:65
+msgid "No images found in this section"
+msgstr ""
+
+#: builder/src/components/AI/AIUnsplash.vue:141
+msgid "No images found. Please try again with different keywords."
+msgstr ""
+
+#: builder/src/components/AI/AIUnsplash.vue:131
+msgid "No images to complete. Please add an image to the section first."
+msgstr ""
+
+#: builder/src/components/Builder/TopBar/DocumentChooser/DocumentChooser.vue:134
+msgid "No items found"
+msgstr ""
+
+#: builder/src/components/Builder/TopBar/PreviewChooser/PreviewChooserText.vue:50
+msgid "No match found"
+msgstr ""
+
+#: builder/src/oxygen/variables/VariableChooserEmpty.vue:23
+msgid "No matching variables found."
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/WpQuery/WpQuery.vue:226
+msgid "No Meta Box fields found"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/Button/ButtonPresetInput.vue:60
+#: builder/src/components/Reusable/CustomInputs/Typography/TypographyPresetChooserInput.vue:7
+#: builder/src/components/Settings/ElementPresets/AddPreset.vue:13
+msgid "No presets available"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/WpQuery/WpQuery.vue:73
+msgid "No relationship fields found"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioDropdownOptions.vue:60
+msgid "No repeaters present"
+msgstr ""
+
+#: builder/src/components/AI/AIPanel.vue:264
+msgid "No response was returned from OpenAI API."
+msgstr ""
+
+#: builder/src/components/Add/ElementsList.vue:123
+msgid "no results"
+msgstr ""
+
+#: builder/src/components/Builder/TopBar/PreviewChooser/PreviewContentChooserDialog.vue:86
+msgid "No results apply to this template"
+msgstr ""
+
+#: builder/src/components/Reusable/Revisions/RevisionsList.vue:17
+msgid "No revisions found"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudio.vue:38
+msgid "No support is provided. Please read the"
+msgstr ""
+
+#: builder/src/oxygen/variables/VariableChooserEmpty.vue:8
+msgid "No variables"
+msgstr ""
+
+#: builder/src/oxygen/variables/panel/VariablesPanel.vue:245
+msgid "No Variables to import."
+msgstr ""
+
+#: builder/src/components/Onboarding/FirstTimeVisit.vue:31
+msgid "No, thanks"
+msgstr ""
+
+#: builder/src/oxygen/interactions/InteractionsInput.vue:118
+#: builder/src/oxygen/properties-panel/OxyHtmlAttributes.vue:23
+msgid "None"
+msgstr ""
+
+#: builder/src/components/Settings/Preferences/CustomFonts/components/UpdateFontFace.vue:97
+msgid "Normal"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/MediaSize/MediaSizeInput.vue:116
+msgid "Not available for external images"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioFocusPointOptions.vue:27
+msgid "Not available when grid mode is enabled."
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/ConditionalFieldInput.vue:187
+msgid "not equals"
+msgstr ""
+
+#: builder/src/subapps/onboarding/views/barebones/OnboardingBarebonesSitemap.vue:34
+msgid "Not happy with the generated sitemap?"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioTabsAndPanels.vue:505
+msgid "Note: This breaks JavaScript functionality that relies on the tag being present (Ex: %%SELECTOR%%)"
+msgstr ""
+
+#: builder/src/subapps/design-library/DesignLibraryImportingDialog.vue:81
+msgid "Nothing to import for %s."
+msgstr ""
+
+#: builder/src/components/Builder/TopBar/PreviewChooser/PreviewChooserNoResults.vue:12
+#: builder/src/components/Builder/TopBar/PreviewChooser/PreviewChooserText.vue:48
+#: builder/src/components/Builder/TopBar/PreviewChooser/PreviewChooserText.vue:70
+msgid "Nothing to preview"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/WpQuery/WpQuery.vue:144
+msgid "Offset"
+msgstr ""
+
+#: builder/src/components/Notifications/Types/FriendlyMultiError.vue:57
+#. translators: %s: HTTP error code
+msgid "Oh no! Your server returned a %s error. 😢"
+msgstr ""
+
+#: builder/src/components/Notifications/Types/Util/InternalServerErrorErrorDetails.vue:10
+msgid "on"
+msgstr ""
+
+#: builder/src/components/AI/InlineAI.vue:312
+msgid "One-Click Write"
+msgstr ""
+
+#: builder/src/components/Settings/Preferences/CustomFonts/components/FontFileUpload.vue:58
+msgid "Only  \".woff\" and \".woff2\" files are supported"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioTabsAndPanels.vue:400
+msgid "Only change to create complex elements"
+msgstr ""
+
+#: builder/src/oxygen/interactions/InteractionsInput.vue:180
+#: builder/src/oxygen/interactions/InteractionsInput.vue:264
+msgid "Only Children Of This Element"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/LinkInput/LinkInputSettings.vue:533
+#: builder/src/subapps/onboarding/views/OnboardingComplete.vue:32
+msgid "Open"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/CodeInput/CodeInput.vue:176
+#. translators: %s: Programming language name
+msgid "Open %s Editor"
+msgstr ""
+
+#: builder/src/components/Help/KeyboardShortcutsHelpModal.vue:55
+msgid "Open add elements panel"
+msgstr ""
+
+#: builder/src/components/Onboarding/FirstTimeVisit.vue:28
+msgid "Open Design Library"
+msgstr ""
+
+#: builder/src/components/Help/KeyboardShortcutsHelpModal.vue:60
+msgid "Open design sets modal"
+msgstr ""
+
+#: builder/src/subapps/design-library/DesignLibraryImportingDialog.vue:114
+#. translators: %s: Plugin name
+msgid "Open in %s"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/3rdPartyWrappers/TipTapWrapper.vue:61
+#: builder/src/components/Reusable/CustomInputs/LinkInput/LinkInputSettings.vue:23
+msgid "Open in new tab"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ControlSectionOrControl.vue:91
+#: builder/src/components/ElementStudio/ControlSectionOrControl.vue:632
+msgid "Open options"
+msgstr ""
+
+#: builder/src/components/Help/KeyboardShortcutsHelpModal.vue:75
+msgid "Open selectors panel"
+msgstr ""
+
+#: builder/src/components/Help/KeyboardShortcutsHelpModal.vue:65
+msgid "Open structure panel"
+msgstr ""
+
+#: builder/src/components/Help/KeyboardShortcutsHelpModal.vue:156
+msgid "Open the active element's Advanced → Classes autocomplete and focus it."
+msgstr ""
+
+#: builder/src/components/Help/KeyboardShortcutsHelpModal.vue:149
+msgid "Open the active element's Advanced → Custom CSS and focus it."
+msgstr ""
+
+#: builder/src/components/Help/KeyboardShortcutsHelpModal.vue:187
+msgid "Open the Element Studio panel."
+msgstr ""
+
+#: builder/src/components/Help/KeyboardShortcutsHelpModal.vue:142
+msgid "Open the rich text editor modal. Only when the Rich Text element is selected"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ControlSectionOrControl.vue:34
+msgid "Open Twig Code Helper"
+msgstr ""
+
+#: builder/src/components/Help/KeyboardShortcutsHelpModal.vue:70
+msgid "Open variables panel"
+msgstr ""
+
+#: builder/src/components/Add/WebsiteDialog.vue:3
+msgid "Open Website Dialog"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioConditionInput.vue:61
+#: builder/src/components/Reusable/CustomInputs/ConditionalFieldInput.vue:15
+msgid "Operand"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/DynamicInput.vue:131
+msgid "Options"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioProjectManagement.vue:12
+msgid "Options Are Good"
+msgstr ""
+
+#: builder/src/components/Add/ElementsList.vue:55
+msgid "Options Good:"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioProjectManagement.vue:19
+msgid "Options Work"
+msgstr ""
+
+#: builder/src/components/Add/ElementsList.vue:61
+msgid "Options Work:"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioConditionInput.vue:11
+#: builder/src/components/Reusable/CustomInputs/ConditionInput/ConditionPreviewTooltip.vue:16
+#: builder/src/components/Reusable/CustomInputs/Conditions/ConditionsMatrix.vue:9
+msgid "OR"
+msgstr ""
+
+#: builder/src/subapps/onboarding/views/OnboardingComplete.vue:24
+msgid "or view it live"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/WpQuery/WpQuery.vue:180
+#: builder/src/components/Reusable/CustomInputs/WpQuery/WpQuery.vue:234
+msgid "Order"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/WpQuery/WpQuery.vue:185
+msgid "Order By"
+msgstr ""
+
+#: builder/src/components/AI/AIUnsplash.vue:28
+msgid "Orientation"
+msgstr ""
+
+#: builder/src/oxygen/properties-panel/OxyTabsAndControls.vue:45
+msgid "Override Variables"
+msgstr ""
+
+#: builder/src/oxygen/classes/inputs/spacing/OxySpacingInput.vue:36
+msgid "Padding"
+msgstr ""
+
+#: builder/src/components/Settings/Preferences/CustomUiSettings.vue:143
+msgid "Panel Positions"
+msgstr ""
+
+#: builder/src/subapps/manage-templates/EditTemplateModal.vue:460
+#. translators: %s: Template parent ID
+msgid "Parent with ID: %s"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/WpQuery/WpQuery.vue:737
+msgid "Past day"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/WpQuery/WpQuery.vue:745
+msgid "Past Month"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/WpQuery/WpQuery.vue:749
+msgid "Past Three month"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/WpQuery/WpQuery.vue:741
+msgid "Past week"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/WpQuery/WpQuery.vue:753
+msgid "Past Year"
+msgstr ""
+
+#: builder/src/components/Canvas/OverlaidUI/Canvas/ClipboardDialog.vue:42
+msgid "paste"
+msgstr ""
+
+#: builder/src/components/Canvas/OverlaidUI/Canvas/RightClickMenu.vue:26
+#: builder/src/components/ElementStudio/ElementStudioControls.vue:34
+#: builder/src/oxygen/properties-panel/OxyCopyPasteContextMenu.vue:142
+msgid "Paste"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ControlSectionOrControl.vue:743
+msgid "Paste As Child"
+msgstr ""
+
+#: builder/src/components/Help/KeyboardShortcutsHelpModal.vue:100
+msgid "Paste copied element"
+msgstr ""
+
+#: builder/src/components/Canvas/OverlaidUI/Canvas/RightClickMenu.vue:35
+msgid "Paste Design"
+msgstr ""
+
+#: builder/src/components/Structure/StructurePanelDropdownMenu.vue:26
+msgid "Paste Elements"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/LinkInput/LinkInput.vue:22
+#: builder/src/components/Reusable/CustomInputs/LinkInput/URLInput.vue:7
+msgid "Paste or type an URL"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/VideoInput.vue:11
+msgid "Paste or type URL"
+msgstr ""
+
+#: builder/src/oxygen/properties-panel/OxyTabsAndControls.vue:276
+msgid "Paste settings"
+msgstr ""
+
+#: builder/src/components/Canvas/OverlaidUI/Canvas/RightClickMenu.vue:43
+msgid "Paste Settings"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/IconInput/IconInput.vue:32
+msgid "Paste SVG"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioConditionInput.vue:51
+#: builder/src/components/ElementStudio/ElementStudioDropdownOptions.vue:33
+#: builder/src/components/ElementStudio/ElementStudioVariableOptions.vue:63
+msgid "Path"
+msgstr ""
+
+#: builder/src/subapps/manage-templates/EditTemplateModal.vue:124
+msgid "Per Page Load"
+msgstr ""
+
+#: builder/src/subapps/manage-templates/EditTemplateModal.vue:133
+msgid "Per Session"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/LinkInput/LinkInputSettings.vue:162
+msgid "Phone Number"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ControlSectionOrControl.vue:585
+msgid "Placeholder"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ControlSectionOrControl.vue:344
+msgid "Plain Text"
+msgstr ""
+
+#: builder/src/components/UI/TemplateDialog.vue:52
+msgid "Please create your own template."
+msgstr ""
+
+#: builder/src/components/Notifications/Types/FriendlyMultiError.vue:23
+msgid "Please deactivate it and try again."
+msgstr ""
+
+#: builder/src/subapps/design-library/DesignLibraryImportingDialog.vue:96
+msgid "Please don't close this tab until the import is finished."
+msgstr ""
+
+#: builder/src/components/AI/AIUnsplash.vue:124
+msgid "Please enter a keyword to fetch images."
+msgstr ""
+
+#: builder/src/components/Settings/Preferences/CustomFonts/CustomFontFamilies.vue:171
+msgid "Please enter a valid URL"
+msgstr ""
+
+#: builder/src/components/Settings/Preferences/CustomFonts/CustomFontFamilies.vue:170
+msgid "Please enter a value"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/ApiKeyInput.vue:289
+msgid "Please enter an API key"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioSaveNewDialog.vue:14
+#. translators: %s: Item type (element, macro, preset)
+msgid "Please enter the %s's name."
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/IconInput/IconUpload.vue:92
+msgid "Please extract the contents of the zip file and upload the individual SVG files."
+msgstr ""
+
+#: builder/src/subapps/manage-templates/EditTemplateModal.vue:247
+msgid "Please read the documentation before creating custom templates."
+msgstr ""
+
+#: builder/src/subapps/manage-templates/EditTemplateModal.vue:260
+msgid "Please read the documentation before making customizations to template settings."
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioTopBar.vue:262
+#. translators: %s: Item type (element, macro, preset)
+msgid "Please save your changes before closing this %s, or discard your changes."
+msgstr ""
+
+#: builder/src/lib/components/controls.ts:158
+msgid "Please select elements of the same type to edit them together."
+msgstr ""
+
+#: builder/src/components/ElementPropertiesPanel/TabsAndControls.vue:20
+msgid "Please select only elements of the same type to edit their properties together."
+msgstr ""
+
+#: builder/src/components/Reusable/ControlsTree/DynamicData/DynamicDataDialog.vue:90
+msgid "Please upgrade to pro to use this field."
+msgstr ""
+
+#: builder/src/components/Builder/TopBar/OxyMenuDropdown.vue:40
+msgid "Plugin Settings"
+msgstr ""
+
+#: builder/src/components/Settings/Preferences/CustomUiSettings.vue:165
+msgid "Popout Position"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioDropdownOptions.vue:15
+msgid "Populate dropdown dynamically"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioDropdownOptions.vue:23
+msgid "Populate from a Repeater's Input"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioDropdownOptions.vue:90
+msgid "Populate from function"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioDropdownOptions.vue:65
+msgid "Populate from server data"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioVariableOptions.vue:56
+msgid "Populate variables based on a Repeater Input"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioDropdownOptions.vue:10
+msgid "Populate with HTML Tag Options"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioDropdownOptions.vue:26
+msgid "Populating from server data. To use items instead, clear those fields below."
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/LinkInput/LinkInputSettings.vue:250
+#: builder/src/components/Reusable/CustomInputs/LinkInput/LinkInputSettings.vue:456
+#: builder/src/subapps/manage-templates/ManageTemplates.vue:387
+msgid "Popup"
+msgstr ""
+
+#: builder/src/subapps/manage-templates/EditTemplateModal.vue:99
+msgid "Popup Opens When"
+msgstr ""
+
+#: builder/src/subapps/design-library/DesignLibraryConfirmImportDialog.vue:67
+#: builder/src/subapps/design-library/DesignLibraryImportingDialog.vue:274
+#: builder/src/subapps/manage-templates/ManageTemplates.vue:397
+msgid "Popups"
+msgstr ""
+
+#: builder/src/components/AI/AIUnsplash.vue:111
+msgid "Portrait"
+msgstr ""
+
+#: builder/src/subapps/manage-templates/lib/quick-add-templates.ts:60
+msgid "Post Archive"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioPostChooserOptions.vue:4
+msgid "Post Chooser Options"
+msgstr ""
+
+#: builder/src/components/Builder/TopBar/DocumentChooser/DocumentChooserCreateDialog.vue:108
+msgid "Post Title"
+msgstr ""
+
+#: builder/src/components/Builder/TopBar/DocumentChooser/DocumentChooserCreateDialog.vue:115
+#: builder/src/components/Builder/TopBar/DocumentChooser/DocumentChooserFilters.vue:48
+#: builder/src/components/ElementStudio/ElementStudioPostChooserOptions.vue:7
+msgid "Post Type"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/WpQuery/WpQuery.vue:640
+msgid "Post Types"
+msgstr ""
+
+#: builder/src/subapps/design-library/DesignLibraryImportingDialog.vue:258
+msgid "Posts and Pages"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/WpQuery/WpQuery.vue:105
+msgid "Posts per page"
+msgstr ""
+
+#: builder/src/components/UI/InvalidPostDialog.vue:23
+#. translators: 1: Post type name, 2: Plugin name, 3: Plugin name
+msgid "Posts with post type \"%s\" can't be edited with %s directly. Please use a %s Template instead."
+msgstr ""
+
+#: builder/src/components/Settings/Preferences/CustomUiSettings.vue:81
+msgid "Prefer TinyMCE For Rich Text"
+msgstr ""
+
+#: builder/src/components/Builder/TopBar/OxyMenuDropdown.vue:30
+#: builder/src/components/Builder/TopBar/SettingsDropdown.vue:65
+#: builder/src/components/Settings/Preferences/PreferencesModal.vue:24
+msgid "Preferences"
+msgstr ""
+
+#: builder/src/subapps/onboarding/views/OnboardingSelectType.vue:55
+msgid "Premade templates to kickstart your design."
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioPresets.vue:31
+#: builder/src/components/Reusable/CustomInputs/Typography/TypographyInput.vue:12
+msgid "Preset"
+msgstr ""
+
+#: builder/src/components/Settings/ElementPresets/EditPreset.vue:24
+#: builder/src/components/Settings/ElementPresets/PresetDialog.vue:12
+msgid "Preset Name"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/Typography/TypographyInput.vue:21
+msgid "Presets"
+msgstr ""
+
+#: builder/src/components/AI/AIUnsplash.vue:23
+#: builder/src/components/AI/AIUnsplash.vue:43
+#: builder/src/components/Builder/TopBar/PreviewChooser/PreviewChooserSettings.vue:115
+msgid "Preview"
+msgstr ""
+
+#: builder/src/components/Builder/TopBar/PreviewChooser/PreviewChooserText.vue:62
+#. translators: %s: Item type
+msgid "Preview %s:"
+msgstr ""
+
+#: builder/src/components/Builder/TopBar/PreviewSize.vue:31
+msgid "Preview Size"
+msgstr ""
+
+#: builder/src/components/Builder/TopBar/PreviewChooser/PreviewChooserText.vue:54
+msgid "Previewing"
+msgstr ""
+
+#: builder/src/components/Builder/TopBar/PreviewChooser/PreviewChooserText.vue:75
+msgid "Previewing:"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/LinkInput/LinkInputSettings.vue:463
+msgid "Previous Slide"
+msgstr ""
+
+#: builder/src/subapps/onboarding/components/ManageButtons.vue:24
+msgid "Primary"
+msgstr ""
+
+#: builder/src/subapps/manage-templates/EditTemplateModal.vue:166
+#: builder/src/subapps/manage-templates/ManageTemplates.vue:118
+msgid "Priority"
+msgstr ""
+
+#: builder/src/components/AI/AISettings.vue:70
+msgid "Prompt"
+msgstr ""
+
+#: builder/src/components/Reusable/ControlsTree/ComponentEditablePropertySettings.vue:17
+msgid "Property Key"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioPresets.vue:37
+#: builder/src/components/ElementStudio/ElementStudioTabsAndPanels.vue:85
+msgid "Property Paths"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioManagePropertyPaths.vue:55
+msgid "Property paths to SSR the element when value changes"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioManagePropertyPaths.vue:31
+msgid "Property paths to whitelist in flat props"
+msgstr ""
+
+#: builder/src/components/Reusable/ControlsTree/ComponentEditablePropertyToggle.vue:10
+msgid "Property Settings"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioVideoOptions.vue:6
+msgid "Providers"
+msgstr ""
+
+#: builder/src/components/AI/AISettings.vue:18
+#: builder/src/components/AI/AIWriter.vue:41
+msgid "Qualifiers (optional)"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/WpQuery/WpQuery.vue:33
+msgid "Query Builder"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/Color/ColorPicker.vue:187
+msgid "Radial"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/WpQuery/WpQuery.vue:694
+msgid "Random"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioRangeOptions.vue:3
+msgid "Range Options"
+msgstr ""
+
+#: builder/src/components/Notifications/Types/Util/ErrorNextSteps.vue:26
+msgid "Recommended"
+msgstr ""
+
+#: builder/src/components/Help/KeyboardShortcutsHelpModal.vue:90
+msgid "Redo"
+msgstr ""
+
+#: builder/src/components/Builder/TopBar/UndoRedo.vue:15
+msgid "Redo changes"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioDropdownOptions.vue:107
+msgid "Refetch data if a control's value changes (specify path)"
+msgstr ""
+
+#: builder/src/components/Notifications/Types/SessionExpiredError.vue:36
+msgid "Refresh"
+msgstr ""
+
+#: builder/src/components/Canvas/OverlaidUI/NodeTitlebar.vue:59
+msgid "Refresh element"
+msgstr ""
+
+#: builder/src/subapps/regenerate-cache/RegenerateCacheForm.vue:9
+msgid "Regenerate CSS Cache"
+msgstr ""
+
+#: builder/src/components/Notifications/RegeneratingCacheProgress.vue:8
+msgid "Regenerating caches. Leaving the page will stop the process."
+msgstr ""
+
+#: builder/src/components/ElementStudio/ControlSectionOrControl.vue:445
+msgid "Registered Children options: add extra elements"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/WpQuery/WpQuery.vue:641
+msgid "Related"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioPresets.vue:88
+msgid "Relative Property Paths To Whitetlist In Flatprops"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioDependencies.vue:97
+#: builder/src/components/ElementStudio/ElementStudioDependencies.vue:236
+msgid "Reload dependencies files"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/ApiKeyInput.vue:34
+msgid "Reload Key"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioDependencies.vue:78
+#: builder/src/components/ElementStudio/ElementStudioDependencies.vue:217
+msgid "Remember to use"
+msgstr ""
+
+#: builder/src/components/Canvas/OverlaidUI/NodeTitlebar.vue:87
+#: builder/src/oxygen/classes/OxyClassTokenActions.vue:189
+msgid "Remove"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/GlobalColorSettingsDropdown.vue:82
+#: builder/src/oxygen/classes/OxyClassTokenActions.vue:177
+msgid "Rename"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/GlobalColorSettingsDropdown.vue:87
+msgid "Rename CSS Variable"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/GlobalColorSettingsDropdown.vue:93
+msgid "Renaming this CSS variable may cause it to lose references throughout your site."
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/InlineRepeater.vue:19
+msgid "Reorder"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioRepeaterOptions.vue:3
+msgid "Repeater Options"
+msgstr ""
+
+#: builder/src/components/AI/InlineAICompletion.vue:54
+msgid "Rephrase"
+msgstr ""
+
+#: builder/src/components/AI/InlineAI.vue:366
+msgid "Rephrase the text provided by the user."
+msgstr ""
+
+#: builder/src/components/ElementStudio/ControlSectionOrControl.vue:751
+msgid "Replace"
+msgstr ""
+
+#: builder/src/components/Notifications/Types/FriendlyMultiError.vue:71
+msgid "Request Details"
+msgstr ""
+
+#: builder/src/components/Notifications/Types/Util/InternalServerErrorRequestDetails.vue:7
+msgid "Request Time:"
+msgstr ""
+
+#: builder/src/components/Notifications/Types/Util/EmailForHost.vue:60
+msgid "Request Time: %s"
+msgstr ""
+
+#: builder/src/components/Notifications/Types/Util/InternalServerErrorRequestDetails.vue:9
+msgid "Request Type:"
+msgstr ""
+
+#: builder/src/components/Notifications/Types/Util/EmailForHost.vue:62
+msgid "Request Type: %s"
+msgstr ""
+
+#: builder/src/components/Notifications/Types/Util/EmailForHost.vue:61
+msgid "Request URI: %s"
+msgstr ""
+
+#: builder/src/components/Notifications/Types/TroubleshootingModal.vue:43
+#: builder/src/components/Notifications/Types/Util/InternalServerErrorRequestDetails.vue:11
+msgid "Request URL:"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioTabsAndPanels.vue:407
+msgid "Required plugins"
+msgstr ""
+
+#: builder/src/components/ElementPropertiesPanel/DesignContentSettingsTabs.vue:18
+msgid "Reset Content"
+msgstr ""
+
+#: builder/src/components/ElementPropertiesPanel/DesignContentSettingsTabs.vue:39
+msgid "Reset Design"
+msgstr ""
+
+#: builder/src/components/ElementPropertiesPanel/DesignContentSettingsTabs.vue:63
+msgid "Reset Settings"
+msgstr ""
+
+#: builder/src/components/Settings/Preferences/CustomUiSettings.vue:180
+msgid "Reset to defaults"
+msgstr ""
+
+#: builder/src/components/Notifications/Types/Util/InternalServerErrorRequestDetails.vue:5
+msgid "Response Code:"
+msgstr ""
+
+#: builder/src/subapps/manage-templates/BlockRow.vue:45
+#: builder/src/subapps/manage-templates/BlockRow.vue:49
+#: builder/src/subapps/manage-templates/TemplateRow.vue:54
+#: builder/src/subapps/manage-templates/TemplateRow.vue:57
+msgid "Restore"
+msgstr ""
+
+#: builder/src/components/Settings/RevisionsPanel.vue:166
+#. translators: %s: Resource name (selectors, presets, etc)
+msgid "Restore %s from revision"
+msgstr ""
+
+#: builder/src/components/HistoryAndRevisions/HistoryAndRevisionsPanel.vue:22
+msgid "Revisions"
+msgstr ""
+
+#: builder/src/components/Canvas/OverlaidUI/Onboarding/NodeOnboardingAIRewriteButton.vue:20
+msgid "Rewrite"
+msgstr ""
+
+#: builder/src/components/AI/AIPanel.vue:39
+#. translators: %s: Item name being rewritten with AI
+msgid "Rewrite %s"
+msgstr ""
+
+#: builder/src/components/AI/AIWriter.vue:158
+msgid "Rewrite With AI"
+msgstr ""
+
+#: builder/src/components/AI/AIPluginNotInstalled.vue:7
+msgid "Rewrite your content with the power of AI."
+msgstr ""
+
+#: builder/src/components/Settings/Preferences/CustomUiSettings.vue:327
+msgid "right"
+msgstr ""
+
+#: builder/src/oxygen/classes/inputs/align/OxyAlignInput.vue:53
+msgid "Right"
+msgstr ""
+
+#: builder/src/components/Structure/StructurePanel.vue:56
+msgid "Root Node"
+msgstr ""
+
+#: builder/src/components/Builder/TopBar/PreviewChooser/PreviewChooserSettings.vue:135
+msgid "Row Index"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioAction.vue:146
+msgid "Run for all children"
+msgstr ""
+
+#: builder/src/oxygen/interactions/InteractionsInput.vue:292
+msgid "Run Only Once"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioTabsAndPanels.vue:797
+msgid "Runs after adding this element to the canvas for the first time"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioTabsAndPanels.vue:704
+msgid "Runs after one of this element's property changes (a value in a control)"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioTabsAndPanels.vue:812
+msgid "Runs after the element is activated (selected)"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioTabsAndPanels.vue:727
+msgid "Runs after this element is moved in the canvas."
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioTabsAndPanels.vue:784
+msgid "Runs after this element renders in the canvas"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioTabsAndPanels.vue:749
+msgid "Runs AFTER this element was deleted"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioTabsAndPanels.vue:772
+msgid "Runs BEFORE this element is deleted"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/WpQuery/WpQuery.vue:302
+msgid "Same author only"
+msgstr ""
+
+#: builder/src/components/BrowseMode/BrowseModeSave.vue:9
+#: builder/src/components/Builder/TopBar/DocumentChooser/DocumentChooserCreateDialog.vue:126
+#: builder/src/components/Builder/TopBar/Save.vue:11
+#: builder/src/components/Builder/TopBar/Save.vue:23
+#: builder/src/components/ElementStudio/ElementStudioSpacingBar.vue:17
+#: builder/src/components/ElementStudio/ElementStudioTopBar.vue:110
+#: builder/src/components/ElementStudio/ElementStudioTopBar.vue:123
+#: builder/src/components/ElementStudio/ElementStudioTopBar.vue:145
+#: builder/src/components/Help/KeyboardShortcutsHelpModal.vue:80
+#: builder/src/components/Reusable/CustomInputs/3rdPartyWrappers/TipTapWrapper.vue:80
+#: builder/src/components/Reusable/CustomInputs/GlobalColorSettingsDropdown.vue:70
+#: builder/src/components/Reusable/CustomInputs/Typography/GlobalTypographySaveDialog.vue:15
+#: builder/src/components/Reusable/GlobalBlockDialog.vue:30
+#: builder/src/components/Settings/ElementPresets/PresetDialog.vue:22
+#: builder/src/components/Settings/Preferences/Breakpoints/EditBreakpoint.vue:79
+#: builder/src/components/UI/ConfirmDialog.vue:77
+#: builder/src/oxygen/variables/SaveVariableDropdown.vue:67
+#: builder/src/subapps/manage-templates/EditGlobalBlockModal.vue:57
+#: builder/src/subapps/manage-templates/EditTemplateModal.vue:225
+msgid "Save"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioTopBar.vue:136
+msgid "Save &amp; Bypass Psalm..."
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioTopBar.vue:153
+msgid "Save A Copy In:"
+msgstr ""
+
+#: builder/src/Builder.vue:118
+msgid "Save and continue"
+msgstr ""
+
+#: builder/src/components/Reusable/Revisions/RevisionsList.vue:18
+msgid "Save any changes to create a new revision"
+msgstr ""
+
+#: builder/src/components/Canvas/OverlaidUI/Canvas/RightClickMenu.vue:69
+#: builder/src/components/Reusable/GlobalBlockDialog.vue:10
+#. translators: %s: Global block label
+msgid "Save as %s"
+msgstr ""
+
+#: builder/src/components/ElementPropertiesPanel/DesignContentSettingsTabs.vue:42
+#: builder/src/components/Reusable/CustomInputs/Typography/TypographyInput.vue:57
+msgid "Save as Preset"
+msgstr ""
+
+#: builder/src/components/Settings/Preferences/Breakpoints/CustomBreakpointsPanel.vue:4
+msgid "Save Breakpoints"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioTopBar.vue:107
+#: builder/src/components/ElementStudio/ElementStudioTopBar.vue:120
+msgid "Save element"
+msgstr ""
+
+#: builder/src/components/Settings/Preferences/CustomFonts/CustomFontFamilies.vue:4
+msgid "Save Fonts"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/IconInput/IconUpload.vue:43
+msgid "Save Icons"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/IconInput/IconUpload.vue:33
+msgid "Save icons to existing set, or create a new icon set..."
+msgstr ""
+
+#: builder/src/lib/selectors/selectors.ts:145
+msgid "Saving selectors to WordPress"
+msgstr ""
+
+#: builder/src/components/Settings/Preferences/CustomUiSettings.vue:22
+msgid "Scale content to fit the screen (zoom)"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioAction.vue:23
+#: builder/src/components/ElementStudio/ElementStudioDependencies.vue:57
+msgid "Script"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioDependencies.vue:35
+#. translators: %s: Number of scripts
+msgid "Scripts (%s)"
+msgstr ""
+
+#: builder/src/components/ElementPropertiesPanel/SearchBox.vue:121
+#: builder/src/components/Settings/ElementPresets/PresetsList.vue:43
+#: builder/src/components/Settings/Selectors/SelectorsList.vue:37
+msgid "Search"
+msgstr ""
+
+#: builder/src/components/Add/ElementsList.vue:12
+msgid "Search %d elements"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioTopBar.vue:40
+#. translators: Element Studio. %s: Item type (element, macro, preset)
+msgid "Search %ss"
+msgstr ""
+
+#: builder/src/subapps/manage-templates/ManageGlobalBlocks.vue:46
+msgid "Search blocks"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/PostChooserInput.vue:9
+msgid "Search by title"
+msgstr ""
+
+#: builder/src/components/Add/ElementsList.vue:13
+#: builder/src/components/Reusable/CustomInputs/AddRegisteredChildrenControl.vue:11
+msgid "Search elements"
+msgstr ""
+
+#: builder/src/subapps/manage-templates/ManageTemplates.vue:417
+#. translators: %s: Template type name (plural)
+msgid "Search for %s"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/IconInput/IconChooserDialog.vue:224
+#. translators: %s: Icon set name
+msgid "Search in \"%s\""
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/Conditions/ConditionValuesAutocomplete.vue:8
+msgid "Search More"
+msgstr ""
+
+#: builder/src/subapps/manage-templates/lib/quick-add-templates.ts:81
+msgid "Search Results"
+msgstr ""
+
+#: builder/src/oxygen/classes/panel/OxySelectorsList.vue:59
+msgid "Search selectors"
+msgstr ""
+
+#: builder/src/oxygen/variables/VariableChooser.vue:60
+msgid "Search variables"
+msgstr ""
+
+#: builder/src/components/Add/library/DesignLibrarySidebar.vue:5
+#: builder/src/components/Add/library/DesignProviderDropdown.vue:35
+#: builder/src/components/Builder/TopBar/DocumentChooser/DocumentChooser.vue:58
+#: builder/src/components/Builder/TopBar/PreviewChooser/PreviewContentChooserDialog.vue:56
+#: builder/src/components/Reusable/ControlsTree/DynamicData/DynamicDataFields.vue:7
+msgid "Search..."
+msgstr ""
+
+#: builder/src/subapps/onboarding/components/ManageButtons.vue:31
+msgid "Secondary"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ControlSectionOrControl.vue:673
+msgid "Section Layout"
+msgstr ""
+
+#: builder/src/components/AI/AIWriter.vue:33
+msgid "Section showing testimonials"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ControlSectionOrControl.vue:519
+msgid "See content editable code"
+msgstr ""
+
+#: builder/src/components/Notifications/Types/FriendlyMultiError.vue:39
+msgid "See Details"
+msgstr ""
+
+#: builder/src/components/AI/AIWriter.vue:21
+#: builder/src/components/AI/AIWriter.vue:53
+msgid "See examples"
+msgstr ""
+
+#: builder/src/components/Builder/TopBar/PreviewChooser/PreviewChooserSettings.vue:126
+msgid "Select a field to preview"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/WpQuery/WpQuery.vue:68
+#: builder/src/components/Reusable/CustomInputs/WpQuery/WpQuery.vue:202
+#: builder/src/components/Reusable/CustomInputs/WpQuery/WpQuery.vue:221
+msgid "Select a field..."
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/LinkInput/LinkInputSettings.vue:253
+msgid "Select a popup..."
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioSaveNewDialog.vue:34
+msgid "Select a saving location"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/LinkInput/LinkInputSettings.vue:129
+#: builder/src/components/Reusable/CustomInputs/LinkInput/LinkInputSettings.vue:187
+msgid "Select a type..."
+msgstr ""
+
+#: builder/src/components/AI/AINoElementSelected.vue:5
+msgid "Select an element first"
+msgstr ""
+
+#: builder/src/oxygen/classes/OxyClassDropdown.vue:29
+msgid "Select or create a class"
+msgstr ""
+
+#: builder/src/components/Canvas/OverlaidUI/NodeTitlebar.vue:46
+msgid "Select parent"
+msgstr ""
+
+#: builder/src/subapps/onboarding/components/OnboardingStartForm.vue:67
+msgid "Select up to four"
+msgstr ""
+
+#: builder/src/subapps/onboarding/components/OnboardingStartForm.vue:79
+msgid "Select up to three"
+msgstr ""
+
+#: builder/src/subapps/onboarding/components/OnboardingStartForm.vue:57
+msgid "Select up to two"
+msgstr ""
+
+#: builder/src/subapps/manage-templates/EditTemplateModal.vue:494
+#. translators: %s: Template parent ID
+msgid "Selected template with ID: %s no longer exists."
+msgstr ""
+
+#: builder/src/BrowseMode.vue:53
+#: builder/src/components/Add/library/DesignLibraryDependencyWarning.vue:87
+#: builder/src/components/Add/library/DesignLibraryDependencyWarning.vue:272
+#: builder/src/components/Builder/TopBar/SettingsDropdown.vue:40
+#: builder/src/components/Settings/Preferences/CustomUiSettings.vue:263
+#: builder/src/components/Settings/Preferences/CustomUiSettings.vue:274
+#: builder/src/components/Settings/Selectors/ManageSelectors.vue:4
+#: builder/src/oxygen/classes/OxyClassDropdown.vue:3
+#: builder/src/oxygen/classes/panel/OxySelectorsPanel.vue:4
+#: builder/src/oxygen/classes/panel/OxySelectorsPanel.vue:25
+#: builder/src/subapps/design-library/DesignLibraryConfirmImportDialog.vue:143
+#: builder/src/subapps/design-library/DesignLibraryImportingDialog.vue:308
+msgid "Selectors"
+msgstr ""
+
+#: builder/src/subapps/onboarding/components/OnboardingFeedback.vue:52
+msgid "Send Feedback"
+msgstr ""
+
+#: builder/src/components/Partners/CodeBoxButtonForCodeEditor.vue:9
+msgid "Send To CodeBox"
+msgstr ""
+
+#: builder/src/oxygen/classes/OxyClassTokenActions.vue:154
+msgid "Set condition"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioDefaultProperties.vue:43
+msgid "Set Default Properties"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioDefaultProperties.vue:48
+#. translators: %s: Element name
+msgid "Set default properties for %s to:"
+msgstr ""
+
+#: builder/src/components/AI/InlineAiNoApiKey.vue:37
+msgid "Set Up API Key"
+msgstr ""
+
+#: builder/src/components/AI/AINoApiKey.vue:5
+msgid "Set up your OpenAI API key"
+msgstr ""
+
+#: builder/src/components/Builder/TopBar/PreviewChooser/PreviewChooserSettings.vue:108
+#: builder/src/components/Builder/TopBar/SettingsDropdown.vue:19
+#: builder/src/components/ElementStudio/ElementStudioMacros.vue:34
+#: builder/src/components/ElementStudio/ElementStudioPresets.vue:40
+#: builder/src/components/ElementStudio/ElementStudioTabsAndPanels.vue:106
+#: builder/src/components/Reusable/CustomInputs/GlobalColorSettingsDropdown.vue:8
+#: builder/src/components/Settings/Preferences/CustomUiSettings.vue:6
+#: builder/src/oxygen/properties-panel/OxyTabsAndControls.vue:99
+#: builder/src/subapps/manage-templates/BlockRow.vue:32
+#: builder/src/subapps/manage-templates/TemplateRow.vue:45
+#: builder/src/subapps/manage-templates/TemplateRow.vue:48
+msgid "Settings"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ControlSectionOrControl.vue:301
+msgid "Shadow Type"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioTabsAndPanels.vue:486
+msgid "Share props with SSR children"
+msgstr ""
+
+#: builder/src/subapps/manage-templates/lib/quick-add-templates.ts:18
+msgid "Shop Page & All Product Archives"
+msgstr ""
+
+#: builder/src/subapps/manage-templates/ManageGlobalBlocks.vue:91
+msgid "Shortcode"
+msgstr ""
+
+#: builder/src/components/Help/KeyboardShortcutsHelpModal.vue:14
+msgid "Shortcut"
+msgstr ""
+
+#: builder/src/components/AI/InlineAI.vue:287
+msgid "Shorten it"
+msgstr ""
+
+#: builder/src/components/AI/InlineAI.vue:288
+msgid "Shorten the text"
+msgstr ""
+
+#: builder/src/components/Settings/Preferences/CustomUiSettings.vue:61
+msgid "Show elements ID in the Structure Panel"
+msgstr ""
+
+#: builder/src/components/Settings/Preferences/CustomUiSettings.vue:41
+msgid "Show Experimental Elements"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioDropdownOptions.vue:129
+msgid "Show items in the dropdown only if a condition is met"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioVariableOptions.vue:86
+msgid "Show items in the variable only if a condition is met"
+msgstr ""
+
+#: builder/src/components/Help/KeyboardShortcutsHelpModal.vue:130
+msgid "Show keyboard shortcuts help modal"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/ComponentInput.vue:53
+msgid "Show Property Keys"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioPostChooserOptions.vue:22
+msgid "Show Thumbnails"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioFocusPointOptions.vue:19
+msgid "Shows an image as background of this input"
+msgstr ""
+
+#: builder/src/components/Canvas/OverlaidUI/Onboarding/NodeOnboardingReplaceSectionButton.vue:7
+#: builder/src/subapps/onboarding/components/ManagePalettes.vue:5
+msgid "Shuffle"
+msgstr ""
+
+#: builder/src/components/Settings/Preferences/CustomUiSettings.vue:344
+msgid "Side By Side"
+msgstr ""
+
+#: builder/src/subapps/manage-templates/lib/quick-add-templates.ts:49
+msgid "Single Post"
+msgstr ""
+
+#: builder/src/subapps/manage-templates/lib/quick-add-templates.ts:7
+msgid "Single Product"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/LinkInput/LinkInputSettings.vue:234
+msgid "Slide #"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/LinkInput/LinkInputSettings.vue:195
+msgid "Slider"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ControlSectionOrControl.vue:598
+#: builder/src/components/ElementStudio/ControlSectionOrControl.vue:604
+#: builder/src/components/ElementStudio/ControlSectionOrControl.vue:684
+#: builder/src/components/ElementStudio/ControlSectionOrControl.vue:690
+#: builder/src/components/ElementStudio/ElementStudioTabsAndPanels.vue:125
+msgid "Slug"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/LinkInput/LinkInputSettings.vue:448
+msgid "SMS"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/Color/ColorPicker.vue:176
+msgid "Solid"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ControlSectionOrControl.vue:399
+msgid "Solid and Gradient"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ControlSectionOrControl.vue:397
+msgid "Solid Only"
+msgstr ""
+
+#: builder/src/components/AI/AIWriter.vue:123
+msgid "Some fields are locked and will not be updated by AI. <b class='cursor-pointer'>Click to view.</b>"
+msgstr ""
+
+#: builder/src/subapps/design-library/DesignLibraryStatusIcon.vue:26
+msgid "Some requests failed. Try again"
+msgstr ""
+
+<<<<<<< HEAD
+#: builder/src/components/Add/library/DesignLibraryModal.vue:93
+=======
+#: builder/src/components/Add/library/DesignLibraryModal.vue:117
+>>>>>>> 9fe87f2ff (feat: add empty-state screen for Design Library (#9489))
+msgid "Soon, the Design Library will only be available in the pro version. For now, enjoy your free preview!"
+msgstr ""
+
+#: builder/src/components/Builder/TopBar/DocumentChooser/DocumentChooserFilters.vue:56
+msgid "Sort By"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/WpQuery/WpQuery.vue:39
+#: builder/src/components/Reusable/CustomInputs/WpQuery/WpQuery.vue:44
+msgid "Source"
+msgstr ""
+
+#: builder/src/oxygen/classes/inputs/align/OxyAlignInput.vue:69
+msgid "Space Around"
+msgstr ""
+
+#: builder/src/oxygen/classes/inputs/align/OxyAlignInput.vue:68
+msgid "Space Between"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioSpacingBars.vue:8
+msgid "Spacing bar"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioManagePropertyPaths.vue:78
+msgid "Spacing Bars"
+msgstr ""
+
+#: builder/src/subapps/manage-templates/lib/quick-add-templates.ts:29
+msgid "Specific Product Archive"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/ShadowInput/ShadowInput.vue:66
+msgid "Spread"
+msgstr ""
+
+#: builder/src/components/AI/AIUnsplash.vue:112
+msgid "Squarish"
+msgstr ""
+
+#: builder/src/components/Notifications/Types/InternalServerError.vue:91
+msgid "Stack Trace"
+msgstr ""
+
+#: builder/src/components/Settings/Preferences/CustomUiSettings.vue:336
+msgid "Stacked"
+msgstr ""
+
+#: builder/src/components/Settings/Preferences/CustomUiSettings.vue:340
+msgid "Stacked (First Visible)"
+msgstr ""
+
+#: builder/src/subapps/onboarding/views/barebones/OnboardingBarebonesSitemap.vue:40
+msgid "Start over"
+msgstr ""
+
+#: builder/src/oxygen/classes/OxyClassTokenActions.vue:209
+msgid "States"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioRangeOptions.vue:7
+msgid "Step (fixed to 2 decimals)"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/ComponentInput.vue:25
+#: builder/src/components/Reusable/CustomInputs/GlobalBlockInput.vue:23
+msgid "Stop Editing"
+msgstr ""
+
+#: builder/src/oxygen/classes/inputs/align/OxyAlignInput.vue:63
+msgid "Stretch"
+msgstr ""
+
+#: builder/src/components/Settings/Preferences/CustomUiSettings.vue:248
+#: builder/src/components/Structure/StructurePanel.vue:4
+msgid "Structure"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioDependencies.vue:196
+#: builder/src/components/Reusable/CustomInputs/BorderComplex.vue:146
+#: builder/src/components/Reusable/CustomInputs/Typography/CustomTypographyInput.vue:378
+#: builder/src/components/Reusable/CustomInputs/Typography/CustomTypographyInput.vue:476
+msgid "Style"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioDependencies.vue:174
+#. translators: %s: Number of styles
+msgid "Styles (%s)"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/LinkInput/LinkInputSettings.vue:152
+msgid "Subject"
+msgstr ""
+
+#: builder/src/components/Add/library/DesignLibraryPassword.vue:88
+msgid "Submit"
+msgstr ""
+
+#: builder/src/components/Canvas/OverlaidUI/Onboarding/NodeOnboardingAIRewriteButton.vue:17
+#: builder/src/subapps/design-library/DesignLibraryStatusIcon.vue:13
+msgid "Success loading the data"
+msgstr ""
+
+#: builder/src/subapps/design-library/DesignLibraryImportingDialog.vue:74
+msgid "Successfully imported %s."
+msgstr ""
+
+#: builder/src/subapps/design-library/DesignLibraryImportingDialog.vue:39
+msgid "Successfully trashed existing Templates, Headers, Footers, %s, and Popups."
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/IconInput/IconChooserDialog.vue:253
+msgid "Suggested Icons"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioIconOptions.vue:10
+msgid "Suggestions"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioBreakpointOptions.vue:5
+#: builder/src/components/ElementStudio/ElementStudioBreakpointOptions.vue:7
+msgid "Support Multiple"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioTabsAndPanels.vue:277
+msgid "SVG code for icon"
+msgstr ""
+
+#: builder/src/components/Help/KeyboardShortcutsHelpModal.vue:135
+msgid "Switch between 'scale to fit' and 'actual size' content"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioTopBar.vue:235
+msgid "Switch mode"
+msgstr ""
+
+#: builder/src/oxygen/properties-panel/OxyTagChooser.vue:30
+msgid "Tag"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioTabsAndPanels.vue:224
+msgid "Tag of the root element"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioTabsAndPanels.vue:234
+msgid "Tag Options"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioAction.vue:61
+#. translators: 1: tag name, 2: tag name
+msgid "Tags: %s and %s are available."
+msgstr ""
+
+#: builder/src/subapps/onboarding/views/OnboardingSelectType.vue:50
+msgid "Tailor your template to your needs."
+msgstr ""
+
+#: builder/src/oxygen/interactions/InteractionsInput.vue:137
+#: builder/src/oxygen/interactions/InteractionsInput.vue:221
+#: builder/src/oxygen/interactions/InteractionsInput.vue:237
+msgid "Target"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/LinkInput/LinkInputSettings.vue:447
+msgid "Tel"
+msgstr ""
+
+#: builder/src/components/AI/AISettings.vue:3
+msgid "Tell us about your business"
+msgstr ""
+
+#: builder/src/components/AI/InlineAI.vue:127
+msgid "Tell us to..."
+msgstr ""
+
+#: builder/src/components/AI/AIWriter.vue:76
+msgid "Temperature"
+msgstr ""
+
+#: builder/src/subapps/manage-templates/ManageGlobalBlocks.vue:90
+#: builder/src/subapps/manage-templates/ManageTemplates.vue:111
+#: builder/src/subapps/manage-templates/ManageTemplates.vue:384
+msgid "Template"
+msgstr ""
+
+#: builder/src/subapps/design-library/DesignLibraryConfirmImportDialog.vue:63
+#: builder/src/subapps/design-library/DesignLibraryImportingDialog.vue:262
+#: builder/src/subapps/manage-templates/ManageTemplates.vue:394
+msgid "Templates"
+msgstr ""
+
+#: builder/src/components/UI/TemplateDialog.vue:72
+msgid "Templates page"
+msgstr ""
+
+#: builder/src/components/Onboarding/FirstTimeVisit.vue:19
+msgid "Templates save you hours of work. Each template is crafted by a pro and is fully customizable."
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/WpQuery/WpQuery.vue:94
+msgid "Terms in taxonomy"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ControlSectionOrControl.vue:324
+#: builder/src/components/Reusable/CustomInputs/WpQuery/WpQuery.vue:7
+msgid "Text"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ControlSectionOrControl.vue:336
+msgid "Text Format"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/Typography/CustomTypographyInput.vue:566
+msgid "Text Wrap"
+msgstr ""
+
+#: builder/src/components/AI/AIWriter.vue:107
+#. translators: %s: Element name
+msgid "The %s element does not support AI writing."
+msgstr ""
+
+#: builder/src/components/AI/InlineAiPluginNotInstalled.vue:17
+msgid "The Breakdance AI Plugin is not installed. Please install it to use the AI assistant."
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioDependencies.vue:74
+#: builder/src/components/ElementStudio/ElementStudioDependencies.vue:213
+msgid "The dependency is a hardcoded value:"
+msgstr ""
+
+#: builder/src/components/Settings/ElementPresets/ImportExportPresets.vue:106
+msgid "The file you selected does not contain any presets."
+msgstr ""
+
+#: builder/src/components/Settings/ElementPresets/ImportExportPresets.vue:99
+msgid "The file you selected is not a valid Presets file."
+msgstr ""
+
+#: builder/src/subapps/design-library/DesignLibraryConfirmImportDialog.vue:188
+#. translators: %s: Site URL
+msgid "The last full site import you performed was for %s"
+msgstr ""
+
+#: builder/src/subapps/manage-templates/EditTemplateModal.vue:694
+msgid "The minimum priority is 1"
+msgstr ""
+
+#: builder/src/subapps/manage-templates/AddTemplateDropdown.vue:137
+#. translators: %s: Template type name
+msgid "The new %s couldn't be saved"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/ConditionalFieldInput.vue:68
+#. translators: %s: Option value
+msgid "The option %s is not available anymore, please select a new one."
+msgstr ""
+
+#: builder/src/components/Notifications/Types/FriendlyMultiError.vue:14
+#. translators: 1: Plugin name, 2: Error code
+msgid "The plugin %s caused a %s error."
+msgstr ""
+
+#: builder/src/components/UI/InvalidPostDialog.vue:36
+#. translators: %s: Plugin name
+msgid "The requested post can't be edited with %s."
+msgstr ""
+
+#: builder/src/components/UI/InvalidPostDialog.vue:7
+msgid "The requested post doesn't exist. It may have been deleted, or maybe you used an outdated URL."
+msgstr ""
+
+#: builder/src/components/Reusable/ControlsTree/DynamicData/DynamicDataField.vue:42
+msgid "The selected field expects \"%s\", but \"%s\" only returns \"%s\". To use this field anyway, choose \"All\" from the \"Type\" dropdown and then toggle \"Disable Type Safety\" on."
+msgstr ""
+
+#: builder/src/components/ElementPropertiesPanel/ElementPresetChooser.vue:90
+msgid "The selected preset does not exist or has been deleted. Please select another preset."
+msgstr ""
+
+#: builder/src/oxygen/classes/OxyClassProperties.vue:226
+#. translators: %s: CSS selector name
+msgid "The selector %s is locked."
+msgstr ""
+
+#: builder/src/components/Notifications/Types/AjaxCodeError.vue:84
+msgid "The task failed due a problem on the server side."
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioAdditionalClasses.vue:37
+msgid "The template can run Twig code. Properties like design.something.whatever are available. If the template returns a blank string, the class will not be added. If the template returns anything, the class will be added."
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioTabsAndPanels.vue:154
+msgid "the_best_class"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/VideoInput.vue:182
+#: builder/src/components/Reusable/CustomInputs/VideoInput.vue:185
+msgid "There was an error embedding the video"
+msgstr ""
+
+#: builder/src/subapps/design-library/DesignLibraryStatusIcon.vue:19
+msgid "There was an error loading the data"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/Typography/CustomTypographyInput.vue:511
+msgid "Thickness"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioTopBar.vue:202
+msgid "This action cannot be undone."
+msgstr ""
+
+#: builder/src/components/Add/library/DesignLibraryDesignPresets.vue:20
+#: builder/src/components/Add/library/DesignLibraryDesignPresets.vue:35
+msgid "This design relies on Design Presets. It won't look the same unless you import them."
+msgstr ""
+
+#: builder/src/components/Add/library/DesignLibraryPassword.vue:79
+msgid "This Design Set is password protected by the author. Please enter the password below to view it."
+msgstr ""
+
+#: builder/src/components/Add/library/DesignLibraryDependencyWarning.vue:21
+msgid "This design set relies on %s. It won't look the same unless you import them."
+msgstr ""
+
+#: builder/src/components/AI/AIWriter.vue:137
+#: builder/src/oxygen/interactions/InteractionsInput.vue:149
+#: builder/src/oxygen/interactions/InteractionsInput.vue:229
+msgid "This Element"
+msgstr ""
+
+#: builder/src/components/Add/AddElement.vue:251
+msgid "This element can't be added for unknown reasons"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioTabsAndPanels.vue:374
+msgid "This element contains a Global Block that can be edited inline. Requires a Global Block Chooser control to be present."
+msgstr ""
+
+#: builder/src/components/AI/AIPanel.vue:342
+msgid "This element is empty, please add some content first."
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioTabsAndPanels.vue:352
+msgid "This element will not be allowed on a page if one of the following elements is already present on the page"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioTabsAndPanels.vue:308
+msgid "This element will only be allowed as a direct child of the selected elements"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioTabsAndPanels.vue:330
+msgid "This element will only be allowed inside the selected elements"
+msgstr ""
+
+#: builder/src/components/Settings/Preferences/CustomFonts/components/UpdateFontFace.vue:168
+msgid "This font style already exists with this weight, and format"
+msgstr ""
+
+#: builder/src/components/Settings/Preferences/CustomFonts/components/UpdateFontFace.vue:155
+msgid "This font weight already exists with this style, and format"
+msgstr ""
+
+#: builder/src/components/Add/WebsiteDialog.vue:16
+msgid "this is currently used at https://breakdance.com/features/elements"
+msgstr ""
+
+#: builder/src/components/UI/TemplateDialog.vue:4
+msgid "This post can't be edited directly."
+msgstr ""
+
+#: builder/src/components/UI/TemplateDialog.vue:25
+#. translators: %s: Template name
+msgid "This post is rendered with a \"%s\" template."
+msgstr ""
+
+#: builder/src/components/UI/TemplateDialog.vue:13
+#. translators: %s: Template name
+msgid "This post is rendered with a builder's internal \"%s\" template."
+msgstr ""
+
+#: builder/src/components/UI/TemplateDialog.vue:39
+#. translators: %s: Template name
+msgid "This post is rendered with a builder's internal template."
+msgstr ""
+
+#: builder/src/components/UI/TemplateDialog.vue:46
+msgid "This post is rendered with a template."
+msgstr ""
+
+#: builder/src/oxygen/classes/panel/OxyAddSelector.vue:63
+msgid "This selector already exists."
+msgstr ""
+
+#: builder/src/oxygen/classes/OxyClassToken.vue:174
+msgid "This selector is no longer available. Remove it from the element?"
+msgstr ""
+
+#: builder/src/oxygen/variables/VariableChip.vue:51
+msgid "This variable has been deleted, but it is still used here."
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/VideoInput.vue:73
+msgid "This video could not be embedded."
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioTabsAndPanels.vue:253
+msgid "This will disable the 'Settings -> Html -> Tag' control"
+msgstr ""
+
+#: builder/src/subapps/onboarding/components/OnboardingStartForm.vue:37
+msgid "This won't be visible on the website but helps us understand your needs."
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioDependencies.vue:18
+#: builder/src/components/Reusable/CustomInputs/WpQuery/WpQuery.vue:682
+#: builder/src/subapps/manage-templates/EditGlobalBlockModal.vue:38
+#: builder/src/subapps/manage-templates/EditTemplateModal.vue:50
+msgid "Title"
+msgstr ""
+
+#: builder/src/subapps/manage-templates/EditGlobalBlockModal.vue:141
+msgid "Title field can't be empty"
+msgstr ""
+
+#: builder/src/subapps/manage-templates/EditTemplateModal.vue:676
+msgid "Title is required"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioRepeaterOptions.vue:6
+msgid "Title Template"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioDynPropPaths.vue:21
+#: builder/src/components/ElementStudio/ElementStudioPropertyPaths.vue:11
+msgid "To describe a repeater, use &quot;[]&quot;. e.g: &quot;content.list.my_repeater[].url&quot;"
+msgstr ""
+
+#: builder/src/components/Settings/ElementPresets/EditPreset.vue:91
+#. translators: %s: element type
+msgid "To edit, select %s element with this preset applied."
+msgstr ""
+
+#: builder/src/components/Canvas/OverlaidUI/Canvas/ClipboardDialog.vue:20
+msgid "To paste using the Edit menu, please allow access to your clipboard."
+msgstr ""
+
+#: builder/src/components/Canvas/OverlaidUI/Canvas/ClipboardDialog.vue:13
+msgid "To paste using the Edit menu, your website needs to be served with HTTPS."
+msgstr ""
+
+#: builder/src/components/Notifications/Types/SessionExpiredError.vue:24
+#. translators: %s: Plugin name
+msgid "To use %s, log in to WordPress admin."
+msgstr ""
+
+#: builder/src/components/Notifications/Types/LoggedOutError.vue:24
+#. translators: %s: Plugin name
+msgid "To use %s, you need to login to WordPress."
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/LinkInput/LinkInputSettings.vue:535
+msgid "Toggle"
+msgstr ""
+
+#: builder/src/components/Help/KeyboardShortcutsHelpModal.vue:175
+msgid "Toggle the modified option in the properties search box."
+msgstr ""
+
+#: builder/src/components/Help/KeyboardShortcutsHelpModal.vue:182
+msgid "Toggle the preview mode."
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/FocusPointInput/FocusPointInput.vue:38
+#: builder/src/oxygen/classes/inputs/align/OxyAlignInput.vue:57
+msgid "Top"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/WpQuery/WpQuery.vue:115
+msgid "Total posts"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/WpQuery/WpQuery.vue:129
+msgid "Total posts must be equal to or greater than Posts Per Page"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/Typography/CustomTypographyInput.vue:530
+msgid "Transform"
+msgstr ""
+
+#: builder/src/subapps/manage-templates/BlockRow.vue:54
+#: builder/src/subapps/manage-templates/BlockRow.vue:56
+#: builder/src/subapps/manage-templates/TemplateRow.vue:72
+#: builder/src/subapps/manage-templates/TemplateRow.vue:74
+msgid "Trash"
+msgstr ""
+
+#: builder/src/subapps/manage-templates/ManageGlobalBlocks.vue:74
+#: builder/src/subapps/manage-templates/ManageTemplates.vue:95
+msgid "Trash (%d)"
+msgstr ""
+
+#: builder/src/subapps/design-library/DesignLibraryImportingDialog.vue:27
+msgid "Trashing existing Templates, Headers, Footers, %s, and Popups."
+msgstr ""
+
+#: builder/src/oxygen/interactions/InteractionsInput.vue:124
+msgid "Trigger"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ControlSectionOrControl.vue:218
+msgid "Trigger action button options"
+msgstr ""
+
+#: builder/src/subapps/manage-templates/ManageTemplates.vue:115
+msgid "Triggers"
+msgstr ""
+
+#: builder/src/components/Builder/TopBar/DocumentChooser/DocumentChooser.vue:137
+msgid "Try adjusting your search to find what you are looking for."
+msgstr ""
+
+#: builder/src/components/Subscription/UpgradeToPro.vue:9
+msgid "Try Breakdance Pro"
+msgstr ""
+
+#: builder/src/components/Subscription/UpgradeToPro.vue:17
+msgid "Try Oxygen Pro"
+msgstr ""
+
+#: builder/src/components/Builder/TopBar/OxyMenuDropdown.vue:56
+msgid "Tutorials"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/LinkInput/LinkInputSettings.vue:7
+msgid "Type"
+msgstr ""
+
+#: builder/src/components/Notifications/Types/TroubleshootingModal.vue:41
+#: builder/src/components/Reusable/ControlsTree/DynamicData/DynamicDataFields.vue:20
+msgid "Type:"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioUnitOptions.vue:7
+msgid "Types"
+msgstr ""
+
+#: builder/src/subapps/onboarding/components/ManageTypography.vue:2
+msgid "Typography"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioTabsAndPanels.vue:260
+msgid "UI Icon"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioTabsAndPanels.vue:297
+msgid "UI Order (number)"
+msgstr ""
+
+#: builder/src/components/Settings/Preferences/CustomUiSettings.vue:3
+#: builder/src/components/Settings/Preferences/PreferencesModal.vue:34
+msgid "UI Settings"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/CodeInput/CodeInput.vue:218
+#. translators: %s: Programming language name
+msgid "Unable to format %s code. Please check for syntax errors like missing brackets, quotes, or semicolons, then try formatting again."
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/VideoInput.vue:191
+msgid "Unable to retrieve a video from this URL"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/IconInput/IconUpload.vue:161
+msgid "Uncategorized"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/Typography/CustomTypographyInput.vue:445
+msgid "Underline Offset"
+msgstr ""
+
+#: builder/src/components/Help/KeyboardShortcutsHelpModal.vue:85
+msgid "Undo"
+msgstr ""
+
+#: builder/src/components/Builder/TopBar/UndoRedo.vue:8
+msgid "Undo changes"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioUnitOptions.vue:3
+msgid "Unit Options"
+msgstr ""
+
+#: builder/src/components/Add/library/DesignLibraryDependencyWarning.vue:308
+msgid "Unknown"
+msgstr ""
+
+#: builder/src/oxygen/classes/OxyControlName.vue:72
+msgid "Unknown breakpoint"
+msgstr ""
+
+#: builder/src/components/Canvas/ForeignDocumentsOverlay.vue:102
+msgid "Unknown Document"
+msgstr ""
+
+#: builder/src/components/Notifications/Notification.vue:44
+#. translators: %s: Notification type
+msgid "Unknown notification type %s"
+msgstr ""
+
+#: builder/src/oxygen/variables/VariableChip.vue:56
+msgid "Unlink it or select a new variable."
+msgstr ""
+
+#: builder/src/oxygen/variables/VariableChip.vue:60
+msgid "Unlink variable"
+msgstr ""
+
+#: builder/src/oxygen/classes/OxyClassTokenActions.vue:201
+msgid "Unlock"
+msgstr ""
+
+#: builder/src/oxygen/classes/panel/OxySelectorsList.vue:28
+msgid "Unlock all"
+msgstr ""
+
+#: builder/src/components/UnrecoverableErrors.vue:3
+msgid "Unrecoverable Errors"
+msgstr ""
+
+#: builder/src/components/AI/AIUnsplash.vue:3
+msgid "Unsplash"
+msgstr ""
+
+#: builder/src/subapps/manage-templates/EditTemplateModal.vue:401
+#: builder/src/subapps/manage-templates/ManageTemplates.vue:389
+msgid "Unsupported template"
+msgstr ""
+
+#: builder/src/subapps/manage-templates/ManageTemplates.vue:399
+msgid "Unsupported templates"
+msgstr ""
+
+#: builder/src/subapps/manage-templates/ManageTemplates.vue:327
+#. translators: %s: Template ID
+msgid "Update for template \"%s\" failed"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioTabsAndPanels.vue:148
+msgid "Update slug"
+msgstr ""
+
+#: builder/src/components/Builder/TopBar/PreviewChooser/PreviewChooserNoResults.vue:19
+msgid "Update your template settings in the WP admin at"
+msgstr ""
+
+#: builder/src/components/AI/AIPanel.vue:420
+#. translators: %s: Element ID
+msgid "Updated prompt info for element #%s"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioTabsAndPanels.vue:160
+msgid "Updating the Class Name will make the previous class obsolete. You'll need to update your CSS"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/IconInput/IconChooserDialog.vue:41
+#: builder/src/components/Reusable/CustomInputs/VideoInput.vue:29
+msgid "Upload"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/VideoInput.vue:93
+msgid "Upload a Video or paste a URL"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/VideoInput.vue:84
+#. translators: %s: allowed platforms list
+msgid "Upload a Video or paste a URL from %s"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/IconInput/IconUpload.vue:131
+msgid "Upload some icons."
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/IconInput/IconUpload.vue:98
+msgid "Upload symbol-defs.svg from an IcoMoon export, or an individual SVG file."
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/ApiKeyInput.vue:281
+#: builder/src/components/Reusable/CustomInputs/LinkInput/LinkInputSettings.vue:429
+msgid "URL"
+msgstr ""
+
+#: builder/src/components/Settings/Preferences/CustomFonts/CustomFontFamilies.vue:174
+msgid "URL to CSS file containing Font Face definitions"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioDependencies.vue:47
+msgid "URL to script"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioDependencies.vue:186
+msgid "URL to style"
+msgstr ""
+
+#: builder/src/components/Settings/Preferences/CustomFonts/CustomFontFamilies.vue:137
+msgid "Use Fonts In External CSS"
+msgstr ""
+
+#: builder/src/components/Settings/Preferences/CustomFonts/CustomFontFamilies.vue:142
+msgid "Use hosted fonts from providers like Adobe Fonts."
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioTabsAndPanels.vue:288
+msgid "Use local icon"
+msgstr ""
+
+#: builder/src/components/Add/WebsiteDialog.vue:9
+msgid "use the below HTML code on breakdance.com to display a list of elements."
+msgstr ""
+
+#: builder/src/components/AI/InlineAI.vue:109
+msgid "Use the lock icon to prevent AI from changing this image during bulk rewrites."
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioTabsAndPanels.vue:458
+msgid "Use this if clicking on the element doesn't active it, but instead clicks something inside of it"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioTabsAndPanels.vue:521
+msgid "Use this if the element should only be visible in the builder"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioTabsAndPanels.vue:488
+msgid "Use this if you need to access the properties data from this element in a child SSR element."
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioTabsAndPanels.vue:474
+msgid "Use this if you want to disable the AI for this element"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioRepeaterOptions.vue:33
+msgid "Used as a fallback when the title template is blank."
+msgstr ""
+
+#: builder/src/components/Notifications/Types/IoTsError.vue:5
+msgid "Validation Error:"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioConditionInput.vue:83
+#: builder/src/components/ElementStudio/ElementStudioDropdownOptions.vue:51
+#: builder/src/components/ElementStudio/ElementStudioDropdownOptions.vue:164
+#: builder/src/components/ElementStudio/ElementStudioVariableOptions.vue:37
+#: builder/src/components/ElementStudio/ElementStudioVariableOptions.vue:77
+#: builder/src/components/Reusable/CustomInputs/ConditionalFieldInput.vue:28
+#: builder/src/components/Reusable/CustomInputs/LinkInput/LinkInputSettings.vue:345
+#: builder/src/oxygen/properties-panel/OxyHtmlAttributes.vue:39
+#: builder/src/oxygen/variables/SaveVariableDropdown.vue:43
+#: builder/src/oxygen/variables/VariableRepeaterItem.vue:181
+msgid "Value"
+msgstr ""
+
+#: builder/src/oxygen/classes/OxyControlName.vue:127
+msgid "Value comes from:"
+msgstr ""
+
+#: builder/src/oxygen/classes/OxyControlName.vue:130
+msgid "Value is overwritten by:"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioConditionInput.vue:95
+msgid "Values"
+msgstr ""
+
+#: builder/src/components/Add/library/DesignLibraryDependencyWarning.vue:79
+#: builder/src/components/Add/library/DesignLibraryDependencyWarning.vue:268
+#: builder/src/components/ElementStudio/ElementStudioVariableOptions.vue:3
+#: builder/src/components/Settings/Preferences/CustomUiSettings.vue:270
+#: builder/src/oxygen/variables/panel/VariablesPanel.vue:4
+#: builder/src/oxygen/variables/panel/VariablesPanel.vue:25
+#: builder/src/subapps/design-library/DesignLibraryConfirmImportDialog.vue:139
+#: builder/src/subapps/design-library/DesignLibraryImportingDialog.vue:301
+msgid "Variables"
+msgstr ""
+
+#: builder/src/oxygen/variables/VariableChooserEmpty.vue:14
+msgid "Variables panel."
+msgstr ""
+
+#: builder/src/components/AI/InlineAI.vue:96
+msgid "Variations"
+msgstr ""
+
+#: builder/src/components/Builder/TopBar/PreviewSize.vue:96
+msgid "Vertically Center"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/LinkInput/LinkInputSettings.vue:81
+#: builder/src/components/Reusable/CustomInputs/LinkInput/LinkInputSettings.vue:420
+msgid "Video"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioVideoOptions.vue:3
+msgid "Video Options"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/VideoInput.vue:199
+#. translators: %s: video platform name, %s: allowed platforms list
+msgid "Videos from %s are not allowed for this field. Allowed embed platforms are %s"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/VideoInput.vue:208
+#. translators: %s: allowed platforms list
+msgid "Videos from this platform, are not allowed for this field. Allowed embed platforms are %s"
+msgstr ""
+
+#: builder/src/components/Add/library/DesignLibraryPassword.vue:105
+msgid "View Design Set"
+msgstr ""
+
+#: builder/src/BrowseMode.vue:8
+msgid "Viewing Page"
+msgstr ""
+
+#: builder/src/components/Add/library/DesignLibraryModal.vue:59
+msgid "Visit site"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/3rdPartyWrappers/TipTapWrapper.vue:8
+msgid "Visual"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/GlobalColorSettingsDropdown.vue:91
+msgid "Warning:"
+msgstr ""
+
+#: builder/src/oxygen/variables/VariableChip.vue:48
+msgid "Warning: Deleted Variable"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/IconInput/IconChooserDialog.vue:120
+msgid "We couldn't find any icons matching \"%s\"."
+msgstr ""
+
+#: builder/src/subapps/onboarding/components/OnboardingStartForm.vue:8
+msgid "We just need a few details. These answers help us generate a starting point that feels right for you."
+msgstr ""
+
+#: builder/src/subapps/onboarding/views/barebones/OnboardingBarebonesSitemap.vue:28
+msgid "We're creating a sitemap."
+msgstr ""
+
+#: builder/src/subapps/onboarding/views/OnboardingSelectType.vue:28
+msgid "We're setting up your design library."
+msgstr ""
+
+#: builder/src/subapps/onboarding/views/OnboardingComplete.vue:48
+msgid "We're setting up your website based on your choices."
+msgstr ""
+
+#: builder/src/subapps/onboarding/views/OnboardingComplete.vue:14
+msgid "We've set up your website based on your choices. You can now start customizing it to make it truly yours."
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/Typography/CustomTypographyInput.vue:196
+msgid "Weight"
+msgstr ""
+
+#: builder/src/components/Onboarding/FirstTimeVisit.vue:9
+#. translators: %s: Plugin name
+msgid "Welcome to %s"
+msgstr ""
+
+#: builder/src/components/AI/AIPluginNotInstalled.vue:5
+msgid "Welcome to Breakdance AI"
+msgstr ""
+
+#: builder/src/subapps/onboarding/components/OnboardingStartForm.vue:65
+msgid "What are your website goals?"
+msgstr ""
+
+#: builder/src/subapps/onboarding/components/OnboardingStartForm.vue:53
+msgid "What category does your website fall under?"
+msgstr ""
+
+#: builder/src/subapps/onboarding/components/OnboardingStartForm.vue:34
+msgid "What is your website about?"
+msgstr ""
+
+#: builder/src/subapps/onboarding/components/OnboardingStartForm.vue:26
+msgid "What is your website called?"
+msgstr ""
+
+#: builder/src/subapps/onboarding/components/OnboardingStartForm.vue:75
+msgid "What is your website's writing style?"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/LinkInput/LinkInputSettings.vue:449
+msgid "WhatsApp"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/ConditionalFieldInput.vue:5
+msgid "When field"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioDependencies.vue:342
+#: builder/src/components/ElementStudio/ElementStudioDependencies.vue:418
+msgid "When left empty the dependencies will always be added."
+msgstr ""
+
+#: builder/src/subapps/regenerate-cache/RegenerateCacheForm.vue:15
+#. translators: 1: plugin name, 2: plugin name
+msgid "When saving in %s, the CSS and other dependencies required by the saved item are cached. Use this tool to regenerate the caches for all %s-created content."
+msgstr ""
+
+#: builder/src/components/Notifications/Types/Util/EmailForHost.vue:55
+msgid "When using the Breakdance or Oxygen plugin, my server failed to fulfill the following request as expected. Instead, it returned an error code."
+msgstr ""
+
+#: builder/src/components/Notifications/Types/Util/EmailForHost.vue:64
+msgid "Why did the server return a %s error?"
+msgstr ""
+
+#: builder/src/components/Builder/TopBar/PreviewSize.vue:52
+#: builder/src/components/Reusable/CustomInputs/BorderComplex.vue:109
+#: builder/src/components/Reusable/CustomInputs/MediaSize/MediaCropper.vue:5
+msgid "Width"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioPresets.vue:67
+msgid "will be replaced with the correct path in the element."
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioMediaSizeOptions.vue:11
+msgid "Will only show an image's available sizes. Use [] when inside a repeater."
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/Typography/CustomTypographyInput.vue:355
+msgid "Word Spacing"
+msgstr ""
+
+#: builder/src/components/AI/AIPanel.vue:433
+#: builder/src/components/Settings/DocumentOrGlobalSettings/GlobalSettingsPanel.vue:130
+#: builder/src/components/Settings/ElementPresets/PresetsPanel.vue:71
+#: builder/src/components/Settings/Selectors/SelectorsPanel.vue:71
+#: builder/src/oxygen/variables/panel/VariablesPanel.vue:142
+msgid "Would you like to save or discard these changes?"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioMediaOptions.vue:4
+msgid "WP Media Options"
+msgstr ""
+
+#: builder/src/components/Canvas/OverlaidUI/Canvas/RightClickWrapMenu.vue:127
+msgid "Wrap In"
+msgstr ""
+
+#: builder/src/components/AI/InlineAI.vue:57
+msgid "Write CSS with AI."
+msgstr ""
+
+#: builder/src/components/AI/AIWriter.vue:63
+msgid "Write it like snoop dogg"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/ShadowInput/ShadowInput.vue:30
+msgid "X"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/ShadowInput/ShadowInput.vue:41
+msgid "Y"
+msgstr ""
+
+#: builder/src/subapps/design-library/DesignLibraryConfirmImportDialog.vue:183
+msgid "You already did full site import for this site."
+msgstr ""
+
+#: builder/src/components/Notifications/Types/LoggedOutError.vue:7
+msgid "You are not logged in"
+msgstr ""
+
+#: builder/src/subapps/onboarding/views/barebones/OnboardingBarebonesSitemap.vue:29
+msgid "You can now view and manage your sitemap."
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioAction.vue:74
+msgid "You can use Twig to access the element properties. eg."
+msgstr ""
+
+#: builder/src/components/UI/InvalidPostDialog.vue:14
+msgid "You can't edit this item because it is in the Trash. Please restore it and try again."
+msgstr ""
+
+#: builder/src/components/Settings/ElementPresets/PresetsList.vue:34
+msgid "You don't have any presets yet."
+msgstr ""
+
+#: builder/src/components/UI/InvalidPostDialog.vue:48
+#. translators: %s: Post type name
+msgid "You don't have enough permissions to edit \"%s\" post type."
+msgstr ""
+
+#: builder/src/subapps/manage-templates/EmptyState.vue:63
+#. translators: %s: template type name (plural)
+msgid "You have no deleted %s."
+msgstr ""
+
+#: builder/src/subapps/manage-templates/EmptyState.vue:74
+#. translators: %s: template type name (plural)
+msgid "You have no published %s."
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioTopBar.vue:257
+msgid "You have unsaved changes"
+msgstr ""
+
+#: builder/src/components/AI/AIPanel.vue:432
+msgid "You have unsaved changes to your AI Settings."
+msgstr ""
+
+#: builder/src/components/Settings/DocumentOrGlobalSettings/GlobalSettingsPanel.vue:129
+msgid "You have unsaved changes to your Global Settings."
+msgstr ""
+
+#: builder/src/components/Settings/ElementPresets/PresetsPanel.vue:70
+msgid "You have unsaved changes to your Presets."
+msgstr ""
+
+#: builder/src/components/Settings/Selectors/SelectorsPanel.vue:70
+msgid "You have unsaved changes to your Selectors."
+msgstr ""
+
+#: builder/src/oxygen/variables/panel/VariablesPanel.vue:141
+msgid "You have unsaved changes to your Variables."
+msgstr ""
+
+#: builder/src/Builder.vue:117
+msgid "You must save your changes first"
+msgstr ""
+
+#: builder/src/components/AI/AINoApiKey.vue:9
+#: builder/src/components/AI/InlineAiNoApiKey.vue:25
+msgid "You need to set up your OpenAI API key before you can use the AI assistant."
+msgstr ""
+
+#: builder/src/oxygen/classes/OxyClassToken.vue:184
+msgid "You're about to delete \"%s\" permanently from the site. Are you sure?"
+msgstr ""
+
+#: builder/src/components/Add/library/DesignLibraryDependencyWarning.vue:9
+msgid "You've already imported settings from this Design Library."
+msgstr ""
+
+#: builder/src/components/Add/library/DesignLibraryDesignPresets.vue:9
+msgid "You've already imported the Design Presets from this site."
+msgstr ""
+
+#: builder/src/components/Notifications/Types/LoggedOutError.vue:14
+#. translators: %s: Plugin name
+msgid "You've been logged out of WordPress. Log back in to continue using %s."
+msgstr ""
+
+#: builder/src/components/Add/library/DesignLibraryModal.vue:80
+#: builder/src/subapps/design-library/ManageDesignLibrary.vue:14
+msgid "Your Design Library is empty"
+msgstr ""
+
+#: builder/src/subapps/design-library/DesignLibraryConfirmImportDialog.vue:161
+#. translators: %s: Items list (Templates, Headers, Footers, etc)
+msgid "Your existing %s will be moved to the trash. You can restore them from the trash after the import."
+msgstr ""
+
+#: builder/src/components/Add/library/DesignLibraryDesignPresets.vue:60
+msgid "Your existing Design Presets will be overwritten with the Presets from this library website."
+msgstr ""
+
+#: builder/src/components/Notifications/Types/Util/EmailForHost.vue:71
+msgid "Your Name"
+msgstr ""
+
+#: builder/src/components/Notifications/Types/FriendlyMultiError.vue:28
+#. translators: %s: HTTP error code
+msgid "Your server returned a %s error."
+msgstr ""
+
+#: builder/src/components/Notifications/Types/SessionExpiredError.vue:7
+msgid "Your session has expired"
+msgstr ""
+
+#: builder/src/components/Notifications/Types/SessionExpiredError.vue:14
+#. translators: %s: Plugin name
+msgid "Your session has expired. Refresh your session to continue using %s."
+msgstr ""
+
+#: builder/src/subapps/onboarding/views/barebones/OnboardingBarebonesSitemap.vue:22
+msgid "Your sitemap is ready!"
+msgstr ""
+
+#: builder/src/components/Builder/TopBar/PreviewChooser/PreviewChooserNoResults.vue:13
+msgid "Your template settings don't match any content. You can:"
+msgstr ""
+
+#: builder/src/subapps/onboarding/views/OnboardingComplete.vue:10
+msgid "Your website is ready!"
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/ClassInput/ClassInput.vue:95
+msgctxt "%s: CSS class name(s)"
+msgid "%s is assigned to this element but is no longer present on the site. Remove it by <span>clicking here</span> or editing the class list."
+msgid_plural "%s are assigned to this element but are no longer present on the site. Remove them by <span>clicking here</span> or editing the class list."
+msgstr[0] ""
+msgstr[1] ""
+
+#: builder/src/components/Reusable/CustomInputs/GlobalColorsInput.vue:109
+#. translators: %s: Color name
+msgctxt "Color"
+msgid "Add %s"
+msgstr ""
+
+#: builder/src/components/Reusable/ControlsTree/ControlsTreeControlSectionContextMenu.vue:111
+#. translators: %s: Control label/section name
+msgctxt "Controls Tree"
+msgid "Clear %s"
+msgstr ""
+
+#: builder/src/components/Reusable/ControlsTree/ControlsTreeControlSectionContextMenu.vue:93
+#. translators: %s: Control label/section name
+msgctxt "Controls Tree"
+msgid "Copy %s"
+msgstr ""
+
+#: builder/src/components/Reusable/ControlsTree/ControlsTreeControlSectionContextMenu.vue:102
+#. translators: %s: Control label/section name
+msgctxt "Controls Tree"
+msgid "Paste %s"
+msgstr ""
+
+#: builder/src/subapps/design-library/DesignLibraryConfirmImportDialog.vue:109
+#. translators: %s: Provider name
+msgctxt "Design Library"
+msgid "Import %s"
+msgstr ""
+
+#: builder/src/components/Canvas/ForeignDocumentsOverlay.vue:14
+#: builder/src/components/Canvas/ForeignDocumentsOverlay.vue:23
+#. translators: %s: Document title
+msgctxt "Document"
+msgid "Edit %s"
+msgstr ""
+
+#: builder/src/components/Builder/TopBar/DocumentChooser/DocumentChooser.vue:22
+#. translators: %s: Document type label
+msgctxt "Document"
+msgid "Editing %s"
+msgstr ""
+
+#: builder/src/components/Add/AddElement.vue:240
+msgctxt "element nesting"
+msgid "Must be added inside a \"%s\" element"
+msgid_plural "Must be added inside a \"%s\" elements"
+msgstr[0] ""
+msgstr[1] ""
+
+#: builder/src/components/Settings/ElementPresets/EditPreset.vue:40
+#. translators: %s: Search query
+msgctxt "Element Presets"
+msgid "Search results for \"%s\""
+msgstr ""
+
+#: builder/src/components/ElementPropertiesPanel/TabsAndControls.vue:41
+#. translators: %s: Search query
+msgctxt "Element Properties"
+msgid "Search results for \"%s\""
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioTopBar.vue:74
+#. translators: Element Studio. %s: Item type (element, macro, preset)
+msgctxt "Element Studio"
+msgid "New %s"
+msgstr ""
+
+#: builder/src/components/ElementStudio/ElementStudioTopBar.vue:24
+#. translators: Element Studio. %s: Item type (element, macro, preset)
+msgctxt "Element Studio Item Type"
+msgid "Open %s"
+msgstr ""
+
+#: builder/src/subapps/manage-templates/EditGlobalBlockModal.vue:16
+#: builder/src/subapps/manage-templates/EditGlobalBlockModal.vue:60
+#: builder/src/subapps/manage-templates/ManageGlobalBlocks.vue:29
+#. translators: %s: Global block label
+msgctxt "Global Block"
+msgid "Add %s"
+msgstr ""
+
+#: builder/src/subapps/manage-templates/BlockRow.vue:110
+#. translators: %s: Original block label
+msgctxt "Global Block"
+msgid "Copy of \"%s\""
+msgstr ""
+
+#: builder/src/components/Reusable/CustomInputs/GlobalBlockInput.vue:27
+#. translators: %s: Global block label
+msgctxt "Global Block"
+msgid "Edit %s"
+msgstr ""
+
+#: builder/src/subapps/manage-templates/EditGlobalBlockModal.vue:20
+#. translators: %s: Block title
+msgctxt "Global Block"
+msgid "Editing \"%s\""
+msgstr ""
+
+#: builder/src/subapps/manage-templates/EditGlobalBlockModal.vue:34
+#. translators: %s: Global block label
+msgctxt "Global Block"
+msgid "New %s"
+msgstr ""
+
+#: builder/src/subapps/manage-templates/ManageGlobalBlocks.vue:11
+#. translators: %s: Global blocks label
+msgctxt "Global Blocks"
+msgid "Deleted %s"
+msgstr ""
+
+#: builder/src/components/Settings/DocumentOrGlobalSettings/GlobalSettingsPanel/GlobalSettingsPanelControlsViewMode.vue:20
+#. translators: Global Settings. %s: Search query
+msgctxt "Global Settings"
+msgid "Search results for \"%s\""
+msgstr ""
+
+#: builder/src/oxygen/properties-panel/OxyTabsAndControls.vue:250
+#. translators: %s: Control slug/name
+msgctxt "Oxygen Control"
+msgid "Paste %s"
+msgstr ""
+
+#: builder/src/components/UI/TemplateDialog.vue:57
+msgctxt "Plugin name"
+msgid "The template does not contain a Template Content Area element. Therefore, the posts it applies to are not editable in %s."
+msgstr ""
+
+#: builder/src/components/ElementPropertiesPanel/SearchBoxEmptyState.vue:29
+#. translators: %s: Item type being searched
+msgctxt "Search"
+msgid "No %s found."
+msgstr ""
+
+#: builder/src/components/Settings/Selectors/EditSelector.vue:70
+#. translators: %s: Search query
+msgctxt "Selectors"
+msgid "Search results for \"%s\""
+msgstr ""
+
+#: builder/src/components/Settings/DocumentOrGlobalSettings/ImportExportDropdownMenu.vue:25
+#: builder/src/components/Settings/DocumentOrGlobalSettings/ImportExportDropdownMenu.vue:40
+#. translators: %s: Settings name
+msgctxt "Settings"
+msgid "Import %s"
+msgstr ""
+
+#: builder/src/subapps/manage-templates/EditTemplateModal.vue:17
+#: builder/src/subapps/manage-templates/EditTemplateModal.vue:228
+#. translators: %s: Template type name
+msgctxt "Template"
+msgid "Add %s"
+msgstr ""
+
+#: builder/src/subapps/manage-templates/TemplateRow.vue:257
+#. translators: %s: Original template title
+msgctxt "Template"
+msgid "Copy of \"%s\""
+msgstr ""
+
+#: builder/src/subapps/manage-templates/TemplateRow.vue:29
+#: builder/src/subapps/manage-templates/TemplateRow.vue:36
+#. translators: %s: Plugin name
+msgctxt "Template"
+msgid "Edit in %s"
+msgstr ""
+
+#: builder/src/subapps/manage-templates/EditTemplateModal.vue:21
+#. translators: %s: Template title
+msgctxt "Template"
+msgid "Editing \"%s\""
+msgstr ""
+
+#: builder/src/subapps/manage-templates/EditTemplateModal.vue:45
+#. translators: %s: Template type name
+msgctxt "Template"
+msgid "New %s"
+msgstr ""
+
+#: builder/src/subapps/manage-templates/ManageTemplates.vue:11
+#. translators: %s: Template type name (plural)
+msgctxt "Templates"
+msgid "Deleted %s"
+msgstr ""
+
+#: builder/src/subapps/manage-templates/EmptyState.vue:89
+#. translators: %s: Template type name (plural)
+msgctxt "Templates"
+msgid "No %s found."
+msgstr ""
+

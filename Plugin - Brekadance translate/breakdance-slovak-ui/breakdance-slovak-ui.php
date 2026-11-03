@@ -3,7 +3,7 @@
 /**
  * Plugin Name: Breakdance Slovak UI
  * Description: Slovak translation of the Breakdance interface (editor and admin pages). Active only for users whose language is Slovencina (sk_SK).
- * Version: 1.2.0
+ * Version: 1.6.0
  * Author: Mikulas Polak
  * Requires at least: 6.0
  * Requires PHP: 7.4
@@ -14,7 +14,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-define('BSU_PLUGIN_VERSION', '1.2.0');
+define('BSU_PLUGIN_VERSION', '1.6.0');
 define('BSU_PLUGIN_PATH', plugin_dir_path(__FILE__));
 
 const BSU_LOCALE = 'sk_SK';
