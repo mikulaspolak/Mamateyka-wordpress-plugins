@@ -83,10 +83,10 @@ class Oznamy_Shortcode
     public static function render_embed($request)
     {
         if ('obrazky' === $request['typ']) {
-            // Display-only embed (monitor vo vestibule): vždy plné originály, nie miniatúry.
-            self::$original_images = true;
+            // Display-only embed (monitor vo vestibule): väčšie miniatúry pre Full HD, nie 480 px ani originály.
+            self::$monitor_images = true;
             $html = self::render_images(array('columns' => '2'));
-            self::$original_images = false;
+            self::$monitor_images = false;
         } else {
             $html = self::render_modern(array());
         }
@@ -1885,7 +1885,7 @@ class Oznamy_Shortcode
      */
     private static function enqueue_lightbox_script()
     {
-        if (self::$original_images) {
+        if (self::$monitor_images) {
             return;
         }
 
@@ -2629,7 +2629,7 @@ class Oznamy_Shortcode
                 });
             })();
         </script>
-        <?php
+<?php
         return ob_get_clean();
     }
 
@@ -2950,8 +2950,8 @@ class Oznamy_Shortcode
         self::enqueue_archive_script();
         self::enqueue_lightbox_script();
 
-        // Miniatúry a originály majú oddelenú cache, aby sa nikdy nemiešali.
-        $variant   = self::$original_images ? '_full' : '';
+        // Web a monitor majú oddelenú cache, aby sa nikdy nemiešali.
+        $variant   = self::$monitor_images ? '_monitor' : '';
         $settings  = get_option(OZNAMY_OPTION_KEY, array());
         self::schedule_next_release_cache_purge($settings);
         $publication = self::resolve_current_publication(self::resolve_render_mode($settings));
@@ -3156,7 +3156,7 @@ class Oznamy_Shortcode
 
         $cached_images = array();
         foreach ($images as $image) {
-            $cached = self::ensure_image_cached($image['id'], $image['name'], $subfolder['id'], $client);
+            $cached = self::ensure_image_cached($image['id'], $image['name'], $subfolder['id'], $client, '', self::$monitor_images);
             if (! is_wp_error($cached)) {
                 $cached['name'] = $image['name'];
                 $cached_images[] = $cached;
@@ -3192,14 +3192,14 @@ class Oznamy_Shortcode
         );
     }
 
-    /** @var bool When true, galleries use the full originals instead of thumbnails (monitor embed). */
-    private static $original_images = false;
+    /** @var bool When true, galleries use the larger Full HD thumbnails (monitor embed). */
+    private static $monitor_images = false;
 
     /**
      * Build masonry image grid HTML. The lightbox lives in assets/lightbox.js, so the (cached)
      * markup contains only the figures.
      *
-     * @param array<int, array{url: string, name: string, thumb_url?: string, thumb_width?: int, thumb_height?: int}> $images
+     * @param array<int, array{url: string, name: string, thumb_url?: string, thumb_width?: int, thumb_height?: int, monitor_url?: string, monitor_width?: int, monitor_height?: int}> $images
      * @return string
      */
     private static function build_images_html($images)
@@ -3214,11 +3214,12 @@ class Oznamy_Shortcode
             $position++;
             $src   = esc_url($image['url']);
             $alt   = esc_attr(self::image_alt_text($image['name'], $position, $total));
-            $thumb = (! self::$original_images && ! empty($image['thumb_url'])) ? esc_url($image['thumb_url']) : $src;
+            $prefix = self::$monitor_images ? 'monitor' : 'thumb';
+            $thumb  = ! empty($image[$prefix . '_url']) ? esc_url($image[$prefix . '_url']) : $src;
 
             $size_attrs = '';
-            if ($thumb !== $src && ! empty($image['thumb_width']) && ! empty($image['thumb_height'])) {
-                $size_attrs = ' width="' . (int) $image['thumb_width'] . '" height="' . (int) $image['thumb_height'] . '"';
+            if ($thumb !== $src && ! empty($image[$prefix . '_width']) && ! empty($image[$prefix . '_height'])) {
+                $size_attrs = ' width="' . (int) $image[$prefix . '_width'] . '" height="' . (int) $image[$prefix . '_height'] . '"';
             }
 
             echo '<figure class="oznamy-img-item" data-src="' . $src . '" data-alt="' . $alt . '" role="button" tabindex="0">';
@@ -3271,15 +3272,18 @@ class Oznamy_Shortcode
     /** Longest side (px) of the gallery thumbnail; the full original stays next to it for the lightbox. */
     const THUMB_MAX_SIDE = 480;
     const THUMB_QUALITY = 80;
+    // Monitor vo vestibule (Full HD, na výšku aj na šírku): najdlhšia strana plagátu na obrazovke je ~1700 px.
+    const MONITOR_MAX_SIDE = 1600;
+    const MONITOR_QUALITY = 85;
     // Skenované plagáty môžu byť obrovské; nad touto hranicou sa miniatúra nerobí, aby nepadol PHP kvôli pamäti.
     const THUMB_MAX_SOURCE_PIXELS = 50000000;
 
     /**
      * Ensure an image is downloaded to the local cache together with its thumbnail.
      *
-     * @return array{url:string,thumb_url:string,thumb_width:int,thumb_height:int}|WP_Error
+     * @return array{url:string,thumb_url:string,thumb_width:int,thumb_height:int,monitor_url:string,monitor_width:int,monitor_height:int}|WP_Error
      */
-    private static function ensure_image_cached($file_id, $filename, $subfolder_id, $client, $modified_time = '')
+    private static function ensure_image_cached($file_id, $filename, $subfolder_id, $client, $modified_time = '', $with_monitor = false)
     {
         $safe_name = self::versioned_image_filename(sanitize_file_name($filename), $file_id, $modified_time);
         $dir       = self::get_image_cache_dir($subfolder_id);
@@ -3297,14 +3301,26 @@ class Oznamy_Shortcode
             'thumb_url'    => '',
             'thumb_width'  => 0,
             'thumb_height' => 0,
+            'monitor_url'  => '',
+            'monitor_width'  => 0,
+            'monitor_height' => 0,
         );
 
         // Miniatúra je len optimalizácia: ak sa nepodarí, galéria použije originál.
-        $thumb = self::ensure_image_thumbnail($path);
+        $thumb = self::ensure_image_thumbnail($path, self::THUMB_MAX_SIDE, self::THUMB_QUALITY);
         if ($thumb) {
             $cached['thumb_url']    = self::get_image_cache_url($subfolder_id, $thumb['file']);
             $cached['thumb_width']  = $thumb['width'];
             $cached['thumb_height'] = $thumb['height'];
+        }
+
+        if ($with_monitor) {
+            $monitor = self::ensure_image_thumbnail($path, self::MONITOR_MAX_SIDE, self::MONITOR_QUALITY);
+            if ($monitor) {
+                $cached['monitor_url']    = self::get_image_cache_url($subfolder_id, $monitor['file']);
+                $cached['monitor_width']  = $monitor['width'];
+                $cached['monitor_height'] = $monitor['height'];
+            }
         }
 
         return $cached;
@@ -3315,7 +3331,7 @@ class Oznamy_Shortcode
      *
      * @return array{file:string,width:int,height:int}|null Null when no thumbnail is needed or possible.
      */
-    private static function ensure_image_thumbnail($path)
+    private static function ensure_image_thumbnail($path, $max_side, $quality)
     {
         $info = pathinfo($path);
 
@@ -3340,10 +3356,10 @@ class Oznamy_Shortcode
             $target_ext = 'webp';
         }
 
-        $thumb_file = $info['filename'] . '-oznamy-' . self::THUMB_MAX_SIDE . '.' . $target_ext;
+        $thumb_file = $info['filename'] . '-oznamy-' . $max_side . '.' . $target_ext;
         $thumb_path = $info['dirname'] . '/' . $thumb_file;
 
-        if (max($source[0], $source[1]) <= self::THUMB_MAX_SIDE) {
+        if (max($source[0], $source[1]) <= $max_side) {
             return null;
         }
         if ($source[0] * $source[1] > self::THUMB_MAX_SOURCE_PIXELS) {
@@ -3369,9 +3385,9 @@ class Oznamy_Shortcode
         if (method_exists($editor, 'maybe_exif_rotate')) {
             $editor->maybe_exif_rotate();
         }
-        $editor->set_quality(self::THUMB_QUALITY);
+        $editor->set_quality($quality);
 
-        $resized = $editor->resize(self::THUMB_MAX_SIDE, self::THUMB_MAX_SIDE, false);
+        $resized = $editor->resize($max_side, $max_side, false);
         if (is_wp_error($resized)) {
             error_log('[Oznamy] Thumbnail resize failed: ' . $resized->get_error_message());
             return null;
