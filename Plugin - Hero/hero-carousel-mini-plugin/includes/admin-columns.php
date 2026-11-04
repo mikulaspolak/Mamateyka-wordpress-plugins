@@ -25,25 +25,13 @@ function hcm_admin_columns($columns) {
 add_action('manage_hero_carousel_posts_custom_column', 'hcm_admin_custom_column', 10, 2);
 function hcm_admin_custom_column($column, $post_id) {
     if ($column === 'thumbnail') {
-        $image = function_exists('get_field') ? get_field('carousel_image', $post_id) : null;
-
-        if (is_array($image) && !empty($image['ID'])) {
-            echo wp_get_attachment_image((int) $image['ID'], array(50, 50));
-
-            $image_label = '';
-            if (!empty($image['title'])) {
-                $image_label = $image['title'];
-            } elseif (!empty($image['filename'])) {
-                $image_label = $image['filename'];
-            }
-
-            if ($image_label !== '') {
-                echo '<br><small>' . esc_html($image_label) . '</small>';
-            }
-            return;
+        $image_id = hcm_get_hero_image_id($post_id);
+        if ($image_id) {
+            echo wp_get_attachment_image($image_id, array(50, 50));
         }
-
-        echo '<span aria-hidden="true">-</span>';
+        if (!$image_id) {
+            echo '<span aria-hidden="true">-</span>';
+        }
         return;
     }
 
@@ -55,7 +43,7 @@ function hcm_admin_custom_column($column, $post_id) {
     }
 
     if ($column === 'hero_link') {
-        $link = function_exists('get_field') ? get_field('carousel_link', $post_id) : '';
+        $link = get_post_meta($post_id, 'carousel_link', true);
         if (!empty($link)) {
             $resolved_link = function_exists('hcm_resolve_carousel_link') ? hcm_resolve_carousel_link($link) : esc_url_raw($link);
             echo '<a href="' . esc_url($resolved_link) . '" target="_blank" rel="noopener noreferrer">' . esc_html($link) . '</a>';

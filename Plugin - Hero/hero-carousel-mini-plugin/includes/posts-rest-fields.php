@@ -362,7 +362,7 @@ function hcm_transform_hero_item_to_carousel($post)
 
     $post_id = $post->ID;
 
-    // Get image from ACF or featured image
+    // Read the saved image, with the featured image as a fallback.
     $image_url = '';
     $image_alt = '';
     $image_data = array(
@@ -371,26 +371,9 @@ function hcm_transform_hero_item_to_carousel($post)
         'image_sizes' => '',
     );
 
-    if (function_exists('get_field')) {
-        $image = get_field('carousel_image', $post_id);
-        if (!empty($image['url'])) {
-            $image_url = $image['url'];
-            $image_alt = $image['alt'] ?? '';
-
-            $attachment_id = absint($image['ID'] ?? ($image['id'] ?? 0));
-            if ($attachment_id > 0) {
-                $attachment_data = hcm_get_attachment_image_data($attachment_id);
-                $image_url = $attachment_data['image_url'] ?: $image_url;
-                $image_alt = $image_alt ?: $attachment_data['image_alt'];
-                $image_data = $attachment_data;
-            }
-        }
-    }
-
-    // Fallback to featured image
-    if (!$image_url && has_post_thumbnail($post_id)) {
-        $thumb_id = get_post_thumbnail_id($post_id);
-        $attachment_data = hcm_get_attachment_image_data($thumb_id);
+    $attachment_id = hcm_get_hero_image_id($post_id);
+    if ($attachment_id > 0) {
+        $attachment_data = hcm_get_attachment_image_data($attachment_id);
         $image_url = $attachment_data['image_url'];
         $image_alt = $attachment_data['image_alt'];
         $image_data = $attachment_data;
@@ -400,12 +383,14 @@ function hcm_transform_hero_item_to_carousel($post)
         return null;
     }
 
-    // Get title and link from ACF or post fields
-    $carousel_title = function_exists('get_field') ? (string) get_field('carousel_title', $post_id) : (string) $post->post_title;
+    // Keep an explicitly empty carousel title empty; older items without this field use the post title.
+    $carousel_title = metadata_exists('post', $post_id, 'carousel_title')
+        ? (string) get_post_meta($post_id, 'carousel_title', true)
+        : (string) $post->post_title;
     $carousel_title = trim($carousel_title);
-    $raw_link = function_exists('get_field') ? get_field('carousel_link', $post_id) : '';
+    $raw_link = get_post_meta($post_id, 'carousel_link', true);
     $carousel_link = function_exists('hcm_resolve_carousel_link') ? hcm_resolve_carousel_link($raw_link) : esc_url_raw((string) $raw_link);
-    $carousel_show_button = function_exists('get_field') ? get_field('carousel_show_button', $post_id) : true;
+    $carousel_show_button = get_post_meta($post_id, 'carousel_show_button', true);
 
     return array(
         'id' => $post_id,
@@ -420,7 +405,7 @@ function hcm_transform_hero_item_to_carousel($post)
         'image_sizes' => $image_data['image_sizes'],
         'image_alt' => esc_attr($image_alt ?: ($carousel_title ?: $post->post_title)),
         'carousel_link' => $carousel_link,
-        'carousel_show_button' => $carousel_show_button === null ? true : (bool) $carousel_show_button,
+        'carousel_show_button' => $carousel_show_button === '' ? true : (bool) $carousel_show_button,
         'link' => $carousel_link,
         'date' => $post->post_date_gmt,
     );

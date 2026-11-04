@@ -103,30 +103,20 @@ function hcm_get_post_id_from_rest_item($post)
 function hcm_get_image_url($post)
 {
     $post_id = hcm_get_post_id_from_rest_item($post);
-
-    if (function_exists('get_field')) {
-        $image = get_field('carousel_image', $post_id);
-        if (!empty($image['url'])) {
-            return esc_url_raw($image['url']);
-        }
-    }
-
-    if (has_post_thumbnail($post_id)) {
-        $thumb = wp_get_attachment_image_src(get_post_thumbnail_id($post_id), 'large');
-        return !empty($thumb[0]) ? esc_url_raw($thumb[0]) : null;
-    }
-
-    return null;
+    $image_id = hcm_get_hero_image_id($post_id);
+    $image = $image_id ? wp_get_attachment_image_src($image_id, 'large') : false;
+    return !empty($image[0]) ? esc_url_raw($image[0]) : null;
 }
 
 function hcm_get_image_alt($post)
 {
     $post_id = hcm_get_post_id_from_rest_item($post);
 
-    if (function_exists('get_field')) {
-        $image = get_field('carousel_image', $post_id);
-        if (!empty($image['alt'])) {
-            return sanitize_text_field($image['alt']);
+    $image_id = hcm_get_hero_image_id($post_id);
+    if ($image_id) {
+        $alt = get_post_meta($image_id, '_wp_attachment_image_alt', true);
+        if ($alt !== '') {
+            return sanitize_text_field($alt);
         }
     }
 
@@ -137,9 +127,8 @@ function hcm_get_carousel_title($post)
 {
     $post_id = hcm_get_post_id_from_rest_item($post);
 
-    if (function_exists('get_field')) {
-        $value = trim((string) get_field('carousel_title', $post_id));
-        return $value !== '' ? sanitize_text_field($value) : '';
+    if (metadata_exists('post', $post_id, 'carousel_title')) {
+        return sanitize_text_field((string) get_post_meta($post_id, 'carousel_title', true));
     }
 
     return get_the_title($post_id);
@@ -172,11 +161,9 @@ function hcm_get_carousel_link($post)
 {
     $post_id = hcm_get_post_id_from_rest_item($post);
 
-    if (function_exists('get_field')) {
-        $value = get_field('carousel_link', $post_id);
-        if (!empty($value)) {
-            return hcm_resolve_carousel_link($value);
-        }
+    $value = get_post_meta($post_id, 'carousel_link', true);
+    if (!empty($value)) {
+        return hcm_resolve_carousel_link($value);
     }
 
     return get_permalink($post_id);

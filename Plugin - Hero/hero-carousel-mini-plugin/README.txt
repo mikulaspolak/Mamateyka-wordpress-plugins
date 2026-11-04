@@ -3,7 +3,7 @@ Hero Carousel Mini Plugin
 
 What this plugin does:
 - registers hero_carousel custom post type
-- registers ACF fields for hero carousel items
+- provides native WordPress fields for hero carousel items (no ACF dependency)
 - adds CTA mode toggle per item (carousel_show_button)
 - adds enabled/disabled switch per item (carousel_enabled)
 - exposes image_url, image_alt, carousel_title, carousel_link, carousel_enabled, carousel_show_button in REST API
@@ -15,7 +15,7 @@ What this plugin does:
 
 Requirements:
 - WordPress 6+
-- ACF plugin active
+- PHP 7.4+
 
 Installation:
 1. Copy folder hero-carousel-mini-plugin to wp-content/plugins/
@@ -38,6 +38,10 @@ Release build:
 - The ZIP keeps `hero-carousel-mini-plugin` as its root folder.
 
 Release Notes:
+- 3.11.0
+	- version bump to 3.11.0
+- 3.10.0
+	- replaced the ACF dependency with native WordPress fields while retaining existing carousel metadata
 - 3.9.0
 	- version bump to 3.9.0
 - 3.8.0
