@@ -168,11 +168,87 @@ class Oznamy_GDocs_Fetcher
 
         $html = wp_kses($html, self::ALLOWED_TAGS);
         $html = $this->sanitize_inline_styles($html);
+        $html = $this->remove_preface_parish_title_and_date($html);
 
         // Normalise excess blank lines.
         $html = preg_replace('/\n{3,}/', "\n\n", $html);
 
         return trim($html);
+    }
+
+    /**
+     * Remove the repeated title and date rows before the liturgical calendar.
+     */
+    private function remove_preface_parish_title_and_date($html)
+    {
+        $pattern = '/<(p|h[1-6])\b[^>]*>(.*?)<\/\1\s*>/is';
+        if (! preg_match_all($pattern, (string) $html, $nodes, PREG_SET_ORDER | PREG_OFFSET_CAPTURE)) {
+            return $html;
+        }
+
+        $calendar_offset = null;
+        foreach ($nodes as $node) {
+            if (preg_match('/^liturgicky\s+kalendar[.!:]?$/u', $this->normalize_document_text($node[2][0]))) {
+                $calendar_offset = $node[0][1];
+                break;
+            }
+        }
+
+        if (null === $calendar_offset) {
+            return $html;
+        }
+
+        $output = '';
+        $offset = 0;
+        foreach ($nodes as $node) {
+            $node_offset = $node[0][1];
+            if ($node_offset >= $calendar_offset) {
+                break;
+            }
+
+            $output .= substr($html, $offset, $node_offset - $offset);
+            $node_text = $this->normalize_document_text($node[2][0]);
+            if (! preg_match('/^farske\s+oznamy[.!:]?$/u', $node_text) && ! $this->is_document_date($node_text)) {
+                $output .= $node[0][0];
+            }
+            $offset = $node_offset + strlen($node[0][0]);
+        }
+
+        return $output . substr($html, $offset);
+    }
+
+    /**
+     * Normalize block text for case- and diacritic-insensitive comparisons.
+     */
+    private function normalize_document_text($html)
+    {
+        $text = preg_replace('/<br\s*\/?>/i', ' ', (string) $html);
+        $text = html_entity_decode(wp_strip_all_tags($text), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+        $text = preg_replace('/[\s\x{00A0}\x{200B}\x{FEFF}]+/u', ' ', trim($text));
+
+        return is_string($text) ? strtolower(remove_accents($text)) : '';
+    }
+
+    /**
+     * Recognize common numeric, Slovak, and English date-only rows.
+     */
+    private function is_document_date($text)
+    {
+        $day = '(?:0?[1-9]|[12]\d|3[01])';
+        $month_number = '(?:0?[1-9]|1[0-2])';
+        if (preg_match('/^(?:' . $day . '\s*[.\/-]\s*' . $month_number . '\s*[.\/-]\s*\d{4}|\d{4}\s*[.\/-]\s*' . $month_number . '\s*[.\/-]\s*' . $day . ')\.?$/u', $text)) {
+            return true;
+        }
+
+        $month_name = '(?:januar(?:a)?|februar(?:a)?|marec|marca|april(?:a)?|maj(?:a)?|jun(?:a)?|jul(?:a)?|august(?:a)?|september|oktober(?:a)?|november(?:a)?|december(?:a)?|january|february|march|may|june|july|august|september|october|november|december|jan|feb|mar|apr|jun|jul|aug|sep|sept|oct|nov|dec)';
+        $weekday = '(?:pondelok|utorok|streda|stvrtok|piatok|sobota|nedela|monday|tuesday|wednesday|thursday|friday|saturday|sunday)';
+        $day_first = $day . '\.?\s+(?:' . $month_name . '|\p{L}{3,})\.?';
+        $month_first = '(?:' . $month_name . '|\p{L}{3,})\.?\s+' . $day . ',?';
+
+        return (bool) preg_match(
+            '/^(?:' . $weekday . '[,\s]+)?(?:' . $day_first . '|' . $month_first . ')(?:(?:,\s*|\s+)\d{4})?\.?$/u',
+            $text
+        );
     }
 
     /**

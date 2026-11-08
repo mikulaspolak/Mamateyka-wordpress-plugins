@@ -391,6 +391,15 @@ class Oznamy_Shortcode
             $section_headings[$node_index] = self::get_modern_section_heading($node, $node_texts[$node_index]);
         }
 
+        $calendar_heading_index = false;
+        foreach ($node_texts as $node_index => $node_text) {
+            $calendar_title = strtolower(remove_accents(trim((string) $node_text)));
+            if (preg_match('/^liturgicky\s+kalendar[.!:]?$/', $calendar_title)) {
+                $calendar_heading_index = $node_index;
+                break;
+            }
+        }
+
         $intro_nodes = self::get_modern_intro_nodes($nodes, $node_texts, $section_headings);
         $output = '';
         $section_open = false;
@@ -430,13 +439,21 @@ class Oznamy_Shortcode
 
             $section_heading = $section_headings[$index] ?? false;
             if (false !== $section_heading) {
-                if ($section_open) {
-                    $output .= '</div>';
-                }
-                $output .= '<div class="oznamy-modern-section">';
-                $section_open = true;
                 $found_section = true;
-                $node = self::format_modern_section_heading($node, $section_heading);
+
+                if (false !== $calendar_heading_index && $index < $calendar_heading_index) {
+                    if (! $section_open) {
+                        $output .= '<div class="oznamy-modern-section oznamy-modern-section--preface">';
+                        $section_open = true;
+                    }
+                } else {
+                    if ($section_open) {
+                        $output .= '</div>';
+                    }
+                    $output .= '<div class="oznamy-modern-section">';
+                    $section_open = true;
+                    $node = self::format_modern_section_heading($node, $section_heading);
+                }
             } elseif ($section_open && self::is_empty_paragraph($node)) {
                 ++$index;
                 continue;

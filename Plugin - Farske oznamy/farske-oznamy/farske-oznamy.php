@@ -3,7 +3,7 @@
 /**
  * Plugin Name: Farské oznamy
  * Description: Automatically fetches parish announcements and Mass intentions from Google Docs.
- * Version:     1.134.0
+ * Version:     1.137.0
  * Requires at least: 5.9
  * Requires PHP: 7.0
  * Author:      Mikulas Polak
@@ -11,6 +11,9 @@
  * Text Domain: oznamy-gdocs
  *
  * Changelog:
+ *   1.137.0 - Release package generated.
+ *   1.136.0 - Release package generated.
+ *   1.135.0 - Release package generated.
  *   1.134.0 - Release package generated.
  *   1.133.0 - Release package generated.
  *   1.132.0 - Release package generated.
@@ -155,8 +158,8 @@ if (! defined('ABSPATH')) {
 
 define('OZNAMY_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('OZNAMY_PLUGIN_URL', plugin_dir_url(__FILE__));
-define('OZNAMY_VERSION', '1.134.0');
-define('OZNAMY_DB_VERSION', '1.134.0');
+define('OZNAMY_VERSION', '1.137.0');
+define('OZNAMY_DB_VERSION', '1.137.0');
 define('OZNAMY_OPTION_KEY', 'oznamy_settings');
 define('OZNAMY_CACHE_KEY_PREFIX', 'oznamy_cache_');
 define('OZNAMY_HISTORY_KEY', 'oznamy_sync_history');

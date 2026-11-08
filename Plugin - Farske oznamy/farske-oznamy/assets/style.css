@@ -306,6 +306,16 @@
   background: #dbe7ed;
 }
 
+.oznamy-content.oznamy-modern .oznamy-modern-section.oznamy-modern-section--preface,
+.oznamy-content.oznamy-modern .oznamy-modern-section.oznamy-modern-section--preface:hover,
+.oznamy-content.oznamy-modern .oznamy-modern-section.oznamy-modern-section--preface:focus-within,
+.oznamy-content.oznamy-modern .oznamy-modern-section.oznamy-modern-section--preface:active {
+  background: transparent !important;
+  border: 0;
+  padding: 0;
+  box-shadow: none;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .oznamy-content.oznamy-modern .oznamy-modern-section {
     transition: none;
@@ -355,6 +365,7 @@
   color: #537891 !important;
   font-size: inherit !important;
   text-decoration: none !important;
+  text-transform: uppercase;
 }
 
 .oznamy-content.oznamy-modern .oznamy-modern-title p {
