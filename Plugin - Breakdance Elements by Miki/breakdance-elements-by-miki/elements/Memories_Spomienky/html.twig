@@ -1,0 +1,46 @@
+{% set memories = content.memories.items|default([])|slice(0, 99) %}
+{% set showHashtag = design.tags.show_hashtag is defined ? design.tags.show_hashtag : true %}
+{% if memories|length %}
+  <div class="miki-memories__grid{{ design.decor.tilt ? ' miki-memories__grid--tilt' : '' }}{{ design.decor.tape ? ' miki-memories__grid--tape' : '' }}{{ design.decor.hover ? ' miki-memories__grid--hover' : '' }}">
+    {% for memory in memories %}
+      {% set image = memory.image %}
+      {% set imageSize = image.sizes.large|default(image.sizes.full) %}
+      {% set imageSrc = imageSize.url|default(image.url) %}
+      {% set avatar = memory.avatar %}
+      {% set avatarSize = avatar.sizes.thumbnail|default(avatar.sizes.full) %}
+      {% set avatarSrc = avatarSize.url|default(avatar.url) %}
+      {% set tagText = memory.tag|default('')|trim|trim('#') %}
+      <article class="miki-memories__card">
+        {% if imageSrc %}
+          <figure class="miki-memories__image">
+            <img src="{{ imageSrc|e('html_attr') }}"{% if imageSize.width and imageSize.height %} width="{{ imageSize.width|e('html_attr') }}" height="{{ imageSize.height|e('html_attr') }}"{% endif %} alt="{{ memory.image_alt|default(image.alt)|default('')|e('html_attr') }}" loading="lazy" decoding="async">
+          </figure>
+        {% endif %}
+        <div class="miki-memories__content">
+          {% if memory.author %}
+            <p class="miki-memories__author">
+              {% if avatarSrc %}
+                <img class="miki-memories__avatar" src="{{ avatarSrc|e('html_attr') }}" alt="" width="28" height="28" loading="lazy" decoding="async">
+              {% else %}
+                <span class="miki-memories__avatar miki-memories__avatar--initial" aria-hidden="true">{{ memory.author|trim|slice(0, 1)|upper|e }}</span>
+              {% endif %}
+              <span class="miki-memories__author-name">{{ memory.author|e }}</span>
+            </p>
+          {% endif %}
+          {% if memory.heading %}
+            <h3 class="miki-memories__heading">{{ memory.heading|e }}</h3>
+          {% endif %}
+          {% if tagText %}
+            <p class="miki-memories__tag-wrap"><span class="miki-memories__tag">{{ showHashtag ? '#' : '' }}{{ tagText|e }}</span></p>
+          {% endif %}
+          {% if memory.quote %}
+            <blockquote class="miki-memories__quote"><p>{{ memory.quote|replace({'<br>': "\n", '<br/>': "\n", '<br />': "\n", '<BR>': "\n", '<BR/>': "\n", '<BR />': "\n"})|nl2br }}</p></blockquote>
+          {% endif %}
+          {% if memory.text %}
+            <p class="miki-memories__text">{{ memory.text|replace({'<br>': "\n", '<br/>': "\n", '<br />': "\n", '<BR>': "\n", '<BR/>': "\n", '<BR />': "\n"})|nl2br }}</p>
+          {% endif %}
+        </div>
+      </article>
+    {% endfor %}
+  </div>
+{% endif %}

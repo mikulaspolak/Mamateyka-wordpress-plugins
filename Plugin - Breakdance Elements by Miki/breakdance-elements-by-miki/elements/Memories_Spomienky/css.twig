@@ -1,0 +1,27 @@
+%%SELECTOR%% {
+  {% if design.card.background %}--miki-card-bg: {{ design.card.background }};{% endif %}
+  {% if design.card.heading_color %}--miki-heading-color: {{ design.card.heading_color }};{% endif %}
+  {% if design.card.text_color %}--miki-text-color: {{ design.card.text_color }};{% endif %}
+  {% if design.card.radius.style %}--miki-card-radius: {{ design.card.radius.style }};{% endif %}
+  --miki-gap: {{ design.layout.gap.style|default('24px') }};
+}
+
+%%SELECTOR%% .miki-memories__grid {
+  {% if design.layout.columns_mode == 'manual' %}
+  column-count: {{ design.layout.columns|default(3) }};
+  column-width: auto;
+  {% else %}
+  column-count: auto;
+  column-width: {{ design.layout.min_card_width.style|default('280px') }};
+  {% endif %}
+}
+
+{% if design.card.text_lines > 0 %}
+%%SELECTOR%% .miki-memories__text {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: {{ design.card.text_lines }};
+  line-clamp: {{ design.card.text_lines }};
+  overflow: hidden;
+}
+{% endif %}
