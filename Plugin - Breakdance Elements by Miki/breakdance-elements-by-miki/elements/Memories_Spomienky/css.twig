@@ -1,18 +1,36 @@
 %%SELECTOR%% {
   {% if design.card.background %}--miki-card-bg: {{ design.card.background }};{% endif %}
-  {% if design.card.heading_color %}--miki-heading-color: {{ design.card.heading_color }};{% endif %}
-  {% if design.card.text_color %}--miki-text-color: {{ design.card.text_color }};{% endif %}
   {% if design.card.radius.style %}--miki-card-radius: {{ design.card.radius.style }};{% endif %}
-  --miki-gap: {{ design.layout.gap.style|default('24px') }};
+  {% if design.decor.tape_width.style %}--miki-tape-width: {{ design.decor.tape_width.style }};{% endif %}
+  {% if design.decor.tape_height.style %}--miki-tape-height: {{ design.decor.tape_height.style }};{% endif %}
+  {% if design.layout.column_gap.style %}--miki-column-gap: {{ design.layout.column_gap.style }};{% endif %}
+  {% if design.layout.row_gap.style %}--miki-row-gap: {{ design.layout.row_gap.style }};{% endif %}
+  {% if design.layout.columns is defined %}--miki-columns: {{ design.layout.columns }};{% endif %}
+}
+
+{% if design.card.heading_typography %}
+%%SELECTOR%% .miki-memories__heading {
+  {{ macros.typography(design.card.heading_typography, globalSettings) }}
+}
+{% endif %}
+
+{% if design.card.text_typography %}
+%%SELECTOR%% .miki-memories__text {
+  {{ macros.typography(design.card.text_typography, globalSettings) }}
+}
+{% endif %}
+
+%%SELECTOR%% .miki-memories__content {
+  {{ macros.spacing_padding_all(design.card.padding) }}
 }
 
 %%SELECTOR%% .miki-memories__grid {
   {% if design.layout.columns_mode == 'manual' %}
-  column-count: {{ design.layout.columns|default(3) }};
+    {% if design.layout.columns is defined %}column-count: {{ design.layout.columns }};{% endif %}
   column-width: auto;
   {% else %}
   column-count: auto;
-  column-width: {{ design.layout.min_card_width.style|default('280px') }};
+    {% if design.layout.min_card_width.style %}column-width: {{ design.layout.min_card_width.style }};{% endif %}
   {% endif %}
 }
 

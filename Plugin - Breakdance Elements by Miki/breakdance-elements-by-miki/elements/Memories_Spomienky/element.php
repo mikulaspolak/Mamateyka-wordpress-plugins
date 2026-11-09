@@ -76,21 +76,18 @@ class MemoriesSpomienky extends \Breakdance\Elements\Element
                             'heading' => 'Miesto, kde sme vyrastali',
                             'author' => 'Ján Novák',
                             'tag' => 'tabor',
-                            'tag_color' => 'orange',
                             'text' => 'Mamateyka bola pre mňa druhým domovom. Po škole som tu našiel kamarátov, zmysluplné aktivity a ľudí, ktorí nás podržali.',
                         ],
                         [
                             'heading' => 'Prvé leto na Mamateyke',
                             'author' => 'Mária Kováčová',
                             'tag' => 'leto',
-                            'tag_color' => 'orange',
                             'text' => 'Bolo to moje prvé leto na Mamateyke. Nevnímala som to len ako prázdniny, ale ako miesto, kde som našla priateľov.',
                         ],
                         [
                             'heading' => 'Hudba, ktorá spája',
                             'author' => 'Katarína Veselá',
                             'tag' => 'hudba',
-                            'tag_color' => 'orange',
                             'quote' => 'Hudba dokáže spojiť ľudí.',
                             'text' => 'V Mamateyke som objavila, že hudba dokáže spojiť ľudí, dať im nádej a radosť.',
                         ],
@@ -100,9 +97,11 @@ class MemoriesSpomienky extends \Breakdance\Elements\Element
             'design' => [
                 'layout' => [
                     'columns_mode' => 'auto',
+                    'mobile_animation' => 'expand',
                     'min_card_width' => ['breakpoint_base' => ['number' => 280, 'unit' => 'px', 'style' => '280px']],
                     'columns' => ['breakpoint_base' => 3],
-                    'gap' => ['breakpoint_base' => ['number' => 24, 'unit' => 'px', 'style' => '24px']],
+                    'column_gap' => ['breakpoint_base' => ['number' => 24, 'unit' => 'px', 'style' => '24px']],
+                    'row_gap' => ['breakpoint_base' => ['number' => 24, 'unit' => 'px', 'style' => '24px']],
                 ],
                 'card' => [
                     'text_lines' => 4,
@@ -113,6 +112,8 @@ class MemoriesSpomienky extends \Breakdance\Elements\Element
                 'decor' => [
                     'tilt' => true,
                     'tape' => true,
+                    'tape_width' => ['breakpoint_base' => ['number' => 84, 'unit' => 'px', 'style' => '84px']],
+                    'tape_height' => ['breakpoint_base' => ['number' => 22, 'unit' => 'px', 'style' => '22px']],
                     'hover' => true,
                 ],
             ],
@@ -144,20 +145,6 @@ class MemoriesSpomienky extends \Breakdance\Elements\Element
                             c('author', t('Author'), [], ['type' => 'text', 'layout' => 'vertical'], false, false),
                             c('heading', t('Heading'), [], ['type' => 'text', 'layout' => 'vertical'], false, false),
                             c('tag', t('Tag'), [], ['type' => 'text', 'layout' => 'vertical'], false, false),
-                            c(
-                                'tag_color',
-                                t('Tag color'),
-                                [],
-                                [
-                                    'type' => 'dropdown',
-                                    'layout' => 'vertical',
-                                    'items' => [
-                                        ['text' => t('Orange'), 'value' => 'orange'],
-                                    ],
-                                ],
-                                false,
-                                false
-                            ),
                             c('quote', t('Quote'), [], ['type' => 'text', 'layout' => 'vertical', 'textOptions' => ['multiline' => true]], false, false),
                             c('text', t('Text'), [], ['type' => 'text', 'layout' => 'vertical', 'textOptions' => ['multiline' => true]], false, false),
                         ],
@@ -204,6 +191,21 @@ class MemoriesSpomienky extends \Breakdance\Elements\Element
                         false
                     ),
                     c(
+                        'mobile_animation',
+                        t('Mobile card animation'),
+                        [],
+                        [
+                            'type' => 'dropdown',
+                            'layout' => 'inline',
+                            'items' => [
+                                ['text' => t('Expand'), 'value' => 'expand'],
+                                ['text' => t('Pop out'), 'value' => 'popup'],
+                            ],
+                        ],
+                        false,
+                        false
+                    ),
+                    c(
                         'min_card_width',
                         t('Minimum card width'),
                         [],
@@ -230,8 +232,20 @@ class MemoriesSpomienky extends \Breakdance\Elements\Element
                         false
                     ),
                     c(
-                        'gap',
-                        t('Gap between cards'),
+                        'column_gap',
+                        t('Gap between columns'),
+                        [],
+                        [
+                            'type' => 'unit',
+                            'layout' => 'inline',
+                            'unitOptions' => ['types' => ['px', 'rem', 'em'], 'defaultType' => 'px'],
+                        ],
+                        true,
+                        false
+                    ),
+                    c(
+                        'row_gap',
+                        t('Gap between rows'),
                         [],
                         [
                             'type' => 'unit',
@@ -251,8 +265,18 @@ class MemoriesSpomienky extends \Breakdance\Elements\Element
                 t('Card'),
                 [
                     c('background', t('Card background'), [], ['type' => 'color', 'layout' => 'inline'], false, false),
-                    c('heading_color', t('Heading color'), [], ['type' => 'color', 'layout' => 'inline'], false, false),
-                    c('text_color', t('Text color'), [], ['type' => 'color', 'layout' => 'inline'], false, false),
+                    \Breakdance\Elements\PresetSections\getPresetSection(
+                        'EssentialElements\\typography',
+                        t('Heading typography'),
+                        'heading_typography',
+                        ['type' => 'popout']
+                    ),
+                    \Breakdance\Elements\PresetSections\getPresetSection(
+                        'EssentialElements\\typography',
+                        t('Text typography'),
+                        'text_typography',
+                        ['type' => 'popout']
+                    ),
                     c(
                         'radius',
                         t('Corner radius'),
@@ -264,6 +288,12 @@ class MemoriesSpomienky extends \Breakdance\Elements\Element
                         ],
                         false,
                         false
+                    ),
+                    \Breakdance\Elements\PresetSections\getPresetSection(
+                        'EssentialElements\\spacing_padding_all',
+                        t('Card content padding'),
+                        'padding',
+                        ['type' => 'popout']
                     ),
                     c(
                         'text_lines',
@@ -294,6 +324,32 @@ class MemoriesSpomienky extends \Breakdance\Elements\Element
                 [
                     c('tilt', t('Slight card tilt'), [], ['type' => 'toggle', 'layout' => 'inline'], false, false),
                     c('tape', t('Washi tape'), [], ['type' => 'toggle', 'layout' => 'inline'], false, false),
+                    c(
+                        'tape_width',
+                        t('Tape width'),
+                        [],
+                        [
+                            'type' => 'unit',
+                            'layout' => 'inline',
+                            'unitOptions' => ['types' => ['px', 'rem', 'em'], 'defaultType' => 'px'],
+                            'condition' => ['path' => 'design.decor.tape', 'operand' => 'equals', 'value' => true],
+                        ],
+                        true,
+                        false
+                    ),
+                    c(
+                        'tape_height',
+                        t('Tape height'),
+                        [],
+                        [
+                            'type' => 'unit',
+                            'layout' => 'inline',
+                            'unitOptions' => ['types' => ['px', 'rem', 'em'], 'defaultType' => 'px'],
+                            'condition' => ['path' => 'design.decor.tape', 'operand' => 'equals', 'value' => true],
+                        ],
+                        true,
+                        false
+                    ),
                     c('hover', t('Subtle hover effect'), [], ['type' => 'toggle', 'layout' => 'inline'], false, false),
                 ],
                 ['type' => 'section', 'layout' => 'vertical'],

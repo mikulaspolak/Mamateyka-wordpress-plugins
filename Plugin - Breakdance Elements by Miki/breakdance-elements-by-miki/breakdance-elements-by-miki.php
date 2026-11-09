@@ -3,7 +3,7 @@
 /**
  * Plugin Name: Breakdance Elements by Miki
  * Description: Custom Breakdance elements, macros, and presets by Miki.
- * Version: 1.6.0
+ * Version: 1.15.0
  * Author: Mikulas Polak
  * Requires at least: 6.0
  * Requires PHP: 8.2
@@ -66,6 +66,17 @@ add_action('breakdance_loaded', function () {
         false
     );
 }, 9);
+
+add_action('wp_enqueue_scripts', function () {
+    $scriptPath = __DIR__ . '/elements/Memories_Spomienky/memories.js';
+    wp_enqueue_script(
+        'miki-memories',
+        plugin_dir_url(__FILE__) . 'elements/Memories_Spomienky/memories.js',
+        [],
+        (string) filemtime($scriptPath),
+        true
+    );
+});
 
 add_action('admin_notices', function () {
     if (!current_user_can('activate_plugins')) {

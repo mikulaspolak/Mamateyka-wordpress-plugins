@@ -1,7 +1,7 @@
 .breakdance .bde-miki-memories .miki-memories__grid {
   display: block;
   column-fill: balance;
-  column-gap: var(--miki-gap, 24px);
+  column-gap: var(--miki-column-gap, 24px);
   padding: 8px;
 }
 
@@ -9,7 +9,7 @@
   position: relative;
   display: inline-block;
   width: 100%;
-  margin: 0 0 var(--miki-gap, 24px);
+  margin: 0 0 var(--miki-row-gap, 24px);
   break-inside: avoid;
   color: var(--miki-text-color, #3c4a5c);
   background: var(--miki-card-bg, #fffdfa);
@@ -30,41 +30,24 @@
   box-shadow: 0 16px 30px rgba(27, 46, 64, 0.18);
 }
 
-/* Tilt: a fixed repeating pattern keeps the layout stable between renders. */
-.breakdance .bde-miki-memories .miki-memories__grid--tilt .miki-memories__card:nth-child(4n + 1) {
-  --miki-rot: -1.4deg;
-}
-
-.breakdance .bde-miki-memories .miki-memories__grid--tilt .miki-memories__card:nth-child(4n + 2) {
-  --miki-rot: 1deg;
-}
-
-.breakdance .bde-miki-memories .miki-memories__grid--tilt .miki-memories__card:nth-child(4n + 3) {
-  --miki-rot: -0.6deg;
-}
-
-.breakdance .bde-miki-memories .miki-memories__grid--tilt .miki-memories__card:nth-child(4n) {
-  --miki-rot: 1.6deg;
-}
-
 /* Tape appears on every card, alternating colour. */
 .breakdance .bde-miki-memories .miki-memories__grid--tape .miki-memories__card::before {
   content: "";
   position: absolute;
   z-index: 1;
-  top: -10px;
+  top: 0;
   left: 50%;
-  width: 84px;
-  height: 22px;
+  width: var(--miki-tape-width, 84px);
+  height: var(--miki-tape-height, 22px);
   background: rgba(244, 200, 90, 0.78);
   box-shadow: 0 1px 3px rgba(27, 46, 64, 0.15);
-  transform: translateX(-50%) rotate(-3deg);
+  transform: translate(-50%, -50%) rotate(-3deg);
   pointer-events: none;
 }
 
 .breakdance .bde-miki-memories .miki-memories__grid--tape .miki-memories__card:nth-child(even)::before {
   background: rgba(105, 169, 207, 0.7);
-  transform: translateX(-50%) rotate(3deg);
+  transform: translate(-50%, -50%) rotate(3deg);
 }
 
 .breakdance .bde-miki-memories .miki-memories__image {
@@ -82,7 +65,7 @@
   object-fit: cover;
 }
 
-.breakdance .bde-miki-memories .miki-memories__content {
+.breakdance .miki-memories__content {
   padding: 16px 20px 20px;
 }
 
@@ -113,9 +96,9 @@
   background: #dcebf5;
 }
 
-.breakdance .bde-miki-memories .miki-memories__heading {
+.breakdance .miki-memories__heading {
   margin: 0 0 8px;
-  color: var(--miki-heading-color, #20344d);
+  color: #20344d;
   font-size: 1.15em;
   font-weight: 700;
   line-height: 1.25;
@@ -132,7 +115,7 @@
   padding: 5px 12px;
   color: #a35a12;
   font-size: 0.82em;
-  font-weight: 600;
+  font-weight: 500;
   line-height: 1.4;
   text-align: left;
   white-space: normal;
@@ -159,8 +142,253 @@
   white-space: pre-line;
 }
 
-.breakdance .bde-miki-memories .miki-memories__text {
+.breakdance .miki-memories__text {
   line-height: 1.55;
+}
+
+.breakdance .bde-miki-memories .miki-memories__body-inner {
+  min-height: 0;
+}
+
+.breakdance .bde-miki-memories .miki-memories__toggle {
+  display: none;
+}
+
+.breakdance .bde-miki-memories .miki-memories__toggle-indicator {
+  display: none;
+}
+
+.breakdance .bde-miki-memories .miki-memories__backdrop {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  .breakdance .bde-miki-memories .miki-memories__tag {
+    display: block;
+    width: 100%;
+    padding: 0;
+    color: #3c4a5c;
+    font-weight: 500;
+    white-space: normal;
+    overflow: visible;
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+  }
+
+  .breakdance .bde-miki-memories .miki-memories__tag::after {
+    content: "...";
+  }
+
+  .breakdance .bde-miki-memories .miki-memories__grid--accordion {
+    position: relative;
+    isolation: isolate;
+    display: grid;
+    grid-template-columns: repeat(var(--miki-columns, 3), minmax(0, 1fr));
+    grid-auto-flow: row;
+    column-gap: var(--miki-column-gap, 24px);
+    row-gap: var(--miki-row-gap, 24px);
+    padding: 8px;
+  }
+
+  .breakdance .bde-miki-memories .miki-memories--modal-open {
+    z-index: 2147482000;
+  }
+
+  .breakdance .bde-miki-memories .miki-memories__placeholder {
+    min-width: 0;
+    margin: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  .breakdance .bde-miki-memories .miki-memories__card {
+    display: block;
+    width: auto;
+    margin: 0;
+    break-inside: auto;
+  }
+
+  .breakdance .bde-miki-memories .miki-memories__card--expanded:not(.miki-memories__card--popup) {
+    z-index: 4;
+    grid-column: 1 / -1;
+    margin-bottom: 0;
+  }
+
+  .breakdance .bde-miki-memories .miki-memories__backdrop:not([hidden]) {
+    position: fixed;
+    z-index: 9998;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background: rgba(15, 29, 43, 0.58);
+    border: 0;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 320ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .breakdance .bde-miki-memories .miki-memories__backdrop:not([hidden]).miki-memories__backdrop--visible {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .breakdance .bde-miki-memories .miki-memories__backdrop:not([hidden]).miki-memories__backdrop--closing {
+    opacity: 0;
+    pointer-events: auto;
+  }
+
+  .breakdance .bde-miki-memories .miki-memories__card:not(.miki-memories__card--expanded) .miki-memories__author {
+    display: none;
+  }
+
+  .breakdance .bde-miki-memories .miki-memories__body {
+    display: grid;
+    grid-template-rows: 0fr;
+    opacity: 0;
+    transition:
+      grid-template-rows 500ms cubic-bezier(0.2, 0.8, 0.2, 1),
+      opacity 320ms ease-out;
+  }
+
+  .breakdance .bde-miki-memories .miki-memories__card--expanded .miki-memories__body {
+    grid-template-rows: 1fr;
+    opacity: 1;
+  }
+
+  .breakdance .bde-miki-memories .miki-memories__body-inner {
+    overflow: hidden;
+  }
+
+  .breakdance .bde-miki-memories .miki-memories__card--expanded .miki-memories__text {
+    display: block;
+    -webkit-line-clamp: unset;
+    line-clamp: unset;
+    overflow: visible;
+  }
+
+  .breakdance .bde-miki-memories .miki-memories__toggle {
+    position: absolute;
+    z-index: 3;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    color: transparent;
+    cursor: pointer;
+    background: transparent;
+    border: 0;
+    border-radius: inherit;
+  }
+
+  .breakdance .bde-miki-memories .miki-memories__card--expanded .miki-memories__toggle {
+    position: relative;
+    inset: auto;
+    width: 36px;
+    height: 36px;
+    margin: 0 10px 10px auto;
+  }
+
+  .breakdance .bde-miki-memories .miki-memories__card:not(.miki-memories__card--expanded) .miki-memories__toggle-icon {
+    display: none;
+  }
+
+  .breakdance .bde-miki-memories .miki-memories__toggle-indicator {
+    position: relative;
+    z-index: 4;
+    display: grid;
+    width: 32px;
+    height: 32px;
+    margin: 0 10px 10px auto;
+    place-items: center;
+    color: #20344d;
+    font-size: 1.4rem;
+    line-height: 1;
+    pointer-events: none;
+    background: rgba(255, 255, 255, 0.94);
+    border-radius: 50%;
+    box-shadow: 0 2px 8px rgba(27, 46, 64, 0.2);
+  }
+
+  .breakdance .bde-miki-memories .miki-memories__card--expanded .miki-memories__toggle-indicator {
+    display: none;
+  }
+
+  .breakdance .bde-miki-memories .miki-memories__toggle-icon {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    display: grid;
+    width: 32px;
+    height: 32px;
+    place-items: center;
+    color: #20344d;
+    font-size: 1.4rem;
+    line-height: 1;
+    background: rgba(255, 255, 255, 0.94);
+    border-radius: 50%;
+    box-shadow: 0 2px 8px rgba(27, 46, 64, 0.2);
+  }
+
+  .breakdance .bde-miki-memories .miki-memories__card--expanded .miki-memories__toggle-icon {
+    position: static;
+    width: 100%;
+    height: 100%;
+  }
+
+  .breakdance .bde-miki-memories .miki-memories__grid--accordion .miki-memories__card--popup:nth-child(n) {
+    position: fixed;
+    z-index: 9999;
+    top: 50%;
+    left: 50%;
+    display: flex;
+    flex-direction: column;
+    width: min(560px, calc(100vw - 32px));
+    max-width: calc(100vw - 32px);
+    max-height: calc(100vh - 32px);
+    max-height: calc(100dvh - 32px);
+    margin: 0;
+    overflow: hidden;
+    transform: translate(-50%, -50%);
+    transform-origin: center;
+    box-shadow: 0 28px 80px rgba(15, 29, 43, 0.35);
+  }
+
+  .breakdance .bde-miki-memories .miki-memories__card--popup .miki-memories__image {
+    flex: none;
+  }
+
+  .breakdance .bde-miki-memories .miki-memories__card--popup .miki-memories__content {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+
+  .breakdance .bde-miki-memories .miki-memories__card--popup .miki-memories__body {
+    grid-template-rows: 1fr;
+    opacity: 1;
+    transition: none;
+  }
+
+  .breakdance .bde-miki-memories .miki-memories__card--popup .miki-memories__toggle {
+    position: relative;
+    inset: auto;
+    display: flex;
+    flex: none;
+    width: 36px;
+    height: 36px;
+    margin: 0 10px 10px auto;
+  }
+
+  .breakdance .bde-miki-memories .miki-memories__card:focus-within {
+    outline: 3px solid #315d7c;
+    outline-offset: 3px;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -170,5 +398,13 @@
 
   .breakdance .bde-miki-memories .miki-memories__grid--hover .miki-memories__card:hover {
     transform: rotate(var(--miki-rot, 0deg));
+  }
+
+  .breakdance .bde-miki-memories .miki-memories__body {
+    transition: none;
+  }
+
+  .breakdance .bde-miki-memories .miki-memories__backdrop {
+    transition: none;
   }
 }
