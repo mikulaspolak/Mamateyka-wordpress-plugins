@@ -1,0 +1,38 @@
+{% set raw = content.images.gallery|default([]) %}
+{% set images = (raw.url is defined ? [raw] : raw)|slice(0, 999) %}
+{% set captionMode = design.item.caption_visible ? (design.item.caption_position == 'below' ? 'below' : 'hover') : 'none' %}
+{% if images|length %}
+  <div class="miki-post-gallery__grid" data-miki-gallery>
+    {% for entry in images %}
+      {% set image = entry.url is defined ? entry : entry.image %}
+      {% set sizes = image.sizes|default([]) %}
+      {% set fullSize = sizes.full %}
+      {% set imageSize = sizes.large|default(fullSize) %}
+      {% set imageSrc = imageSize.url|default(image.url) %}
+      {% if imageSrc %}
+        {% set fullSrc = image.url|default(imageSrc) %}
+        {% set xlSize = sizes['1536x1536'] %}
+        {% set viewSrc = xlSize.url|default(imageSrc) %}
+        {% set thumbSrc = sizes.thumbnail.url|default(imageSrc) %}
+        {% set width = imageSize.width|default(1500) %}
+        {% set height = imageSize.height|default(1000) %}
+        {% set ratio = height > 0 ? (width / height)|round(3) : 1.5 %}
+        {% set mediumSize = sizes.medium %}
+        {% set mediumLargeSize = sizes.medium_large %}
+        {% set srcset = imageSrc ~ ' ' ~ width ~ 'w' ~ (mediumSize.url and mediumSize.width ? ', ' ~ mediumSize.url ~ ' ' ~ mediumSize.width ~ 'w' : '') ~ (mediumLargeSize.url and mediumLargeSize.width ? ', ' ~ mediumLargeSize.url ~ ' ' ~ mediumLargeSize.width ~ 'w' : '') ~ (xlSize.url and xlSize.width ? ', ' ~ xlSize.url ~ ' ' ~ xlSize.width ~ 'w' : '') %}
+        {% set caption = image.caption|default('') %}
+        {% set altText = image.alt|default(caption)|default('') %}
+        <figure class="miki-post-gallery__item{{ captionMode != 'none' and caption ? ' miki-post-gallery__item--caption-' ~ captionMode : '' }}" style="--miki-ratio: {{ ratio }};">
+          <a class="miki-post-gallery__link" href="{{ fullSrc|e('html_attr') }}" data-miki-gallery-item data-full="{{ fullSrc|e('html_attr') }}" data-src="{{ viewSrc|e('html_attr') }}" data-thumb="{{ thumbSrc|e('html_attr') }}" data-width="{{ (fullSize.width|default(width))|e('html_attr') }}" data-height="{{ (fullSize.height|default(height))|e('html_attr') }}" data-alt="{{ altText|e('html_attr') }}" data-caption="{{ caption|e('html_attr') }}">
+            <span class="miki-post-gallery__frame"><img class="miki-post-gallery__img" src="{{ imageSrc|e('html_attr') }}" srcset="{{ srcset|e('html_attr') }}" sizes="(max-width: 767px) 50vw, 33vw" width="{{ width|e('html_attr') }}" height="{{ height|e('html_attr') }}" alt="{{ altText|e('html_attr') }}" loading="lazy" decoding="async"></span>
+          </a>
+          {% if caption and captionMode != 'none' %}
+            <figcaption class="miki-post-gallery__caption">{{ caption|e }}</figcaption>
+          {% endif %}
+        </figure>
+      {% endif %}
+    {% endfor %}
+  </div>
+{% else %}
+  <div class="miki-post-gallery__empty"></div>
+{% endif %}

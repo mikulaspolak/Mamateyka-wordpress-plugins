@@ -1,0 +1,482 @@
+.breakdance .bde-miki-post-gallery {
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.breakdance .bde-miki-post-gallery .miki-post-gallery__grid {
+  width: 100%;
+  box-sizing: border-box;
+  --miki-cols: 3;
+  --miki-gap-fallback: 16px;
+}
+
+@media (max-width: 767px) {
+  .breakdance .bde-miki-post-gallery .miki-post-gallery__grid {
+    --miki-cols: 2;
+    --miki-gap-fallback: 8px;
+  }
+}
+
+/* Empty-state hint: drawn by CSS only in the builder canvas (where the element root has .builder-element). */
+.breakdance .bde-miki-post-gallery .miki-post-gallery__empty {
+  display: none;
+}
+
+.breakdance .bde-miki-post-gallery.builder-element .miki-post-gallery__empty {
+  display: block;
+  padding: 32px 16px;
+  color: #586879;
+  font-size: 14px;
+  text-align: center;
+  background: #f1f4f8;
+  border: 1px dashed #b8c4d0;
+  border-radius: 12px;
+}
+
+.breakdance .bde-miki-post-gallery.builder-element .miki-post-gallery__empty::before {
+  content: "%%MIKI_EMPTY_HINT%%";
+}
+
+.breakdance .bde-miki-post-gallery:has(.miki-post-gallery__grid) .miki-post-gallery__empty {
+  display: none !important;
+}
+
+.breakdance .bde-miki-post-gallery .miki-post-gallery__item {
+  position: relative;
+  box-sizing: border-box;
+  margin: 0;
+  overflow: hidden;
+  background: var(--miki-placeholder, #e8edf2);
+  border: var(--miki-border-width, 0) solid var(--miki-border-color, transparent);
+  border-radius: var(--miki-radius, 18px);
+  box-shadow: var(--miki-shadow, 0 10px 28px rgba(15, 23, 42, 0.12));
+  transform: translateZ(0);
+}
+
+.breakdance .bde-miki-post-gallery .miki-post-gallery__item[hidden] {
+  display: none;
+}
+
+.breakdance .bde-miki-post-gallery .miki-post-gallery__link {
+  display: block;
+  color: inherit;
+  line-height: 0;
+  text-decoration: none;
+}
+
+.breakdance .bde-miki-post-gallery a.miki-post-gallery__link {
+  cursor: pointer;
+}
+
+.breakdance .bde-miki-post-gallery a.miki-post-gallery__link:focus-visible {
+  outline: 3px solid #4c9ed9;
+  outline-offset: -3px;
+}
+
+/* Focus returned by script after a mouse/touch open should not show a ring. */
+.breakdance .bde-miki-post-gallery a.miki-post-gallery__link[data-miki-pointer]:focus-visible {
+  outline: none;
+}
+
+/* The frame reserves the tile size before the image loads, so the page does not jump. */
+.breakdance .bde-miki-post-gallery .miki-post-gallery__frame {
+  position: relative;
+  display: block;
+  width: 100%;
+  overflow: hidden;
+  aspect-ratio: var(--miki-ratio, 1.5);
+}
+
+.breakdance .bde-miki-post-gallery .miki-post-gallery__img {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  max-width: none;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 0;
+  opacity: 1;
+}
+
+.breakdance .bde-miki-post-gallery .miki-post-gallery__img.is-pending {
+  opacity: 0;
+}
+
+/* Layout: masonry. Without script it falls back to CSS columns; script positions tiles in reading order. */
+.breakdance .bde-miki-post-gallery .miki-post-gallery__grid {
+  display: block;
+  column-count: var(--miki-cols);
+  column-gap: var(--miki-column-gap, var(--miki-gap-fallback));
+}
+
+.breakdance .bde-miki-post-gallery .miki-post-gallery__item {
+  display: inline-block;
+  width: 100%;
+  margin: 0 0 var(--miki-row-gap, var(--miki-gap-fallback));
+  break-inside: avoid;
+}
+
+/* Hidden until positioned; the animation reveals it anyway if the script never runs. */
+.breakdance .bde-miki-post-gallery .miki-post-gallery__grid:not(.is-ready) {
+  opacity: 0;
+  animation: miki-post-gallery-failsafe 0s linear 1s forwards;
+}
+
+@keyframes miki-post-gallery-failsafe {
+  to {
+    opacity: 1;
+  }
+}
+
+.breakdance .bde-miki-post-gallery .miki-post-gallery__grid.is-masonry {
+  position: relative;
+  column-count: auto;
+}
+
+.breakdance .bde-miki-post-gallery .miki-post-gallery__grid.is-masonry .miki-post-gallery__item {
+  position: absolute;
+  display: block;
+  margin: 0;
+}
+
+/* Captions */
+.breakdance .bde-miki-post-gallery .miki-post-gallery__caption {
+  margin: 0;
+  font-size: 0.9em;
+  line-height: 1.4;
+}
+
+.breakdance .bde-miki-post-gallery .miki-post-gallery__item--caption-below .miki-post-gallery__caption {
+  padding: 10px 12px;
+  color: #3c4a5c;
+  background: #fff;
+}
+
+.breakdance .bde-miki-post-gallery .miki-post-gallery__item--caption-hover .miki-post-gallery__caption {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 36px 14px 12px;
+  color: #fff;
+  background: linear-gradient(to top, rgba(8, 15, 27, 0.72), rgba(8, 15, 27, 0));
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(6px);
+}
+
+.breakdance .bde-miki-post-gallery .miki-post-gallery__item--caption-hover:focus-within .miki-post-gallery__caption {
+  opacity: 1;
+  transform: none;
+}
+
+@media (hover: none) {
+  .breakdance .bde-miki-post-gallery .miki-post-gallery__item--caption-hover .miki-post-gallery__caption {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Subtle hover effect and fade-in (skipped for reduced motion) */
+@media (prefers-reduced-motion: no-preference) {
+  .breakdance .bde-miki-post-gallery .miki-post-gallery__item {
+    transition: transform 320ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .breakdance .bde-miki-post-gallery .miki-post-gallery__img {
+    transition:
+      opacity 450ms ease,
+      transform 400ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .breakdance .bde-miki-post-gallery .miki-post-gallery__item--caption-hover .miki-post-gallery__caption {
+    transition:
+      opacity 240ms ease,
+      transform 240ms ease;
+  }
+}
+
+@media (hover: hover) {
+  .breakdance .bde-miki-post-gallery .miki-post-gallery__item--caption-hover:hover .miki-post-gallery__caption {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .breakdance .bde-miki-post-gallery .miki-post-gallery__item:hover {
+    transform: translateY(-3px);
+  }
+
+  .breakdance .bde-miki-post-gallery .miki-post-gallery__item:hover .miki-post-gallery__img {
+    transform: scale(1.04);
+  }
+}
+
+/* Lightbox (moved to <body> by post-gallery.js, so it is not scoped to the element) */
+.breakdance .miki-post-gallery-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  display: flex;
+  flex-direction: column;
+  color: #fff;
+  opacity: 0;
+  overscroll-behavior: contain;
+  transition: opacity 180ms ease;
+}
+
+.breakdance .miki-post-gallery-lightbox[hidden] {
+  display: none;
+}
+
+.breakdance .miki-post-gallery-lightbox.is-open {
+  opacity: 1;
+}
+
+.breakdance .miki-post-gallery-lightbox__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(6, 11, 20, 0.95);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+}
+
+.breakdance .miki-post-gallery-lightbox__bar {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 68px;
+  padding: 12px 16px;
+  pointer-events: none;
+}
+
+.breakdance .miki-post-gallery-lightbox__bar,
+.breakdance .miki-post-gallery-lightbox__footer,
+.breakdance .miki-post-gallery-lightbox__nav {
+  transition:
+    opacity 180ms ease,
+    visibility 0s;
+}
+
+.breakdance .miki-post-gallery-lightbox.is-chrome-hidden .miki-post-gallery-lightbox__bar,
+.breakdance .miki-post-gallery-lightbox.is-chrome-hidden .miki-post-gallery-lightbox__footer,
+.breakdance .miki-post-gallery-lightbox.is-chrome-hidden .miki-post-gallery-lightbox__nav {
+  visibility: hidden;
+  opacity: 0;
+  transition:
+    opacity 180ms ease,
+    visibility 0s 180ms;
+}
+
+.breakdance .miki-post-gallery-lightbox__counter {
+  margin: 0;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.2;
+  background: rgba(255, 255, 255, 0.14);
+  border-radius: 999px;
+  font-variant-numeric: tabular-nums;
+}
+
+.breakdance .miki-post-gallery-lightbox__counter:empty {
+  visibility: hidden;
+}
+
+.breakdance .miki-post-gallery-lightbox__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  color: inherit;
+  background: rgba(255, 255, 255, 0.14);
+  border: 0;
+  border-radius: 50%;
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.breakdance .miki-post-gallery-lightbox__btn:hover {
+  background: rgba(255, 255, 255, 0.26);
+}
+
+.breakdance .miki-post-gallery-lightbox__btn:focus-visible,
+.breakdance .miki-post-gallery-lightbox__thumb:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
+
+.breakdance .miki-post-gallery-lightbox__btn[hidden] {
+  display: none;
+}
+
+.breakdance .miki-post-gallery-lightbox__btn svg {
+  width: 22px;
+  height: 22px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.breakdance .miki-post-gallery-lightbox__stage {
+  position: relative;
+  z-index: 1;
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: hidden;
+  touch-action: none;
+}
+
+.breakdance .miki-post-gallery-lightbox__image {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: block;
+  max-width: none;
+  border-radius: 0;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.35);
+  transform: translate(-50%, -50%);
+  transform-origin: center center;
+  transition:
+    transform 180ms ease,
+    translate 180ms ease;
+  will-change: transform;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.breakdance .miki-post-gallery-lightbox__stage.is-zoomed .miki-post-gallery-lightbox__image {
+  cursor: grab;
+}
+
+.breakdance .miki-post-gallery-lightbox__stage.is-dragging .miki-post-gallery-lightbox__image {
+  cursor: grabbing;
+  transition: none;
+}
+
+.breakdance .miki-post-gallery-lightbox__nav {
+  position: absolute;
+  top: 50%;
+  z-index: 2;
+  width: 52px;
+  height: 52px;
+  transform: translateY(-50%);
+}
+
+.breakdance .miki-post-gallery-lightbox__nav--prev {
+  left: 16px;
+}
+
+.breakdance .miki-post-gallery-lightbox__nav--next {
+  right: 16px;
+}
+
+.breakdance .miki-post-gallery-lightbox__footer {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+  padding: 8px 16px 16px;
+  pointer-events: none;
+}
+
+.breakdance .miki-post-gallery-lightbox__caption {
+  max-width: min(90vw, 900px);
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.4;
+  text-align: center;
+  pointer-events: auto;
+}
+
+.breakdance .miki-post-gallery-lightbox__caption:empty,
+.breakdance .miki-post-gallery-lightbox__thumbs:empty {
+  display: none;
+}
+
+.breakdance .miki-post-gallery-lightbox__thumbs {
+  display: flex;
+  gap: 8px;
+  max-width: 100%;
+  padding: 4px;
+  overflow-x: auto;
+  pointer-events: auto;
+  scrollbar-width: none;
+}
+
+.breakdance .miki-post-gallery-lightbox__thumbs::-webkit-scrollbar {
+  display: none;
+}
+
+.breakdance .miki-post-gallery-lightbox__thumb {
+  flex: none;
+  width: 64px;
+  height: 48px;
+  padding: 0;
+  overflow: hidden;
+  color: inherit;
+  background: none;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  cursor: pointer;
+  opacity: 0.55;
+  transition: opacity 180ms ease;
+}
+
+.breakdance .miki-post-gallery-lightbox__thumb:hover,
+.breakdance .miki-post-gallery-lightbox__thumb[aria-current="true"] {
+  opacity: 1;
+}
+
+.breakdance .miki-post-gallery-lightbox__thumb[aria-current="true"] {
+  border-color: currentColor;
+}
+
+.breakdance .miki-post-gallery-lightbox__thumb img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: cover;
+  border-radius: 0;
+}
+
+@media (max-width: 700px) {
+  .breakdance .miki-post-gallery-lightbox__nav {
+    width: 44px;
+    height: 44px;
+  }
+
+  .breakdance .miki-post-gallery-lightbox__nav--prev {
+    left: 8px;
+  }
+
+  .breakdance .miki-post-gallery-lightbox__nav--next {
+    right: 8px;
+  }
+
+  .breakdance .miki-post-gallery-lightbox__thumb {
+    width: 52px;
+    height: 40px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .breakdance .miki-post-gallery-lightbox,
+  .breakdance .miki-post-gallery-lightbox__image,
+  .breakdance .miki-post-gallery-lightbox__bar,
+  .breakdance .miki-post-gallery-lightbox__footer,
+  .breakdance .miki-post-gallery-lightbox__nav,
+  .breakdance .miki-post-gallery-lightbox__thumb {
+    transition: none;
+  }
+}

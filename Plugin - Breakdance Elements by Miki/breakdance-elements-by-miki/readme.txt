@@ -2,7 +2,7 @@
 Contributors: mikulaspolak
 Requires at least: 6.0
 Requires PHP: 8.2
-Stable tag: 1.15.0
+Stable tag: 1.26.0
 License: Proprietary - All rights reserved
 
 Vlastné Breakdance prvky vytvorené v Breakdance Element Studio alebo ručne. Všetky sa v paneli pridávania prvkov zobrazujú v samostatnej sekcii **Elements by Miki**.

@@ -43,6 +43,25 @@ return [
     'Washi tape' => 'Lepiaca páska',
     'Subtle hover effect' => 'Jemný hover efekt',
 
+    // Post Gallery
+    'Post Gallery' => 'Galéria článku',
+    'Images' => 'Obrázky',
+    'Gallery images' => 'Obrázky galérie',
+    'Post Gallery: select images in the Content tab.' => 'Galéria článku: vyber obrázky v záložke Obsah.',
+    'Gap between columns' => 'Medzera medzi stĺpcami',
+    'Gap between rows' => 'Medzera medzi riadkami',
+    'Spacing' => 'Odsadenie',
+    'Padding' => 'Vnútorné odsadenie',
+    'Placeholder color' => 'Farba zástupného pozadia',
+    'Border width' => 'Hrúbka orámovania',
+    'Border color' => 'Farba orámovania',
+    'No shadow' => 'Bez tieňa',
+    'Show caption on tile' => 'Zobraziť popisok na dlaždici',
+    'Caption position' => 'Poloha popisku',
+    'Overlay on hover' => 'Prekrytie pri nabehnutí myšou',
+    'Below image' => 'Pod obrázkom',
+    'Caption typography' => 'Typografia popisku',
+
     // Admin notices
     'Breakdance Elements by Miki requires an active Breakdance plugin.' => 'Breakdance Elements by Miki vyžaduje aktívny plugin Breakdance.',
     'Breakdance Elements by Miki was tested with Breakdance %1$d.x (installed: %2$s). After updating, check the elements in the editor and on the frontend.' => 'Breakdance Elements by Miki bol overený s Breakdance %1$d.x (nainštalované: %2$s). Po aktualizácii skontroluj elementy v editore a na fronte.',

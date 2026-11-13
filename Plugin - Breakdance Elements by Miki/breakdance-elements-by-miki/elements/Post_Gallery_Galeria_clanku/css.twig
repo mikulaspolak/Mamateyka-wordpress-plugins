@@ -1,0 +1,19 @@
+%%SELECTOR%% {
+  {% if design.layout.column_gap.style %}--miki-column-gap: {{ design.layout.column_gap.style }};{% endif %}
+  {% if design.layout.row_gap.style %}--miki-row-gap: {{ design.layout.row_gap.style }};{% endif %}
+  {% if design.item.radius.style %}--miki-radius: {{ design.item.radius.style }};{% endif %}
+  {% if design.item.background %}--miki-placeholder: {{ design.item.background }};{% endif %}
+  {% if design.item.border_width.style %}--miki-border-width: {{ design.item.border_width.style }};{% endif %}
+  {% if design.item.border_color %}--miki-border-color: {{ design.item.border_color }};{% endif %}
+  {% if design.item.shadow_disabled %}--miki-shadow: none;{% endif %}
+}
+
+%%SELECTOR%% {
+  {{ macros.spacing_padding_all(design.spacing.padding) }}
+}
+
+{% if design.item.caption_typography %}
+%%SELECTOR%% .miki-post-gallery__caption {
+  {{ macros.typography(design.item.caption_typography, globalSettings) }}
+}
+{% endif %}
