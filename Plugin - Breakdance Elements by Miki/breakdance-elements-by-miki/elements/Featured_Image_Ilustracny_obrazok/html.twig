@@ -1,0 +1,14 @@
+{% set visual = design.visual.style|default('v1') %}
+{% set visualClass = visual in ['none', 'v1', 'v2', 'v3'] ? visual : 'v1' %}
+{% set imageSize = design.size.image_size|default('full') %}
+<div class="miki-featured-image__box">
+  <figure class="miki-featured-image__stage miki-featured-image__stage--{{ visualClass }}{{ design.animation.disabled ? '' : ' miki-featured-image__stage--animate' }}">
+    <span class="miki-featured-image__shape" aria-hidden="true"></span>
+    <span class="miki-featured-image__frame">
+      <span class="miki-featured-image__clip">
+        <span class="miki-featured-image__placeholder" aria-hidden="true"></span>
+        <!--miki-featured-image:{{ imageSize|e }}-->
+      </span>
+    </span>
+  </figure>
+</div>

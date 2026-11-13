@@ -1,0 +1,11 @@
+%%SELECTOR%% {
+  {% if design.size.max_width.style %}--miki-max-width: {{ design.size.max_width.style }};{% endif %}
+  {% if design.size.align == 'left' %}--miki-margin-left: 0;--miki-margin-right: auto;{% endif %}
+  {% if design.size.align == 'right' %}--miki-margin-left: auto;--miki-margin-right: 0;{% endif %}
+  {% if design.appearance.radius.style %}--miki-radius: {{ design.appearance.radius.style }};{% endif %}
+  {% if design.appearance.shadow_disabled %}--miki-shadow: none;{% endif %}
+}
+
+%%SELECTOR%% {
+  {{ macros.spacing_padding_all(design.spacing.padding) }}
+}

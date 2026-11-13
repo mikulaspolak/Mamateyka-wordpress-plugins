@@ -3,7 +3,7 @@
 /**
  * Plugin Name: Breakdance Elements by Miki
  * Description: Custom Breakdance elements, macros, and presets by Miki.
- * Version: 1.26.0
+ * Version: 1.30.0
  * Author: Mikulas Polak
  * Requires at least: 6.0
  * Requires PHP: 8.2
@@ -19,6 +19,7 @@ if (!defined('ABSPATH')) {
 use function Breakdance\Util\getDirectoryPathRelativeToPluginFolder;
 
 require_once __DIR__ . '/includes/i18n.php';
+require_once __DIR__ . '/elements/Featured_Image_Ilustracny_obrazok/featured-image.php';
 
 const CATEGORY_SLUG = 'miki-elements';
 const CATEGORY_LABEL = 'Elements by Miki';

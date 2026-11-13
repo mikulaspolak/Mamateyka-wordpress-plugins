@@ -1,0 +1,166 @@
+.breakdance .bde-miki-featured-image {
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+/* The box is the size container: the stage padding below is in cqw, so the decoration scales with the element. */
+.breakdance .bde-miki-featured-image .miki-featured-image__box {
+  container-type: inline-size;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: var(--miki-max-width, none);
+  margin-right: var(--miki-margin-right, auto);
+  margin-left: var(--miki-margin-left, auto);
+}
+
+.breakdance .bde-miki-featured-image .miki-featured-image__stage {
+  position: relative;
+  box-sizing: border-box;
+  margin: 0;
+  padding: var(--fi-pad, 0);
+}
+
+/* One round background shape spans the whole stage diagonally; only its two ends show around the photo. */
+.breakdance .bde-miki-featured-image .miki-featured-image__shape {
+  position: absolute;
+  inset: 0;
+  background: #cddfe7;
+  -webkit-mask-image: var(--fi-a-mask, none);
+  mask-image: var(--fi-a-mask, none);
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  pointer-events: none;
+}
+
+/* The mask would cut a box-shadow, so the shadow is a drop-shadow filter on the wrapper. */
+.breakdance .bde-miki-featured-image .miki-featured-image__frame {
+  position: relative;
+  z-index: 1;
+  display: block;
+  filter: var(--miki-shadow, drop-shadow(0 10px 18px rgba(27, 46, 64, 0.18)));
+}
+
+.breakdance .bde-miki-featured-image .miki-featured-image__clip {
+  display: block;
+  overflow: hidden;
+  background: #cddfe7;
+  border-radius: var(--fi-radius, 0);
+  -webkit-mask-image: var(--fi-clip, none);
+  mask-image: var(--fi-clip, none);
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+
+.breakdance .bde-miki-featured-image .miki-featured-image__img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  object-fit: cover;
+}
+
+/* No image: nothing on the site; in the builder a placeholder lets you judge the chosen visual. */
+.breakdance .bde-miki-featured-image:not(.builder-element) .miki-featured-image__box:not(:has(.miki-featured-image__img)) {
+  display: none;
+}
+
+.breakdance .bde-miki-featured-image .miki-featured-image__placeholder {
+  display: none;
+}
+
+.breakdance .bde-miki-featured-image.builder-element .miki-featured-image__placeholder {
+  display: block;
+  aspect-ratio: 3 / 2;
+  background: linear-gradient(135deg, #cfe0ee, #eef4f9);
+}
+
+.breakdance .bde-miki-featured-image.builder-element .miki-featured-image__placeholder::before {
+  content: "%%MIKI_EMPTY_HINT%%";
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  padding: 16px;
+  box-sizing: border-box;
+  color: #586879;
+  font-size: 14px;
+  text-align: center;
+}
+
+.breakdance .bde-miki-featured-image .miki-featured-image__clip:has(.miki-featured-image__img) .miki-featured-image__placeholder {
+  display: none !important;
+}
+
+/* Visual: none */
+.breakdance .bde-miki-featured-image .miki-featured-image__stage--none {
+  --fi-radius: var(--miki-radius, 14px);
+}
+
+.breakdance .bde-miki-featured-image .miki-featured-image__stage--none .miki-featured-image__shape {
+  display: none;
+}
+
+/* Visual 1: near-rectangular frame with a slight lean; shape from bottom left to top right */
+.breakdance .bde-miki-featured-image .miki-featured-image__stage--v1 {
+  --fi-pad: 2.6cqw 11cqw 4.22cqw 8.76cqw;
+  --fi-clip: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1' preserveAspectRatio='none'%3E%3Cpath d='M.0644 .032Q.5117 .0002 .9593 0C.9779 -.0007 .9933 .0273 .9936 .0621Q1.0026 .4871 .999 .9125C.9993 .9603 .9786 .9991 .953 .9986Q.5043 1.0053 .0559 .9804C.0373 .98 .0213 .9513 .0204 .9165Q-.0003 .5397 .0001 .1608C-.0018 .0913 .0271 .0333 .0644 .032Z'/%3E%3C/svg%3E");
+  --fi-a-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1' preserveAspectRatio='none'%3E%3Cpath d='M.9448 .4983C.9149 .6075 .7509 .6769 .6891 .7217C.6273 .7666 .606 .7525 .5739 .7675C.5418 .7825 .5265 .7976 .4966 .812C.4667 .8263 .4578 .8324 .3946 .8535C.3314 .8745 .1747 .9974 .1175 .9382C.0604 .879 .0197 .6077 .0518 .4983C.0838 .3888 .2489 .3276 .3099 .2816C.3708 .2356 .3862 .2374 .4173 .2223C.4485 .2072 .4658 .206 .4966 .1908C.5274 .1756 .54 .1519 .6021 .1311C.6641 .1104 .8117 .0051 .8688 .0663C.9259 .1275 .9748 .3891 .9448 .4983Z'/%3E%3C/svg%3E");
+}
+
+/* Visual 2: straight top and bottom; bigger shape end top right, smaller bottom left */
+.breakdance .bde-miki-featured-image .miki-featured-image__stage--v2 {
+  --fi-pad: 5.09cqw 13.64cqw 3.37cqw 6.79cqw;
+  --fi-clip: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1' preserveAspectRatio='none'%3E%3Cpath d='M.0391 .0074Q.5044 -.0054 .9698 .0039C.9843 .0039 .9962 .027 .9963 .0554Q1.0028 .4918 .9979 .9282C.998 .9646 .9828 .9945 .9642 .9945Q.5082 1.0055 .0522 .9945C.0388 .9945 .0271 .973 .0263 .9467Q.0075 .5182 .0001 .0884C-.0013 .0439 .0163 .0075 .0391 .0074Z'/%3E%3C/svg%3E");
+  --fi-a-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1' preserveAspectRatio='none'%3E%3Cpath d='M.9423 .5091C.9078 .6183 .7189 .6749 .6528 .7149C.5867 .755 .575 .7388 .5458 .7496C.5166 .7605 .5029 .7708 .4775 .7801C.4521 .7895 .4498 .7845 .3933 .8056C.3369 .8267 .1938 .9562 .1388 .9068C.0839 .8574 .033 .6057 .0637 .5091C.0944 .4126 .2653 .3675 .323 .3277C.3807 .288 .384 .2857 .4098 .2706C.4355 .2556 .4503 .2537 .4775 .2375C.5047 .2213 .5092 .2027 .5729 .1731C.6366 .1436 .7983 .0042 .8599 .0602C.9215 .1162 .9768 .4 .9423 .5091Z'/%3E%3C/svg%3E");
+}
+
+/* Visual 3: rising top edge, slight lean on the right; shape from top left to bottom right */
+.breakdance .bde-miki-featured-image .miki-featured-image__stage--v3 {
+  --fi-pad: 3.82cqw 7.72cqw 4.9cqw 5.62cqw;
+  --fi-clip: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1' preserveAspectRatio='none'%3E%3Cpath d='M.0469 .0347Q.4939 -.005 .9412 .0007C.9749 -.0006 1.0013 .0562 .9997 .1269Q1.0021 .5179 .9829 .9069C.9818 .9568 .9614 .9972 .9376 .9966Q.4958 1.009 .0541 .9761C.0264 .9754 .0038 .9272 .0041 .8689Q-.0053 .494 .0069 .1195C.0071 .0737 .0251 .0356 .0469 .0347Z'/%3E%3C/svg%3E");
+  --fi-a-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1' preserveAspectRatio='none'%3E%3Cpath d='M.9547 .4969C.9908 .6042 .9471 .8887 .8873 .9441C.8275 .9995 .6605 .8558 .5959 .8291C.5314 .8024 .5278 .7986 .5 .7841C.4722 .7696 .4583 .7564 .4292 .7421C.4001 .7278 .3888 .7392 .3256 .6983C.2624 .6574 .0841 .6034 .05 .4969C.0159 .3904 .0624 .1157 .1211 .0594C.1799 .0031 .3393 .133 .4025 .159C.4656 .185 .4716 .2009 .5 .2153C.5284 .2297 .5442 .2313 .5726 .2454C.601 .2595 .6069 .258 .6706 .2999C.7343 .3418 .9186 .3895 .9547 .4969Z'/%3E%3C/svg%3E");
+}
+
+@keyframes miki-featured-image-in {
+  from {
+    opacity: 0;
+    translate: 0 14px;
+  }
+
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+
+@keyframes miki-featured-image-shape-in {
+  from {
+    opacity: 0;
+    scale: 0.92;
+  }
+
+  to {
+    opacity: 1;
+    scale: 1;
+  }
+}
+
+.breakdance .bde-miki-featured-image:not(.builder-element) .miki-featured-image__stage--animate .miki-featured-image__frame {
+  animation: miki-featured-image-in 650ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+.breakdance .bde-miki-featured-image:not(.builder-element) .miki-featured-image__stage--animate .miki-featured-image__shape {
+  animation: miki-featured-image-shape-in 900ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .breakdance .bde-miki-featured-image .miki-featured-image__frame,
+  .breakdance .bde-miki-featured-image .miki-featured-image__shape {
+    animation: none !important;
+  }
+}

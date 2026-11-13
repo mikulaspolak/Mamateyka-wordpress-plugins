@@ -2,7 +2,7 @@
 Contributors: mikulaspolak
 Requires at least: 6.0
 Requires PHP: 8.2
-Stable tag: 1.26.0
+Stable tag: 1.30.0
 License: Proprietary - All rights reserved
 
 Vlastné Breakdance prvky vytvorené v Breakdance Element Studio alebo ručne. Všetky sa v paneli pridávania prvkov zobrazujú v samostatnej sekcii **Elements by Miki**.
@@ -24,6 +24,19 @@ Mriežka kariet so spomienkami (nadpis sekcie a odkaz „Ďalšie spomienky“ s
 - Najviac 99 kariet; Breakdance neponúka UI limit pre repeater, preto je v editore upozornenie a limit vynucuje šablóna.
 - Masonry cez CSS columns, poradie pokračuje zhora nadol v stĺpcoch. Režim stĺpcov: automatický (minimálna šírka karty) alebo manuálny (počet stĺpcov); obe hodnoty sú responzívne podľa breakpointov Breakdance.
 - Dizajn: pozadie, farby, zaoblenie, počet riadkov textu; prepínače pre náklon kariet, lepiacu pásku a jemný hover (bez JavaScriptu, rešpektuje `prefers-reduced-motion`).
+
+== Element: Featured Image (Ilustračný obrázok) ==
+
+Zobrazí náhľadový obrázok (featured image) aktuálneho príspevku. Určený do šablóny článku; v šablóne stačí element vložiť, obrázok nastavuješ v príspevku.
+
+- Obrázok sa dosadí na fronte PHP výstupným filtrom (`elements/Featured_Image_Ilustracny_obrazok/featured-image.php`, načítaný z hlavného súboru pluginu) len na jednotlivých príspevkoch/stránkach (`is_singular()`). Šablóna elementu vypisuje len značku `<!--miki-featured-image:...-->`, ktorú filter nahradí `<img>`. Element preto ukazuje obrázok aktuálnej stránky, nie položky v slučke (Loop).
+- Predvolená veľkosť súboru je Full size (plné rozlíšenie, `srcset` ponúka aj menšie veľkosti); v nastaveniach sa dá zmeniť na Extra large / Large.
+- V editore Breakdance sa náhľad načíta skriptom `featured-image-editor.js` (len pre prihlásených s `edit_posts`) cez AJAX `miki_featured_image_preview`: obrázok upravovaného príspevku (parameter `id`/`*preview*` v URL canvasu), inak najnovší príspevok s náhľadovým obrázkom. Ak sa nenájde žiadny, zostane zástupný rámik.
+- Bez náhľadového obrázka sa na fronte nezobrazí nič (ani rámik). V editore sa namiesto obrázka zobrazí zástupný rámik s vybraným vizuálom.
+- Vizuál (Design -> Visual): Žiadny, 1, 2, 3. Fotka je orezaná SVG maskou (`mask`) s takmer obdĺžnikovým tvarom, jemne šikmými hranami a nerovnakými rohmi; tieň je `drop-shadow`. Za fotkou je vždy jeden oblý tvar s pevnou farbou `#CDDFE7`, ktorý ide diagonálne cez celé pozadie a vykukuje len v dvoch protiľahlých rohoch. Hodnoty `none`, `v1`..`v3` sú uložené v obsahu stránok, nemeň ich; neznáma uložená hodnota (napr. staré `v4`/`v5`) sa zobrazí ako Vizuál 1.
+- Tvar sa prispôsobí pomeru strán obrázka (maska aj tvary v pozadí sa škálujú cez `cqw`, bez JavaScriptu). Extrémne pomery mimo 9:16 až 21:9 sa orežú.
+- Nastavenia: maximálna šírka, zarovnanie (responzívne), veľkosť súboru obrázka, odsadenie, zaoblenie (len pri vizuáli Žiadny), tieň, animácia pri načítaní (rešpektuje `prefers-reduced-motion`).
+- Obrázok sa načítava `eager` s `fetchpriority="high"` (ilustrácia je zvyčajne v hornej časti článku).
 
 == Aktualizácie Breakdance a WordPressu ==
 
