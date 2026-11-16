@@ -1,0 +1,59 @@
+.breakdance .bde-miki-google-upcoming-events {
+  width: 100%;
+}
+
+.breakdance .bde-miki-google-upcoming-events .miki-google-upcoming-events__item {
+  display: flex;
+  gap: 14px;
+  padding: 12px 0;
+  border-top: 1px solid var(--miki-ue-divider, #d9e8ee);
+  align-items: center;
+}
+
+.breakdance .bde-miki-google-upcoming-events .miki-google-upcoming-events__item:first-child {
+  border-top: none;
+  padding-top: 4px;
+}
+
+.breakdance .bde-miki-google-upcoming-events .miki-google-upcoming-events__date {
+  flex: 0 0 auto;
+  width: 60px;
+  aspect-ratio: 1;
+  background: var(--miki-ue-date-bg, #cddfe7);
+  color: var(--miki-ue-date-color, #40647d);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 8px;
+}
+
+.breakdance .bde-miki-google-upcoming-events .miki-google-upcoming-events__day {
+  display: block;
+  font-size: 20px;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.breakdance .bde-miki-google-upcoming-events .miki-google-upcoming-events__month {
+  font-size: 11px;
+  text-transform: uppercase;
+  margin-top: 2px;
+}
+
+.breakdance .bde-miki-google-upcoming-events .miki-google-upcoming-events__meta {
+  flex: 1;
+}
+
+.breakdance .bde-miki-google-upcoming-events .miki-google-upcoming-events__title {
+  display: block;
+  font-size: 14px;
+  margin: 3px 0 2px;
+}
+
+.breakdance .bde-miki-google-upcoming-events .miki-google-upcoming-events__label {
+  font-size: 12px;
+  color: var(--miki-ue-meta-color, #66737b);
+}

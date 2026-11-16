@@ -1,4 +1,3 @@
-#Requires -Version 7.0
 $ErrorActionPreference = 'Stop'
 
 $projectRoot = $PSScriptRoot
@@ -62,9 +61,25 @@ try {
     [System.IO.File]::WriteAllText((Join-Path $stagingPluginDir "$pluginSlug.php"), $updatedPluginText, $utf8NoBom)
     [System.IO.File]::WriteAllText((Join-Path $stagingPluginDir 'readme.txt'), $updatedReadmeText, $utf8NoBom)
 
-    Compress-Archive -Path $stagingPluginDir -DestinationPath $temporaryZip -CompressionLevel Optimal
-
+    Add-Type -AssemblyName System.IO.Compression
     Add-Type -AssemblyName System.IO.Compression.FileSystem
+    $archive = [System.IO.Compression.ZipFile]::Open($temporaryZip, [System.IO.Compression.ZipArchiveMode]::Create)
+    try {
+        foreach ($file in Get-ChildItem -LiteralPath $stagingPluginDir -Recurse -File) {
+            $relativePath = $file.FullName.Substring($stagingPluginDir.Length + 1).Replace('\', '/')
+            $entryName = "$pluginSlug/$relativePath"
+            [System.IO.Compression.ZipFileExtensions]::CreateEntryFromFile(
+                $archive,
+                $file.FullName,
+                $entryName,
+                [System.IO.Compression.CompressionLevel]::Optimal
+            ) | Out-Null
+        }
+    }
+    finally {
+        $archive.Dispose()
+    }
+
     $archive = [System.IO.Compression.ZipFile]::OpenRead($temporaryZip)
     try {
         $entries = @($archive.Entries | Where-Object { -not [string]::IsNullOrEmpty($_.FullName) })

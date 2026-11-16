@@ -6,7 +6,7 @@ Read this file and `README.md` before working in this repository.
 
 - Repository of WordPress plugins and helper scripts for **mamateyka.sk** (production site, built with **Breakdance**).
 - Each `Plugin - ...` folder is a project: installable plugin in a slug-named subfolder, `build-release.ps1` at the project root, ZIPs in `Releases/`.
-- Target stack: WordPress 7.1.x, Breakdance 2.8.3, PHP 8.2. Windows; use PowerShell 7 (`pwsh`) for build scripts.
+- Target stack: WordPress 7.1.x, Breakdance 2.8.3, PHP 8.2. Windows; build scripts should support Windows PowerShell 5.1 and PowerShell 7 (`pwsh`).
 - Write code, comments, and docs in English. Never commit secrets or Breakdance's own (licensed) files.
 
 ## Breakdance Elements by Miki (`Plugin - Breakdance Elements by Miki/`)

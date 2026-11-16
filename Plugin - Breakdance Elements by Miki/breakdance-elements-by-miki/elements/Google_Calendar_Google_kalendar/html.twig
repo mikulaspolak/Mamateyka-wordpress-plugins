@@ -1,0 +1,8 @@
+{% set calendarId = content.source.calendar_id|default('') %}
+{% set accent = design.colors.accent|default('') %}
+{% set accentHex = (accent|slice(0, 1) == '#' and accent|length >= 7) ? accent|slice(0, 7) : '#537891' %}
+<div class="miki-google-calendar__container">
+  {% if calendarId %}
+    <iframe class="miki-google-calendar__frame" data-miki-google-calendar data-src="https://calendar.google.com/calendar/embed?src={{ calendarId|url_encode|e('html_attr') }}&amp;ctz=Europe%2FBratislava&amp;color={{ accentHex|url_encode|e('html_attr') }}&amp;showTitle=0&amp;showPrint=0&amp;showTabs=0&amp;showCalendars=0&amp;showTz=0" width="100%" height="600" scrolling="no" loading="lazy" title="{{ content.source.title|default('')|e('html_attr') }}"></iframe>
+  {% endif %}
+</div>

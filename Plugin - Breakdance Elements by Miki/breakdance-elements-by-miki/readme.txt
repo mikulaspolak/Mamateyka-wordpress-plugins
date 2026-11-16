@@ -2,7 +2,7 @@
 Contributors: mikulaspolak
 Requires at least: 6.0
 Requires PHP: 8.2
-Stable tag: 1.30.0
+Stable tag: 1.32.0
 License: Proprietary - All rights reserved
 
 Vlastné Breakdance prvky vytvorené v Breakdance Element Studio alebo ručne. Všetky sa v paneli pridávania prvkov zobrazujú v samostatnej sekcii **Elements by Miki**.
@@ -37,6 +37,24 @@ Zobrazí náhľadový obrázok (featured image) aktuálneho príspevku. Určený
 - Tvar sa prispôsobí pomeru strán obrázka (maska aj tvary v pozadí sa škálujú cez `cqw`, bez JavaScriptu). Extrémne pomery mimo 9:16 až 21:9 sa orežú.
 - Nastavenia: maximálna šírka, zarovnanie (responzívne), veľkosť súboru obrázka, odsadenie, zaoblenie (len pri vizuáli Žiadny), tieň, animácia pri načítaní (rešpektuje `prefers-reduced-motion`).
 - Obrázok sa načítava `eager` s `fetchpriority="high"` (ilustrácia je zvyčajne v hornej časti článku).
+
+== Element: Google Calendar (Google kalendár) ==
+
+Vložený verejný Google kalendár (iframe) s rovnakým vzhľadom ako pôvodný skript z webu.
+
+- Obsah: ID kalendára a názov iframe (pre čítačky obrazovky). Kalendár musí byť verejný.
+- Dizajn: výška (responzívna, predvolene 600 px), akcentová farba kalendára (len `#RRGGBB`, inak sa použije `#537891`) a farba pozadia.
+- Iframe sa načíta len na obrazovkách od 1024 px (`elements/Google_Calendar_Google_kalendar/google-calendar.js`); v editore sa načíta vždy.
+- Nadpis sekcie a odkaz na celý kalendár si pridaj zvlášť ako bežné prvky Breakdance.
+
+== Element: Google Upcoming Events (Google najbližšie udalosti) ==
+
+Zoznam najbližších udalostí z verejného Google kalendára (dátum, názov, deň a čas).
+
+- Obsah: ID kalendára, Google API kľúč, počet udalostí na desktope (od 1024 px, predvolene 6) a na tablete/mobile (predvolene 4), texty pre prázdny zoznam, chybu a udalosť bez názvu.
+- API kľúč nie je súčasťou pluginu; vkladá sa v editore a je viditeľný v zdrojovom kóde stránky. V Google Cloud Console ho obmedz na Google Calendar API a referrer webu (napr. `mamateyka.sk/*`).
+- Udalosti sa načítajú v prehliadači (`google-upcoming-events.js`) cez Google Calendar API; názvy sa vkladajú ako text (nie HTML). Časy sa zobrazujú v časovej zóne Europe/Bratislava.
+- Dizajn: farby pozadia a textu dátumu, vedľajšieho textu a oddeľovacej čiary.
 
 == Aktualizácie Breakdance a WordPressu ==
 
@@ -75,3 +93,5 @@ Cieľ: Breakdance 2.8.3, WordPress 7.1.4, PHP 8.2.
 = 1.3.0 =
 - Element sa volá Memories (sk: Spomienky); texty v editore sú po anglicky so slovenským prekladom v pluguine.
 - Upozornenie po aktualizácii na novú hlavnú verziu Breakdance, dokumentácia aktualizácií.
+= 1.31.0 =
+- Nové elementy Google Calendar (Google kalendár) a Google Upcoming Events (Google najbližšie udalosti) nahrádzajú skripty z priečinka Script - Calendar.

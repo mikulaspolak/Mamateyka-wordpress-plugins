@@ -9,9 +9,11 @@ for the Mamateyka website.
 - **Knizica Mamateyka** — a small library catalogue and reservation plugin.
 - **Hero Carousel Mini Plugin** — a carousel for selected website content.
 - **Breakdance Elements by Miki** — custom Breakdance elements (section
-  *Elements by Miki* in the editor). First element: Memories (sk: Spomienky).
+  *Elements by Miki* in the editor): Memories (sk: Spomienky), Featured Image,
+  Post Gallery, Google Calendar (sk: Google kalendár) and Google Upcoming
+  Events (sk: Google najbližšie udalosti).
 - **Breakdance Slovak UI** — Slovak translation of the Breakdance editor.
-- **Website scripts** — calendar, search, gallery, navigation, and other
+- **Website scripts** — search, gallery, navigation, and other
   custom website components.
 
 The website (production: mamateyka.sk) is built with Breakdance. AI assistants
@@ -30,10 +32,12 @@ kept in their own `Script - ...` project folders.
 
 ## Building plugin releases
 
-Run `build-release.ps1` from the relevant plugin project folder using Windows
-PowerShell. Each script increments that plugin's minor version, updates its
-version metadata, builds a ZIP with the existing WordPress slug as its root,
-and validates the package before saving it under `Releases/`.
+Run `build-release.ps1` from the relevant plugin project folder using
+Windows PowerShell 5.1 or later, for example
+`.\build-release.ps1` or `pwsh -File .\build-release.ps1`. Each script
+increments that plugin's minor version, updates its version metadata, builds a
+ZIP with the existing WordPress slug as its root, and validates the package
+before saving it under `Releases/`.
 
 The three scripts share the same name and workflow, while retaining the
 plugin-specific version fields and release notes. Exception: the Breakdance

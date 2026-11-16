@@ -1,0 +1,15 @@
+.breakdance .bde-miki-google-calendar {
+  width: 100%;
+}
+
+.breakdance .bde-miki-google-calendar .miki-google-calendar__container {
+  width: 100%;
+  background-color: var(--miki-gc-bg, #f4f8fa);
+}
+
+.breakdance .bde-miki-google-calendar .miki-google-calendar__frame {
+  width: 100%;
+  height: var(--miki-gc-height, 600px);
+  border: 0;
+  filter: brightness(102%) contrast(101%);
+}

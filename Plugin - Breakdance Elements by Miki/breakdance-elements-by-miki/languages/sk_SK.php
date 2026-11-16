@@ -85,6 +85,35 @@ return [
     'Animation' => 'Animácia',
     'No load animation' => 'Bez animácie pri načítaní',
 
+    // Google Calendar
+    'Google Calendar' => 'Google kalendár',
+    'Calendar' => 'Kalendár',
+    'Calendar ID' => 'ID kalendára',
+    'Calendar ID hint' => 'Poznámka k ID kalendára',
+    'The calendar must be public. The ID is in Google Calendar under Settings for my calendars, Integrate calendar. The calendar is loaded only on screens 1024 px wide and larger.' => 'Kalendár musí byť verejný. ID nájdeš v Google Kalendári v Nastaveniach mojich kalendárov, v časti Integrovať kalendár. Kalendár sa načíta len na obrazovkách širokých aspoň 1024 px.',
+    'Calendar title (for screen readers)' => 'Názov kalendára (pre čítačky obrazovky)',
+    'Height' => 'Výška',
+    'Colors' => 'Farby',
+    'Calendar accent color' => 'Akcentová farba kalendára',
+    'Background' => 'Pozadie',
+
+    // Google Upcoming Events
+    'Google Upcoming Events' => 'Google najbližšie udalosti',
+    'Google API key' => 'Google API kľúč',
+    'API key hint' => 'Poznámka k API kľúču',
+    'The calendar must be public. The key is visible in the page source, so restrict it in Google Cloud Console to the Google Calendar API and to the website referrer (for example mamateyka.sk/*).' => 'Kalendár musí byť verejný. Kľúč je viditeľný v zdrojovom kóde stránky, preto ho v Google Cloud Console obmedz na Google Calendar API a na referrer webu (napríklad mamateyka.sk/*).',
+    'Display' => 'Zobrazenie',
+    'Events on desktop (1024 px and wider)' => 'Počet udalostí na desktope (od 1024 px)',
+    'Events on tablet and mobile' => 'Počet udalostí na tablete a mobile',
+    'Texts' => 'Texty',
+    'Text when there are no events' => 'Text, keď nie sú žiadne udalosti',
+    'Text when loading fails' => 'Text pri chybe načítania',
+    'Title for events without a name' => 'Názov pre udalosti bez mena',
+    'Date background' => 'Pozadie dátumu',
+    'Date text' => 'Text dátumu',
+    'Secondary text (day and time)' => 'Vedľajší text (deň a čas)',
+    'Divider line' => 'Oddeľovacia čiara',
+
     // Admin notices
     'Breakdance Elements by Miki requires an active Breakdance plugin.' => 'Breakdance Elements by Miki vyžaduje aktívny plugin Breakdance.',
     'Breakdance Elements by Miki was tested with Breakdance %1$d.x (installed: %2$s). After updating, check the elements in the editor and on the frontend.' => 'Breakdance Elements by Miki bol overený s Breakdance %1$d.x (nainštalované: %2$s). Po aktualizácii skontroluj elementy v editore a na fronte.',

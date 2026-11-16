@@ -1,0 +1,3 @@
+{% set countDesktop = content.display.count_desktop|default(6) %}
+{% set countMobile = content.display.count_mobile|default(4) %}
+<div class="miki-google-upcoming-events__list" data-miki-upcoming-events data-calendar-id="{{ content.source.calendar_id|default('')|e('html_attr') }}" data-api-key="{{ content.source.api_key|default('')|e('html_attr') }}" data-count-desktop="{{ countDesktop|e('html_attr') }}" data-count-mobile="{{ countMobile|e('html_attr') }}" data-empty-text="{{ content.texts.empty|default('')|e('html_attr') }}" data-error-text="{{ content.texts.error|default('')|e('html_attr') }}" data-fallback-title="{{ content.texts.fallback_title|default('')|e('html_attr') }}"></div>
