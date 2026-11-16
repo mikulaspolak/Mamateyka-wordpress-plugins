@@ -1,0 +1,143 @@
+.breakdance .bde-miki-toast .miki-toast {
+  position: fixed;
+  top: var(--miki-toast-top, 72px);
+  left: 50%;
+  z-index: var(--miki-toast-z, 8);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: calc(100vw - 20px);
+  max-width: var(--miki-toast-max-width, 1200px);
+  box-sizing: border-box;
+  padding: 9px 12px 9px 10px;
+  background: var(--miki-toast-bg, #ffffff);
+  color: var(--miki-toast-text, #1d2630);
+  border-radius: var(--miki-toast-radius, 10px);
+  box-shadow: var(--miki-toast-shadow, 0 5px 20px rgba(0, 0, 0, 0.15));
+  font-family: inherit;
+  opacity: 0;
+  transform: translateX(-50%) translateY(20px);
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  touch-action: pan-y;
+}
+
+.breakdance .bde-miki-toast .miki-toast.is-visible {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* The editor shows the toast as a normal block so it can be selected and edited. */
+.breakdance .bde-miki-toast .miki-toast.miki-toast--static {
+  position: relative;
+  top: auto;
+  left: auto;
+  margin: 0 auto;
+  opacity: 1;
+  transform: none;
+}
+
+.breakdance .bde-miki-toast .miki-toast__icon {
+  width: 27px;
+  height: 27px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--miki-toast-accent, #537891);
+  color: var(--miki-toast-icon-color, #ffffff);
+  border-radius: 50%;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.breakdance .bde-miki-toast .miki-toast__content {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  flex: 1;
+  line-height: 1.3;
+}
+
+.breakdance .bde-miki-toast .miki-toast__title {
+  font-size: var(--miki-toast-title-size, 14px);
+  white-space: nowrap;
+}
+
+.breakdance .bde-miki-toast .miki-toast__text {
+  font-size: var(--miki-toast-text-size, inherit);
+}
+
+.breakdance .bde-miki-toast .miki-toast__button {
+  display: inline-block;
+  flex-shrink: 0;
+  border: 0;
+  padding: 7px 11px;
+  background: var(--miki-toast-accent, #537891);
+  color: var(--miki-toast-button-color, #ffffff) !important;
+  border-radius: 6px;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.breakdance .bde-miki-toast .miki-toast__button:hover {
+  background: var(--miki-toast-accent-hover, #41647a);
+  color: var(--miki-toast-button-color, #ffffff) !important;
+}
+
+.breakdance .bde-miki-toast .miki-toast__close {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  color: var(--miki-toast-close, #7a858d);
+  font-size: 21px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.breakdance .bde-miki-toast .miki-toast__close:hover {
+  color: var(--miki-toast-close-hover, #1d2630);
+}
+
+@media (max-width: 600px) {
+  .breakdance .bde-miki-toast .miki-toast {
+    top: var(--miki-toast-top-mobile, 62px);
+    padding: 8px 10px 8px 8px;
+  }
+
+  .breakdance .bde-miki-toast .miki-toast.miki-toast--static {
+    top: auto;
+  }
+
+  .breakdance .bde-miki-toast .miki-toast__content {
+    display: block;
+  }
+
+  .breakdance .bde-miki-toast .miki-toast__title {
+    display: block;
+    font-size: var(--miki-toast-title-size-mobile, 13px);
+  }
+
+  .breakdance .bde-miki-toast .miki-toast__text {
+    font-size: var(--miki-toast-text-size-mobile, var(--miki-toast-text-size, inherit));
+  }
+
+  .breakdance .bde-miki-toast .miki-toast__button {
+    display: inline-block;
+    margin: 7px 0 0;
+    padding: 6px 8px;
+    font-size: 11px;
+    width: fit-content;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .breakdance .bde-miki-toast .miki-toast {
+    transition: none;
+  }
+}

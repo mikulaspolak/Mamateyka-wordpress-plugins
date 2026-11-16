@@ -3,7 +3,7 @@
 /**
  * Plugin Name: Breakdance Elements by Miki
  * Description: Custom Breakdance elements, macros, and presets by Miki.
- * Version: 1.32.0
+ * Version: 1.33.0
  * Author: Mikulas Polak
  * Requires at least: 6.0
  * Requires PHP: 8.2
@@ -90,6 +90,7 @@ add_action('wp_enqueue_scripts', function () {
     foreach ([
         'miki-google-calendar' => 'elements/Google_Calendar_Google_kalendar/google-calendar.js',
         'miki-google-upcoming-events' => 'elements/Google_Upcoming_Events_Google_najblizsie_udalosti/google-upcoming-events.js',
+        'miki-toast' => 'elements/Toast_Oznamenie/toast.js',
     ] as $handle => $relativePath) {
         wp_enqueue_script(
             $handle,

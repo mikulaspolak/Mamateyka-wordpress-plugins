@@ -2,7 +2,7 @@
 Contributors: mikulaspolak
 Requires at least: 6.0
 Requires PHP: 8.2
-Stable tag: 1.32.0
+Stable tag: 1.33.0
 License: Proprietary - All rights reserved
 
 Vlastné Breakdance prvky vytvorené v Breakdance Element Studio alebo ručne. Všetky sa v paneli pridávania prvkov zobrazujú v samostatnej sekcii **Elements by Miki**.
@@ -56,6 +56,16 @@ Zoznam najbližších udalostí z verejného Google kalendára (dátum, názov, 
 - Udalosti sa načítajú v prehliadači (`google-upcoming-events.js`) cez Google Calendar API; názvy sa vkladajú ako text (nie HTML). Časy sa zobrazujú v časovej zóne Europe/Bratislava.
 - Dizajn: farby pozadia a textu dátumu, vedľajšieho textu a oddeľovacej čiary.
 
+== Element: Toast (Oznámenie) ==
+
+Plávajúce oznámenie v hornej časti stránky (nahrádza skript z priečinka Script - Toast). Vlož ho na stránku alebo do šablóny; predvolené nastavenia zodpovedajú pôvodnému oznámeniu „Mamateyka 30 rokov“.
+
+- Obsah: ikona (znak), nadpis, text, tlačidlo (text, odkaz, nová karta) a popis tlačidla zavrieť. Ikonu aj tlačidlo možno vypnúť; tlačidlo sa nezobrazí bez textu alebo odkazu.
+- Správanie: zatvorenie tlačidlom × alebo potiahnutím do strany (swipe). Voliteľne sa po zatvorení alebo kliknutí na tlačidlo oznámenie v tej istej relácii prehliadača (`sessionStorage`) už nezobrazí; kľúč je „ID oznámenia“ (predvolene `top-toast-seen`), pre každé oznámenie nastav iné.
+- Dizajn: vzdialenosť od hora (desktop a mobil do 600 px), maximálna šírka, z-index, zaoblenie, tieň, veľkosť nadpisu a textu, farby (pozadie, text, akcent, hover tlačidla, znak ikony, text tlačidla, tlačidlo zavrieť).
+- Skript `elements/Toast_Oznamenie/toast.js` je rovnaký pre všetky inštancie. V editore sa oznámenie zobrazuje ako bežný blok (nie ako plávajúce), aby sa dalo vybrať a upravovať; animácia rešpektuje `prefers-reduced-motion`.
+- Odkaz tlačidla je obyčajné textové pole (bez výberu stránky z Breakdance).
+
 == Aktualizácie Breakdance a WordPressu ==
 
 - Plugin je samostatný priečinok `wp-content/plugins/breakdance-elements-by-miki/`. Aktualizácia Breakdance ani WordPressu ho neprepíše; prepísal by ho len Breakdance priečinok, preto elementy nikdy neukladaj do umiestnenia Breakdance.
@@ -95,3 +105,5 @@ Cieľ: Breakdance 2.8.3, WordPress 7.1.4, PHP 8.2.
 - Upozornenie po aktualizácii na novú hlavnú verziu Breakdance, dokumentácia aktualizácií.
 = 1.31.0 =
 - Nové elementy Google Calendar (Google kalendár) a Google Upcoming Events (Google najbližšie udalosti) nahrádzajú skripty z priečinka Script - Calendar.
+= 1.33.0 =
+- Nový element Toast (Oznámenie) nahrádza skript z priečinka Script - Toast.

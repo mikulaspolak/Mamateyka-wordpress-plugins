@@ -1,0 +1,22 @@
+{% set showIcon = content.message.show_icon is defined ? content.message.show_icon : true %}
+{% set showButton = content.button.show is defined ? content.button.show : true %}
+{% set remember = content.behavior.remember is defined ? content.behavior.remember : true %}
+{% set buttonUrl = content.button.url|default('')|trim %}
+{% set buttonLabel = content.button.label|default('')|trim %}
+<div class="miki-toast" data-miki-toast data-remember="{{ remember ? '1' : '0' }}" data-storage-key="{{ content.behavior.storage_key|default('top-toast-seen')|e('html_attr') }}">
+  {% if showIcon and content.message.icon %}
+    <div class="miki-toast__icon" aria-hidden="true">{{ content.message.icon|e }}</div>
+  {% endif %}
+  <div class="miki-toast__content">
+    {% if content.message.title %}
+      <strong class="miki-toast__title">{{ content.message.title|e }}</strong>
+    {% endif %}
+    {% if content.message.text %}
+      <span class="miki-toast__text">{{ content.message.text|e }}</span>
+    {% endif %}
+    {% if showButton and buttonLabel and buttonUrl %}
+      <a class="miki-toast__button" href="{{ buttonUrl|e('html_attr') }}"{% if content.button.new_tab %} target="_blank" rel="noopener"{% endif %}>{{ buttonLabel|e }}</a>
+    {% endif %}
+  </div>
+  <button class="miki-toast__close" type="button" aria-label="{{ content.message.close_label|default('')|e('html_attr') }}">×</button>
+</div>
