@@ -2,8 +2,8 @@
 
 /**
  * Plugin Name: Hero Carousel Mini Plugin
- * Description: Hero Carousel with automatic posts from Clanky and Galeria categories; no additional field plugin required
- * Version: 3.11.0
+ * Description: Hero Carousel with automatic posts from admin-selected categories; no additional field plugin required
+ * Version: 3.13.0
  * Author: Mikulas Polak
  * Requires at least: 6.0
  * Requires PHP: 7.4
@@ -14,7 +14,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-define('HCM_PLUGIN_VERSION', '3.11.0');
+define('HCM_PLUGIN_VERSION', '3.13.0');
 define('HCM_PLUGIN_FILE', __FILE__);
 define('HCM_PLUGIN_PATH', plugin_dir_path(__FILE__));
 
@@ -74,6 +74,13 @@ function hcm_maybe_upgrade()
     }
 
     if (version_compare((string) $installed_version, '3.10.0', '<')) {
+        if (function_exists('hcm_flush_universal_carousel_cache')) {
+            hcm_flush_universal_carousel_cache();
+        }
+    }
+
+    if (version_compare((string) $installed_version, '3.12.0', '<')) {
+        // Carousel posts now come from admin-selected categories instead of fixed Clanky + Galeria.
         if (function_exists('hcm_flush_universal_carousel_cache')) {
             hcm_flush_universal_carousel_cache();
         }

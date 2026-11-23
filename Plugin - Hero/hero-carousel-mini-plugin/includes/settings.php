@@ -105,11 +105,12 @@ function hcm_render_settings_page()
             update_option('hcm_posts_clanky_count', $count);
         }
 
-        if (isset($_POST['hcm_posts_galeria_count'])) {
-            $count = (int) sanitize_text_field(wp_unslash($_POST['hcm_posts_galeria_count']));
-            $count = max(0, min(20, $count)); // Clamp between 0 and 20
-            update_option('hcm_posts_galeria_count', $count);
-        }
+        // The checkbox list is always rendered, so a missing field means nothing is selected.
+        $submitted_category_ids = isset($_POST['hcm_posts_category_ids']) ? (array) wp_unslash($_POST['hcm_posts_category_ids']) : array();
+        $submitted_category_ids = array_values(array_unique(array_filter(array_map('absint', $submitted_category_ids))));
+        $valid_category_ids = get_terms(array('taxonomy' => 'category', 'hide_empty' => false, 'fields' => 'ids'));
+        $valid_category_ids = is_wp_error($valid_category_ids) ? array() : array_map('intval', $valid_category_ids);
+        update_option('hcm_posts_category_ids', array_values(array_intersect($submitted_category_ids, $valid_category_ids)), false);
 
         if (isset($_POST['hcm_carousel_aspect_ratio'])) {
             $ratio = sanitize_text_field(wp_unslash($_POST['hcm_carousel_aspect_ratio']));
@@ -124,25 +125,27 @@ function hcm_render_settings_page()
     }
 
     $clanky_count = (int) get_option('hcm_posts_clanky_count', 5);
-    $galeria_count = (int) get_option('hcm_posts_galeria_count', 3);
+    $selected_category_ids = hcm_get_selected_category_ids();
     $aspect_ratio = hcm_normalize_aspect_ratio_option((string) get_option('hcm_carousel_aspect_ratio', '3:4'));
     $aspect_ratio_options = hcm_get_allowed_aspect_ratio_options();
 
+    $categories = get_categories(array('taxonomy' => 'category', 'hide_empty' => false, 'orderby' => 'name'));
+    $category_tree = hcm_build_category_tree($categories);
+
     // Preview walk goes up to the selector maximum so JS can trim live for any chosen value.
-    $clanky_preview = function_exists('hcm_evaluate_category_posts') ? hcm_evaluate_category_posts('clanky', 20) : array();
-    $galeria_preview = function_exists('hcm_evaluate_category_posts') ? hcm_evaluate_category_posts('galeria', 20) : array();
+    $preview_rows = hcm_collect_preview_rows($categories);
 ?>
     <div class="wrap">
         <h1>Hero Carousel — Nastavenia</h1>
         <form method="post" action="">
             <?php wp_nonce_field('hcm_carousel_action', 'hcm_carousel_nonce'); ?>
 
-            <h2 style="margin-top: 24px;">Počet príspevkov</h2>
+            <h2 style="margin-top: 24px;">Príspevky v carouseli</h2>
             <table class="form-table">
                 <tbody>
                     <tr>
                         <th scope="row">
-                            <label for="hcm_posts_clanky_count">Príspevky z "Články":</label>
+                            <label for="hcm_posts_clanky_count">Počet príspevkov:</label>
                         </th>
                         <td>
                             <input
@@ -153,31 +156,22 @@ function hcm_render_settings_page()
                                 min="0"
                                 max="20"
                                 step="1"
-                                data-hcm-preview-target="hcm-preview-clanky" />
+                                data-hcm-preview-target="hcm-preview-posts" />
                             <p class="description">
-                                Koľko príspevkov z kategórie <strong>Články</strong> sa má <strong>pridať</strong> do carouselu (za manuálnymi položkami). (Min: 0, Max: 20)
+                                Koľko príspevkov z vybraných kategórií sa má <strong>pridať</strong> do carouselu (za manuálnymi položkami). (Min: 0, Max: 20)
                             </p>
-                            <?php hcm_render_preview_table('hcm-preview-clanky', $clanky_preview); ?>
                         </td>
                     </tr>
                     <tr>
-                        <th scope="row">
-                            <label for="hcm_posts_galeria_count">Príspevky z "Galéria":</label>
-                        </th>
+                        <th scope="row">Kategórie:</th>
                         <td>
-                            <input
-                                type="number"
-                                id="hcm_posts_galeria_count"
-                                name="hcm_posts_galeria_count"
-                                value="<?php echo esc_attr($galeria_count); ?>"
-                                min="0"
-                                max="20"
-                                step="1"
-                                data-hcm-preview-target="hcm-preview-galeria" />
+                            <fieldset class="hcm-category-list" id="hcm-category-list">
+                                <?php hcm_render_category_checkboxes($category_tree, 0, $selected_category_ids); ?>
+                            </fieldset>
                             <p class="description">
-                                Koľko príspevkov z kategórie <strong>Galéria</strong> sa má <strong>pridať</strong> na koniec carouselu. (Min: 0, Max: 20)
+                                Príspevky sa vyberajú z <strong>zaškrtnutých kategórií</strong> (podkategórie sa nezahŕňajú automaticky). Príspevok vo viacerých kategóriách sa zobrazí raz. Ak nie je zaškrtnutá žiadna, nepridá sa žiadny príspevok.
                             </p>
-                            <?php hcm_render_preview_table('hcm-preview-galeria', $galeria_preview); ?>
+                            <?php hcm_render_preview_table('hcm-preview-posts', $preview_rows); ?>
                         </td>
                     </tr>
                 </tbody>
@@ -214,6 +208,24 @@ function hcm_render_settings_page()
     </div>
 
     <style>
+        .hcm-category-list {
+            max-height: 260px;
+            max-width: 520px;
+            overflow-y: auto;
+            padding: 8px 12px;
+            border: 1px solid #dcdcde;
+            background: #fff;
+        }
+
+        .hcm-category-list label {
+            display: block;
+            margin: 3px 0;
+        }
+
+        .hcm-category-count {
+            color: #757575;
+        }
+
         .hcm-preview {
             margin-top: 10px;
             max-width: 520px;
@@ -273,17 +285,29 @@ function hcm_render_settings_page()
                     return;
                 }
 
-                var rows = Array.prototype.slice.call(wrapper.querySelectorAll('tbody tr'));
+                var rows = Array.prototype.slice.call(wrapper.querySelectorAll('.hcm-preview-table > tbody > tr'));
                 var table = wrapper.querySelector('.hcm-preview-table');
                 var empty = wrapper.querySelector('.hcm-preview-empty');
+                var checkboxes = Array.prototype.slice.call(document.querySelectorAll('input[name="hcm_posts_category_ids[]"]'));
 
                 function update() {
                     var limit = clamp(parseInt(input.value, 10), 0, 20);
+                    var checked = {};
+                    checkboxes.forEach(function(box) {
+                        if (box.checked) {
+                            checked[box.value] = true;
+                        }
+                    });
+
                     var validCount = 0;
                     var shownCount = 0;
 
                     rows.forEach(function(row) {
-                        if (validCount >= limit) {
+                        var inSelection = row.getAttribute('data-terms').split(',').some(function(id) {
+                            return checked[id];
+                        });
+
+                        if (!inSelection || validCount >= limit) {
                             row.style.display = 'none';
                             return;
                         }
@@ -305,11 +329,93 @@ function hcm_render_settings_page()
                 }
 
                 input.addEventListener('input', update);
+                checkboxes.forEach(function(box) {
+                    box.addEventListener('change', update);
+                });
                 update();
             });
         })();
     </script>
 <?php
+}
+
+/**
+ * Arrange categories into a parent => children map.
+ */
+function hcm_build_category_tree($categories)
+{
+    $ids = array();
+    foreach ($categories as $category) {
+        $ids[(int) $category->term_id] = true;
+    }
+
+    $tree = array();
+    foreach ($categories as $category) {
+        $parent = (int) $category->parent;
+        // Treat categories with a missing parent as top-level.
+        if (!isset($ids[$parent])) {
+            $parent = 0;
+        }
+        $tree[$parent][] = $category;
+    }
+
+    return $tree;
+}
+
+/**
+ * Render nested category checkboxes with post counts.
+ */
+function hcm_render_category_checkboxes($tree, $parent, $selected_ids, $depth = 0)
+{
+    if (empty($tree[$parent]) || $depth > 10) {
+        return;
+    }
+
+    foreach ($tree[$parent] as $category) {
+        $term_id = (int) $category->term_id;
+        ?>
+        <label style="margin-left: <?php echo (int) ($depth * 18); ?>px;">
+            <input
+                type="checkbox"
+                name="hcm_posts_category_ids[]"
+                value="<?php echo esc_attr($term_id); ?>"
+                <?php checked(in_array($term_id, $selected_ids, true)); ?> />
+            <?php echo esc_html($category->name); ?>
+            <span class="hcm-category-count">(<?php echo (int) $category->count; ?>)</span>
+        </label>
+        <?php
+        hcm_render_category_checkboxes($tree, $term_id, $selected_ids, $depth + 1);
+    }
+}
+
+/**
+ * Merge per-category preview walks into one list (newest first, each post once).
+ * Each category contributes its first 20 displayable posts, which is enough for any
+ * selection and count up to the maximum.
+ */
+function hcm_collect_preview_rows($categories)
+{
+    if (!function_exists('hcm_evaluate_category_posts')) {
+        return array();
+    }
+
+    $rows = array();
+    foreach ($categories as $category) {
+        if ((int) $category->count <= 0) {
+            continue;
+        }
+
+        foreach (hcm_evaluate_category_posts(array((int) $category->term_id), 20) as $row) {
+            $rows[$row['post_id']] = $row;
+        }
+    }
+
+    uasort($rows, static function ($a, $b) {
+        $by_date = strcmp($b['date'], $a['date']);
+        return $by_date !== 0 ? $by_date : $b['post_id'] <=> $a['post_id'];
+    });
+
+    return array_values($rows);
 }
 
 /**
@@ -337,7 +443,7 @@ function hcm_render_preview_table($wrapper_id, $rows)
                     $title = $row['title'] !== '' ? $row['title'] : '(bez názvu)';
                     $status_class = $status === 'show' ? 'hcm-status-show' : 'hcm-status-reason';
                 ?>
-                    <tr data-status="<?php echo esc_attr($status); ?>">
+                    <tr data-status="<?php echo esc_attr($status); ?>" data-terms="<?php echo esc_attr(implode(',', array_map('intval', $row['term_ids']))); ?>">
                         <td><?php echo esc_html($title); ?></td>
                         <td class="<?php echo esc_attr($status_class); ?>"><?php echo esc_html($status_labels[$status]); ?></td>
                     </tr>

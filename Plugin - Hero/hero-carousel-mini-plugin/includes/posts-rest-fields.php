@@ -118,6 +118,8 @@ function hcm_flush_universal_carousel_cache()
 add_action('save_post', 'hcm_flush_universal_carousel_cache');
 add_action('deleted_post', 'hcm_flush_universal_carousel_cache');
 add_action('trashed_post', 'hcm_flush_universal_carousel_cache');
+add_action('edited_category', 'hcm_flush_universal_carousel_cache');
+add_action('delete_category', 'hcm_flush_universal_carousel_cache');
 
 // Covers scheduled posts published by WP-Cron, which do not fire save_post.
 add_action('transition_post_status', 'hcm_flush_universal_carousel_cache_on_transition', 10, 3);
@@ -151,15 +153,11 @@ function hcm_get_post_image_status($post_id)
  * with a valid featured image are collected, backfilling past ones without an image.
  * Returns ordered rows (including skipped ones) as ['post_id', 'title', 'status'].
  */
-function hcm_evaluate_category_posts($slug, $limit)
+function hcm_evaluate_category_posts($term_ids, $limit)
 {
     $limit = (int) $limit;
-    if ($limit <= 0) {
-        return array();
-    }
-
-    $term = get_term_by('slug', $slug, 'category');
-    if (!$term) {
+    $term_ids = array_values(array_unique(array_filter(array_map('absint', (array) $term_ids))));
+    if ($limit <= 0 || empty($term_ids)) {
         return array();
     }
 
@@ -175,7 +173,8 @@ function hcm_evaluate_category_posts($slug, $limit)
             array(
                 'taxonomy' => 'category',
                 'field' => 'term_id',
-                'terms' => $term->term_id,
+                'terms' => $term_ids,
+                'include_children' => false,
             ),
         ),
     ));
@@ -190,6 +189,8 @@ function hcm_evaluate_category_posts($slug, $limit)
             'post_id' => (int) $post_id,
             'title' => get_the_title($post_id),
             'status' => $status,
+            'date' => (string) get_post_field('post_date_gmt', $post_id),
+            'term_ids' => array_map('intval', wp_get_post_categories($post_id)),
         );
 
         if ($status === 'show') {
@@ -204,15 +205,31 @@ function hcm_evaluate_category_posts($slug, $limit)
 }
 
 /**
- * Append carousel items for the newest displayable posts of a category (backfilled).
+ * Category term IDs whose posts feed the carousel. Defaults to the "clanky" category
+ * until the admin saves a selection; a saved empty selection means no posts.
  */
-function hcm_append_category_carousel_items(&$combined_items, $slug, $count)
+function hcm_get_selected_category_ids()
+{
+    $saved = get_option('hcm_posts_category_ids', null);
+
+    if (!is_array($saved)) {
+        $term = get_term_by('slug', 'clanky', 'category');
+        return $term ? array((int) $term->term_id) : array();
+    }
+
+    return array_values(array_unique(array_filter(array_map('absint', $saved))));
+}
+
+/**
+ * Append carousel items for the newest displayable posts of the given categories (backfilled).
+ */
+function hcm_append_category_carousel_items(&$combined_items, $term_ids, $count)
 {
     if ((int) $count <= 0) {
         return;
     }
 
-    $post_ids = hcm_get_frontend_category_post_ids($slug, $count);
+    $post_ids = hcm_get_frontend_category_post_ids($term_ids, $count);
     foreach ($post_ids as $post_id) {
         $item = hcm_transform_post_to_carousel_item(get_post($post_id));
         if ($item) {
@@ -224,15 +241,11 @@ function hcm_append_category_carousel_items(&$combined_items, $slug, $count)
 /**
  * Find enough frontend posts in small batches instead of loading a whole category.
  */
-function hcm_get_frontend_category_post_ids($slug, $limit)
+function hcm_get_frontend_category_post_ids($term_ids, $limit)
 {
     $limit = (int) $limit;
-    if ($limit <= 0) {
-        return array();
-    }
-
-    $term = get_term_by('slug', $slug, 'category');
-    if (!$term) {
+    $term_ids = array_values(array_unique(array_filter(array_map('absint', (array) $term_ids))));
+    if ($limit <= 0 || empty($term_ids)) {
         return array();
     }
 
@@ -260,7 +273,8 @@ function hcm_get_frontend_category_post_ids($slug, $limit)
                 array(
                     'taxonomy' => 'category',
                     'field' => 'term_id',
-                    'terms' => $term->term_id,
+                    'terms' => $term_ids,
+                    'include_children' => false,
                 ),
             ),
         ));
@@ -284,7 +298,7 @@ function hcm_get_frontend_category_post_ids($slug, $limit)
 }
 
 /**
- * Get universal carousel (manual items + Clanky posts + Galeria posts)
+ * Get universal carousel (manual items + posts from the selected categories)
  */
 function hcm_get_universal_carousel_items()
 {
@@ -295,7 +309,6 @@ function hcm_get_universal_carousel_items()
     }
 
     $clanky_count = (int) get_option('hcm_posts_clanky_count', 5);
-    $galeria_count = (int) get_option('hcm_posts_galeria_count', 3);
     $combined_items = array();
 
     // 1. Get all enabled manual hero_carousel items
@@ -332,11 +345,8 @@ function hcm_get_universal_carousel_items()
         }
     }
 
-    // 2. Add posts from Clanky category (backfilled to full count when possible)
-    hcm_append_category_carousel_items($combined_items, 'clanky', $clanky_count);
-
-    // 3. Add posts from Galeria category (backfilled to full count when possible)
-    hcm_append_category_carousel_items($combined_items, 'galeria', $galeria_count);
+    // 2. Add newest posts from the selected categories (backfilled to full count when possible)
+    hcm_append_category_carousel_items($combined_items, hcm_get_selected_category_ids(), $clanky_count);
 
     set_transient($cache_key, $combined_items, 10 * MINUTE_IN_SECONDS);
 

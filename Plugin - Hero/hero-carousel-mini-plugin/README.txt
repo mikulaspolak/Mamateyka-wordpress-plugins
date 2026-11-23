@@ -8,7 +8,7 @@ What this plugin does:
 - adds enabled/disabled switch per item (carousel_enabled)
 - exposes image_url, image_alt, carousel_title, carousel_link, carousel_enabled, carousel_show_button in REST API
 - returns only enabled items in default REST view responses
-- provides a combined frontend feed (manual hero items + posts from Clanky + posts from Galeria) at /wp-json/hcm/v1/carousel (cached)
+- provides a combined frontend feed (manual hero items + posts from the categories selected in Settings) at /wp-json/hcm/v1/carousel (cached)
 - renders the carousel via the [hero_carousel] shortcode with editable CSS/JS and a global image aspect ratio setting
 - adds useful admin columns in WP admin list
 - supports native manual ordering for Hero items via WordPress Order (menu_order)
@@ -22,7 +22,7 @@ Installation:
 2. Activate plugin in WP Admin -> Plugins
 3. Go to Settings -> Permalinks and click Save
 4. Add items in WP Admin -> Hero Carousel
-5. Configure counts / CSS / JS / aspect ratio in Hero Carousel -> Settings
+5. Configure post count / categories / aspect ratio in Hero Carousel -> Settings
 6. Place the [hero_carousel] shortcode where the carousel should appear
 
 Endpoint:
@@ -38,6 +38,15 @@ Release build:
 - The ZIP keeps `hero-carousel-mini-plugin` as its root folder.
 
 Release Notes:
+- 3.13.0
+	- version bump to 3.13.0
+- 3.12.0
+	- version bump to 3.12.0
+- Next release (3.12.0; the build script adds the entry automatically)
+	- removed the separate Galeria post count; one post count now applies to posts from the categories ticked in Settings
+	- added a category checkbox list (exact categories only, a post in several categories appears once, newest first)
+	- default selection is Clanky until a selection is saved; no ticked category adds no posts
+	- Galeria posts no longer appear unless that category is ticked; the old hcm_posts_galeria_count option is left in the database unused
 - 3.11.0
 	- version bump to 3.11.0
 - 3.10.0
