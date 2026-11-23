@@ -61,7 +61,9 @@
   width: 100%;
   height: auto;
   max-width: 100%;
-  object-fit: cover;
+  aspect-ratio: var(--miki-ratio, var(--fi-auto-ratio, auto));
+  object-fit: var(--miki-fit, cover);
+  object-position: var(--miki-pos-x, 50%) var(--miki-pos-y, 50%);
 }
 
 /* No image: nothing on the site; in the builder a placeholder lets you judge the chosen visual. */
@@ -75,7 +77,7 @@
 
 .breakdance .bde-miki-featured-image.builder-element .miki-featured-image__placeholder {
   display: block;
-  aspect-ratio: 3 / 2;
+  aspect-ratio: var(--miki-ratio, 3 / 2);
   background: linear-gradient(135deg, #cfe0ee, #eef4f9);
 }
 

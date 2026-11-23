@@ -81,7 +81,8 @@ function render_image(string $size, int $postId): string
         $ratio = $width / $height;
         $clamped = min(max($ratio, MIN_RATIO), MAX_RATIO);
         if (abs($clamped - $ratio) > 0.0001) {
-            $attributes['style'] = 'aspect-ratio:' . round($clamped, 4);
+            // A custom property (not aspect-ratio itself) so the element's crop setting can override it.
+            $attributes['style'] = '--fi-auto-ratio:' . round($clamped, 4);
         }
     }
 
@@ -117,6 +118,8 @@ function enqueue_editor_script(): void
         'ajaxUrl' => admin_url('admin-ajax.php'),
         'action' => AJAX_ACTION,
         'nonce' => wp_create_nonce(AJAX_ACTION),
+        // The editor canvas loads the permalink of the previewed post, so the queried object is the post being previewed.
+        'postId' => is_singular() ? (int) get_queried_object_id() : 0,
     ]);
 }
 

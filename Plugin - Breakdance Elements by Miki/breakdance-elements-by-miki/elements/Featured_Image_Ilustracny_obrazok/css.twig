@@ -1,4 +1,11 @@
+{% set ratio = design.crop.aspect_ratio|default('original') %}
 %%SELECTOR%% {
+  {% if ratio == 'custom' %}{% if design.crop.custom_width > 0 and design.crop.custom_height > 0 %}--miki-ratio: {{ design.crop.custom_width|e }} / {{ design.crop.custom_height|e }};{% endif %}{% elseif ratio in ['1 / 1', '4 / 3', '3 / 2', '16 / 9', '21 / 9', '2 / 1', '3 / 4', '2 / 3', '9 / 16'] %}--miki-ratio: {{ ratio }};{% endif %}
+  {% if ratio != 'original' %}
+    {% if design.crop.object_fit in ['cover', 'contain', 'fill'] %}--miki-fit: {{ design.crop.object_fit }};{% endif %}
+    {% if design.crop.position_x.style %}--miki-pos-x: {{ design.crop.position_x.style }};{% endif %}
+    {% if design.crop.position_y.style %}--miki-pos-y: {{ design.crop.position_y.style }};{% endif %}
+  {% endif %}
   {% if design.size.max_width.style %}--miki-max-width: {{ design.size.max_width.style }};{% endif %}
   {% if design.size.align == 'left' %}--miki-margin-left: 0;--miki-margin-right: auto;{% endif %}
   {% if design.size.align == 'right' %}--miki-margin-left: auto;--miki-margin-right: 0;{% endif %}

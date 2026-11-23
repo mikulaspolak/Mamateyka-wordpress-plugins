@@ -66,7 +66,16 @@ class FeaturedImage extends \Breakdance\Elements\Element
     public static function defaultProperties()
     {
         return [
-            'design' => ['visual' => ['style' => 'v1'], 'size' => ['image_size' => 'full']],
+            'design' => [
+                'visual' => ['style' => 'v1'],
+                'size' => ['image_size' => 'full'],
+                'crop' => [
+                    'aspect_ratio' => 'original',
+                    'object_fit' => ['breakpoint_base' => 'cover'],
+                    'position_x' => ['breakpoint_base' => ['number' => 50, 'unit' => '%', 'style' => '50%']],
+                    'position_y' => ['breakpoint_base' => ['number' => 50, 'unit' => '%', 'style' => '50%']],
+                ],
+            ],
         ];
     }
 
@@ -178,6 +187,109 @@ class FeaturedImage extends \Breakdance\Elements\Element
                                 ['text' => t('Extra large'), 'value' => '1536x1536'],
                                 ['text' => t('Large'), 'value' => 'large'],
                             ],
+                        ],
+                        false,
+                        false
+                    ),
+                ],
+                ['type' => 'section', 'layout' => 'vertical'],
+                false,
+                false
+            ),
+            c(
+                'crop',
+                t('Image crop'),
+                [
+                    c(
+                        'aspect_ratio',
+                        t('Aspect ratio'),
+                        [],
+                        [
+                            'type' => 'dropdown',
+                            'layout' => 'inline',
+                            'items' => [
+                                ['text' => t('Original'), 'value' => 'original'],
+                                ['text' => '1:1', 'value' => '1 / 1'],
+                                ['text' => '4:3', 'value' => '4 / 3'],
+                                ['text' => '3:2', 'value' => '3 / 2'],
+                                ['text' => '16:9', 'value' => '16 / 9'],
+                                ['text' => '21:9', 'value' => '21 / 9'],
+                                ['text' => '2:1', 'value' => '2 / 1'],
+                                ['text' => '3:4', 'value' => '3 / 4'],
+                                ['text' => '2:3', 'value' => '2 / 3'],
+                                ['text' => '9:16', 'value' => '9 / 16'],
+                                ['text' => t('Custom'), 'value' => 'custom'],
+                            ],
+                        ],
+                        false,
+                        false
+                    ),
+                    c(
+                        'custom_width',
+                        t('Custom ratio - width'),
+                        [],
+                        [
+                            'type' => 'number',
+                            'layout' => 'inline',
+                            'rangeOptions' => ['min' => 1, 'max' => 100, 'step' => 1],
+                            'condition' => ['path' => 'design.crop.aspect_ratio', 'operand' => 'equals', 'value' => 'custom'],
+                        ],
+                        false,
+                        false
+                    ),
+                    c(
+                        'custom_height',
+                        t('Custom ratio - height'),
+                        [],
+                        [
+                            'type' => 'number',
+                            'layout' => 'inline',
+                            'rangeOptions' => ['min' => 1, 'max' => 100, 'step' => 1],
+                            'condition' => ['path' => 'design.crop.aspect_ratio', 'operand' => 'equals', 'value' => 'custom'],
+                        ],
+                        false,
+                        false
+                    ),
+                    c(
+                        'object_fit',
+                        t('Image fit'),
+                        [],
+                        [
+                            'type' => 'dropdown',
+                            'layout' => 'inline',
+                            'items' => [
+                                ['text' => t('Cover (crop)'), 'value' => 'cover'],
+                                ['text' => t('Contain (fit whole image)'), 'value' => 'contain'],
+                                ['text' => t('Fill (stretch)'), 'value' => 'fill'],
+                            ],
+                            'condition' => ['path' => 'design.crop.aspect_ratio', 'operand' => 'not equals', 'value' => 'original'],
+                        ],
+                        true,
+                        false
+                    ),
+                    self::unitControl(
+                        'position_x',
+                        t('Horizontal position'),
+                        ['%'],
+                        true,
+                        ['condition' => ['path' => 'design.crop.aspect_ratio', 'operand' => 'not equals', 'value' => 'original']]
+                    ),
+                    self::unitControl(
+                        'position_y',
+                        t('Vertical position'),
+                        ['%'],
+                        true,
+                        ['condition' => ['path' => 'design.crop.aspect_ratio', 'operand' => 'not equals', 'value' => 'original']]
+                    ),
+                    c(
+                        'info',
+                        '',
+                        [],
+                        [
+                            'type' => 'alert_box',
+                            'layout' => 'vertical',
+                            'alertBoxOptions' => ['style' => 'info', 'content' => '<p>' . t('Position moves the visible part of a cropped image: 0% is the left or top edge, 50% the center, 100% the right or bottom edge.') . '</p>'],
+                            'condition' => ['path' => 'design.crop.aspect_ratio', 'operand' => 'not equals', 'value' => 'original'],
                         ],
                         false,
                         false

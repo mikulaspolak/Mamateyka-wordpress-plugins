@@ -2,7 +2,7 @@
 Contributors: mikulaspolak
 Requires at least: 6.0
 Requires PHP: 8.2
-Stable tag: 1.33.0
+Stable tag: 1.34.0
 License: Proprietary - All rights reserved
 
 Vlastné Breakdance prvky vytvorené v Breakdance Element Studio alebo ručne. Všetky sa v paneli pridávania prvkov zobrazujú v samostatnej sekcii **Elements by Miki**.
@@ -31,10 +31,11 @@ Zobrazí náhľadový obrázok (featured image) aktuálneho príspevku. Určený
 
 - Obrázok sa dosadí na fronte PHP výstupným filtrom (`elements/Featured_Image_Ilustracny_obrazok/featured-image.php`, načítaný z hlavného súboru pluginu) len na jednotlivých príspevkoch/stránkach (`is_singular()`). Šablóna elementu vypisuje len značku `<!--miki-featured-image:...-->`, ktorú filter nahradí `<img>`. Element preto ukazuje obrázok aktuálnej stránky, nie položky v slučke (Loop).
 - Predvolená veľkosť súboru je Full size (plné rozlíšenie, `srcset` ponúka aj menšie veľkosti); v nastaveniach sa dá zmeniť na Extra large / Large.
-- V editore Breakdance sa náhľad načíta skriptom `featured-image-editor.js` (len pre prihlásených s `edit_posts`) cez AJAX `miki_featured_image_preview`: obrázok upravovaného príspevku (parameter `id`/`*preview*` v URL canvasu), inak najnovší príspevok s náhľadovým obrázkom. Ak sa nenájde žiadny, zostane zástupný rámik.
+- V editore Breakdance sa náhľad načíta skriptom `featured-image-editor.js` (len pre prihlásených s `edit_posts`) cez AJAX `miki_featured_image_preview`: obrázok príspevku, ktorý canvas práve zobrazuje (pri úprave šablóny článku je to zvolený náhľadový príspevok; ID dodá PHP cez `get_queried_object_id()`), inak najnovší príspevok s náhľadovým obrázkom. Ak sa nenájde žiadny, zostane zástupný rámik.
 - Bez náhľadového obrázka sa na fronte nezobrazí nič (ani rámik). V editore sa namiesto obrázka zobrazí zástupný rámik s vybraným vizuálom.
 - Vizuál (Design -> Visual): Žiadny, 1, 2, 3. Fotka je orezaná SVG maskou (`mask`) s takmer obdĺžnikovým tvarom, jemne šikmými hranami a nerovnakými rohmi; tieň je `drop-shadow`. Za fotkou je vždy jeden oblý tvar s pevnou farbou `#CDDFE7`, ktorý ide diagonálne cez celé pozadie a vykukuje len v dvoch protiľahlých rohoch. Hodnoty `none`, `v1`..`v3` sú uložené v obsahu stránok, nemeň ich; neznáma uložená hodnota (napr. staré `v4`/`v5`) sa zobrazí ako Vizuál 1.
 - Tvar sa prispôsobí pomeru strán obrázka (maska aj tvary v pozadí sa škálujú cez `cqw`, bez JavaScriptu). Extrémne pomery mimo 9:16 až 21:9 sa orežú.
+- Orezanie (Design -> Image crop): pomer strán (Pôvodný, 1:1, 4:3, 3:2, 16:9, 21:9, 2:1, 3:4, 2:3, 9:16, Vlastný), prispôsobenie (Cover / Contain / Fill; responzívne) a vodorovná a zvislá poloha orezu v % (responzívne). Ovládače sa zobrazia, ak pomer nie je Pôvodný. Mení sa len CSS vlastnosť `aspect-ratio`, `object-fit` a `object-position` na `<img>`; automatické orezanie extrémnych pomerov (`--fi-auto-ratio`) platí len pri pomere Pôvodný.
 - Nastavenia: maximálna šírka, zarovnanie (responzívne), veľkosť súboru obrázka, odsadenie, zaoblenie (len pri vizuáli Žiadny), tieň, animácia pri načítaní (rešpektuje `prefers-reduced-motion`).
 - Obrázok sa načítava `eager` s `fetchpriority="high"` (ilustrácia je zvyčajne v hornej časti článku).
 

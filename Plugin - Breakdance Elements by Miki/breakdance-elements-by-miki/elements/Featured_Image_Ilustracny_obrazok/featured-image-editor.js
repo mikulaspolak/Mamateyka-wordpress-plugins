@@ -15,6 +15,10 @@
   const cache = new Map();
 
   function requestedPost() {
+    if (config.postId > 0) {
+      return String(config.postId);
+    }
+
     const params = new URLSearchParams(window.location.search);
 
     for (const [key, value] of params) {
