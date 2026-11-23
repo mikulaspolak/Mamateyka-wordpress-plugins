@@ -103,7 +103,7 @@ return [
     'Calendar' => 'Kalendár',
     'Calendar ID' => 'ID kalendára',
     'Calendar ID hint' => 'Poznámka k ID kalendára',
-    'The calendar must be public. The ID is in Google Calendar under Settings for my calendars, Integrate calendar. The calendar is loaded only on screens 1024 px wide and larger.' => 'Kalendár musí byť verejný. ID nájdeš v Google Kalendári v Nastaveniach mojich kalendárov, v časti Integrovať kalendár. Kalendár sa načíta len na obrazovkách širokých aspoň 1024 px.',
+    'The calendar must be public. The ID is in Google Calendar under Settings for my calendars, Integrate calendar.' => 'Kalendár musí byť verejný. ID nájdeš v Google Kalendári v Nastaveniach mojich kalendárov, v časti Integrovať kalendár.',
     'Calendar title (for screen readers)' => 'Názov kalendára (pre čítačky obrazovky)',
     'Height' => 'Výška',
     'Colors' => 'Farby',

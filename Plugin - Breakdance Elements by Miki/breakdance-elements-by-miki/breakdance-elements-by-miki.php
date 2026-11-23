@@ -3,7 +3,7 @@
 /**
  * Plugin Name: Breakdance Elements by Miki
  * Description: Custom Breakdance elements, macros, and presets by Miki.
- * Version: 1.34.0
+ * Version: 1.35.0
  * Author: Mikulas Polak
  * Requires at least: 6.0
  * Requires PHP: 8.2

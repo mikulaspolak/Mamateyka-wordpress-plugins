@@ -94,7 +94,7 @@ class GoogleCalendarGoogleKalendar extends \Breakdance\Elements\Element
                         'calendar_hint',
                         t('Calendar ID hint'),
                         [],
-                        ['type' => 'alert_box', 'layout' => 'vertical', 'alertBoxOptions' => ['style' => 'info', 'content' => '<p>' . t('The calendar must be public. The ID is in Google Calendar under Settings for my calendars, Integrate calendar. The calendar is loaded only on screens 1024 px wide and larger.') . '</p>']],
+                        ['type' => 'alert_box', 'layout' => 'vertical', 'alertBoxOptions' => ['style' => 'info', 'content' => '<p>' . t('The calendar must be public. The ID is in Google Calendar under Settings for my calendars, Integrate calendar.') . '</p>']],
                         false,
                         false
                     ),
